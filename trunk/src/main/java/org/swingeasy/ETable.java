@@ -32,7 +32,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JWindow;
 import javax.swing.ListSelectionModel;
-import javax.swing.SwingUtilities;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -676,52 +675,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
      * @return
      */
     public ETableI getSimpleThreadSafeInterface() {
-        final ETableI table = this;
-        javassist.util.proxy.ProxyFactory f = new javassist.util.proxy.ProxyFactory();
-        f.setInterfaces(new Class[] { ETableI.class });
-        javassist.util.proxy.MethodHandler mi = new javassist.util.proxy.MethodHandler() {
-            @Override
-            public Object invoke(final Object self, final java.lang.reflect.Method method, final java.lang.reflect.Method paramMethod2,
-                    final Object[] args) throws Throwable {
-                boolean edt = javax.swing.SwingUtilities.isEventDispatchThread();
-
-                if (edt) {
-                    return method.invoke(table, args);
-                }
-
-                final Object[] values = new Object[] { null, null };
-                Runnable doRun = new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            values[0] = method.invoke(table, args);
-                        } catch (Exception ex) {
-                            values[1] = ex;
-                        }
-                    }
-                };
-                boolean wait = !method.getReturnType().equals(Void.TYPE);
-                if (!wait) {
-                    SwingUtilities.invokeLater(doRun);
-                    return Void.TYPE;
-                }
-                SwingUtilities.invokeAndWait(doRun);
-                if (values[1] != null) {
-                    throw Exception.class.cast(values[1]);
-                }
-                return values[0];
-            }
-        };
-        Object proxy;
-        try {
-            proxy = f.createClass().newInstance();
-        } catch (InstantiationException ex) {
-            throw new RuntimeException(ex);
-        } catch (IllegalAccessException ex) {
-            throw new RuntimeException(ex);
-        }
-        ((javassist.util.proxy.ProxyObject) proxy).setHandler(mi);
-        return (ETableI) proxy;
+        return EventThreadSafeWrapper.getSimpleThreadSafeInterface(ETable.class, this, ETableI.class);
     }
 
     /**

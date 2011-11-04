@@ -1,11 +1,10 @@
 package org.swingeasy;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.swing.JComboBox;
-import javax.swing.SwingUtilities;
 
+import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
 import ca.odell.glazedlists.TextFilterator;
@@ -13,17 +12,25 @@ import ca.odell.glazedlists.matchers.TextMatcherEditor;
 import ca.odell.glazedlists.swing.AutoCompleteSupport;
 import ca.odell.glazedlists.swing.EventComboBoxModel;
 
+/**
+ * @author Jurgen
+ */
 public class EComboBox<T> extends JComboBox implements EComboBoxI<T> {
     private static final long serialVersionUID = -3602504810131193505L;
 
     protected EComboBoxConfig cfg;
 
-    protected EventList<T> list;
+    protected EventList<EComboBoxRecord<T>> records;
 
-    public EComboBox(EComboBoxConfig cfg, T... values) {
+    protected EComboBox() {
+        //
+    }
+
+    public EComboBox(EComboBoxConfig cfg) {
         this.cfg = cfg;
-        this.list = GlazedLists.eventList(Arrays.asList(values));
-        EventComboBoxModel<T> model = new EventComboBoxModel<T>(this.list);
+        this.records = (this.cfg.isThreadSafe() ? GlazedLists.threadSafeList(new BasicEventList<EComboBoxRecord<T>>())
+                : new BasicEventList<EComboBoxRecord<T>>());
+        EventComboBoxModel<EComboBoxRecord<T>> model = new EventComboBoxModel<EComboBoxRecord<T>>(this.records);
         this.setModel(model);
         if (cfg.isAutoComplete()) {
             this.getSimpleThreadSafeInterface().activateAutoCompletion();
@@ -36,13 +43,22 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T> {
      */
     @Override
     public void activateAutoCompletion() {
-        AutoCompleteSupport<T> support = AutoCompleteSupport.install(this, this.list, new TextFilterator<T>() {
+        AutoCompleteSupport<EComboBoxRecord<T>> support = AutoCompleteSupport.install(this, this.records, new TextFilterator<EComboBoxRecord<T>>() {
             @Override
-            public void getFilterStrings(List<String> baseList, T element) {
-                baseList.add(String.valueOf(element));
+            public void getFilterStrings(List<String> baseList, EComboBoxRecord<T> element) {
+                baseList.add(element.getStringValue());
             }
         });
         support.setFilterMode(TextMatcherEditor.CONTAINS);
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComboBoxI#addRecord(org.swingeasy.EComboBoxRecord)
+     */
+    @Override
+    public void addRecord(EComboBoxRecord<T> record) {
+        this.records.add(record);
     }
 
     /**
@@ -51,66 +67,21 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T> {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public EComboBoxI<T> getSimpleThreadSafeInterface() {
-        final EComboBoxI<T> combobox = this;
-        javassist.util.proxy.ProxyFactory f = new javassist.util.proxy.ProxyFactory();
-        f.setInterfaces(new Class[] { EComboBoxI.class });
-        javassist.util.proxy.MethodHandler mi = new javassist.util.proxy.MethodHandler() {
-            @Override
-            public Object invoke(final Object self, final java.lang.reflect.Method method, final java.lang.reflect.Method paramMethod2,
-                    final Object[] args) throws Throwable {
-                boolean edt = javax.swing.SwingUtilities.isEventDispatchThread();
-
-                if (edt) {
-                    return method.invoke(combobox, args);
-                }
-
-                final Object[] values = new Object[] { null, null };
-                Runnable doRun = new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            values[0] = method.invoke(combobox, args);
-                        } catch (Exception ex) {
-                            values[1] = ex;
-                        }
-                    }
-                };
-                boolean wait = !method.getReturnType().equals(Void.TYPE);
-                if (!wait) {
-                    SwingUtilities.invokeLater(doRun);
-                    return Void.TYPE;
-                }
-                SwingUtilities.invokeAndWait(doRun);
-                if (values[1] != null) {
-                    throw Exception.class.cast(values[1]);
-                }
-                return values[0];
-            }
-        };
-        Object proxy;
-        try {
-            proxy = f.createClass().newInstance();
-        } catch (InstantiationException ex) {
-            throw new RuntimeException(ex);
-        } catch (IllegalAccessException ex) {
-            throw new RuntimeException(ex);
-        }
-        ((javassist.util.proxy.ProxyObject) proxy).setHandler(mi);
-        return (EComboBoxI<T>) proxy;
+    public EComboBox<T> getSimpleThreadSafeInterface() {
+        return EventThreadSafeWrapper.getSimpleThreadSafeInterface(EComboBox.class, this, EComboBoxI.class);
     }
 
     /**
      * @see #getSimpleThreadSafeInterface()
      */
-    public EComboBoxI<T> stsi() {
+    public EComboBox<T> stsi() {
         return this.getSimpleThreadSafeInterface();
     }
 
     /**
      * @see #getSimpleThreadSafeInterface()
      */
-    public EComboBoxI<T> STSI() {
+    public EComboBox<T> STSI() {
         return this.getSimpleThreadSafeInterface();
     }
 }
