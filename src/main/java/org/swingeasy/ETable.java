@@ -677,9 +677,6 @@ public class ETable extends JTable implements ETableI, Reorderable {
      */
     public ETableI getSimpleThreadSafeInterface() {
         final ETableI table = this;
-        if (this.cfg.isThreadSafe()) {
-            return table;
-        }
         javassist.util.proxy.ProxyFactory f = new javassist.util.proxy.ProxyFactory();
         f.setInterfaces(new Class[] { ETableI.class });
         javassist.util.proxy.MethodHandler mi = new javassist.util.proxy.MethodHandler() {
