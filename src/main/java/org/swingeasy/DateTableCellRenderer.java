@@ -8,6 +8,9 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
 // javax.swing.text.DateFormatter
+/**
+ * @author Jurgen
+ */
 public class DateTableCellRenderer extends DefaultTableCellRenderer.UIResource {
     public enum Type {
         DATE, TIME, DATE_TIME;

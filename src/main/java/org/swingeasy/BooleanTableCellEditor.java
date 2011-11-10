@@ -4,6 +4,9 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JCheckBox;
 import javax.swing.SwingConstants;
 
+/**
+ * @author Jurgen
+ */
 public class BooleanTableCellEditor extends DefaultCellEditor {
     /** serialVersionUID */
     private static final long serialVersionUID = -1148800983303008114L;

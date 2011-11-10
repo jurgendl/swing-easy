@@ -8,6 +8,9 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableCellRenderer;
 
+/**
+ * @author Jurgen
+ */
 public class ColorTableCellRenderer extends DefaultTableCellRenderer.UIResource {
     /** serialVersionUID */
     private static final long serialVersionUID = -7605301072046365348L;

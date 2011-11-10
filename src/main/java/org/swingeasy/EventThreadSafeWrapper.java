@@ -11,6 +11,9 @@ import javassist.util.proxy.ProxyObject;
 
 import javax.swing.SwingUtilities;
 
+/**
+ * @author Jurgen
+ */
 public class EventThreadSafeWrapper {
     public static interface EventSafe {
         //

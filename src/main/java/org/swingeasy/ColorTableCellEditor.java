@@ -13,6 +13,9 @@ import javax.swing.JDialog;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
+/**
+ * @author Jurgen
+ */
 public class ColorTableCellEditor extends AbstractCellEditor implements TableCellEditor, ActionListener {
     /** serialVersionUID */
     private static final long serialVersionUID = 819809458892249679L;

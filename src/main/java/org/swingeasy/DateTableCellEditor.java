@@ -8,6 +8,9 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JTextField;
 
 // javax.swing.text.DateFormatter
+/**
+ * @author Jurgen
+ */
 public class DateTableCellEditor extends DefaultCellEditor {
     public enum Type {
         DATE, TIME, DATE_TIME;
