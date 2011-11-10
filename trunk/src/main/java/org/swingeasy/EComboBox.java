@@ -32,10 +32,12 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T> {
     public EComboBox(EComboBoxConfig cfg) {
         this.cfg = cfg;
         this.cfg.lock();
-        this.records = (this.cfg.isThreadSafe() ? GlazedLists.threadSafeList(new BasicEventList<EComboBoxRecord<T>>())
-                : new BasicEventList<EComboBoxRecord<T>>());
+        this.records = new BasicEventList<EComboBoxRecord<T>>();
         if (this.cfg.isSortable()) {
-            this.records = new SortedList<EComboBoxRecord<T>>(this.records, null);
+            this.records = new SortedList<EComboBoxRecord<T>>(this.records);
+        }
+        if (this.cfg.isThreadSafe()) {
+            this.records = GlazedLists.threadSafeList(this.records);
         }
         EventComboBoxModel<EComboBoxRecord<T>> model = new EventComboBoxModel<EComboBoxRecord<T>>(this.records);
         this.setModel(model);
@@ -107,6 +109,7 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T> {
     @Override
     public void addRecord(EComboBoxRecord<T> record) {
         this.records.add(record);
+        System.out.println("*" + this.records.indexOf(record));
     }
 
     /**
