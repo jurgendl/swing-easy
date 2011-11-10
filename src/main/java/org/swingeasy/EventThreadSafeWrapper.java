@@ -1,5 +1,6 @@
 package org.swingeasy;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,6 +20,18 @@ public class EventThreadSafeWrapper {
         //
     }
 
+    private static class ValueHolder<T> {
+        private T value;
+
+        public ValueHolder() {
+            super();
+        }
+
+        public ValueHolder(T value) {
+            this.value = value;
+        }
+    }
+
     public static <C, I> C getSimpleThreadSafeInterface(final Class<C> componentClass, final C component, final Class<I> interfaced) {
         if (component instanceof EventSafe) {
             return component;
@@ -36,38 +49,32 @@ public class EventThreadSafeWrapper {
             public Object invoke(final Object self, final Method method, final Method proceed, final Object[] args) throws Throwable {
                 String sig = method.getReturnType() + " " + method.getName() + "(" + Arrays.toString(method.getParameterTypes()) + ")";
                 boolean interfacedMethod = interfacedMethods.contains(sig);
-
                 if (!interfacedMethod) {
                     return method.invoke(component, args);
                 }
-
                 boolean edt = SwingUtilities.isEventDispatchThread();
-
                 if (edt) {
                     return method.invoke(component, args);
                 }
-
-                final Object[] values = new Object[] { null, null };
+                final ValueHolder<Object> returnValue = new ValueHolder<Object>(Void.TYPE);
+                final ValueHolder<Throwable> exceptionThrown = new ValueHolder<Throwable>();
                 Runnable doRun = new Runnable() {
                     @Override
                     public void run() {
                         try {
-                            values[0] = method.invoke(component, args);
+                            returnValue.value = method.invoke(component, args);
+                        } catch (InvocationTargetException ex) {
+                            exceptionThrown.value = ex.getTargetException();
                         } catch (Exception ex) {
-                            values[1] = ex;
+                            exceptionThrown.value = ex;
                         }
                     }
                 };
-                boolean wait = !method.getReturnType().equals(Void.TYPE);
-                if (!wait) {
-                    SwingUtilities.invokeLater(doRun);
-                    return Void.TYPE;
-                }
                 SwingUtilities.invokeAndWait(doRun);
-                if (values[1] != null) {
-                    throw Exception.class.cast(values[1]);
+                if (exceptionThrown.value != null) {
+                    throw exceptionThrown.value;
                 }
-                return values[0];
+                return returnValue.value;
             }
         };
         Object proxy;

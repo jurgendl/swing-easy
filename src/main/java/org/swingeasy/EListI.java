@@ -14,11 +14,15 @@ public interface EListI<T> {
 
     public abstract void addRecords(Collection<EListRecord<T>> EListRecords);
 
-    public abstract void addRecords(EListRecord<T>... EListRecord);
-
     public abstract EventList<EListRecord<T>> getRecords();
+
+    public abstract Collection<EListRecord<T>> getSelectedRecords();
 
     public abstract void removeAllRecords();
 
     public abstract void removeRecord(final EListRecord<T> record);
+
+    public abstract void setSelectedRecord(EListRecord<T> record);
+
+    public abstract void setSelectedRecords(Collection<EListRecord<T>> EListRecords);
 }

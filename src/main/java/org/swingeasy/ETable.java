@@ -16,7 +16,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -63,11 +62,11 @@ public class ETable extends JTable implements ETableI, Reorderable {
 
     protected class EFiltering {
         /**
-         * J_DOC
+         * JDOC
          */
         protected class FilterPopup extends JWindow {
             /**
-             * J_DOC
+             * JDOC
              */
             protected class RecordMatcher implements Matcher<ETableRecord> {
                 protected final Pattern pattern;
@@ -157,7 +156,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
             }
 
             /**
-             * J_DOC
+             * JDOC
              * 
              * @param p
              */
@@ -177,7 +176,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
             }
 
             /**
-             * J_DOC
+             * JDOC
              */
             public void clear() {
                 this.popupFilters.clear();
@@ -186,7 +185,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
         }
 
         /**
-         * J_DOC
+         * JDOC
          */
         protected class FilterPopupActivate extends MouseAdapter {
             /**
@@ -354,7 +353,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
     }
 
     /**
-     * J_DOC
+     * JDOC
      */
     protected static class RecordMatcherEditor<T> extends AbstractMatcherEditor<ETableRecord<T>> {
         protected void fire(Matcher<ETableRecord<T>> matcher) {
@@ -561,15 +560,6 @@ public class ETable extends JTable implements ETableI, Reorderable {
 
     /**
      * 
-     * @see org.swingeasy.ETableI#addRecords(org.swingeasy.ETableRecord[])
-     */
-    @Override
-    public void addRecords(ETableRecord... r) {
-        this.records.addAll(Arrays.asList(r));
-    }
-
-    /**
-     * 
      * @see org.swingeasy.ETableI#clear()
      */
     @Override
@@ -637,7 +627,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
     }
 
     /**
-     * J_DOC
+     * JDOC
      * 
      * @param comp
      * @return
@@ -680,7 +670,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
     }
 
     /**
-     * J_DOC
+     * JDOC
      * 
      * @return
      */

@@ -30,7 +30,7 @@ public class ETableHeaders implements WritableTableFormat<ETableRecord>, Advance
     }
 
     /**
-     * J_DOC
+     * JDOC
      * 
      * @param column
      */
@@ -40,7 +40,7 @@ public class ETableHeaders implements WritableTableFormat<ETableRecord>, Advance
 
     /**
      * 
-     * J_DOC
+     * JDOC
      * 
      * @param column
      * @param clazz
@@ -51,7 +51,7 @@ public class ETableHeaders implements WritableTableFormat<ETableRecord>, Advance
 
     /**
      * 
-     * J_DOC
+     * JDOC
      * 
      * @param column
      * @param clazz
