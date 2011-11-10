@@ -10,7 +10,7 @@ import ca.odell.glazedlists.gui.AdvancedTableFormat;
 import ca.odell.glazedlists.gui.WritableTableFormat;
 
 /**
- * @author jdlandsh
+ * @author Jurgen
  */
 @SuppressWarnings("rawtypes")
 public class ETableHeaders implements WritableTableFormat<ETableRecord>, AdvancedTableFormat<ETableRecord> {

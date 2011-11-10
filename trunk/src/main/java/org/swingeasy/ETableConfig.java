@@ -1,7 +1,7 @@
 package org.swingeasy;
 
 /**
- * @author jdlandsh
+ * @author Jurgen
  */
 public class ETableConfig {
     protected boolean threadSafe = true;

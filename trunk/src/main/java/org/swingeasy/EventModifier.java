@@ -4,7 +4,7 @@ package org.swingeasy;
  * 
  * see {@link EventHelper}
  * 
- * @author jdlandsh
+ * @author Jurgen
  * 
  */
 public enum EventModifier {

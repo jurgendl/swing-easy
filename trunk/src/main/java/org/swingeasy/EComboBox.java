@@ -2,6 +2,8 @@ package org.swingeasy;
 
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 import javax.swing.JComboBox;
@@ -19,11 +21,46 @@ import ca.odell.glazedlists.swing.EventComboBoxModel;
  * @author Jurgen
  */
 public class EComboBox<T> extends JComboBox implements EComboBoxI<T> {
+    protected class MouseValueScroller implements MouseWheelListener {
+        @Override
+        public synchronized void mouseWheelMoved(MouseWheelEvent e) {
+            int currentSelected = EComboBox.this.getSelectedIndex();
+            final boolean nullFound = EComboBox.this.getModel().getElementAt(0) == null;
+            if (currentSelected == -1) {
+                currentSelected = nullFound ? 1 : 0;
+                EComboBox.this.setSelectedIndex(currentSelected);
+                return;
+            }
+            final int max = EComboBox.this.getItemCount() - 1;
+            final boolean down = e.getWheelRotation() > 0;
+            if (down) {
+                currentSelected++;
+                if (currentSelected > max) {
+                    currentSelected = 0;
+                }
+                if (nullFound && (currentSelected == 0)) {
+                    currentSelected = 1;
+                }
+            } else {
+                currentSelected--;
+                if (currentSelected < 0) {
+                    currentSelected = max;
+                }
+                if (nullFound && (currentSelected == 0)) {
+                    currentSelected = max;
+                }
+            }
+            EComboBox.this.setSelectedIndex(currentSelected);
+        }
+    }
+
     private static final long serialVersionUID = -3602504810131193505L;
 
     protected EComboBoxConfig cfg;
 
     protected EventList<EComboBoxRecord<T>> records;
+
+    protected MouseValueScroller mouseValueScroller = null;
 
     protected EComboBox() {
         //
@@ -67,39 +104,16 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T> {
         support.setFilterMode(TextMatcherEditor.CONTAINS);
     }
 
+    /**
+     * 
+     * @see org.swingeasy.EComboBoxI#activateScrolling()
+     */
+    @Override
     public void activateScrolling() {
-        this.addMouseWheelListener(new MouseWheelListener() {
-            @Override
-            public synchronized void mouseWheelMoved(MouseWheelEvent e) {
-                int currentSelected = EComboBox.this.getSelectedIndex();
-                final boolean nullFound = EComboBox.this.getModel().getElementAt(0) == null;
-                if (currentSelected == -1) {
-                    currentSelected = nullFound ? 1 : 0;
-                    EComboBox.this.setSelectedIndex(currentSelected);
-                    return;
-                }
-                final int max = EComboBox.this.getItemCount() - 1;
-                final boolean down = e.getWheelRotation() > 0;
-                if (down) {
-                    currentSelected++;
-                    if (currentSelected > max) {
-                        currentSelected = 0;
-                    }
-                    if (nullFound && (currentSelected == 0)) {
-                        currentSelected = 1;
-                    }
-                } else {
-                    currentSelected--;
-                    if (currentSelected < 0) {
-                        currentSelected = max;
-                    }
-                    if (nullFound && (currentSelected == 0)) {
-                        currentSelected = max;
-                    }
-                }
-                EComboBox.this.setSelectedIndex(currentSelected);
-            }
-        });
+        if (this.mouseValueScroller == null) {
+            this.mouseValueScroller = new MouseValueScroller();
+            this.addMouseWheelListener(new MouseValueScroller());
+        }
     }
 
     /**
@@ -109,7 +123,45 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T> {
     @Override
     public void addRecord(EComboBoxRecord<T> record) {
         this.records.add(record);
-        System.out.println("*" + this.records.indexOf(record));
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComboBoxI#addRecords(java.util.Collection)
+     */
+    @Override
+    public void addRecords(Collection<EComboBoxRecord<T>> eComboBoxRecords) {
+        this.records.addAll(eComboBoxRecords);
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComboBoxI#addRecords(org.swingeasy.EComboBoxRecord<T>[])
+     */
+    @Override
+    public void addRecords(EComboBoxRecord<T>... eComboBoxRecords) {
+        this.records.addAll(Arrays.asList(eComboBoxRecords));
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComboBoxI#deactivateScrolling()
+     */
+    @Override
+    public void deactivateScrolling() {
+        if (this.mouseValueScroller != null) {
+            this.removeMouseWheelListener(this.mouseValueScroller);
+            this.mouseValueScroller = null;
+        }
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComboBoxI#getRecords()
+     */
+    @Override
+    public EventList<EComboBoxRecord<T>> getRecords() {
+        return this.records;
     }
 
     /**
@@ -142,7 +194,25 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T> {
             return null;
         }
 
-        return this.getSelectedRecord().getStringValue();
+        return this.getSelectedRecord().getTooltip();
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComboBoxI#removeAllRecords()
+     */
+    @Override
+    public void removeAllRecords() {
+        this.records.clear();
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComboBoxI#removeRecord(org.swingeasy.EComboBoxRecord)
+     */
+    @Override
+    public void removeRecord(EComboBoxRecord<T> record) {
+        this.records.remove(record);
     }
 
     /**

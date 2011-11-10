@@ -1,11 +1,29 @@
 package org.swingeasy;
 
-public interface EComboBoxI<T> {
-    public void activateAutoCompletion();
+import java.util.Collection;
 
-    public void addRecord(EComboBoxRecord<T> eComboBoxRecord);
+import ca.odell.glazedlists.EventList;
+
+public interface EComboBoxI<T> {
+    public abstract void activateAutoCompletion();
+
+    public abstract void activateScrolling();
+
+    public abstract void addRecord(EComboBoxRecord<T> eComboBoxRecord);
+
+    public abstract void addRecords(Collection<EComboBoxRecord<T>> eComboBoxRecords);
+
+    public abstract void addRecords(EComboBoxRecord<T>... eComboBoxRecord);
+
+    public abstract void deactivateScrolling();
+
+    public abstract EventList<EComboBoxRecord<T>> getRecords();
 
     public abstract EComboBoxRecord<T> getSelectedRecord();
+
+    public abstract void removeAllRecords();
+
+    public abstract void removeRecord(final EComboBoxRecord<T> record);
 
     public abstract void setSelectedRecord(EComboBoxRecord<T> record);
 }

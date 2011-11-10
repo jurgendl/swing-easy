@@ -12,11 +12,17 @@ import javassist.util.proxy.ProxyObject;
 import javax.swing.SwingUtilities;
 
 public class EventThreadSafeWrapper {
-    public static <C, I> C getSimpleThreadSafeInterface(Class<C> componentClass, C component, Class<I> interfaced) {
-        final C finalComponent = component;
+    public static interface EventSafe {
+        //
+    }
+
+    public static <C, I> C getSimpleThreadSafeInterface(final Class<C> componentClass, final C component, final Class<I> interfaced) {
+        if (component instanceof EventSafe) {
+            return component;
+        }
         ProxyFactory f = new ProxyFactory();
         f.setSuperclass(componentClass);
-        f.setInterfaces(new Class[] { interfaced });
+        f.setInterfaces(new Class[] { interfaced, EventSafe.class });
         final List<String> interfacedMethods = new ArrayList<String>();
         for (Method method : interfaced.getDeclaredMethods()) {
             String sig = method.getReturnType() + " " + method.getName() + "(" + Arrays.toString(method.getParameterTypes()) + ")";
@@ -29,13 +35,13 @@ public class EventThreadSafeWrapper {
                 boolean interfacedMethod = interfacedMethods.contains(sig);
 
                 if (!interfacedMethod) {
-                    return method.invoke(finalComponent, args);
+                    return method.invoke(component, args);
                 }
 
                 boolean edt = SwingUtilities.isEventDispatchThread();
 
                 if (edt) {
-                    return method.invoke(finalComponent, args);
+                    return method.invoke(component, args);
                 }
 
                 final Object[] values = new Object[] { null, null };
@@ -43,7 +49,7 @@ public class EventThreadSafeWrapper {
                     @Override
                     public void run() {
                         try {
-                            values[0] = method.invoke(finalComponent, args);
+                            values[0] = method.invoke(component, args);
                         } catch (Exception ex) {
                             values[1] = ex;
                         }
