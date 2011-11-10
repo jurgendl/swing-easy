@@ -16,6 +16,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -55,7 +56,7 @@ import ca.odell.glazedlists.swing.SortableRenderer;
 import ca.odell.glazedlists.swing.TableComparatorChooser;
 
 /**
- * @author jdlandsh
+ * @author Jurgen
  */
 @SuppressWarnings("rawtypes")
 public class ETable extends JTable implements ETableI, Reorderable {
@@ -434,7 +435,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
 
         /**
          * 
-         * @see org.mmmr.services.swing.common.VerticalTableHeaderCellRenderer#getIcon(javax.swing.JTable, int)
+         * @see org.swingeasy.VerticalTableHeaderCellRenderer#getIcon(javax.swing.JTable, int)
          */
         @Override
         protected Icon getIcon(JTable table, int column) {
@@ -542,7 +543,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
 
     /**
      * 
-     * @see org.mmmr.services.swing.common.ETableI#addRecord(org.mmmr.services.swing.common.ETableRecord)
+     * @see org.swingeasy.ETableI#addRecord(org.swingeasy.ETableRecord)
      */
     @Override
     public void addRecord(final ETableRecord record) {
@@ -551,7 +552,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
 
     /**
      * 
-     * @see org.mmmr.services.swing.common.ETableI#addRecords(java.util.Collection)
+     * @see org.swingeasy.ETableI#addRecords(java.util.Collection)
      */
     @Override
     public void addRecords(final Collection<ETableRecord> r) {
@@ -560,7 +561,16 @@ public class ETable extends JTable implements ETableI, Reorderable {
 
     /**
      * 
-     * @see org.mmmr.services.swing.common.ETableI#clear()
+     * @see org.swingeasy.ETableI#addRecords(org.swingeasy.ETableRecord[])
+     */
+    @Override
+    public void addRecords(ETableRecord... r) {
+        this.records.addAll(Arrays.asList(r));
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.ETableI#clear()
      */
     @Override
     public void clear() {
@@ -619,7 +629,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
 
     /**
      * 
-     * @see org.mmmr.services.swing.common.ETableI#getColumnValueAtVisualColumn(int)
+     * @see org.swingeasy.ETableI#getColumnValueAtVisualColumn(int)
      */
     @Override
     public Object getColumnValueAtVisualColumn(int i) {
@@ -644,7 +654,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
 
     /**
      * 
-     * @see org.mmmr.services.swing.common.ETableI#getHeadernames()
+     * @see org.swingeasy.ETableI#getHeadernames()
      */
     @Override
     public List<String> getHeadernames() {
@@ -653,7 +663,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
 
     /**
      * 
-     * @see org.mmmr.services.swing.common.ETableI#getRecordAtVisualRow(int)
+     * @see org.swingeasy.ETableI#getRecordAtVisualRow(int)
      */
     @Override
     public ETableRecord getRecordAtVisualRow(int i) {
@@ -662,7 +672,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
 
     /**
      * 
-     * @see org.mmmr.services.swing.common.ETableI#getRecords()
+     * @see org.swingeasy.ETableI#getRecords()
      */
     @Override
     public List<ETableRecord> getRecords() {
@@ -689,7 +699,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
 
     /**
      * 
-     * @see org.mmmr.services.swing.common.ETableI#packColumn(int)
+     * @see org.swingeasy.ETableI#packColumn(int)
      */
     @Override
     public void packColumn(int vColIndex) {
@@ -750,7 +760,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
 
     /**
      * 
-     * @see org.mmmr.services.swing.common.ETableI#removeAllRecords()
+     * @see org.swingeasy.ETableI#removeAllRecords()
      */
     @Override
     public void removeAllRecords() {
@@ -759,7 +769,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
 
     /**
      * 
-     * @see org.mmmr.services.swing.common.ETableI#removeRecord(org.mmmr.services.swing.common.ETableRecord)
+     * @see org.swingeasy.ETableI#removeRecord(org.swingeasy.ETableRecord)
      */
     @Override
     public void removeRecord(final ETableRecord record) {
@@ -768,7 +778,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
 
     /**
      * 
-     * @see org.mmmr.services.swing.common.ETableI#removeRecordAtVisualRow(int)
+     * @see org.swingeasy.ETableI#removeRecordAtVisualRow(int)
      */
     @Override
     public void removeRecordAtVisualRow(final int i) {
@@ -777,7 +787,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
 
     /**
      * 
-     * @see org.mmmr.services.swing.common.Reorderable#reorder(int, int)
+     * @see org.swingeasy.Reorderable#reorder(int, int)
      */
     @Override
     public void reorder(int fromIndex, int toIndex) {
@@ -788,7 +798,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
 
     /**
      * 
-     * @see org.mmmr.services.swing.common.ETableI#setHeaders(org.mmmr.services.swing.common.ETableHeaders)
+     * @see org.swingeasy.ETableI#setHeaders(org.swingeasy.ETableHeaders)
      */
     @Override
     public void setHeaders(final ETableHeaders headers) {
@@ -815,7 +825,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
 
     /**
      * 
-     * @see org.mmmr.services.swing.common.ETableI#sort(int)
+     * @see org.swingeasy.ETableI#sort(int)
      */
     @Override
     public void sort(final int col) {
@@ -850,7 +860,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
 
     /**
      * 
-     * @see org.mmmr.services.swing.common.ETableI#unsort()
+     * @see org.swingeasy.ETableI#unsort()
      */
     @Override
     public void unsort() {

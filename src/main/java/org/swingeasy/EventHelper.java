@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
  * 
  * JDOC
  * 
- * @author jdlandsh
+ * @author Jurgen
  * 
  */
 public class EventHelper {

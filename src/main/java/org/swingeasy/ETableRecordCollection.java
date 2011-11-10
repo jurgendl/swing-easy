@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * @author jdlandsh
+ * @author Jurgen
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class ETableRecordCollection implements ETableRecord<List> {
@@ -29,7 +29,7 @@ public class ETableRecordCollection implements ETableRecord<List> {
 
     /**
      * 
-     * @see org.mmmr.services.swing.common.ETableRecord#get(int)
+     * @see org.swingeasy.ETableRecord#get(int)
      */
     @Override
     public Object get(int column) {
@@ -38,7 +38,7 @@ public class ETableRecordCollection implements ETableRecord<List> {
 
     /**
      * 
-     * @see org.mmmr.services.swing.common.ETableRecord#getBean()
+     * @see org.swingeasy.ETableRecord#getBean()
      */
     @Override
     public List getBean() {
@@ -47,7 +47,7 @@ public class ETableRecordCollection implements ETableRecord<List> {
 
     /**
      * 
-     * @see org.mmmr.services.swing.common.ETableRecord#getStringValue(int)
+     * @see org.swingeasy.ETableRecord#getStringValue(int)
      */
     @Override
     public String getStringValue(int column) {
@@ -57,7 +57,16 @@ public class ETableRecordCollection implements ETableRecord<List> {
 
     /**
      * 
-     * @see org.mmmr.services.swing.common.ETableRecord#set(int, java.lang.Object)
+     * @see org.swingeasy.ETableRecord#getTooltip(int)
+     */
+    @Override
+    public String getTooltip(int column) {
+        return this.getStringValue(column);
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.ETableRecord#set(int, java.lang.Object)
      */
     @Override
     public void set(int column, Object newValue) {
@@ -66,7 +75,7 @@ public class ETableRecordCollection implements ETableRecord<List> {
 
     /**
      * 
-     * @see org.mmmr.services.swing.common.ETableRecord#size()
+     * @see org.swingeasy.ETableRecord#size()
      */
     @Override
     public int size() {

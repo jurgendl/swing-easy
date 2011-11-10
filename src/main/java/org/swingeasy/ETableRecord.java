@@ -1,7 +1,7 @@
 package org.swingeasy;
 
 /**
- * @author jdlandsh
+ * @author Jurgen
  */
 public interface ETableRecord<T> {
     public abstract Object get(int column);
@@ -9,6 +9,8 @@ public interface ETableRecord<T> {
     public abstract T getBean();
 
     public abstract String getStringValue(int column);
+
+    public abstract String getTooltip(int column);
 
     public abstract void set(int column, Object newValue);
 

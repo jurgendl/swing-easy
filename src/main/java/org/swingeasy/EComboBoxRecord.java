@@ -50,6 +50,10 @@ public class EComboBoxRecord<T> implements Comparable<EComboBoxRecord<? super T>
         return String.valueOf(this.bean);
     }
 
+    public String getTooltip() {
+        return this.getStringValue();
+    }
+
     /**
      * 
      * @see java.lang.Object#hashCode()

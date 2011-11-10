@@ -9,7 +9,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
- * @author jdlandsh
+ * @author Jurgen
  */
 public class ETableRecordBean<T> implements ETableRecord<T> {
     protected T object;
@@ -18,13 +18,6 @@ public class ETableRecordBean<T> implements ETableRecord<T> {
 
     private final Map<String, Object> originalValues = new HashMap<String, Object>();
 
-    /**
-     * 
-     * Instantieer een nieuwe ETableRecordBean
-     * 
-     * @param orderedFields
-     * @param o
-     */
     public ETableRecordBean(List<String> orderedFields, T o) {
         this.object = o;
         this.orderedFields = orderedFields;
@@ -32,7 +25,7 @@ public class ETableRecordBean<T> implements ETableRecord<T> {
 
     /**
      * 
-     * @see org.mmmr.services.swing.common.ETableRecord#get(int)
+     * @see org.swingeasy.ETableRecord#get(int)
      */
     @Override
     public Object get(int column) {
@@ -53,7 +46,7 @@ public class ETableRecordBean<T> implements ETableRecord<T> {
 
     /**
      * 
-     * @see org.mmmr.services.swing.common.ETableRecord#getBean()
+     * @see org.swingeasy.ETableRecord#getBean()
      */
     @Override
     public T getBean() {
@@ -62,12 +55,21 @@ public class ETableRecordBean<T> implements ETableRecord<T> {
 
     /**
      * 
-     * @see org.mmmr.services.swing.common.ETableRecord#getStringValue(int)
+     * @see org.swingeasy.ETableRecord#getStringValue(int)
      */
     @Override
     public String getStringValue(int column) {
         Object value = this.get(column);
         return value == null ? null : "" + value;
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.ETableRecord#getTooltip(int)
+     */
+    @Override
+    public String getTooltip(int column) {
+        return this.getStringValue(column);
     }
 
     public boolean hasChanged(String property) {
@@ -85,7 +87,7 @@ public class ETableRecordBean<T> implements ETableRecord<T> {
 
     /**
      * 
-     * @see org.mmmr.services.swing.common.ETableRecord#set(int, java.lang.Object)
+     * @see org.swingeasy.ETableRecord#set(int, java.lang.Object)
      */
     @Override
     public void set(int column, Object newValue) {
@@ -107,7 +109,7 @@ public class ETableRecordBean<T> implements ETableRecord<T> {
 
     /**
      * 
-     * @see org.mmmr.services.swing.common.ETableRecord#size()
+     * @see org.swingeasy.ETableRecord#size()
      */
     @Override
     public int size() {
