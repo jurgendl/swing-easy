@@ -8,6 +8,9 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JTextField;
 
 // javax.swing.text.NumberFormatter
+/**
+ * @author Jurgen
+ */
 public class NumberTableCellEditor extends DefaultCellEditor {
     private static final long serialVersionUID = 5169127745067354714L;
 

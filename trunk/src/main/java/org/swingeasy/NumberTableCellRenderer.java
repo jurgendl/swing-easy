@@ -6,6 +6,9 @@ import java.util.Locale;
 import javax.swing.table.DefaultTableCellRenderer;
 
 // javax.swing.text.NumberFormatter
+/**
+ * @author Jurgen
+ */
 public class NumberTableCellRenderer extends DefaultTableCellRenderer.UIResource {
     private static final long serialVersionUID = 5169127745067354714L;
 

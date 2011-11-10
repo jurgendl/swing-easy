@@ -7,6 +7,9 @@ import java.util.Vector;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JComboBox;
 
+/**
+ * @author Jurgen
+ */
 public class EnumTableCellEditor<T extends Enum<T>> extends DefaultCellEditor {
     private static final long serialVersionUID = 5169127745067354714L;
 
