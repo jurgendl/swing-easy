@@ -19,7 +19,7 @@ public class EList<T> extends JList implements EListI<T> {
 
     protected EListConfig cfg;
 
-    protected EventList<EComboBoxRecord<T>> records;
+    protected EventList<EListRecord<T>> records;
 
     protected EList() {
         //
@@ -28,23 +28,23 @@ public class EList<T> extends JList implements EListI<T> {
     public EList(EListConfig cfg) {
         this.cfg = cfg;
         this.cfg.lock();
-        this.records = new BasicEventList<EComboBoxRecord<T>>();
+        this.records = new BasicEventList<EListRecord<T>>();
         if (this.cfg.isSortable()) {
-            this.records = new SortedList<EComboBoxRecord<T>>(this.records);
+            this.records = new SortedList<EListRecord<T>>(this.records);
         }
         if (this.cfg.isThreadSafe()) {
             this.records = GlazedLists.threadSafeList(this.records);
         }
-        EventListModel<EComboBoxRecord<T>> model = new EventListModel<EComboBoxRecord<T>>(this.records);
+        EventListModel<EListRecord<T>> model = new EventListModel<EListRecord<T>>(this.records);
         this.setModel(model);
     }
 
     /**
      * 
-     * @see org.swingeasy.EListI#addRecord(org.swingeasy.EComboBoxRecord)
+     * @see org.swingeasy.EListI#addRecord(org.swingeasy.EListRecord)
      */
     @Override
-    public void addRecord(EComboBoxRecord<T> record) {
+    public void addRecord(EListRecord<T> record) {
         this.records.add(record);
     }
 
@@ -53,17 +53,17 @@ public class EList<T> extends JList implements EListI<T> {
      * @see org.swingeasy.EListI#addRecords(java.util.Collection)
      */
     @Override
-    public void addRecords(Collection<EComboBoxRecord<T>> eComboBoxRecords) {
-        this.records.addAll(eComboBoxRecords);
+    public void addRecords(Collection<EListRecord<T>> EListRecords) {
+        this.records.addAll(EListRecords);
     }
 
     /**
      * 
-     * @see org.swingeasy.EListI#addRecords(org.swingeasy.EComboBoxRecord<T>[])
+     * @see org.swingeasy.EListI#addRecords(org.swingeasy.EListRecord<T>[])
      */
     @Override
-    public void addRecords(EComboBoxRecord<T>... eComboBoxRecords) {
-        this.records.addAll(Arrays.asList(eComboBoxRecords));
+    public void addRecords(EListRecord<T>... EListRecords) {
+        this.records.addAll(Arrays.asList(EListRecords));
     }
 
     /**
@@ -71,7 +71,7 @@ public class EList<T> extends JList implements EListI<T> {
      * @see org.swingeasy.EListI#getRecords()
      */
     @Override
-    public EventList<EComboBoxRecord<T>> getRecords() {
+    public EventList<EListRecord<T>> getRecords() {
         return this.records;
     }
 
@@ -96,10 +96,10 @@ public class EList<T> extends JList implements EListI<T> {
 
     /**
      * 
-     * @see org.swingeasy.EListI#removeRecord(org.swingeasy.EComboBoxRecord)
+     * @see org.swingeasy.EListI#removeRecord(org.swingeasy.EListRecord)
      */
     @Override
-    public void removeRecord(EComboBoxRecord<T> record) {
+    public void removeRecord(EListRecord<T> record) {
         this.records.remove(record);
     }
 

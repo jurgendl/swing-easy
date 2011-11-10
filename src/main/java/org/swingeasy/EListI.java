@@ -10,15 +10,15 @@ import ca.odell.glazedlists.EventList;
  * @param <T>
  */
 public interface EListI<T> {
-    public abstract void addRecord(EComboBoxRecord<T> eComboBoxRecord);
+    public abstract void addRecord(EListRecord<T> EListRecord);
 
-    public abstract void addRecords(Collection<EComboBoxRecord<T>> eComboBoxRecords);
+    public abstract void addRecords(Collection<EListRecord<T>> EListRecords);
 
-    public abstract void addRecords(EComboBoxRecord<T>... eComboBoxRecord);
+    public abstract void addRecords(EListRecord<T>... EListRecord);
 
-    public abstract EventList<EComboBoxRecord<T>> getRecords();
+    public abstract EventList<EListRecord<T>> getRecords();
 
     public abstract void removeAllRecords();
 
-    public abstract void removeRecord(final EComboBoxRecord<T> record);
+    public abstract void removeRecord(final EListRecord<T> record);
 }
