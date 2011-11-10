@@ -3,11 +3,13 @@ package org.swingeasy;
 import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Random;
 
 import javax.swing.JFrame;
 
 public class ComboBoxDemo {
     public static void main(String[] args) {
+        UIUtils.lookAndFeel();
         EComboBoxConfig cfg = new EComboBoxConfig();
         cfg.setSortable(true);
         EComboBox<String> cc = new EComboBox<String>(cfg);
@@ -28,12 +30,12 @@ public class ComboBoxDemo {
             f.setSize(200, 80);
         }
         cc.addRecord(null);
-        cc.addRecord(new EComboBoxRecord<String>("44"));
-        cc.addRecord(new EComboBoxRecord<String>("222"));
-        cc.addRecord(new EComboBoxRecord<String>("5555"));
-        cc.addRecord(new EComboBoxRecord<String>("111"));
-        EComboBoxRecord<String> record = new EComboBoxRecord<String>("333");
-        cc.addRecord(record);
+        final Random r = new Random(256955466579946l);
+        EComboBoxRecord<String> record = null;
+        for (int i = 0; i < 1000; i++) {
+            record = new EComboBoxRecord<String>(String.valueOf(r.nextInt(1000)));
+            cc.addRecord(record);
+        }
         cc.setSelectedRecord(record);
         EComboBoxRecord<String> selectedRecord = cc.getSelectedRecord();
         System.out.println(selectedRecord == null ? null : selectedRecord.getClass() + " " + selectedRecord);
