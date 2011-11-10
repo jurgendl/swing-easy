@@ -2,7 +2,6 @@ package org.swingeasy;
 
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -136,15 +135,6 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T> {
 
     /**
      * 
-     * @see org.swingeasy.EComboBoxI#addRecords(org.swingeasy.EComboBoxRecord<T>[])
-     */
-    @Override
-    public void addRecords(EComboBoxRecord<T>... eComboBoxRecords) {
-        this.records.addAll(Arrays.asList(eComboBoxRecords));
-    }
-
-    /**
-     * 
      * @see org.swingeasy.EComboBoxI#deactivateScrolling()
      */
     @Override
@@ -175,7 +165,7 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T> {
     }
 
     /**
-     * J_DOC
+     * JDOC
      * 
      * @return
      */

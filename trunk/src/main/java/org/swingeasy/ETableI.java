@@ -12,8 +12,6 @@ public interface ETableI {
 
     public abstract void addRecords(final Collection<ETableRecord> records);
 
-    public abstract void addRecords(final ETableRecord... records);
-
     public abstract void clear();
 
     public abstract Object getColumnValueAtVisualColumn(int i);

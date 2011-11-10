@@ -16,8 +16,6 @@ public interface EComboBoxI<T> {
 
     public abstract void addRecords(Collection<EComboBoxRecord<T>> eComboBoxRecords);
 
-    public abstract void addRecords(EComboBoxRecord<T>... eComboBoxRecord);
-
     public abstract void deactivateScrolling();
 
     public abstract EventList<EComboBoxRecord<T>> getRecords();

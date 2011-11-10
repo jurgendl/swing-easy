@@ -26,8 +26,9 @@ public class EListConfig {
         return this.threadSafe;
     }
 
-    public void lock() {
+    public EListConfig lock() {
         this.setLocked(true);
+        return this;
     }
 
     private void setLocked(boolean locked) {
