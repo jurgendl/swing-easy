@@ -10,8 +10,14 @@ public class EListConfig {
 
     protected boolean locked;
 
+    protected boolean filterable = false;
+
     public EListConfig() {
         super();
+    }
+
+    public boolean isFilterable() {
+        return this.filterable;
     }
 
     public boolean isLocked() {
@@ -29,6 +35,13 @@ public class EListConfig {
     public EListConfig lock() {
         this.setLocked(true);
         return this;
+    }
+
+    public void setFilterable(boolean filterable) {
+        if (this.isLocked()) {
+            throw new IllegalArgumentException();
+        }
+        this.filterable = filterable;
     }
 
     private void setLocked(boolean locked) {
