@@ -41,31 +41,31 @@ public class ColorListCellRenderer extends DefaultListCellRenderer.UIResource {
         super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
         if (value == null) {
             this.setIcon(this.emptyIcon);
-            this.setText("");
+            this.setText(""); //$NON-NLS-1$
             return this;
         }
         Color color = Color.class.cast(value);
         String red = Integer.toHexString(color.getRed());
         if (red.length() == 1) {
-            red = "0" + red;
+            red = "0" + red; //$NON-NLS-1$
         }
         String green = Integer.toHexString(color.getGreen());
         if (green.length() == 1) {
-            green = "0" + green;
+            green = "0" + green; //$NON-NLS-1$
         }
         String blue = Integer.toHexString(color.getBlue());
         if (blue.length() == 1) {
-            blue = "0" + blue;
+            blue = "0" + blue; //$NON-NLS-1$
         }
         String alpha = Integer.toHexString(color.getAlpha());
         if (alpha.length() == 1) {
-            alpha = "0" + alpha;
+            alpha = "0" + alpha; //$NON-NLS-1$
         }
-        if (alpha.equals("ff")) {
-            this.setText(("#" + red + green + blue).toUpperCase());
+        if (alpha.equals("ff")) { //$NON-NLS-1$
+            this.setText(("#" + red + green + blue).toUpperCase()); //$NON-NLS-1$
             this.setIcon(this.createIcon(color));
         } else {
-            this.setText(("#" + red + green + blue + "(" + alpha + ")").toUpperCase());
+            this.setText(("#" + red + green + blue + "(" + alpha + ")").toUpperCase()); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             this.setIcon(this.createIcon(color));
         }
         return this;

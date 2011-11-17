@@ -24,7 +24,7 @@ public class ComboBoxDemo {
                 @Override
                 public void windowClosing(WindowEvent e) {
                     EComboBoxRecord<String> selectedRecord = ccc.getSelectedRecord();
-                    System.out.println(selectedRecord == null ? null : selectedRecord.getClass() + " " + selectedRecord);
+                    System.out.println(selectedRecord == null ? null : selectedRecord.getClass() + " " + selectedRecord); //$NON-NLS-1$
                 }
             });
             f.setSize(200, 80);
@@ -38,6 +38,6 @@ public class ComboBoxDemo {
         }
         cc.setSelectedRecord(record);
         EComboBoxRecord<String> selectedRecord = cc.getSelectedRecord();
-        System.out.println(selectedRecord == null ? null : selectedRecord.getClass() + " " + selectedRecord);
+        System.out.println(selectedRecord == null ? null : selectedRecord.getClass() + " " + selectedRecord); //$NON-NLS-1$
     }
 }

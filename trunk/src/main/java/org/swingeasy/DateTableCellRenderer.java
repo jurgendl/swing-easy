@@ -70,7 +70,7 @@ public class DateTableCellRenderer extends DefaultTableCellRenderer.UIResource {
      */
     @Override
     public void setValue(Object value) {
-        this.setText((value == null) ? "" : this.formatter.format(value));
+        this.setText((value == null) ? "" : this.formatter.format(value)); //$NON-NLS-1$
     }
 
     // @Override

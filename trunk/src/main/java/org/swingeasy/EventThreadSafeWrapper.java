@@ -41,13 +41,13 @@ public class EventThreadSafeWrapper {
         f.setInterfaces(new Class[] { interfaced, EventSafe.class });
         final List<String> interfacedMethods = new ArrayList<String>();
         for (Method method : interfaced.getDeclaredMethods()) {
-            String sig = method.getReturnType() + " " + method.getName() + "(" + Arrays.toString(method.getParameterTypes()) + ")";
+            String sig = method.getReturnType() + " " + method.getName() + "(" + Arrays.toString(method.getParameterTypes()) + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             interfacedMethods.add(sig);
         }
         MethodHandler mi = new MethodHandler() {
             @Override
             public Object invoke(final Object self, final Method method, final Method proceed, final Object[] args) throws Throwable {
-                String sig = method.getReturnType() + " " + method.getName() + "(" + Arrays.toString(method.getParameterTypes()) + ")";
+                String sig = method.getReturnType() + " " + method.getName() + "(" + Arrays.toString(method.getParameterTypes()) + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 boolean interfacedMethod = interfacedMethods.contains(sig);
                 if (!interfacedMethod) {
                     return method.invoke(component, args);

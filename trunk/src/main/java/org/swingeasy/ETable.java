@@ -131,18 +131,18 @@ public class ETable extends JTable implements ETableI, Reorderable {
                     public void keyReleased(KeyEvent e) {
                         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                             // preview filtering
-                            System.out.println("preview filter " + FilterPopup.this.popupTextfield.getText());
+                            System.out.println("preview filter " + FilterPopup.this.popupTextfield.getText()); //$NON-NLS-1$
                             ETable.this.filtering.matcherEditor.fire(new RecordMatcher(FilterPopup.this.popupForColumn,
                                     FilterPopup.this.popupTextfield.getText()));
                         } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
                             // revert filtering, close
-                            System.out.println("revert filter");
+                            System.out.println("revert filter"); //$NON-NLS-1$
                             ETable.this.filtering.matcherEditor.fire(new RecordMatcher(FilterPopup.this.popupForColumn, FilterPopup.this.popupFilters
                                     .get(FilterPopup.this.popupForColumn)));
                             FilterPopup.this.setVisible(false);
                         } else if (e.getKeyCode() == KeyEvent.VK_TAB) {
                             // commit filtering
-                            System.out.println("filter " + FilterPopup.this.popupTextfield.getText());
+                            System.out.println("filter " + FilterPopup.this.popupTextfield.getText()); //$NON-NLS-1$
                             ETable.this.filtering.matcherEditor.fire(new RecordMatcher(FilterPopup.this.popupForColumn,
                                     FilterPopup.this.popupTextfield.getText()));
                             FilterPopup.this.popupFilters.put(FilterPopup.this.popupForColumn, FilterPopup.this.popupTextfield.getText());
@@ -792,7 +792,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
     @Override
     public void scrollToVisibleRecord(ETableRecord record) {
         if (!this.isDisplayable()) {
-            throw new IllegalArgumentException("can only be used when table is displayable (visible)");
+            throw new IllegalArgumentException("can only be used when table is displayable (visible)"); //$NON-NLS-1$
         }
         int index = this.filtering.getRecords().indexOf(record);
         Rectangle cellbounds = this.getCellRect(index, index, true);

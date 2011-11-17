@@ -104,7 +104,7 @@ public class UIUtils {
     public static void lookAndFeel() {
         try {
             try {
-                UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+                UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel"); //$NON-NLS-1$
             } catch (Exception ex) {
                 log(ex);
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -115,10 +115,10 @@ public class UIUtils {
     }
 
     private static void log(Exception ex) {
-		ex.printStackTrace();
-	}
+        ex.printStackTrace();
+    }
 
-	public static void rounded(Window w) {
+    public static void rounded(Window w) {
         if (AWTUtilitiesWrapper.isTranslucencySupported(AWTUtilitiesWrapper.PERPIXEL_TRANSPARENT)) {
             try {
                 Shape shape = new RoundRectangle2D.Float(0, 0, w.getWidth(), w.getHeight(), 20, 20);
