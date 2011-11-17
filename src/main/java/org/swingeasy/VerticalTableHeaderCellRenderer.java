@@ -31,7 +31,7 @@ public class VerticalTableHeaderCellRenderer extends DefaultTableHeaderCellRende
      */
     private enum VerticalSortIcon implements Icon {
 
-        ASCENDING(UIManager.getIcon("Table.ascendingSortIcon")), DESCENDING(UIManager.getIcon("Table.descendingSortIcon"));
+        ASCENDING(UIManager.getIcon("Table.ascendingSortIcon")), DESCENDING(UIManager.getIcon("Table.descendingSortIcon")); //$NON-NLS-1$ //$NON-NLS-2$
         private final Icon icon;// = ;
 
         private VerticalSortIcon(Icon icon) {

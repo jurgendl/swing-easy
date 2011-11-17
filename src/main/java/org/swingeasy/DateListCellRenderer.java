@@ -42,7 +42,7 @@ public class DateListCellRenderer extends DefaultListCellRenderer.UIResource {
     }
 
     protected String getValue(Object value) {
-        return ((value == null) ? "" : this.formatter.format(value));
+        return ((value == null) ? "" : this.formatter.format(value)); //$NON-NLS-1$
     }
 
     protected void newFormatter() {

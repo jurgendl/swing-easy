@@ -52,7 +52,7 @@ public class ETableRecordCollection implements ETableRecord<List> {
     @Override
     public String getStringValue(int column) {
         Object value = this.get(column);
-        return value == null ? null : "" + value;
+        return value == null ? null : "" + value; //$NON-NLS-1$
     }
 
     /**

@@ -38,6 +38,6 @@ public class NumberTableCellRenderer extends DefaultTableCellRenderer.UIResource
      */
     @Override
     protected void setValue(Object value) {
-        this.setText((value == null) ? "" : this.formatter.format(value));
+        this.setText((value == null) ? "" : this.formatter.format(value)); //$NON-NLS-1$
     }
 }

@@ -19,7 +19,7 @@ import javax.swing.TransferHandler;
 public class TableRowTransferHandler extends TransferHandler {
     private static final long serialVersionUID = -7424691675591737713L;
 
-    private final DataFlavor localObjectFlavor = new ActivationDataFlavor(Integer.class, DataFlavor.javaJVMLocalObjectMimeType, "Integer Row Index");
+    private final DataFlavor localObjectFlavor = new ActivationDataFlavor(Integer.class, DataFlavor.javaJVMLocalObjectMimeType, "Integer Row Index"); //$NON-NLS-1$
 
     private JTable table = null;
 

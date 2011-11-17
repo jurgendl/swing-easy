@@ -33,8 +33,8 @@ public class AWTUtilitiesWrapper {
 
     static void init() {
         try {
-            AWTUtilitiesWrapper.awtUtilitiesClass = Class.forName("com.sun.awt.AWTUtilities");
-            AWTUtilitiesWrapper.translucencyClass = Class.forName("com.sun.awt.AWTUtilities$Translucency");
+            AWTUtilitiesWrapper.awtUtilitiesClass = Class.forName("com.sun.awt.AWTUtilities"); //$NON-NLS-1$
+            AWTUtilitiesWrapper.translucencyClass = Class.forName("com.sun.awt.AWTUtilities$Translucency"); //$NON-NLS-1$
             if (AWTUtilitiesWrapper.translucencyClass.isEnum()) {
                 Object[] kinds = AWTUtilitiesWrapper.translucencyClass.getEnumConstants();
                 if (kinds != null) {
@@ -43,13 +43,13 @@ public class AWTUtilitiesWrapper {
                     AWTUtilitiesWrapper.PERPIXEL_TRANSLUCENT = kinds[2];
                 }
             }
-            AWTUtilitiesWrapper.mIsTranslucencySupported = AWTUtilitiesWrapper.awtUtilitiesClass.getMethod("isTranslucencySupported",
+            AWTUtilitiesWrapper.mIsTranslucencySupported = AWTUtilitiesWrapper.awtUtilitiesClass.getMethod("isTranslucencySupported", //$NON-NLS-1$
                     AWTUtilitiesWrapper.translucencyClass);
-            AWTUtilitiesWrapper.mIsTranslucencyCapable = AWTUtilitiesWrapper.awtUtilitiesClass.getMethod("isTranslucencyCapable",
+            AWTUtilitiesWrapper.mIsTranslucencyCapable = AWTUtilitiesWrapper.awtUtilitiesClass.getMethod("isTranslucencyCapable", //$NON-NLS-1$
                     GraphicsConfiguration.class);
-            AWTUtilitiesWrapper.mSetWindowShape = AWTUtilitiesWrapper.awtUtilitiesClass.getMethod("setWindowShape", Window.class, Shape.class);
-            AWTUtilitiesWrapper.mSetWindowOpacity = AWTUtilitiesWrapper.awtUtilitiesClass.getMethod("setWindowOpacity", Window.class, float.class);
-            AWTUtilitiesWrapper.mSetWindowOpaque = AWTUtilitiesWrapper.awtUtilitiesClass.getMethod("setWindowOpaque", Window.class, boolean.class);
+            AWTUtilitiesWrapper.mSetWindowShape = AWTUtilitiesWrapper.awtUtilitiesClass.getMethod("setWindowShape", Window.class, Shape.class); //$NON-NLS-1$
+            AWTUtilitiesWrapper.mSetWindowOpacity = AWTUtilitiesWrapper.awtUtilitiesClass.getMethod("setWindowOpacity", Window.class, float.class); //$NON-NLS-1$
+            AWTUtilitiesWrapper.mSetWindowOpaque = AWTUtilitiesWrapper.awtUtilitiesClass.getMethod("setWindowOpaque", Window.class, boolean.class); //$NON-NLS-1$
         } catch (NoSuchMethodException ex) {
             Logger.getLogger(AWTUtilitiesWrapper.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SecurityException ex) {

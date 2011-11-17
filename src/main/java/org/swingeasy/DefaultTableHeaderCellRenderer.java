@@ -51,9 +51,9 @@ public class DefaultTableHeaderCellRenderer extends DefaultTableCellRenderer {
         if ((sortKey != null) && (table.convertColumnIndexToView(sortKey.getColumn()) == column)) {
             switch (sortKey.getSortOrder()) {
                 case ASCENDING:
-                    return UIManager.getIcon("Table.ascendingSortIcon");
+                    return UIManager.getIcon("Table.ascendingSortIcon"); //$NON-NLS-1$
                 case DESCENDING:
-                    return UIManager.getIcon("Table.descendingSortIcon");
+                    return UIManager.getIcon("Table.descendingSortIcon"); //$NON-NLS-1$
                 case UNSORTED:
             }
         }
@@ -101,7 +101,7 @@ public class DefaultTableHeaderCellRenderer extends DefaultTableCellRenderer {
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         this.setIcon(this.getIcon(table, column));
-        this.setBorder(UIManager.getBorder("TableHeader.cellBorder"));
+        this.setBorder(UIManager.getBorder("TableHeader.cellBorder")); //$NON-NLS-1$
         return this;
     }
 }

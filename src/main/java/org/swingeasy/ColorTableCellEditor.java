@@ -30,7 +30,7 @@ public class ColorTableCellEditor extends AbstractCellEditor implements TableCel
 
     protected JDialog d;
 
-    protected static final String EDIT = "edit";
+    protected static final String EDIT = "edit"; //$NON-NLS-1$
 
     public ColorTableCellEditor() {
         // Set up the editor (from the table's point of view),
@@ -83,7 +83,7 @@ public class ColorTableCellEditor extends AbstractCellEditor implements TableCel
 
     public JDialog getDialog() {
         if (this.d == null) {
-            this.d = JColorChooser.createDialog(this.button, "Pick a Color", true, // modal
+            this.d = JColorChooser.createDialog(this.button, Messages.getString("ColorTableCellEditor.pickAColor"), true, // modal //$NON-NLS-1$
                     this.getColorChooser(), this, // OK button handler
                     null); // no CANCEL button handler
             this.d.setLocale(this.locale);

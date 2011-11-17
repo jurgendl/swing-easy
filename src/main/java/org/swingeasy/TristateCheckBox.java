@@ -47,15 +47,15 @@ public final class TristateCheckBox extends JCheckBox {
             }
         });
         ActionMap actions = new ActionMapUIResource();
-        actions.put("pressed", new AbstractAction() {
-            private static final long serialVersionUID = -4444403699594853761L;
+        actions.put("pressed", new AbstractAction() { //$NON-NLS-1$
+                    private static final long serialVersionUID = -4444403699594853761L;
 
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                TristateCheckBox.this.iterateState();
-            }
-        });
-        actions.put("released", null);
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        TristateCheckBox.this.iterateState();
+                    }
+                });
+        actions.put("released", null); //$NON-NLS-1$
         SwingUtilities.replaceUIActionMap(this, actions);
     }
 

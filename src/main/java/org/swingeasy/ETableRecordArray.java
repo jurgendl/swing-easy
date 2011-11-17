@@ -37,7 +37,7 @@ public class ETableRecordArray implements ETableRecord<Object[]> {
     @Override
     public String getStringValue(int column) {
         Object value = this.get(column);
-        return value == null ? null : "" + value;
+        return value == null ? null : "" + value; //$NON-NLS-1$
     }
 
     /**

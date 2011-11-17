@@ -29,7 +29,7 @@ public class ListDemo1 {
                 @Override
                 public void windowClosing(WindowEvent e) {
                     Collection<EListRecord<Integer>> selectedRecord = ccc.getSelectedRecords();
-                    System.out.println(selectedRecord == null ? null : selectedRecord.getClass() + " " + selectedRecord);
+                    System.out.println(selectedRecord == null ? null : selectedRecord.getClass() + " " + selectedRecord); //$NON-NLS-1$
                 }
             });
             cc = cc.stsi();
@@ -49,7 +49,7 @@ public class ListDemo1 {
         try {
             cc.setSelectedRecord(new EListRecord<Integer>(666));
         } catch (IllegalArgumentException ex) {
-            System.out.println("expected: " + ex);
+            System.out.println("expected: " + ex); //$NON-NLS-1$
         }
         cc.setSelectedRecords(Arrays.asList(record, record0));
         f.setVisible(true);

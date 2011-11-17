@@ -27,7 +27,7 @@ public class NumberTableCellEditor extends DefaultCellEditor {
 
             @Override
             public Object getCellEditorValue() {
-                if (jtf.getText().equals("")) {
+                if (jtf.getText().equals("")) { //$NON-NLS-1$
                     return null;
                 }
                 try {
@@ -43,7 +43,7 @@ public class NumberTableCellEditor extends DefaultCellEditor {
              */
             @Override
             public void setValue(Object value) {
-                jtf.setText((value != null) ? NumberTableCellEditor.this.formatter.format(value) : "");
+                jtf.setText((value != null) ? NumberTableCellEditor.this.formatter.format(value) : ""); //$NON-NLS-1$
             }
         };
         jtf.addActionListener(this.delegate);

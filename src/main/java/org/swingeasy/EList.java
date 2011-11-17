@@ -236,7 +236,7 @@ public class EList<T> extends JList implements EListI<T> {
     @Override
     public void scrollToVisibleRecord(EListRecord<T> record) {
         if (!this.isDisplayable()) {
-            throw new IllegalArgumentException("can only be used when list is displayable (visible)");
+            throw new IllegalArgumentException("can only be used when list is displayable (visible)"); //$NON-NLS-1$
         }
         int index = this.records.indexOf(record);
         Rectangle cellbounds = this.getCellBounds(index, index);

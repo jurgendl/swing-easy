@@ -41,11 +41,11 @@ public class TableDemo {
                             if (col == -1) {
                                 return;
                             }
-                            if ("15".equals("" + table.getRecordAtVisualRow(row).get(0))) {
-                                System.out.println("cellvalue 15");
+                            if ("15".equals("" + table.getRecordAtVisualRow(row).get(0))) { //$NON-NLS-1$ //$NON-NLS-2$
+                                System.out.println("cellvalue 15"); //$NON-NLS-1$
                             }
-                            if ("Integer".equals(table.getColumnValueAtVisualColumn(col))) {
-                                System.out.println("col Integer");
+                            if ("Integer".equals(table.getColumnValueAtVisualColumn(col))) { //$NON-NLS-1$
+                                System.out.println("col Integer"); //$NON-NLS-1$
                             }
                         }
 
@@ -66,18 +66,18 @@ public class TableDemo {
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(400, 200);
             final Random r = new Random(256955466579946l);
-            headers.add("Integer", Integer.class, true);
-            headers.add("String", String.class, true);
-            headers.add("Boolean", Boolean.class, true);
-            headers.add("Date", Date.class, true);
-            headers.add("Double", Double.class, true);
-            headers.add("Float", Float.class, true);
-            headers.add("Integer", Integer.class, true);
-            headers.add("Long", Long.class, true);
-            headers.add("BigDecimal", BigDecimal.class, true);
-            headers.add("BigInteger", BigInteger.class, true);
-            headers.add("Color", Color.class, true);
-            headers.add("Enum", EnumTest.class, true);
+            headers.add("Integer", Integer.class, true); //$NON-NLS-1$
+            headers.add("String", String.class, true); //$NON-NLS-1$
+            headers.add("Boolean", Boolean.class, true); //$NON-NLS-1$
+            headers.add("Date", Date.class, true); //$NON-NLS-1$
+            headers.add("Double", Double.class, true); //$NON-NLS-1$
+            headers.add("Float", Float.class, true); //$NON-NLS-1$
+            headers.add("Integer", Integer.class, true); //$NON-NLS-1$
+            headers.add("Long", Long.class, true); //$NON-NLS-1$
+            headers.add("BigDecimal", BigDecimal.class, true); //$NON-NLS-1$
+            headers.add("BigInteger", BigInteger.class, true); //$NON-NLS-1$
+            headers.add("Color", Color.class, true); //$NON-NLS-1$
+            headers.add("Enum", EnumTest.class, true); //$NON-NLS-1$
             safetable.setHeaders(headers);
             Object[] empty = new Object[headers.getColumnCount()];
             safetable.addRecord(new ETableRecordArray(empty));
