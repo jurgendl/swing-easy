@@ -475,18 +475,6 @@ public class ETable extends JTable implements ETableI, Reorderable {
 
     protected ETableHeaders tableFormat;
 
-    protected DateTableCellRenderer dateTableCellRenderer = new DateTableCellRenderer();
-
-    protected DateTableCellEditor dateTableCellEditor = new DateTableCellEditor();
-
-    protected NumberTableCellEditor numberTableCellEditor = new NumberTableCellEditor();
-
-    protected NumberTableCellRenderer numberTableCellRenderer = new NumberTableCellRenderer();
-
-    protected ColorTableCellEditor colorTableCellEditor = new ColorTableCellEditor();
-
-    protected ColorTableCellRenderer colorTableCellRenderer = new ColorTableCellRenderer();
-
     public ETable() {
         this(new ETableConfig(false));
     }
@@ -523,20 +511,6 @@ public class ETable extends JTable implements ETableI, Reorderable {
         this.filtering.install();
         this.getTableHeader().setReorderingAllowed(this.cfg.isReorderable());
         this.getTableHeader().setResizingAllowed(this.cfg.isResizable());
-
-        this.setDefaultRenderer(Boolean.class, new BooleanTableCellRenderer());
-        this.setDefaultEditor(Boolean.class, new BooleanTableCellEditor());
-
-        this.setDefaultRenderer(Date.class, this.dateTableCellRenderer);
-        this.setDefaultEditor(Date.class, this.dateTableCellEditor);
-
-        this.setDefaultRenderer(Color.class, this.colorTableCellRenderer);
-        this.setDefaultEditor(Color.class, this.colorTableCellEditor);
-
-        this.setDefaultRenderer(Number.class, this.numberTableCellRenderer);
-        this.setDefaultRenderer(Float.class, this.numberTableCellRenderer);
-        this.setDefaultRenderer(Double.class, this.numberTableCellRenderer);
-        this.setDefaultEditor(Number.class, this.numberTableCellEditor);
     }
 
     /**
@@ -567,6 +541,36 @@ public class ETable extends JTable implements ETableI, Reorderable {
         this.sorting.dispose();
         this.tableModel.setTableFormat(new ETableHeaders());
         this.filtering.clear();
+    }
+
+    /**
+     * 
+     * @see javax.swing.JTable#createDefaultEditors()
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    protected void createDefaultEditors() {
+        super.createDefaultEditors();
+        this.defaultEditorsByColumnClass.put(Boolean.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.BooleanTableCellEditor"));
+        this.defaultEditorsByColumnClass.put(Date.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.DateTableCellEditor"));
+        this.defaultEditorsByColumnClass.put(Color.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.ColorTableCellEditor"));
+        this.defaultEditorsByColumnClass.put(Number.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.NumberTableCellEditor"));
+    }
+
+    /**
+     * 
+     * @see javax.swing.JTable#createDefaultRenderers()
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    protected void createDefaultRenderers() {
+        super.createDefaultRenderers();
+        this.defaultRenderersByColumnClass.put(Boolean.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.BooleanTableCellRenderer"));
+        this.defaultRenderersByColumnClass.put(Date.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.DateTableCellRenderer"));
+        this.defaultRenderersByColumnClass.put(Color.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.ColorTableCellRenderer"));
+        this.defaultRenderersByColumnClass.put(Number.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.NumberTableCellRenderer"));
+        this.defaultRenderersByColumnClass.put(Float.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.NumberTableCellRenderer"));
+        this.defaultRenderersByColumnClass.put(Double.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.NumberTableCellRenderer"));
     }
 
     /**
@@ -818,12 +822,6 @@ public class ETable extends JTable implements ETableI, Reorderable {
     @Override
     public void setLocale(Locale l) {
         super.setLocale(l);
-        this.dateTableCellRenderer.setLocale(l);
-        this.dateTableCellEditor.setLocale(l);
-        this.numberTableCellEditor.setLocale(l);
-        this.numberTableCellRenderer.setLocale(l);
-        this.colorTableCellEditor.setLocale(l);
-        this.colorTableCellRenderer.setLocale(l);
     }
 
     /**

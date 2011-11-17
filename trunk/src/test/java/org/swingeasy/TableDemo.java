@@ -2,14 +2,19 @@ package org.swingeasy;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.Random;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
@@ -63,6 +68,21 @@ public class TableDemo {
             final ETableI safetable = table.getSimpleThreadSafeInterface();
             final JFrame frame = new JFrame();
             frame.getContentPane().add(new JScrollPane(table), BorderLayout.CENTER);
+            JPanel localepanel = new JPanel(new FlowLayout());
+            final EButtonGroup localegroup = new EButtonGroup();
+            JRadioButton en = new JRadioButton("en");//$NON-NLS-1$
+            localepanel.add(en);
+            localegroup.add(en);
+            JRadioButton nl = new JRadioButton("nl");//$NON-NLS-1$
+            localepanel.add(nl);
+            localegroup.add(nl);
+            localegroup.addPropertyChangeListener(EButtonGroup.SELECTION, new PropertyChangeListener() {
+                @Override
+                public void propertyChange(PropertyChangeEvent evt) {
+                    System.out.println(evt.getNewValue());
+                }
+            });
+            frame.getContentPane().add(localepanel, BorderLayout.NORTH);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(400, 200);
             final Random r = new Random(256955466579946l);
