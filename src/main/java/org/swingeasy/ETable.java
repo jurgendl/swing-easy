@@ -59,7 +59,6 @@ import ca.odell.glazedlists.swing.TableComparatorChooser;
  */
 @SuppressWarnings("rawtypes")
 public class ETable extends JTable implements ETableI, Reorderable {
-
     protected class EFiltering {
         /**
          * JDOC
@@ -674,7 +673,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
      * 
      * @return
      */
-    public ETableI getSimpleThreadSafeInterface() {
+    public ETable getSimpleThreadSafeInterface() {
         return EventThreadSafeWrapper.getSimpleThreadSafeInterface(ETable.class, this, ETableI.class);
     }
 
@@ -788,6 +787,20 @@ public class ETable extends JTable implements ETableI, Reorderable {
 
     /**
      * 
+     * @see org.swingeasy.ETableI#scrollToVisibleRecord(org.swingeasy.ETableRecord)
+     */
+    @Override
+    public void scrollToVisibleRecord(ETableRecord record) {
+        if (!this.isDisplayable()) {
+            throw new IllegalArgumentException("can only be used when table is displayable (visible)");
+        }
+        int index = this.filtering.getRecords().indexOf(record);
+        Rectangle cellbounds = this.getCellRect(index, index, true);
+        this.scrollRectToVisible(cellbounds);
+    }
+
+    /**
+     * 
      * @see org.swingeasy.ETableI#setHeaders(org.swingeasy.ETableHeaders)
      */
     @Override
@@ -825,14 +838,14 @@ public class ETable extends JTable implements ETableI, Reorderable {
     /**
      * @see #getSimpleThreadSafeInterface()
      */
-    public ETableI stsi() {
+    public ETable stsi() {
         return this.getSimpleThreadSafeInterface();
     }
 
     /**
      * @see #getSimpleThreadSafeInterface()
      */
-    public ETableI STSI() {
+    public ETable STSI() {
         return this.getSimpleThreadSafeInterface();
     }
 
