@@ -32,6 +32,8 @@ public interface ETableI {
 
     public abstract void removeRecordAtVisualRow(final int i);
 
+    public abstract void scrollToVisibleRecord(final ETableRecord record);
+
     public abstract void setHeaders(final ETableHeaders headers);
 
     public abstract void sort(final int col);

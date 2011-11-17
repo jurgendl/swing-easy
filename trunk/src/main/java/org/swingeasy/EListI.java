@@ -22,6 +22,8 @@ public interface EListI<T> {
 
     public abstract void removeRecord(final EListRecord<T> record);
 
+    public abstract void scrollToVisibleRecord(EListRecord<T> record);
+
     public abstract void setSelectedRecord(EListRecord<T> record);
 
     public abstract void setSelectedRecords(Collection<EListRecord<T>> EListRecords);

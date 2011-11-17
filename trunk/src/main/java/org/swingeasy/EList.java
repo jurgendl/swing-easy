@@ -2,6 +2,7 @@ package org.swingeasy;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -9,15 +10,19 @@ import java.util.Hashtable;
 import java.util.List;
 
 import javax.swing.JList;
+import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
+import ca.odell.glazedlists.FilterList;
 import ca.odell.glazedlists.GlazedLists;
 import ca.odell.glazedlists.SortedList;
+import ca.odell.glazedlists.TextFilterator;
 import ca.odell.glazedlists.swing.EventListModel;
 import ca.odell.glazedlists.swing.EventSelectionModel;
+import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 
 /**
  * @author Jurgen
@@ -63,6 +68,8 @@ public class EList<T> extends JList implements EListI<T> {
     private static class EListModel<T> extends EventListModel<EListRecord<T>> {
         protected EventList<EListRecord<T>> source;
 
+        protected JTextField filtercomponent;
+
         public EListModel(EventList<EListRecord<T>> source) {
             super(source);
             this.source = source;
@@ -76,12 +83,29 @@ public class EList<T> extends JList implements EListI<T> {
         if (cfg.isSortable()) {
             records = new SortedList<EListRecord<T>>(records);
         }
+        JTextField filtercomponent = null;
+        if (cfg.isFilterable()) {
+            filtercomponent = new JTextField();
+            TextFilterator<EListRecord<T>> textFilterator = new TextFilterator<EListRecord<T>>() {
+                @Override
+                public void getFilterStrings(List<String> baseList, EListRecord<T> element) {
+                    if (element != null) {
+                        baseList.add(element.getStringValue());
+                    }
+                }
+            };
+            TextComponentMatcherEditor<EListRecord<T>> filter = new TextComponentMatcherEditor<EListRecord<T>>(filtercomponent, textFilterator, true);
+            records = new FilterList<EListRecord<T>>(records, filter);
+        }
         if (cfg.isThreadSafe()) {
             records = GlazedLists.threadSafeList(records);
         }
         EListModel<T> model = new EListModel<T>(records);
+        model.filtercomponent = filtercomponent;
         return model;
     }
+
+    protected final JTextField filtercomponent;
 
     protected EListConfig cfg;
 
@@ -93,14 +117,18 @@ public class EList<T> extends JList implements EListI<T> {
      * do not use, do not change access
      */
     protected EList() {
-        super();
+        this.filtercomponent = null;
     }
 
     @SuppressWarnings("unchecked")
     public EList(EListConfig cfg) {
         super(EList.createModel(cfg.lock()));
         this.cfg = cfg;
-        this.records = EListModel.class.cast(this.getModel()).source;
+        @SuppressWarnings("rawtypes")
+        EListModel elistModel = EListModel.class.cast(this.getModel());
+        this.records = elistModel.source;
+        this.filtercomponent = elistModel.filtercomponent;
+        elistModel.filtercomponent = null;
         this.delegatingListCellRenderer = new DelegatingListCellRenderer(this.getCellRenderer());
         this.setCellRenderer(this.delegatingListCellRenderer);
     }
@@ -144,6 +172,10 @@ public class EList<T> extends JList implements EListI<T> {
         } catch (ClassCastException ex) {
             return super.createSelectionModel();
         }
+    }
+
+    public JTextField getFiltercomponent() {
+        return this.filtercomponent;
     }
 
     /**
@@ -195,6 +227,20 @@ public class EList<T> extends JList implements EListI<T> {
     @Override
     public void removeRecord(EListRecord<T> record) {
         this.records.remove(record);
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EListI#scrollToVisibleRecord(org.swingeasy.EListRecord)
+     */
+    @Override
+    public void scrollToVisibleRecord(EListRecord<T> record) {
+        if (!this.isDisplayable()) {
+            throw new IllegalArgumentException("can only be used when list is displayable (visible)");
+        }
+        int index = this.records.indexOf(record);
+        Rectangle cellbounds = this.getCellBounds(index, index);
+        this.scrollRectToVisible(cellbounds);
     }
 
     /**
