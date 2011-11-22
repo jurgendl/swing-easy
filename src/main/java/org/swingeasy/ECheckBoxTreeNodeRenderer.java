@@ -10,7 +10,17 @@ import javax.swing.tree.TreeCellRenderer;
  * @author Jurgen
  */
 public class ECheckBoxTreeNodeRenderer implements TreeCellRenderer {
-    private JCheckBox delegate = new JCheckBox();
+    private JCheckBox delegate;
+
+    public ECheckBoxTreeNodeRenderer() {
+        this(new JCheckBox());
+    }
+
+    public ECheckBoxTreeNodeRenderer(JCheckBox delegate) {
+        super();
+        this.delegate = delegate;
+        this.delegate.setOpaque(false);
+    }
 
     /**
      * 
@@ -23,6 +33,7 @@ public class ECheckBoxTreeNodeRenderer implements TreeCellRenderer {
         @SuppressWarnings("rawtypes")
         ECheckBoxTreeNode node = ECheckBoxTreeNode.class.cast(value);
 
+        this.delegate.setToolTipText(node.getTooltip());
         this.delegate.setText(node.getStringValue());
         this.delegate.setSelected(node.isSelected());
         this.delegate.setEnabled(tree.isEnabled());
