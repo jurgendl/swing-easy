@@ -4,6 +4,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JTree;
+import javax.swing.ToolTipManager;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
@@ -31,5 +32,7 @@ public class ECheckBoxTree<T> extends JTree {
             }
         });
         this.setEditable(false);
+
+        ToolTipManager.sharedInstance().registerComponent(this);
     }
 }
