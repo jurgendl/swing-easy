@@ -128,7 +128,6 @@ public class TableDemo {
                     frame.setVisible(true);
                 }
             });
-
         } catch (Exception ex) {
             ex.printStackTrace();
         }

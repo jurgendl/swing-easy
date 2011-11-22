@@ -101,21 +101,25 @@ public class UIUtils {
         return null;
     }
 
+    private static void log(Exception ex) {
+        ex.printStackTrace();
+    }
+
+    private static void log(String string) {
+        System.err.println(string);
+    }
+
     public static void lookAndFeel() {
         try {
             try {
                 UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel"); //$NON-NLS-1$
             } catch (Exception ex) {
-                log(ex);
+                UIUtils.log(String.valueOf(ex));
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             }
         } catch (Exception ex) {
-            log(ex);
+            UIUtils.log(ex);
         }
-    }
-
-    private static void log(Exception ex) {
-        ex.printStackTrace();
     }
 
     public static void rounded(Window w) {
@@ -124,7 +128,7 @@ public class UIUtils {
                 Shape shape = new RoundRectangle2D.Float(0, 0, w.getWidth(), w.getHeight(), 20, 20);
                 AWTUtilitiesWrapper.setWindowShape(w, shape);
             } catch (Exception ex) {
-                log(ex);
+                UIUtils.log(ex);
             }
         }
     }
@@ -139,7 +143,7 @@ public class UIUtils {
             try {
                 AWTUtilitiesWrapper.setWindowOpacity(w, f);
             } catch (Exception ex) {
-                log(ex);
+                UIUtils.log(ex);
             }
         }
     }
