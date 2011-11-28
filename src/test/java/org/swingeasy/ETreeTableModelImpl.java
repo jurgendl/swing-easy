@@ -11,6 +11,9 @@ import javax.swing.event.TreeModelListener;
 import javax.swing.table.TableModel;
 import javax.swing.tree.TreePath;
 
+/**
+ * @author Jurgen
+ */
 public class ETreeTableModelImpl implements ETreeTableModel {
     protected ETreeTableRecordNode root;
 
