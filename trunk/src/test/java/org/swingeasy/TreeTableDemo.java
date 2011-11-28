@@ -32,14 +32,8 @@ public class TreeTableDemo {
             ETreeTableRecordNode child4 = new ETreeTableRecordNode(Arrays.asList(new Object[] { "41", "42", "43" }));
             child2.add(child4);
 
-            ETreeTableHeaders headers = new ETreeTableHeaders();
-            headers.addColumn("col1");
-            headers.addColumn("col2");
-            headers.addColumn("col3");
+            ETreeTable treetable = new ETreeTable(new ETreeTableModelImpl(root, new ETreeTableHeaders("col1", "col2", "col3")));
 
-            ETreeTableModelImpl model = new ETreeTableModelImpl(root, headers);
-
-            ETreeTable treetable = new ETreeTable(model);
             frame.getContentPane().add(new JScrollPane(treetable), BorderLayout.CENTER);
             SwingUtilities.invokeLater(new Runnable() {
                 @Override

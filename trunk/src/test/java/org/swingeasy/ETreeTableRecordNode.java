@@ -3,6 +3,9 @@ package org.swingeasy;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Jurgen
+ */
 public class ETreeTableRecordNode {
     private List<ETreeTableRecordNode> children = new ArrayList<ETreeTableRecordNode>();
 
