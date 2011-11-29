@@ -12,6 +12,8 @@ public class ETreeTableHeaders {
     @SuppressWarnings("rawtypes")
     protected List<Class> types = new ArrayList<Class>();
 
+    protected List<Boolean> editable = new ArrayList<Boolean>();
+
     public ETreeTableHeaders() {
         super();
     }
@@ -23,12 +25,13 @@ public class ETreeTableHeaders {
     }
 
     public void addColumn(String name) {
-        this.addColumn(name, Object.class);
+        this.addColumn(name, Object.class, false);
     }
 
-    public void addColumn(String name, Class<?> type) {
+    public void addColumn(String name, Class<?> type, boolean coleditable) {
         this.names.add(name);
         this.types.add(type);
+        this.editable.add(coleditable);
     }
 
     public Class<?> getColumnClass(int columnIndex) {
@@ -41,5 +44,9 @@ public class ETreeTableHeaders {
 
     public String getColumnName(int columnIndex) {
         return this.names.get(columnIndex);
+    }
+
+    public boolean isColumnEditable(int columnIndex) {
+        return this.editable.get(columnIndex);
     }
 }

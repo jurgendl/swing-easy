@@ -1,68 +1,104 @@
 package org.swingeasy;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 /**
  * @author Jurgen
  */
-public class ETreeTableRecordNode {
-    private List<ETreeTableRecordNode> children = new ArrayList<ETreeTableRecordNode>();
+@SuppressWarnings({ "unchecked", "rawtypes" })
+public class ETreeTableRecordNode implements Iterable<ETreeTableRecordNode> {
+    protected ETreeTableRecordNode parent = null;
 
-    private List<Object> values = new ArrayList<Object>();
+    protected final List<ETreeTableRecordNode> children = new ArrayList<ETreeTableRecordNode>();
+
+    protected final List values = new ArrayList();
 
     public ETreeTableRecordNode() {
-        super();
+        this.setValues(Collections.singletonList("ROOT"));
     }
 
-    public ETreeTableRecordNode(List<Object> values) {
-        this.values = values;
+    public ETreeTableRecordNode(List values) {
+        this.setValues(values);
     }
 
-    public ETreeTableRecordNode(List<Object> values, List<ETreeTableRecordNode> children) {
-        super();
-        this.values = values;
-        this.children = children;
+    public ETreeTableRecordNode(List values, List<ETreeTableRecordNode> children) {
+        this.setValues(values);
+        this.addAll(children);
     }
 
+    // write access
     public void add(ETreeTableRecordNode child) {
+        if (child.parent != null) {
+            throw new IllegalArgumentException();
+        }
         this.children.add(child);
+        child.parent = this;
+    }
+
+    // write access
+    public void addAll(Collection<ETreeTableRecordNode> _children) {
+        for (ETreeTableRecordNode child : _children) {
+            this.add(child);
+        }
     }
 
     public int getChildCount() {
-        return this.children.size();
+        return this.getChildren().size();
     }
 
+    // init
     public List<ETreeTableRecordNode> getChildren() {
-        return this.children;
+        return Collections.unmodifiableList(this.children);
     }
 
     public ETreeTableRecordNode getChildren(int index) {
-        return this.children.get(index);
+        return this.getChildren().get(index);
     }
 
-    public int getIndexOfChild(Object child) {
-        return this.children.indexOf(child);
+    public int getIndexOfChild(ETreeTableRecordNode child) {
+        return this.getChildren().indexOf(child);
     }
 
     public Object getValue(int columnIndex) {
-        return this.values.get(columnIndex);
+        return this.getValues().get(columnIndex);
     }
 
-    public List<Object> getValues() {
-        return this.values;
+    // init
+    public List getValues() {
+        return Collections.unmodifiableList(this.values);
     }
 
-    public void setChildren(List<ETreeTableRecordNode> children) {
-        this.children = children;
+    /**
+     * 
+     * @see java.lang.Iterable#iterator()
+     */
+    @Override
+    public Iterator<ETreeTableRecordNode> iterator() {
+        return this.getChildren().iterator();
     }
 
+    // write access
+    public void remove(ETreeTableRecordNode child) {
+        if (child.parent != this) {
+            throw new IllegalArgumentException();
+        }
+        this.children.remove(child);
+        child.parent = null;
+    }
+
+    // write access
     public void setValue(int columnIndex, Object aValue) {
         this.values.set(columnIndex, aValue);
     }
 
-    public void setValues(List<Object> values) {
-        this.values = values;
+    // write access
+    public void setValues(Collection values) {
+        this.values.clear();
+        this.values.addAll(values);
     }
 
     /**
@@ -71,6 +107,6 @@ public class ETreeTableRecordNode {
      */
     @Override
     public String toString() {
-        return this.values.isEmpty() ? null : String.valueOf(this.values.get(0));
+        return this.getValues().toString();
     }
 }
