@@ -31,8 +31,8 @@ public class ETreeTableCellRenderer extends JTree implements TableCellRenderer {
             @Override
             public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row,
                     boolean hasFocus1) {
-                DefaultTreeCellRenderer treeCellRendererComponent = DefaultTreeCellRenderer.class.cast(super.getTreeCellRendererComponent(tree,
-                        value, sel, expanded, leaf, row, hasFocus1));
+                DefaultTreeCellRenderer treeCellRendererComponent = DefaultTreeCellRenderer.class.cast(super.getTreeCellRendererComponent(tree, null,
+                        sel, expanded, leaf, row, hasFocus1));
                 treeCellRendererComponent.setOpaque(true);
                 return treeCellRendererComponent;
             }
@@ -61,6 +61,7 @@ public class ETreeTableCellRenderer extends JTree implements TableCellRenderer {
     public void paint(Graphics g) {
         // paints currentrow of tree to tablecell; rowheight has to be fixed
         g.translate(0, -this.currentRow * this.getRowHeight());
+
         super.paint(g);
     }
 

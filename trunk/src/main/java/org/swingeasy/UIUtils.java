@@ -105,16 +105,11 @@ public class UIUtils {
         ex.printStackTrace();
     }
 
-    private static void log(String string) {
-        System.err.println(string);
-    }
-
     public static void lookAndFeel() {
         try {
             try {
                 UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel"); //$NON-NLS-1$
             } catch (Exception ex) {
-                UIUtils.log(String.valueOf(ex));
                 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
             }
         } catch (Exception ex) {
