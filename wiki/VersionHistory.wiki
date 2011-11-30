@@ -2,13 +2,13 @@
 
 = Version History =
 
- * 0.1.0
+ * 0.1.0 (deprecated)
   * initial release of ETable
   * initial release of UIUtils
- * 0.2.0
+ * 0.2.0 (deprecated)
   * initial release of EventHelper and EventModifier
   * initial release of NonBlockingGlassPane
- * 0.3.0
+ * 0.3.0 (deprecated)
   * initial release of EComboBox
   * fixed eventthread-safe methods
  * 1.0.0
@@ -23,7 +23,8 @@
   * initial release of ETree
   * initial release of ECheckBoxTree
   * initial release of ProgressGlassPane
- * 1.2.0
+ * 1.2.0 (deprecated)
   * UIUtils: additional methods
  * 1.3.0
   * initial release of ETreeTable
+  * UIUtils: renamed method (look-and-feel) breaks backwards compatibility
