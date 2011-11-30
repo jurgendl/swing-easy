@@ -6,7 +6,7 @@
   * initial release of ETable
   * initial release of UIUtils
  * 0.2.0
-  * initial release of EventHelper & EventModifier
+  * initial release of EventHelper and EventModifier
   * initial release of NonBlockingGlassPane
  * 0.3.0
   * initial release of EComboBox
