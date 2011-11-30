@@ -28,7 +28,7 @@ public class TableDemo {
 
     public static void main(String[] args) {
         try {
-            UIUtils.lookAndFeel();
+            UIUtils.niceLookAndFeel();
             ETableConfig configuration = new ETableConfig(true);
             configuration.setVertical(true);
             final ETable table = new ETable(configuration);

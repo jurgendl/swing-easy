@@ -12,12 +12,16 @@ import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 
 /**
  * @see http://java.sun.com/developer/technicalArticles/GUI/translucent_shaped_windows/
  */
 public class UIUtils {
+    /**
+     * {@link MouseListener} that moves around a {@link Window} when dragged
+     */
     public static class MoveMouseListener implements MouseListener, MouseMotionListener {
         Point start_drag;
 
@@ -92,6 +96,36 @@ public class UIUtils {
         }
     }
 
+    /**
+     * interface UncaughtExceptionHandler
+     */
+    public static interface UncaughtExceptionHandler {
+        public void handle(Throwable t);
+    }
+
+    /**
+     * UncaughtExceptionHandler delegating to given instance
+     */
+    public static class UncaughtExceptionHandlerDelegate implements UncaughtExceptionHandler {
+        private static UncaughtExceptionHandler delegate;
+
+        public UncaughtExceptionHandlerDelegate() {
+            super();
+        }
+
+        /**
+         * 
+         * @see org.swingeasy.UIUtils.UncaughtExceptionHandler#handle(java.lang.Throwable)
+         */
+        @Override
+        public void handle(Throwable t) {
+            UncaughtExceptionHandlerDelegate.delegate.handle(t);
+        }
+    }
+
+    /**
+     * gets first displayable {@link JFrame}
+     */
     public static JFrame getCurrentFrame() {
         for (Frame frame : Frame.getFrames()) {
             if ((frame instanceof JFrame) && frame.isDisplayable()) {
@@ -101,11 +135,17 @@ public class UIUtils {
         return null;
     }
 
-    private static void log(Exception ex) {
+    /**
+     * prints exception to system error outputstream
+     */
+    private static void log(Throwable ex) {
         ex.printStackTrace();
     }
 
-    public static void lookAndFeel() {
+    /**
+     * activate Nimbus look and feel or system look and feel if not java 1.7 (7) or higher
+     */
+    public static void niceLookAndFeel() {
         try {
             try {
                 UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel"); //$NON-NLS-1$
@@ -117,6 +157,64 @@ public class UIUtils {
         }
     }
 
+    /**
+     * register default uncaught exception handler thats logs exceptions to system error outputstream and quits only if Error
+     */
+    public static void registerDefaultUncaughtExceptionHandler() {
+        UIUtils.registerUncaughtExceptionHandler(new UncaughtExceptionHandler() {
+            @Override
+            public void handle(Throwable t) {
+                try {
+                    UIUtils.log(t);
+                    // insert your exception handling code here
+                    // or do nothing to make it go away
+                } catch (Exception tt) {
+                    // don't let the exception get thrown out, will cause infinite looping!
+                } catch (Throwable tt) {
+                    System.exit(-1);
+                }
+            }
+        });
+    }
+
+    /**
+     * register uncaught exception handler
+     */
+    public static void registerUncaughtExceptionHandler(Class<? extends UncaughtExceptionHandler> clazz) {
+        try {
+            UIUtils.registerUncaughtExceptionHandler(clazz.newInstance());
+        } catch (InstantiationException ex) {
+            throw new IllegalArgumentException(ex);
+        } catch (IllegalAccessException ex) {
+            throw new IllegalArgumentException(ex);
+        }
+    }
+
+    /**
+     * register uncaught exception handler
+     */
+    @SuppressWarnings("unchecked")
+    public static void registerUncaughtExceptionHandler(String className) {
+        Class<? extends UncaughtExceptionHandler> instance;
+        try {
+            instance = (Class<? extends UncaughtExceptionHandler>) Class.forName(className);
+        } catch (ClassNotFoundException ex) {
+            throw new IllegalArgumentException(ex);
+        }
+        UIUtils.registerUncaughtExceptionHandler(instance);
+    }
+
+    /**
+     * register uncaught exception handler
+     */
+    public static void registerUncaughtExceptionHandler(UncaughtExceptionHandler handler) {
+        UncaughtExceptionHandlerDelegate.delegate = handler;
+        System.setProperty("sun.awt.exception.handler", UncaughtExceptionHandlerDelegate.class.getName());
+    }
+
+    /**
+     * sets rounded borders with arc of 20
+     */
     public static void rounded(Window w) {
         if (AWTUtilitiesWrapper.isTranslucencySupported(AWTUtilitiesWrapper.PERPIXEL_TRANSPARENT)) {
             try {
@@ -128,10 +226,26 @@ public class UIUtils {
         }
     }
 
+    /**
+     * (re-)shows tooltips earlier (10 milliseconds) and longer (20 seconds)
+     */
+    public static void setLongerTooltips() {
+        ToolTipManager sharedInstance = ToolTipManager.sharedInstance();
+        sharedInstance.setReshowDelay(10);
+        sharedInstance.setInitialDelay(10);
+        sharedInstance.setDismissDelay(20000);
+    }
+
+    /**
+     * sets translucency with default value of .93
+     */
     public static void translucent(Window w) {
         UIUtils.translucent(w, .93f);
     }
 
+    /**
+     * sets window translucency value
+     */
     @SuppressWarnings("restriction")
     public static void translucent(Window w, Float f) {
         if (AWTUtilitiesWrapper.isTranslucencySupported(com.sun.awt.AWTUtilities.Translucency.TRANSLUCENT)) {
