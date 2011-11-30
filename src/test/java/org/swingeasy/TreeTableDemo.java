@@ -5,8 +5,9 @@ import java.util.Arrays;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
+
+import org.swingeasy.ETreeTable.CheckMode;
 
 /**
  * @author Jurgen
@@ -15,6 +16,7 @@ public class TreeTableDemo {
     public static void main(String[] args) {
         try {
             UIUtils.niceLookAndFeel();
+
             final JFrame frame = new JFrame();
             frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -38,16 +40,12 @@ public class TreeTableDemo {
             ETreeTableRecordNode child6 = new ETreeTableRecordNode(Arrays.asList(new Object[] { "61", "62", "63" }));
             child4.add(child6);
 
-            ETreeTable treetable = new ETreeTable(new ETreeTableModel(root, new ETreeTableHeaders("col1", "col2", "col3")));
+            final ETreeTable treetable = new ETreeTable(new ETreeTableModel(root, new ETreeTableHeaders("col1", "col2", "col3")));
+            treetable.setCheckMode(CheckMode.NODE_AND_CHILDREN);
 
             frame.getContentPane().add(new JScrollPane(treetable), BorderLayout.CENTER);
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    frame.setSize(400, 200);
-                    frame.setVisible(true);
-                }
-            });
+            frame.setSize(400, 200);
+            frame.setVisible(true);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
