@@ -208,6 +208,10 @@ public class ETreeTableModel implements TableModel, TreeModel {
         return this.rows.size();
     }
 
+    public int getRowIndex(ETreeTableRecordNode node) {
+        return this.rows.indexOf(node);
+    }
+
     /**
      * 
      * @see javax.swing.table.TableModel#getValueAt(int, int)

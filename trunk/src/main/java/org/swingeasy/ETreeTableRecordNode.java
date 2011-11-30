@@ -17,6 +17,8 @@ public class ETreeTableRecordNode implements Iterable<ETreeTableRecordNode> {
 
     protected final List values = new ArrayList();
 
+    protected boolean selected = true;
+
     public ETreeTableRecordNode() {
         this.setValues(Collections.singletonList("ROOT"));
     }
@@ -63,6 +65,10 @@ public class ETreeTableRecordNode implements Iterable<ETreeTableRecordNode> {
         return this.getChildren().indexOf(child);
     }
 
+    public ETreeTableRecordNode getParent() {
+        return this.parent;
+    }
+
     public Object getValue(int columnIndex) {
         return this.getValues().get(columnIndex);
     }
@@ -70,6 +76,10 @@ public class ETreeTableRecordNode implements Iterable<ETreeTableRecordNode> {
     // init
     public List getValues() {
         return Collections.unmodifiableList(this.values);
+    }
+
+    public boolean isSelected() {
+        return this.selected;
     }
 
     /**
@@ -88,6 +98,10 @@ public class ETreeTableRecordNode implements Iterable<ETreeTableRecordNode> {
         }
         this.children.remove(child);
         child.parent = null;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
     // write access

@@ -61,8 +61,7 @@ public class ETreeTableCellRenderer extends JTree implements TableCellRenderer {
     public void paint(Graphics g) {
         // paints currentrow of tree to tablecell; rowheight has to be fixed
         g.translate(0, -this.currentRow * this.getRowHeight());
-
-        super.paint(g);
+        this.super_paint(g);
     }
 
     /**
@@ -84,6 +83,14 @@ public class ETreeTableCellRenderer extends JTree implements TableCellRenderer {
                 this.eTreeTable.setRowHeight(this.getRowHeight());
             }
         }
+    }
+
+    /**
+     * 
+     * @see javax.swing.JComponent#paint(java.awt.Graphics)
+     */
+    public void super_paint(Graphics g) {
+        super.paint(g);
     }
 
     /**
