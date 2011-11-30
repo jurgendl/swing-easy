@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 
 public class ComboBoxDemo {
     public static void main(String[] args) {
-        UIUtils.lookAndFeel();
+        UIUtils.niceLookAndFeel();
         EComboBoxConfig cfg = new EComboBoxConfig();
         cfg.setSortable(true);
         EComboBox<String> cc = new EComboBox<String>(cfg);

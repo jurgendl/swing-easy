@@ -31,7 +31,7 @@ public class GlassPaneDemo {
 
     public static void main(String[] args) {
         try {
-            UIUtils.lookAndFeel();
+            UIUtils.niceLookAndFeel();
             final JFrame frame = new JFrame();
             final ProgressGlassPane glassPane = new ProgressGlassPane(frame);
             {

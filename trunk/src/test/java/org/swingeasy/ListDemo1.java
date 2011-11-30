@@ -14,7 +14,7 @@ import javax.swing.ScrollPaneConstants;
 public class ListDemo1 {
     @SuppressWarnings("unchecked")
     public static void main(String[] args) {
-        UIUtils.lookAndFeel();
+        UIUtils.niceLookAndFeel();
         EListConfig cfg = new EListConfig();
         cfg.setSortable(true);
         EList<Integer> cc = new EList<Integer>(cfg);
