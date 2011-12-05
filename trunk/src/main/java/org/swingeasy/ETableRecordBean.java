@@ -9,6 +9,8 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
+ * requires commons-beanutils-core
+ * 
  * @author Jurgen
  */
 public class ETableRecordBean<T> implements ETableRecord<T> {
