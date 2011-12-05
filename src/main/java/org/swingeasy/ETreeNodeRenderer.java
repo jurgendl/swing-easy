@@ -5,6 +5,9 @@ import java.awt.Component;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
+/**
+ * @author Jurgen
+ */
 public class ETreeNodeRenderer extends DefaultTreeCellRenderer {
     private static final long serialVersionUID = 157224120324383687L;
 

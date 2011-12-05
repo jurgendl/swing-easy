@@ -8,6 +8,9 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
+/**
+ * @author Jurgen
+ */
 public class TreeDemo {
     private static class DummyNode extends ETreeNode<String> {
         private static final long serialVersionUID = 4389106694997553842L;
