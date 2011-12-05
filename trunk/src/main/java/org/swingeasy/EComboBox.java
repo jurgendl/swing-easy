@@ -171,7 +171,12 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T> {
      */
     @SuppressWarnings("unchecked")
     public EComboBox<T> getSimpleThreadSafeInterface() {
-        return EventThreadSafeWrapper.getSimpleThreadSafeInterface(EComboBox.class, this, EComboBoxI.class);
+        try {
+            return EventThreadSafeWrapper.getSimpleThreadSafeInterface(EComboBox.class, this, EComboBoxI.class);
+        } catch (Exception ex) {
+            System.err.println(ex);
+            return this; // no javassist
+        }
     }
 
     /**

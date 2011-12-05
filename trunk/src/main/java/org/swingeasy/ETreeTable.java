@@ -42,7 +42,6 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI {
         this.getColumn(this.getColumnName(0)).setCellRenderer(this.tree);
         this.setIntercellSpacing(new Dimension(0, 0));
         this.setRowHeight(18);
-        this.tree.setRowHeight(18);
         this.addMouseListener(this);
     }
 
@@ -87,7 +86,12 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI {
      * @return
      */
     public ETreeTableI getSimpleThreadSafeInterface() {
-        return EventThreadSafeWrapper.getSimpleThreadSafeInterface(ETreeTable.class, this, ETreeTableI.class);
+        try {
+            return EventThreadSafeWrapper.getSimpleThreadSafeInterface(ETreeTable.class, this, ETreeTableI.class);
+        } catch (Exception ex) {
+            System.err.println(ex);
+            return this; // no javassist
+        }
     }
 
     /**
@@ -232,6 +236,16 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI {
         }
 
         this.repaint();
+    }
+
+    /**
+     * 
+     * @see javax.swing.JTable#setRowHeight(int)
+     */
+    @Override
+    public void setRowHeight(int rowHeight) {
+        super.setRowHeight(rowHeight);
+        this.tree.setRowHeight(18);
     }
 
     /**
