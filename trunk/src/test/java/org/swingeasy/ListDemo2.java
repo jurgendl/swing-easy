@@ -8,6 +8,9 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+/**
+ * @author Jurgen
+ */
 public class ListDemo2 {
     @SuppressWarnings("unchecked")
     public static void main(String[] args) {

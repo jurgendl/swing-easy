@@ -7,6 +7,9 @@ import java.util.Random;
 
 import javax.swing.JFrame;
 
+/**
+ * @author Jurgen
+ */
 public class ComboBoxDemo {
     public static void main(String[] args) {
         UIUtils.niceLookAndFeel();

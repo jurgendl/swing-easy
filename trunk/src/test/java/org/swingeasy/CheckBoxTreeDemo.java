@@ -7,6 +7,9 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
+/**
+ * @author Jurgen
+ */
 public class CheckBoxTreeDemo {
     public static void main(String[] args) {
         try {

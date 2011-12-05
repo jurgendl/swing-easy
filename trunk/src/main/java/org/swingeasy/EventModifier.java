@@ -1,11 +1,9 @@
 package org.swingeasy;
 
 /**
- * 
  * see {@link EventHelper}
  * 
  * @author Jurgen
- * 
  */
 public enum EventModifier {
     NONE_DOWN(0), //

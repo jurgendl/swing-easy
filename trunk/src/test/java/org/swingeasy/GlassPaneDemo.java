@@ -14,6 +14,9 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+/**
+ * @author Jurgen
+ */
 public class GlassPaneDemo {
     private static JSlider addSlider(int min, int max, int value, int major, Integer minor, JPanel panel) {
         final JSlider jslider = new JSlider(min, max, value);
