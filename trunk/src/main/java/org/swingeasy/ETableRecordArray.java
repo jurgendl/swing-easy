@@ -1,12 +1,18 @@
 package org.swingeasy;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
  * @author Jurgen
  */
 public class ETableRecordArray implements ETableRecord<Object[]> {
     protected Object[] array;
+
+    protected final Map<Integer, Object> originalValues = new HashMap<Integer, Object>();
 
     public ETableRecordArray(Object... o) {
         this.array = o;
@@ -51,10 +57,24 @@ public class ETableRecordArray implements ETableRecord<Object[]> {
 
     /**
      * 
+     * @see org.swingeasy.ETableRecord#hasChanged(int)
+     */
+    @Override
+    public boolean hasChanged(int column) {
+        Object ov = this.originalValues.get(column);
+        return (ov != null) && !new EqualsBuilder().append(ov, this.get(column)).isEquals();
+    }
+
+    /**
+     * 
      * @see org.swingeasy.ETableRecord#set(int, java.lang.Object)
      */
     @Override
     public void set(int column, Object newValue) {
+        if (this.originalValues.get(column) == null) {
+            Object ov = this.get(column);
+            this.originalValues.put(column, ov == null ? Void.TYPE : ov);
+        }
         this.array[column] = newValue;
     }
 

@@ -12,6 +12,8 @@ public interface ETableRecord<T> {
 
     public abstract String getTooltip(int column);
 
+    public abstract boolean hasChanged(int column);
+
     public abstract void set(int column, Object newValue);
 
     public abstract int size();
