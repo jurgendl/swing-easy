@@ -120,11 +120,10 @@ public class EList<T> extends JList implements EListI<T> {
         this.filtercomponent = null;
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     public EList(EListConfig cfg) {
         super(EList.createModel(cfg.lock()));
         this.cfg = cfg;
-        @SuppressWarnings("rawtypes")
         EListModel elistModel = EListModel.class.cast(this.getModel());
         this.records = elistModel.source;
         this.filtercomponent = elistModel.filtercomponent;
