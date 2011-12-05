@@ -52,7 +52,12 @@ public class ECheckBoxTree<T> extends JTree implements ECheckBoxTreeI<T> {
      */
     @SuppressWarnings("unchecked")
     public ECheckBoxTreeI<T> getSimpleThreadSafeInterface() {
-        return EventThreadSafeWrapper.getSimpleThreadSafeInterface(ECheckBoxTree.class, this, ECheckBoxTreeI.class);
+        try {
+            return EventThreadSafeWrapper.getSimpleThreadSafeInterface(ECheckBoxTree.class, this, ECheckBoxTreeI.class);
+        } catch (Exception ex) {
+            System.err.println(ex);
+            return this; // no javassist
+        }
     }
 
     /**

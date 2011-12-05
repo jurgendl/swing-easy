@@ -208,7 +208,12 @@ public class EList<T> extends JList implements EListI<T> {
      */
     @SuppressWarnings("unchecked")
     public EList<T> getSimpleThreadSafeInterface() {
-        return EventThreadSafeWrapper.getSimpleThreadSafeInterface(EList.class, this, EListI.class);
+        try {
+            return EventThreadSafeWrapper.getSimpleThreadSafeInterface(EList.class, this, EListI.class);
+        } catch (Exception ex) {
+            System.err.println(ex);
+            return this; // no javassist
+        }
     }
 
     /**

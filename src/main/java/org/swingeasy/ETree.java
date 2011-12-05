@@ -36,7 +36,12 @@ public class ETree<T> extends JTree implements ETreeI<T> {
      */
     @SuppressWarnings("unchecked")
     public ETreeI<T> getSimpleThreadSafeInterface() {
-        return EventThreadSafeWrapper.getSimpleThreadSafeInterface(ETree.class, this, ETreeI.class);
+        try {
+            return EventThreadSafeWrapper.getSimpleThreadSafeInterface(ETree.class, this, ETreeI.class);
+        } catch (Exception ex) {
+            System.err.println(ex);
+            return this; // no javassist
+        }
     }
 
     /**
