@@ -3,7 +3,7 @@ package org.swingeasy;
 /**
  * @author Jurgen
  */
-public class EListConfig {
+public class EListConfig extends EConfig {
     protected boolean threadSafe = true;
 
     protected boolean sortable = true;

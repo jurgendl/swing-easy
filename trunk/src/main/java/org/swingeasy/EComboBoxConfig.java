@@ -3,7 +3,7 @@ package org.swingeasy;
 /**
  * @author Jurgen
  */
-public class EComboBoxConfig {
+public class EComboBoxConfig extends EConfig {
     protected boolean autoComplete = true;
 
     protected boolean threadSafe = true;

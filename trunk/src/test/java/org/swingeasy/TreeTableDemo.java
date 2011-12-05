@@ -40,7 +40,7 @@ public class TreeTableDemo {
             ETreeTableRecordNode child6 = new ETreeTableRecordNode(Arrays.asList(new Object[] { "61", "62", "63" }));
             child4.add(child6);
 
-            final ETreeTable treetable = new ETreeTable(new ETreeTableModel(root, new ETreeTableHeaders("col1", "col2", "col3")));
+            final ETreeTable treetable = new ETreeTable(root, new ETreeTableHeaders("col1", "col2", "col3"));
             treetable.setCheckMode(CheckMode.NODE_AND_CHILDREN);
 
             frame.getContentPane().add(new JScrollPane(treetable), BorderLayout.CENTER);

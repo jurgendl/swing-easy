@@ -3,7 +3,7 @@ package org.swingeasy;
 /**
  * @author Jurgen
  */
-public class ETableConfig {
+public class ETableConfig extends EConfig {
     protected boolean threadSafe = true;
 
     protected boolean sortable;

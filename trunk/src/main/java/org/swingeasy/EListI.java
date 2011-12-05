@@ -9,7 +9,7 @@ import ca.odell.glazedlists.EventList;
  * 
  * @param <T>
  */
-public interface EListI<T> {
+public interface EListI<T> extends EComponentI {
     public abstract void addRecord(EListRecord<T> EListRecord);
 
     public abstract void addRecords(Collection<EListRecord<T>> EListRecords);
