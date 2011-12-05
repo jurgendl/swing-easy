@@ -2,7 +2,11 @@ package org.swingeasy;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.builder.EqualsBuilder;
 
 /**
  * @author Jurgen
@@ -10,6 +14,8 @@ import java.util.List;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class ETableRecordCollection implements ETableRecord<List> {
     protected List collection;
+
+    protected final Map<Integer, Object> originalValues = new HashMap<Integer, Object>();
 
     public ETableRecordCollection() {
         this.collection = new ArrayList();
@@ -66,10 +72,24 @@ public class ETableRecordCollection implements ETableRecord<List> {
 
     /**
      * 
+     * @see org.swingeasy.ETableRecord#hasChanged(int)
+     */
+    @Override
+    public boolean hasChanged(int column) {
+        Object ov = this.originalValues.get(column);
+        return (ov != null) && !new EqualsBuilder().append(ov, this.get(column)).isEquals();
+    }
+
+    /**
+     * 
      * @see org.swingeasy.ETableRecord#set(int, java.lang.Object)
      */
     @Override
     public void set(int column, Object newValue) {
+        if (this.originalValues.get(column) == null) {
+            Object ov = this.get(column);
+            this.originalValues.put(column, ov == null ? Void.TYPE : ov);
+        }
         this.collection.set(column, newValue);
     }
 

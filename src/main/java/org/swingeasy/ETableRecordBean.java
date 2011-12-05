@@ -16,9 +16,9 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 public class ETableRecordBean<T> implements ETableRecord<T> {
     protected T object;
 
-    private List<String> orderedFields;
+    protected List<String> orderedFields;
 
-    private final Map<String, Object> originalValues = new HashMap<String, Object>();
+    protected final Map<String, Object> originalValues = new HashMap<String, Object>();
 
     public ETableRecordBean(List<String> orderedFields, T o) {
         this.object = o;
@@ -74,8 +74,14 @@ public class ETableRecordBean<T> implements ETableRecord<T> {
         return this.getStringValue(column);
     }
 
-    public boolean hasChanged(String property) {
+    /**
+     * 
+     * @see org.swingeasy.ETableRecord#hasChanged(int)
+     */
+    @Override
+    public boolean hasChanged(int column) {
         try {
+            String property = this.orderedFields.get(column);
             Object ov = this.originalValues.get(property);
             return (ov != null) && !new EqualsBuilder().append(ov, PropertyUtils.getProperty(this.object, property)).isEquals();
         } catch (IllegalAccessException ex) {
