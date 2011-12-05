@@ -1,6 +1,7 @@
 package org.swingeasy;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -27,9 +28,8 @@ public class ETreeTableRecordNode implements Iterable<ETreeTableRecordNode> {
         this.setValues(values);
     }
 
-    public ETreeTableRecordNode(List values, List<ETreeTableRecordNode> children) {
-        this.setValues(values);
-        this.addAll(children);
+    public ETreeTableRecordNode(Object[] values) {
+        this(Arrays.asList(values));
     }
 
     // write access

@@ -15,6 +15,9 @@ public class ETree<T> extends JTree implements ETreeI<T> {
 
     public ETree(ETreeConfig cfg, ETreeNode<T> rootNode) {
         super(new javax.swing.tree.DefaultTreeModel(rootNode, true));
+
+        cfg.lock();
+
         this.setShowsRootHandles(true);
         this.setRootVisible(true);
 

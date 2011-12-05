@@ -22,6 +22,8 @@ public class ECheckBoxTree<T> extends JTree implements ECheckBoxTreeI<T> {
     public ECheckBoxTree(ECheckBoxTreeConfig cfg, ECheckBoxTreeNode<T> root) {
         super(root);
 
+        cfg.lock();
+
         this.setCellRenderer(new ECheckBoxTreeNodeRenderer());
 
         this.addMouseListener(new MouseAdapter() {
