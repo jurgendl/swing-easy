@@ -17,7 +17,7 @@ import org.apache.commons.lang.StringUtils;
 /**
  * @author Jurgen
  */
-public class ETreeTable extends JTable implements MouseListener {
+public class ETreeTable extends JTable implements MouseListener, ETreeTableI {
     public static enum CheckMode {
         NONE, NODE, NODE_AND_PARENTS, NODE_AND_CHILDREN;
     }
@@ -30,7 +30,11 @@ public class ETreeTable extends JTable implements MouseListener {
 
     protected CheckMode checkMode = CheckMode.NONE;
 
-    public ETreeTable(final ETreeTableModel model) {
+    protected ETreeTable() {
+        this(new ETreeTableRecordNode(), new ETreeTableHeaders());
+    }
+
+    protected ETreeTable(ETreeTableConfig cfg, final ETreeTableModel model) {
         super(model);
         this.model = model;
         this.model.parent = this;
@@ -40,6 +44,14 @@ public class ETreeTable extends JTable implements MouseListener {
         this.setRowHeight(18);
         this.tree.setRowHeight(18);
         this.addMouseListener(this);
+    }
+
+    public ETreeTable(ETreeTableConfig cfg, ETreeTableRecordNode root, ETreeTableHeaders headers) {
+        this(cfg, new ETreeTableModel(root, headers));
+    }
+
+    public ETreeTable(ETreeTableRecordNode root, ETreeTableHeaders headers) {
+        this(new ETreeTableConfig(), root, headers);
     }
 
     /**
@@ -67,6 +79,15 @@ public class ETreeTable extends JTable implements MouseListener {
 
     public CheckMode getCheckMode() {
         return this.checkMode;
+    }
+
+    /**
+     * JDOC
+     * 
+     * @return
+     */
+    public ETreeTableI getSimpleThreadSafeInterface() {
+        return EventThreadSafeWrapper.getSimpleThreadSafeInterface(ETreeTable.class, this, ETreeTableI.class);
     }
 
     /**
@@ -211,6 +232,20 @@ public class ETreeTable extends JTable implements MouseListener {
         }
 
         this.repaint();
+    }
+
+    /**
+     * @see #getSimpleThreadSafeInterface()
+     */
+    public ETreeTableI stsi() {
+        return this.getSimpleThreadSafeInterface();
+    }
+
+    /**
+     * @see #getSimpleThreadSafeInterface()
+     */
+    public ETreeTableI STSI() {
+        return this.getSimpleThreadSafeInterface();
     }
 
     /**

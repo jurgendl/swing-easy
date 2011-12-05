@@ -7,7 +7,7 @@ import ca.odell.glazedlists.EventList;
 /**
  * @author Jurgen
  */
-public interface EComboBoxI<T> {
+public interface EComboBoxI<T> extends EComponentI {
     public abstract void activateAutoCompletion();
 
     public abstract void activateScrolling();

@@ -7,7 +7,7 @@ import java.util.List;
  * @author Jurgen
  */
 @SuppressWarnings("rawtypes")
-public interface ETableI {
+public interface ETableI extends EComponentI {
     public abstract void addRecord(final ETableRecord record);
 
     public abstract void addRecords(final Collection<ETableRecord> records);

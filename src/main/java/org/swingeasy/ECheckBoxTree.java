@@ -11,10 +11,15 @@ import javax.swing.tree.TreePath;
 /**
  * @author Jurgen
  */
-public class ECheckBoxTree<T> extends JTree {
+public class ECheckBoxTree<T> extends JTree implements ECheckBoxTreeI<T> {
     private static final long serialVersionUID = 6378784816121886802L;
 
-    public ECheckBoxTree(ECheckBoxTreeNode<T> root) {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    protected ECheckBoxTree() {
+        super(new ECheckBoxTreeNode("root"));
+    }
+
+    public ECheckBoxTree(ECheckBoxTreeConfig cfg, ECheckBoxTreeNode<T> root) {
         super(root);
 
         this.setCellRenderer(new ECheckBoxTreeNodeRenderer());
@@ -34,5 +39,33 @@ public class ECheckBoxTree<T> extends JTree {
         this.setEditable(false);
 
         ToolTipManager.sharedInstance().registerComponent(this);
+    }
+
+    public ECheckBoxTree(ECheckBoxTreeNode<T> root) {
+        this(new ECheckBoxTreeConfig(), root);
+    }
+
+    /**
+     * JDOC
+     * 
+     * @return
+     */
+    @SuppressWarnings("unchecked")
+    public ECheckBoxTreeI<T> getSimpleThreadSafeInterface() {
+        return EventThreadSafeWrapper.getSimpleThreadSafeInterface(ECheckBoxTree.class, this, ECheckBoxTreeI.class);
+    }
+
+    /**
+     * @see #getSimpleThreadSafeInterface()
+     */
+    public ECheckBoxTreeI<T> stsi() {
+        return this.getSimpleThreadSafeInterface();
+    }
+
+    /**
+     * @see #getSimpleThreadSafeInterface()
+     */
+    public ECheckBoxTreeI<T> STSI() {
+        return this.getSimpleThreadSafeInterface();
     }
 }
