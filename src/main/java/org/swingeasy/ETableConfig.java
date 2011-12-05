@@ -3,14 +3,12 @@ package org.swingeasy;
 /**
  * @author Jurgen
  */
-public class ETableConfig extends EConfig {
+public class ETableConfig extends EComponentConfig<ETableConfig> {
     protected boolean threadSafe = true;
 
     protected boolean sortable;
 
     protected boolean filterable;
-
-    protected boolean locked;
 
     protected boolean editable;
 
@@ -58,10 +56,6 @@ public class ETableConfig extends EConfig {
         return this.filterable;
     }
 
-    public boolean isLocked() {
-        return this.locked;
-    }
-
     public boolean isReorderable() {
         return this.reorderable;
     }
@@ -82,10 +76,6 @@ public class ETableConfig extends EConfig {
         return this.vertical;
     }
 
-    public void lock() {
-        this.setLocked(true);
-    }
-
     public void setDraggable(boolean draggable) {
         this.draggable = draggable;
     }
@@ -95,48 +85,32 @@ public class ETableConfig extends EConfig {
     }
 
     public void setFilterable(boolean filterable) {
-        if (this.isLocked()) {
-            throw new IllegalArgumentException();
-        }
+        this.lockCheck();
         this.filterable = filterable;
     }
 
-    private void setLocked(boolean locked) {
-        this.locked = locked;
-    }
-
     public void setReorderable(boolean reorderable) {
-        if (this.isLocked()) {
-            throw new IllegalArgumentException();
-        }
+        this.lockCheck();
         this.reorderable = reorderable;
     }
 
     public void setResizable(boolean resizable) {
-        if (this.isLocked()) {
-            throw new IllegalArgumentException();
-        }
+        this.lockCheck();
         this.resizable = resizable;
     }
 
     public void setSortable(boolean sortable) {
-        if (this.isLocked()) {
-            throw new IllegalArgumentException();
-        }
+        this.lockCheck();
         this.sortable = sortable;
     }
 
     public void setThreadSafe(boolean threadSafe) {
-        if (this.isLocked()) {
-            throw new IllegalArgumentException();
-        }
+        this.lockCheck();
         this.threadSafe = threadSafe;
     }
 
     public void setVertical(boolean vertical) {
-        if (this.isLocked()) {
-            throw new IllegalArgumentException();
-        }
+        this.lockCheck();
         this.vertical = vertical;
     }
 }

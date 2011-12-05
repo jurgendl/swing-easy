@@ -3,12 +3,10 @@ package org.swingeasy;
 /**
  * @author Jurgen
  */
-public class EListConfig extends EConfig {
+public class EListConfig extends EComponentConfig<EListConfig> {
     protected boolean threadSafe = true;
 
     protected boolean sortable = true;
-
-    protected boolean locked;
 
     protected boolean filterable = false;
 
@@ -20,10 +18,6 @@ public class EListConfig extends EConfig {
         return this.filterable;
     }
 
-    public boolean isLocked() {
-        return this.locked;
-    }
-
     public boolean isSortable() {
         return this.sortable;
     }
@@ -32,33 +26,18 @@ public class EListConfig extends EConfig {
         return this.threadSafe;
     }
 
-    public EListConfig lock() {
-        this.setLocked(true);
-        return this;
-    }
-
     public void setFilterable(boolean filterable) {
-        if (this.isLocked()) {
-            throw new IllegalArgumentException();
-        }
+        this.lockCheck();
         this.filterable = filterable;
     }
 
-    private void setLocked(boolean locked) {
-        this.locked = locked;
-    }
-
     public void setSortable(boolean sortable) {
-        if (this.isLocked()) {
-            throw new IllegalArgumentException();
-        }
+        this.lockCheck();
         this.sortable = sortable;
     }
 
     public void setThreadSafe(boolean threadSafe) {
-        if (this.isLocked()) {
-            throw new IllegalArgumentException();
-        }
+        this.lockCheck();
         this.threadSafe = threadSafe;
     }
 }

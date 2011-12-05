@@ -36,6 +36,9 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI {
 
     protected ETreeTable(ETreeTableConfig cfg, final ETreeTableModel model) {
         super(model);
+
+        cfg.lock();
+
         this.model = model;
         this.model.parent = this;
         this.tree = new ETreeTableCellRenderer(this, model);

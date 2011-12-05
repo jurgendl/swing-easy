@@ -26,7 +26,7 @@ public class ColorTableCellRenderer extends DefaultTableCellRenderer.UIResource 
         BufferedImage bi = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = bi.createGraphics();
         g2d.setColor(color);
-        g2d.fillRoundRect(0, 0, 16, 16, 4, 4);
+        g2d.fillRoundRect(0, 0, 14, 14, 4, 4);
         return new ImageIcon(bi);
     }
 
