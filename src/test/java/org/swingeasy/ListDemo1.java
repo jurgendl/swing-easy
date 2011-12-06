@@ -20,6 +20,7 @@ public class ListDemo1 {
         UIUtils.niceLookAndFeel();
         EListConfig cfg = new EListConfig();
         cfg.setSortable(true);
+        cfg.setFilterable(true);
         EList<Integer> cc = new EList<Integer>(cfg);
         JFrame f = new JFrame();
         {
