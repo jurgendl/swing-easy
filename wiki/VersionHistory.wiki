@@ -5,8 +5,12 @@
 latest change: 2011-12-07
 
 featured: downloads are available on the frontpage
+
 deprecated: downloads are not available, version should not be used
+
 not released: downloads are not available yet, only available by checking out the source repository
+
+major version changes (first number) are possibly not backwards compatible!
 
  * 0.1.0 (deprecated)
   * initial release of ETable
