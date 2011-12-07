@@ -9,12 +9,12 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 /**
  * @author Jurgen
  */
-public class ETableRecordArray implements ETableRecord<Object[]> {
-    protected Object[] array;
+public class ETableRecordArray<E> implements ETableRecord<E[]> {
+    protected E[] array;
 
-    protected final Map<Integer, Object> originalValues = new HashMap<Integer, Object>();
+    protected final Map<Integer, E> originalValues = new HashMap<Integer, E>();
 
-    public ETableRecordArray(Object... o) {
+    public ETableRecordArray(E... o) {
         this.array = o;
     }
 
@@ -32,7 +32,7 @@ public class ETableRecordArray implements ETableRecord<Object[]> {
      * @see org.swingeasy.ETableRecord#getBean()
      */
     @Override
-    public Object[] getBean() {
+    public E[] getBean() {
         return this.array;
     }
 
@@ -69,13 +69,14 @@ public class ETableRecordArray implements ETableRecord<Object[]> {
      * 
      * @see org.swingeasy.ETableRecord#set(int, java.lang.Object)
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void set(int column, Object newValue) {
         if (this.originalValues.get(column) == null) {
             Object ov = this.get(column);
-            this.originalValues.put(column, ov == null ? Void.TYPE : ov);
+            this.originalValues.put(column, (E) (ov == null ? Void.TYPE : ov));
         }
-        this.array[column] = newValue;
+        this.array[column] = (E) newValue;
     }
 
     /**
