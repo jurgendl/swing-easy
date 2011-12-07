@@ -13,7 +13,7 @@ import ca.odell.glazedlists.gui.WritableTableFormat;
  * @author Jurgen
  */
 @SuppressWarnings("rawtypes")
-public class ETableHeaders implements WritableTableFormat<ETableRecord>, AdvancedTableFormat<ETableRecord> {
+public class ETableHeaders<T> implements WritableTableFormat<ETableRecord<T>>, AdvancedTableFormat<ETableRecord<T>> {
     protected final List<String> columnNames = new Vector<String>();
 
     protected final List<Class> columnClasses = new Vector<Class>();
