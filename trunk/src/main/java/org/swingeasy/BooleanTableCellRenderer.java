@@ -5,6 +5,7 @@ import java.awt.Component;
 
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 
 /**
@@ -17,6 +18,7 @@ public class BooleanTableCellRenderer extends DefaultTableCellRenderer {
 
     public BooleanTableCellRenderer() {
         this.renderer = new JCheckBox();
+        this.renderer.setHorizontalAlignment(SwingConstants.CENTER);
     }
 
     @Override
