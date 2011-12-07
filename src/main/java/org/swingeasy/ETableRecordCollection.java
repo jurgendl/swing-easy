@@ -11,25 +11,25 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 /**
  * @author Jurgen
  */
-@SuppressWarnings({ "unchecked", "rawtypes" })
-public class ETableRecordCollection implements ETableRecord<List> {
-    protected List collection;
+
+public class ETableRecordCollection<E> implements ETableRecord<List<E>> {
+    protected List<E> collection;
 
     protected final Map<Integer, Object> originalValues = new HashMap<Integer, Object>();
 
     public ETableRecordCollection() {
-        this.collection = new ArrayList();
+        this.collection = new ArrayList<E>();
     }
 
-    public ETableRecordCollection(Collection o) {
-        this.collection = new ArrayList(o);
+    public ETableRecordCollection(Collection<E> o) {
+        this.collection = new ArrayList<E>(o);
     }
 
-    public ETableRecordCollection(List o) {
-        this.collection = List.class.cast(o);
+    public ETableRecordCollection(List<E> o) {
+        this.collection = o;
     }
 
-    public void add(Object item) {
+    public void add(E item) {
         this.collection.add(item);
     }
 
@@ -47,7 +47,7 @@ public class ETableRecordCollection implements ETableRecord<List> {
      * @see org.swingeasy.ETableRecord#getBean()
      */
     @Override
-    public List getBean() {
+    public List<E> getBean() {
         return this.collection;
     }
 
@@ -84,13 +84,14 @@ public class ETableRecordCollection implements ETableRecord<List> {
      * 
      * @see org.swingeasy.ETableRecord#set(int, java.lang.Object)
      */
+    @SuppressWarnings("unchecked")
     @Override
     public void set(int column, Object newValue) {
         if (this.originalValues.get(column) == null) {
             Object ov = this.get(column);
             this.originalValues.put(column, ov == null ? Void.TYPE : ov);
         }
-        this.collection.set(column, newValue);
+        this.collection.set(column, (E) newValue);
     }
 
     /**
