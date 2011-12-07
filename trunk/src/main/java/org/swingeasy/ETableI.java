@@ -6,11 +6,10 @@ import java.util.List;
 /**
  * @author Jurgen
  */
-@SuppressWarnings("rawtypes")
-public interface ETableI extends EComponentI {
-    public abstract void addRecord(final ETableRecord record);
+public interface ETableI<T> extends EComponentI {
+    public abstract void addRecord(final ETableRecord<T> record);
 
-    public abstract void addRecords(final Collection<ETableRecord> records);
+    public abstract void addRecords(final Collection<ETableRecord<T>> records);
 
     public abstract void clear();
 
@@ -18,9 +17,9 @@ public interface ETableI extends EComponentI {
 
     public abstract List<String> getHeadernames();
 
-    public abstract ETableRecord getRecordAtVisualRow(int i);
+    public abstract ETableRecord<T> getRecordAtVisualRow(int i);
 
-    public abstract List<ETableRecord> getRecords();
+    public abstract List<ETableRecord<T>> getRecords();
 
     public abstract void packColumn(int vColIndex);
 
@@ -28,13 +27,13 @@ public interface ETableI extends EComponentI {
 
     public abstract void removeAllRecords();
 
-    public abstract void removeRecord(final ETableRecord record);
+    public abstract void removeRecord(final ETableRecord<T> record);
 
     public abstract void removeRecordAtVisualRow(final int i);
 
-    public abstract void scrollToVisibleRecord(final ETableRecord record);
+    public abstract void scrollToVisibleRecord(final ETableRecord<T> record);
 
-    public abstract void setHeaders(final ETableHeaders headers);
+    public abstract void setHeaders(final ETableHeaders<T> headers);
 
     public abstract void sort(final int col);
 

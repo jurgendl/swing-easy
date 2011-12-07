@@ -57,8 +57,7 @@ import ca.odell.glazedlists.swing.TableComparatorChooser;
 /**
  * @author Jurgen
  */
-@SuppressWarnings("rawtypes")
-public class ETable extends JTable implements ETableI, Reorderable {
+public class ETable<T> extends JTable implements ETableI<T>, Reorderable {
     protected class EFiltering {
         /**
          * JDOC
@@ -67,7 +66,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
             /**
              * JDOC
              */
-            protected class RecordMatcher implements Matcher<ETableRecord> {
+            protected class RecordMatcher implements Matcher<ETableRecord<T>> {
                 protected final Pattern pattern;
 
                 protected final int column;
@@ -87,7 +86,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
                  * @see ca.odell.glazedlists.matchers.Matcher#matches(java.lang.Object)
                  */
                 @Override
-                public boolean matches(ETableRecord item) {
+                public boolean matches(ETableRecord<T> item) {
                     if (this.pattern == null) {
                         return true;
                     }
@@ -126,7 +125,6 @@ public class ETable extends JTable implements ETableI, Reorderable {
                     }
                 });
                 this.popupTextfield.addKeyListener(new KeyAdapter() {
-                    @SuppressWarnings("unchecked")
                     @Override
                     public void keyReleased(KeyEvent e) {
                         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -197,28 +195,27 @@ public class ETable extends JTable implements ETableI, Reorderable {
             }
         }
 
-        protected RecordMatcherEditor matcherEditor;
+        protected RecordMatcherEditor<T> matcherEditor;
 
-        protected FilterList<ETableRecord> filteredRecords;
+        protected FilterList<ETableRecord<T>> filteredRecords;
 
         protected FilterPopup filterPopup;
 
-        protected EventList<ETableRecord> source;
+        protected EventList<ETableRecord<T>> source;
 
-        @SuppressWarnings("unchecked")
-        protected EFiltering(EventList<ETableRecord> source, AbstractMatcherEditor<ETableRecord> matcher) {
+        protected EFiltering(EventList<ETableRecord<T>> source, AbstractMatcherEditor<ETableRecord<T>> matcher) {
             this.source = source;
             if (matcher != null) {
                 // we do matching ourselves
-                this.filteredRecords = new FilterList<ETableRecord>(source, matcher);
+                this.filteredRecords = new FilterList<ETableRecord<T>>(source, matcher);
                 return;
             }
             if (!ETable.this.cfg.isFilterable()) {
                 return;
             }
             // default matching
-            this.matcherEditor = new RecordMatcherEditor();
-            this.filteredRecords = new FilterList<ETableRecord>(source, this.matcherEditor);
+            this.matcherEditor = new RecordMatcherEditor<T>();
+            this.filteredRecords = new FilterList<ETableRecord<T>>(source, this.matcherEditor);
         }
 
         protected void clear() {
@@ -238,7 +235,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
             return this.filterPopup;
         }
 
-        protected EventList<ETableRecord> getRecords() {
+        protected EventList<ETableRecord<T>> getRecords() {
             if (this.filteredRecords == null) {
                 return this.source;
             }
@@ -264,18 +261,18 @@ public class ETable extends JTable implements ETableI, Reorderable {
     }
 
     protected class ESorting {
-        protected TableComparatorChooser<ETableRecord> tableSorter;
+        protected TableComparatorChooser<ETableRecord<T>> tableSorter;
 
-        protected SortedList<ETableRecord> sortedRecords;
+        protected SortedList<ETableRecord<T>> sortedRecords;
 
-        protected EventList<ETableRecord> source;
+        protected EventList<ETableRecord<T>> source;
 
-        protected ESorting(EventList<ETableRecord> source) {
+        protected ESorting(EventList<ETableRecord<T>> source) {
             this.source = source;
             if (!ETable.this.cfg.isSortable()) {
                 return;
             }
-            this.sortedRecords = new SortedList<ETableRecord>(source, null);
+            this.sortedRecords = new SortedList<ETableRecord<T>>(source, null);
         }
 
         protected void dispose() {
@@ -285,7 +282,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
             this.tableSorter.dispose();
         }
 
-        protected EventList<ETableRecord> getRecords() {
+        protected EventList<ETableRecord<T>> getRecords() {
             if (!ETable.this.cfg.isSortable()) {
                 return this.source;
             }
@@ -317,10 +314,10 @@ public class ETable extends JTable implements ETableI, Reorderable {
         }
     }
 
-    public class ETableModel extends EventTableModel<ETableRecord> {
+    public class ETableModel extends EventTableModel<ETableRecord<T>> {
         private static final long serialVersionUID = -8936359559294414836L;
 
-        protected ETableModel(EventList<ETableRecord> source, TableFormat<? super ETableRecord> tableFormat) {
+        protected ETableModel(EventList<ETableRecord<T>> source, TableFormat<? super ETableRecord<T>> tableFormat) {
             super(source, tableFormat);
         }
 
@@ -461,11 +458,11 @@ public class ETable extends JTable implements ETableI, Reorderable {
 
     private static final long serialVersionUID = 6515690492295488815L;
 
-    protected final EventList<ETableRecord> records;
+    protected final EventList<ETableRecord<T>> records;
 
-    protected final EventTableModel<ETableRecord> tableModel;
+    protected final EventTableModel<ETableRecord<T>> tableModel;
 
-    protected final EventSelectionModel<ETableRecord> tableSelectionModel;
+    protected final EventSelectionModel<ETableRecord<T>> tableSelectionModel;
 
     protected final EFiltering filtering;
 
@@ -473,7 +470,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
 
     protected final ETableConfig cfg;
 
-    protected ETableHeaders tableFormat;
+    protected ETableHeaders<T> tableFormat;
 
     public ETable() {
         this(new ETableConfig(false));
@@ -483,8 +480,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
         this(configuration, null);
     }
 
-    @SuppressWarnings("unchecked")
-    public ETable(ETableConfig configuration, Filter matcher) {
+    public ETable(ETableConfig configuration, Filter<T> matcher) {
         this.cfg = configuration;
         this.cfg.lock();
         if (this.cfg.isVertical()) {
@@ -496,13 +492,14 @@ public class ETable extends JTable implements ETableI, Reorderable {
             this.setTransferHandler(new TableRowTransferHandler(this));
         }
         this.setColumnModel(new EventTableColumnModel<TableColumn>(new BasicEventList<TableColumn>()));
-        this.records = (this.cfg.isThreadSafe() ? GlazedLists.threadSafeList(new BasicEventList<ETableRecord>()) : new BasicEventList<ETableRecord>());
+        this.records = (this.cfg.isThreadSafe() ? GlazedLists.threadSafeList(new BasicEventList<ETableRecord<T>>())
+                : new BasicEventList<ETableRecord<T>>());
         this.sorting = new ESorting(this.records);
-        this.tableFormat = new ETableHeaders();
+        this.tableFormat = new ETableHeaders<T>();
         this.filtering = new EFiltering(this.sorting.getRecords(), matcher);
         this.tableModel = new ETableModel(this.filtering.getRecords(), this.tableFormat);
         this.setModel(this.tableModel);
-        this.tableSelectionModel = new EventSelectionModel<ETableRecord>(this.records);
+        this.tableSelectionModel = new EventSelectionModel<ETableRecord<T>>(this.records);
         this.tableSelectionModel.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         this.setColumnSelectionAllowed(true);
         this.setRowSelectionAllowed(true);
@@ -518,7 +515,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
      * @see org.swingeasy.ETableI#addRecord(org.swingeasy.ETableRecord)
      */
     @Override
-    public void addRecord(final ETableRecord record) {
+    public void addRecord(final ETableRecord<T> record) {
         this.records.add(record);
     }
 
@@ -527,7 +524,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
      * @see org.swingeasy.ETableI#addRecords(java.util.Collection)
      */
     @Override
-    public void addRecords(final Collection<ETableRecord> r) {
+    public void addRecords(final Collection<ETableRecord<T>> r) {
         this.records.addAll(r);
     }
 
@@ -539,7 +536,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
     public void clear() {
         this.records.clear();
         this.sorting.dispose();
-        this.tableModel.setTableFormat(new ETableHeaders());
+        this.tableModel.setTableFormat(new ETableHeaders<T>());
         this.filtering.clear();
     }
 
@@ -651,7 +648,8 @@ public class ETable extends JTable implements ETableI, Reorderable {
      */
     @Override
     public List<String> getHeadernames() {
-        return this.tableFormat.getColumnNames();
+        List<String> columnNames = this.tableFormat.getColumnNames();
+        return columnNames;
     }
 
     /**
@@ -659,7 +657,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
      * @see org.swingeasy.ETableI#getRecordAtVisualRow(int)
      */
     @Override
-    public ETableRecord getRecordAtVisualRow(int i) {
+    public ETableRecord<T> getRecordAtVisualRow(int i) {
         return this.filtering.getRecords().get(i);
     }
 
@@ -668,7 +666,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
      * @see org.swingeasy.ETableI#getRecords()
      */
     @Override
-    public List<ETableRecord> getRecords() {
+    public List<ETableRecord<T>> getRecords() {
         return this.filtering.getRecords();
     }
 
@@ -677,7 +675,8 @@ public class ETable extends JTable implements ETableI, Reorderable {
      * 
      * @return
      */
-    public ETable getSimpleThreadSafeInterface() {
+    @SuppressWarnings("unchecked")
+    public ETable<T> getSimpleThreadSafeInterface() {
         try {
             return EventThreadSafeWrapper.getSimpleThreadSafeInterface(ETable.class, this, ETableI.class);
         } catch (Exception ex) {
@@ -770,7 +769,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
      * @see org.swingeasy.ETableI#removeRecord(org.swingeasy.ETableRecord)
      */
     @Override
-    public void removeRecord(final ETableRecord record) {
+    public void removeRecord(final ETableRecord<T> record) {
         this.records.remove(record);
     }
 
@@ -789,7 +788,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
      */
     @Override
     public void reorder(int fromIndex, int toIndex) {
-        ETableRecord record = this.getRecordAtVisualRow(fromIndex);
+        ETableRecord<T> record = this.getRecordAtVisualRow(fromIndex);
         this.removeRecord(record);
         this.records.add(toIndex, record);
     }
@@ -799,7 +798,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
      * @see org.swingeasy.ETableI#scrollToVisibleRecord(org.swingeasy.ETableRecord)
      */
     @Override
-    public void scrollToVisibleRecord(ETableRecord record) {
+    public void scrollToVisibleRecord(ETableRecord<T> record) {
         if (!this.isDisplayable()) {
             throw new IllegalArgumentException("can only be used when table is displayable (visible)"); //$NON-NLS-1$
         }
@@ -813,7 +812,7 @@ public class ETable extends JTable implements ETableI, Reorderable {
      * @see org.swingeasy.ETableI#setHeaders(org.swingeasy.ETableHeaders)
      */
     @Override
-    public void setHeaders(final ETableHeaders headers) {
+    public void setHeaders(final ETableHeaders<T> headers) {
         this.tableFormat = headers;
         this.sorting.dispose();
         this.tableModel.setTableFormat(headers);
@@ -841,14 +840,14 @@ public class ETable extends JTable implements ETableI, Reorderable {
     /**
      * @see #getSimpleThreadSafeInterface()
      */
-    public ETable stsi() {
+    public ETable<T> stsi() {
         return this.getSimpleThreadSafeInterface();
     }
 
     /**
      * @see #getSimpleThreadSafeInterface()
      */
-    public ETable STSI() {
+    public ETable<T> STSI() {
         return this.getSimpleThreadSafeInterface();
     }
 
