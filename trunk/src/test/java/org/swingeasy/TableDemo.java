@@ -31,8 +31,8 @@ public class TableDemo {
             UIUtils.niceLookAndFeel();
             ETableConfig configuration = new ETableConfig(true);
             configuration.setVertical(true);
-            final ETable table = new ETable(configuration);
-            final ETableHeaders headers = new ETableHeaders();
+            final ETable<Object[]> table = new ETable<Object[]>(configuration);
+            final ETableHeaders<Object[]> headers = new ETableHeaders<Object[]>();
             table.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -65,7 +65,7 @@ public class TableDemo {
                 }
             });
 
-            final ETableI safetable = table.getSimpleThreadSafeInterface();
+            final ETableI<Object[]> safetable = table.getSimpleThreadSafeInterface();
             final JFrame frame = new JFrame();
             frame.getContentPane().add(new JScrollPane(table), BorderLayout.CENTER);
             JPanel localepanel = new JPanel(new FlowLayout());
@@ -100,10 +100,10 @@ public class TableDemo {
             headers.add("Enum", EnumTest.class, true); //$NON-NLS-1$
             safetable.setHeaders(headers);
             Object[] empty = new Object[headers.getColumnCount()];
-            safetable.addRecord(new ETableRecordArray(empty));
+            safetable.addRecord(new ETableRecordArray<Object>(empty));
             for (int i = 0; i < 100; i++) {
                 int next = r.nextInt(1000);
-                safetable.addRecord(new ETableRecordArray(new Object[] {
+                safetable.addRecord(new ETableRecordArray<Object>(new Object[] {
                         next,
                         String.valueOf(next),
                         Boolean.TRUE,
