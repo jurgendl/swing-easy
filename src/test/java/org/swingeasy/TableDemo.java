@@ -67,7 +67,8 @@ public class TableDemo {
 
             final ETableI<Object[]> safetable = table.getSimpleThreadSafeInterface();
             final JFrame frame = new JFrame();
-            frame.getContentPane().add(new JScrollPane(table), BorderLayout.CENTER);
+            JScrollPane jsp = new JScrollPane(table);
+            frame.getContentPane().add(jsp, BorderLayout.CENTER);
             JPanel localepanel = new JPanel(new FlowLayout());
             final EButtonGroup localegroup = new EButtonGroup();
             JRadioButton en = new JRadioButton("en");//$NON-NLS-1$
@@ -121,6 +122,7 @@ public class TableDemo {
                 table.packColumn(i, 3);
             }
             table.setDefaultEditor(EnumTest.class, new EnumTableCellEditor<EnumTest>(EnumTest.class));
+
             // table.setLocale(Config.LOCALE);
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
