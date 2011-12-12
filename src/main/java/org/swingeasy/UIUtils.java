@@ -150,7 +150,7 @@ public class UIUtils {
             try {
                 UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel"); //$NON-NLS-1$
             } catch (Exception ex) {
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+                UIUtils.systemLookAndFeel();
             }
         } catch (Exception ex) {
             UIUtils.log(ex);
@@ -234,6 +234,17 @@ public class UIUtils {
         sharedInstance.setReshowDelay(10);
         sharedInstance.setInitialDelay(10);
         sharedInstance.setDismissDelay(20000);
+    }
+
+    /**
+     * activate system look and feel
+     */
+    public static void systemLookAndFeel() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception ex) {
+            UIUtils.log(ex);
+        }
     }
 
     /**
