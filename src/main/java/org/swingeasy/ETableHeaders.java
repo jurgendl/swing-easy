@@ -29,6 +29,12 @@ public class ETableHeaders<T> implements WritableTableFormat<ETableRecord<T>>, A
         super();
     }
 
+    public ETableHeaders(String... cols) {
+        for (String col : cols) {
+            this.add(col);
+        }
+    }
+
     /**
      * JDOC
      * 
