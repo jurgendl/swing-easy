@@ -3,19 +3,21 @@ package org.swingeasy;
 import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
-import javax.swing.JTable;
 
 /**
  * @author Jurgen
  */
 public class RowTableDemo {
     public static void main(String[] args) {
-        UIUtils.niceLookAndFeel();
+        UIUtils.systemLookAndFeel();
         JFrame f = new JFrame();
-        Object[][] data = { { "0", "0" }, { "0", "0" } };
-        String[] names = { "0", "0" };
-        JTable mainTable = new JTable(data, names);
-        f.getContentPane().add(new RowNumberTableWrapper(mainTable), BorderLayout.CENTER);
+        ETable<String[]> table = new ETable<String[]>(new ETableConfig(true));
+        table.setHeaders(new ETableHeaders<String[]>("A", "B", "C"));
+        table.addRecord(new ETableRecordArray<String>("1", "2", "3"));
+        table.addRecord(new ETableRecordArray<String>("4", "5", "6"));
+        table.addRecord(new ETableRecordArray<String>("7", "8", "9"));
+        table.addRecord(new ETableRecordArray<String>("10", "11", "12"));
+        f.getContentPane().add(new RowNumberTableWrapper(table), BorderLayout.CENTER);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setSize(400, 400);
         f.setVisible(true);

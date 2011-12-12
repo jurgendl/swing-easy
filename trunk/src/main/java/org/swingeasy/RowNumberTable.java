@@ -26,7 +26,8 @@ public class RowNumberTable extends JTable implements ChangeListener, PropertyCh
     /**
      * Borrow the renderer from JDK1.4.2 table header
      */
-    private static class RowNumberRenderer extends DefaultTableCellRenderer {
+    @SuppressWarnings("unused")
+    private static class RowNumberRenderer extends DefaultTableCellRenderer.UIResource {
         private static final long serialVersionUID = -4438439969007063384L;
 
         public RowNumberRenderer() {
@@ -72,7 +73,9 @@ public class RowNumberTable extends JTable implements ChangeListener, PropertyCh
         TableColumn column = new TableColumn();
         column.setHeaderValue(" ");
         this.addColumn(column);
-        column.setCellRenderer(new RowNumberRenderer());
+
+        column.setCellRenderer(this.getTableHeader().getDefaultRenderer());
+        // column.setCellRenderer(new RowNumberRenderer());
 
         this.getColumnModel().getColumn(0).setPreferredWidth(50);
         this.setPreferredScrollableViewportSize(this.getPreferredSize());
