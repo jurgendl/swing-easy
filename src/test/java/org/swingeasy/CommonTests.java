@@ -26,8 +26,8 @@ public class CommonTests {
         eComboBox.stsi().setEnabled(false);
         Assert.assertEquals(false, eComboBox.isEnabled());
 
-        ECheckBoxTree eCheckBoxTree = new ECheckBoxTree(new ECheckBoxTreeNode("test"));
-        eCheckBoxTree = new ECheckBoxTree(new ECheckBoxTreeConfig(), new ECheckBoxTreeNode("test"));
+        ECheckBoxTree eCheckBoxTree = new ECheckBoxTree(new ECheckBoxTreeNode("test")); //$NON-NLS-1$
+        eCheckBoxTree = new ECheckBoxTree(new ECheckBoxTreeConfig(), new ECheckBoxTreeNode("test")); //$NON-NLS-1$
         eCheckBoxTree.stsi().setEnabled(false);
         Assert.assertEquals(false, eCheckBoxTree.isEnabled());
 

@@ -39,7 +39,7 @@ public class GlassPaneDemo {
             final ProgressGlassPane glassPane = new ProgressGlassPane(frame);
             {
                 frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-                glassPane.setMessage("message");
+                glassPane.setMessage("message"); //$NON-NLS-1$
                 frame.setGlassPane(glassPane);
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
