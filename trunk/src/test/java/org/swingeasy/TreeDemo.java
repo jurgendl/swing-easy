@@ -16,7 +16,7 @@ public class TreeDemo {
         private static final long serialVersionUID = 4389106694997553842L;
 
         public DummyNode() {
-            this("0");
+            this("0"); //$NON-NLS-1$
         }
 
         public DummyNode(String userObject) {
@@ -25,10 +25,10 @@ public class TreeDemo {
 
         @Override
         protected void initChildren(Vector<ETreeNode<String>> list) {
-            System.out.println("lazy-init " + this);
-            if (!this.getUserObject().toString().endsWith("5")) {
+            System.out.println("lazy-init " + this); //$NON-NLS-1$
+            if (!this.getUserObject().toString().endsWith("5")) { //$NON-NLS-1$
                 for (int i = 0; i < 10; i++) {
-                    String s = this.getUserObject() + "." + i;
+                    String s = this.getUserObject() + "." + i; //$NON-NLS-1$
                     list.add(new DummyNode(s));
                 }
             }

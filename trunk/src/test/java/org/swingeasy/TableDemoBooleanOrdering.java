@@ -17,15 +17,15 @@ public class TableDemoBooleanOrdering {
 
         ETable<Object[]> table = new ETable<Object[]>(configuration);
         ETableHeaders<Object[]> headers = new ETableHeaders<Object[]>();
-        headers.add("string");
-        headers.add("boolean", Boolean.class);
-        headers.add("info");
+        headers.add("string"); //$NON-NLS-1$
+        headers.add("boolean", Boolean.class); //$NON-NLS-1$
+        headers.add("info"); //$NON-NLS-1$
         table.setHeaders(headers);
 
-        table.addRecord(new ETableRecordArray<Object>("kol.a", true, "1(a)"));
-        table.addRecord(new ETableRecordArray<Object>("kol.b", false, "0(b)"));
-        table.addRecord(new ETableRecordArray<Object>("kol.c", true, "1(c)"));
-        table.addRecord(new ETableRecordArray<Object>("kol.d", false, "0(d)"));
+        table.addRecord(new ETableRecordArray<Object>("kol.a", true, "1(a)")); //$NON-NLS-1$ //$NON-NLS-2$
+        table.addRecord(new ETableRecordArray<Object>("kol.b", false, "0(b)")); //$NON-NLS-1$ //$NON-NLS-2$
+        table.addRecord(new ETableRecordArray<Object>("kol.c", true, "1(c)")); //$NON-NLS-1$ //$NON-NLS-2$
+        table.addRecord(new ETableRecordArray<Object>("kol.d", false, "0(d)")); //$NON-NLS-1$ //$NON-NLS-2$
 
         frame.getContentPane().add(new JScrollPane(table), BorderLayout.CENTER);
         frame.setSize(400, 400);

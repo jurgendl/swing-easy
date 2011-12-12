@@ -16,9 +16,9 @@ public class CheckBoxTreeDemo {
             UIUtils.niceLookAndFeel();
             final JFrame frame = new JFrame();
             frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-            ECheckBoxTreeNode<String> root = new ECheckBoxTreeNode<String>("on1", true);
-            root.add(new ECheckBoxTreeNode<String>("on11", true));
-            root.add(new ECheckBoxTreeNode<String>("on12", true));
+            ECheckBoxTreeNode<String> root = new ECheckBoxTreeNode<String>("on1", true); //$NON-NLS-1$
+            root.add(new ECheckBoxTreeNode<String>("on11", true)); //$NON-NLS-1$
+            root.add(new ECheckBoxTreeNode<String>("on12", true)); //$NON-NLS-1$
             ECheckBoxTree<String> tree = new ECheckBoxTree<String>(root);
             frame.getContentPane().add(new JScrollPane(tree), BorderLayout.CENTER);
             SwingUtilities.invokeLater(new Runnable() {

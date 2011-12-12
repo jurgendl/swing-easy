@@ -22,25 +22,25 @@ public class TreeTableDemo {
 
             ETreeTableRecordNode root = new ETreeTableRecordNode();
 
-            ETreeTableRecordNode child1 = new ETreeTableRecordNode(Arrays.asList(new Object[] { "11", "12", "13" }));
+            ETreeTableRecordNode child1 = new ETreeTableRecordNode(Arrays.asList(new Object[] { "11", "12", "13" })); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             root.add(child1);
 
-            ETreeTableRecordNode child2 = new ETreeTableRecordNode(Arrays.asList(new Object[] { "21", "22", "23" }));
+            ETreeTableRecordNode child2 = new ETreeTableRecordNode(Arrays.asList(new Object[] { "21", "22", "23" })); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             root.add(child2);
 
-            ETreeTableRecordNode child3 = new ETreeTableRecordNode(Arrays.asList(new Object[] { "31", "32", "33" }));
+            ETreeTableRecordNode child3 = new ETreeTableRecordNode(Arrays.asList(new Object[] { "31", "32", "33" })); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             child2.add(child3);
 
-            ETreeTableRecordNode child4 = new ETreeTableRecordNode(Arrays.asList(new Object[] { "41", "42", "43" }));
+            ETreeTableRecordNode child4 = new ETreeTableRecordNode(Arrays.asList(new Object[] { "41", "42", "43" })); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             child2.add(child4);
 
-            ETreeTableRecordNode child5 = new ETreeTableRecordNode(Arrays.asList(new Object[] { "51", "52", "53" }));
+            ETreeTableRecordNode child5 = new ETreeTableRecordNode(Arrays.asList(new Object[] { "51", "52", "53" })); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             child4.add(child5);
 
-            ETreeTableRecordNode child6 = new ETreeTableRecordNode(Arrays.asList(new Object[] { "61", "62", "63" }));
+            ETreeTableRecordNode child6 = new ETreeTableRecordNode(Arrays.asList(new Object[] { "61", "62", "63" })); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             child4.add(child6);
 
-            final ETreeTable treetable = new ETreeTable(root, new ETreeTableHeaders("col1", "col2", "col3"));
+            final ETreeTable treetable = new ETreeTable(root, new ETreeTableHeaders("col1", "col2", "col3")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
             treetable.setCheckMode(CheckMode.NODE_AND_CHILDREN);
 
             frame.getContentPane().add(new JScrollPane(treetable), BorderLayout.CENTER);
