@@ -293,8 +293,8 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable {
             if (!ETable.this.cfg.isSortable()) {
                 return;
             }
-            this.tableSorter = TableComparatorChooser.install(ETable.this, this.sortedRecords, AbstractTableComparatorChooser.MULTIPLE_COLUMN_MOUSE,
-                    ETable.this.tableFormat);
+            this.tableSorter = TableComparatorChooser.install(ETable.this, this.sortedRecords,
+                    AbstractTableComparatorChooser.MULTIPLE_COLUMN_MOUSE_WITH_UNDO, ETable.this.tableFormat);
         }
 
         protected void sort(int col) {
