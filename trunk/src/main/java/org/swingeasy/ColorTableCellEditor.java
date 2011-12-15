@@ -11,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JTable;
+import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.table.TableCellEditor;
 
 /**
@@ -62,6 +63,10 @@ public class ColorTableCellEditor extends AbstractCellEditor implements TableCel
         }
     }
 
+    protected AbstractColorChooserPanel createHSLColorChooserPanel() {
+        return new HSLColorChooserPanel();
+    }
+
     /**
      * 
      * @see javax.swing.CellEditor#getCellEditorValue()
@@ -75,6 +80,7 @@ public class ColorTableCellEditor extends AbstractCellEditor implements TableCel
         if (this.cc == null) {
             // Set up the dialog that the button brings up.
             this.cc = new JColorChooser();
+            this.cc.addChooserPanel(this.createHSLColorChooserPanel());
             this.cc.setLocale(this.locale);
 
         }
