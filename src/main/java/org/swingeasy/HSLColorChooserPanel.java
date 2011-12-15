@@ -37,11 +37,28 @@ public class HSLColorChooserPanel extends AbstractColorChooserPanel implements C
         this.hueSlider = new JSlider(0, 360);
         this.saturationSlider = new JSlider(0, 100);
         this.luminanceSlider = new JSlider(0, 100);
-        this.setLayout(new GridLayout(3, 1));
-        this.add(this.hueSlider);
-        this.add(this.saturationSlider);
-        this.add(this.luminanceSlider);
-        this.setColorFromModel();
+
+        this.hueSlider.setMajorTickSpacing(90);
+        this.saturationSlider.setMajorTickSpacing(10);
+        this.luminanceSlider.setMajorTickSpacing(10);
+
+        this.hueSlider.setMinorTickSpacing(30);
+        this.saturationSlider.setMinorTickSpacing(5);
+        this.luminanceSlider.setMinorTickSpacing(5);
+
+        this.hueSlider.setPaintTicks(true);
+        this.saturationSlider.setPaintTicks(true);
+        this.luminanceSlider.setPaintTicks(true);
+
+        this.hueSlider.setPaintLabels(true);
+        this.saturationSlider.setPaintLabels(true);
+        this.luminanceSlider.setPaintLabels(true);
+
+        this.setLayout(new GridLayout(-1, 1));
+        this.add(this.hueSlider, null);
+        this.add(this.saturationSlider, null);
+        this.add(this.luminanceSlider, null);
+
         this.hueSlider.addChangeListener(this);
         this.saturationSlider.addChangeListener(this);
         this.luminanceSlider.addChangeListener(this);
@@ -74,19 +91,11 @@ public class HSLColorChooserPanel extends AbstractColorChooserPanel implements C
         return null;
     }
 
-    protected void setColorFromModel() {
-        this.hue_saturation_luminance = new HSLColor(this.getColorSelectionModel().getSelectedColor());
+    protected void setColor(Color newColor) {
+        this.hue_saturation_luminance = new HSLColor(newColor);
         this.hueSlider.setValue((int) this.hue_saturation_luminance.getHue());
         this.saturationSlider.setValue((int) this.hue_saturation_luminance.getSaturation());
         this.luminanceSlider.setValue((int) this.hue_saturation_luminance.getLuminance());
-    }
-
-    protected void setColorInModel() {
-        this.hue_saturation_luminance.adjustHue(this.hueSlider.getValue());
-        this.hue_saturation_luminance.adjustSaturation(this.saturationSlider.getValue());
-        this.hue_saturation_luminance.adjustLuminance(this.luminanceSlider.getValue());
-        Color color = this.hue_saturation_luminance.getRGB();
-        this.getColorSelectionModel().setSelectedColor(color);
     }
 
     /**
@@ -95,7 +104,14 @@ public class HSLColorChooserPanel extends AbstractColorChooserPanel implements C
      */
     @Override
     public void stateChanged(ChangeEvent e) {
-        this.setColorInModel();
+        if (!this.isAdjusting) {
+            this.hue_saturation_luminance.adjustHue(this.hueSlider.getValue());
+            this.hue_saturation_luminance.adjustSaturation(this.saturationSlider.getValue());
+            this.hue_saturation_luminance.adjustLuminance(this.luminanceSlider.getValue());
+            Color color = this.hue_saturation_luminance.getRGB();
+
+            this.getColorSelectionModel().setSelectedColor(color);
+        }
     }
 
     /**
@@ -106,7 +122,7 @@ public class HSLColorChooserPanel extends AbstractColorChooserPanel implements C
     public void updateChooser() {
         if (!this.isAdjusting) {
             this.isAdjusting = true;
-            this.setColorFromModel();
+            this.setColor(this.getColorFromModel());
             this.isAdjusting = false;
         }
     }
