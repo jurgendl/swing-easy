@@ -15,7 +15,7 @@ import javax.swing.SwingUtilities;
 /**
  * @author Jurgen
  */
-public class ProgressGlassPane extends NonBlockingGlassPane implements Runnable {
+public class ProgressGlassPane extends NonBlockingGlassPane {
     private static final long serialVersionUID = -2002416138162255170L;
 
     protected Component blockMe = null;
@@ -50,12 +50,11 @@ public class ProgressGlassPane extends NonBlockingGlassPane implements Runnable 
 
     protected float[] ad = { 0f, 1f, 2f, 3f, 4f, 5f, 6f, 7f, 8f, 7f, 6f, 5f, 4f, 3f, 2f, 1f };
 
+    protected Boolean running = Boolean.FALSE;
+
     public ProgressGlassPane(JFrame parent) {
         super(parent);
         this.parent = parent;
-        this.thread = new Thread(this);
-        this.thread.setDaemon(true);
-        this.thread.start();
         this.font = this.getFont().deriveFont(22f).deriveFont(Font.BOLD);
     }
 
@@ -158,30 +157,6 @@ public class ProgressGlassPane extends NonBlockingGlassPane implements Runnable 
         g2d.dispose();
     }
 
-    /**
-     * 
-     * @see java.lang.Runnable#run()
-     */
-    @Override
-    public void run() {
-        while (true) {
-            try {
-                Thread.sleep(this.speed);
-            } catch (InterruptedException ex) {
-                //
-            }
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    if (ProgressGlassPane.this.isVisible()) {
-                        ProgressGlassPane.this.progress++;
-                        ProgressGlassPane.this.repaint();
-                    }
-                }
-            });
-        }
-    }
-
     public void setBlockingColor(Color blockingColor) {
         this.blockingColor = blockingColor;
     }
@@ -223,7 +198,55 @@ public class ProgressGlassPane extends NonBlockingGlassPane implements Runnable 
      * @see javax.swing.JComponent#setVisible(boolean)
      */
     @Override
-    public void setVisible(boolean aFlag) {
-        super.setVisible(aFlag);
+    public void setVisible(boolean visible) {
+        this.toggle(visible);
+        super.setVisible(visible);
+    }
+
+    protected void toggle(boolean enabled) {
+        if (this.isVisible() != enabled) {
+            return;
+        }
+
+        synchronized (this.running) {
+            if (enabled) {
+                if (this.thread == null) {
+                    this.thread = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            while (ProgressGlassPane.this.running) {
+                                try {
+                                    Thread.sleep(ProgressGlassPane.this.speed);
+                                } catch (InterruptedException ex) {
+                                    //
+                                }
+                                SwingUtilities.invokeLater(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (ProgressGlassPane.this.isVisible()) {
+                                            ProgressGlassPane.this.progress++;
+                                            ProgressGlassPane.this.repaint();
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+                    this.thread.setDaemon(true);
+                    this.thread.start();
+                    this.running = Boolean.TRUE;
+                } else {
+                    throw new IllegalArgumentException();
+                }
+            } else {
+                if (this.thread != null) {
+                    this.thread.interrupt();
+                    this.thread = null;
+                    this.running = Boolean.FALSE;
+                } else {
+                    throw new IllegalArgumentException();
+                }
+            }
+        }
     }
 }

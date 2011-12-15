@@ -2,7 +2,10 @@ package org.swingeasy;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -46,7 +49,6 @@ public class GlassPaneDemo {
                     public void run() {
                         frame.setSize(200, 200);
                         frame.setVisible(true);
-                        glassPane.setVisible(true);
                     }
                 });
             }
@@ -54,6 +56,17 @@ public class GlassPaneDemo {
                 final JFrame frame2 = new JFrame();
                 frame2.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
                 JPanel panel = new JPanel(new GridLayout(-1, 1));
+                {
+                    JCheckBox enabled = new JCheckBox("enabled", glassPane.isVisible());
+                    enabled.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            System.out.println("en/dis-abling glass");
+                            glassPane.setVisible(!glassPane.isVisible());
+                        }
+                    });
+                    panel.add(enabled);
+                }
                 {
                     final JTextField message = new JTextField(glassPane.getMessage());
                     message.getDocument().addDocumentListener(new DocumentListener() {
@@ -109,7 +122,7 @@ public class GlassPaneDemo {
                 SwingUtilities.invokeLater(new Runnable() {
                     @Override
                     public void run() {
-                        frame2.setSize(200, 200);
+                        frame2.setSize(200, 300);
                         frame2.setLocation(200, 200);
                         frame2.setVisible(true);
                     }

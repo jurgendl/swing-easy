@@ -24,18 +24,25 @@ public class NonBlockingGlassPane extends JPanel implements AWTEventListener {
 
     private final JFrame frame;
 
-    // private Point point = new Point();
-
     public NonBlockingGlassPane(JFrame frame) {
         super(null);
         this.frame = frame;
-        setOpaque(false);
+        this.setOpaque(false);
         Toolkit.getDefaultToolkit().addAWTEventListener(this, AWTEvent.MOUSE_MOTION_EVENT_MASK | AWTEvent.MOUSE_EVENT_MASK);
     }
 
-    // public void setPoint(Point point) {
-    // this.point = point;
-    // }
+    /**
+     * If someone adds a mouseListener to the GlassPane or set a new cursor we expect that he knows what he is doing and return the super.contains(x,
+     * y) otherwise we return false to respect the cursors for the underneath components
+     */
+    @Override
+    public boolean contains(int x, int y) {
+        if ((this.getMouseListeners().length == 0) && (this.getMouseMotionListeners().length == 0) && (this.getMouseWheelListeners().length == 0)
+                && (this.getCursor() == Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR))) {
+            return false;
+        }
+        return super.contains(x, y);
+    }
 
     /**
      * 
@@ -48,29 +55,9 @@ public class NonBlockingGlassPane extends JPanel implements AWTEventListener {
             if (me.getComponent() == null) {
                 return;
             }
-            if (!SwingUtilities.isDescendingFrom(me.getComponent(), frame)) {
+            if (!SwingUtilities.isDescendingFrom(me.getComponent(), this.frame)) {
                 return;
             }
-            if (me.getID() == MouseEvent.MOUSE_EXITED && me.getComponent() == frame) {
-                // point = null;
-            } else {
-                // MouseEvent converted = SwingUtilities.convertMouseEvent(me.getComponent(), me, frame.getGlassPane());
-                // point = converted.getPoint();
-            }
-            // repaint();
         }
-    }
-
-    /**
-     * If someone adds a mouseListener to the GlassPane or set a new cursor we expect that he knows what he is doing and return the super.contains(x,
-     * y) otherwise we return false to respect the cursors for the underneath components
-     */
-    @Override
-    public boolean contains(int x, int y) {
-        if (getMouseListeners().length == 0 && getMouseMotionListeners().length == 0 && getMouseWheelListeners().length == 0
-                && getCursor() == Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR)) {
-            return false;
-        }
-        return super.contains(x, y);
     }
 }
