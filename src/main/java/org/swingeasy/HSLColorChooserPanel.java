@@ -1,9 +1,14 @@
 package org.swingeasy;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.Dictionary;
+import java.util.Hashtable;
 
 import javax.swing.Icon;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.event.ChangeEvent;
@@ -32,36 +37,58 @@ public class HSLColorChooserPanel extends AbstractColorChooserPanel implements C
      * 
      * @see javax.swing.colorchooser.AbstractColorChooserPanel#buildChooser()
      */
+    @SuppressWarnings("hiding")
     @Override
     protected void buildChooser() {
-        this.hueSlider = new JSlider(0, 360);
-        this.saturationSlider = new JSlider(0, 100);
-        this.luminanceSlider = new JSlider(0, 100);
-
-        this.hueSlider.setMajorTickSpacing(90);
-        this.saturationSlider.setMajorTickSpacing(10);
-        this.luminanceSlider.setMajorTickSpacing(10);
-
-        this.hueSlider.setMinorTickSpacing(30);
-        this.saturationSlider.setMinorTickSpacing(5);
-        this.luminanceSlider.setMinorTickSpacing(5);
-
-        this.hueSlider.setPaintTicks(true);
-        this.saturationSlider.setPaintTicks(true);
-        this.luminanceSlider.setPaintTicks(true);
-
-        this.hueSlider.setPaintLabels(true);
-        this.saturationSlider.setPaintLabels(true);
-        this.luminanceSlider.setPaintLabels(true);
-
         this.setLayout(new GridLayout(-1, 1));
-        this.add(this.hueSlider, null);
-        this.add(this.saturationSlider, null);
-        this.add(this.luminanceSlider, null);
 
-        this.hueSlider.addChangeListener(this);
-        this.saturationSlider.addChangeListener(this);
-        this.luminanceSlider.addChangeListener(this);
+        {
+            JSlider hueSlider = new JSlider(0, 360);
+            Dictionary<Integer, JComponent> labels = new Hashtable<Integer, JComponent>();
+            labels.put(0, this.newLabel("Red", Color.RED));
+            labels.put(120, this.newLabel("Green", Color.GREEN));
+            labels.put(240, this.newLabel("Blue", Color.BLUE));
+            labels.put(360, this.newLabel("Red", Color.RED));
+            hueSlider.setLabelTable(labels);
+            hueSlider.setMajorTickSpacing(90);
+            hueSlider.setMinorTickSpacing(30);
+            hueSlider.setPaintTicks(true);
+            hueSlider.setPaintLabels(true);
+            hueSlider.setPaintTrack(true);
+            this.add(hueSlider, null);
+            hueSlider.addChangeListener(this);
+            this.hueSlider = hueSlider;
+        }
+
+        {
+            JSlider saturationSlider = new JSlider(0, 100);
+            @SuppressWarnings("unchecked")
+            Dictionary<Integer, JComponent> labels = saturationSlider.createStandardLabels(10, 0);
+            saturationSlider.setLabelTable(labels);
+            saturationSlider.setMajorTickSpacing(10);
+            saturationSlider.setMinorTickSpacing(5);
+            saturationSlider.setPaintTicks(true);
+            saturationSlider.setPaintLabels(true);
+            saturationSlider.setPaintTrack(true);
+            this.add(saturationSlider, null);
+            saturationSlider.addChangeListener(this);
+            this.saturationSlider = saturationSlider;
+        }
+
+        {
+            JSlider luminanceSlider = new JSlider(0, 100);
+            @SuppressWarnings("unchecked")
+            Dictionary<Integer, JComponent> labels = luminanceSlider.createStandardLabels(10, 0);
+            luminanceSlider.setLabelTable(labels);
+            luminanceSlider.setMajorTickSpacing(10);
+            luminanceSlider.setMinorTickSpacing(5);
+            luminanceSlider.setPaintTicks(true);
+            luminanceSlider.setPaintLabels(true);
+            luminanceSlider.setPaintTrack(true);
+            this.add(luminanceSlider, null);
+            luminanceSlider.addChangeListener(this);
+            this.luminanceSlider = luminanceSlider;
+        }
     }
 
     /**
@@ -91,11 +118,19 @@ public class HSLColorChooserPanel extends AbstractColorChooserPanel implements C
         return null;
     }
 
+    protected JComponent newLabel(String string, Color color) {
+        JLabel label = new JLabel(string);
+        label.setFont(label.getFont().deriveFont(Font.BOLD));
+        label.setForeground(color);
+        return label;
+    }
+
     protected void setColor(Color newColor) {
         this.hue_saturation_luminance = new HSLColor(newColor);
         this.hueSlider.setValue((int) this.hue_saturation_luminance.getHue());
         this.saturationSlider.setValue((int) this.hue_saturation_luminance.getSaturation());
         this.luminanceSlider.setValue((int) this.hue_saturation_luminance.getLuminance());
+
     }
 
     /**
@@ -105,11 +140,15 @@ public class HSLColorChooserPanel extends AbstractColorChooserPanel implements C
     @Override
     public void stateChanged(ChangeEvent e) {
         if (!this.isAdjusting) {
-            this.hue_saturation_luminance.adjustHue(this.hueSlider.getValue());
-            this.hue_saturation_luminance.adjustSaturation(this.saturationSlider.getValue());
-            this.hue_saturation_luminance.adjustLuminance(this.luminanceSlider.getValue());
-            Color color = this.hue_saturation_luminance.getRGB();
+            int h = this.hueSlider.getValue();
+            int s = this.saturationSlider.getValue();
+            int l = this.luminanceSlider.getValue();
 
+            this.hue_saturation_luminance.setHue(h);
+            this.hue_saturation_luminance.setSaturation(s);
+            this.hue_saturation_luminance.setLuminance(l);
+
+            Color color = this.hue_saturation_luminance.calcRGB();
             this.getColorSelectionModel().setSelectedColor(color);
         }
     }
