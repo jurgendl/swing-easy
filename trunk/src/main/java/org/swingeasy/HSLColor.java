@@ -225,7 +225,7 @@ public class HSLColor {
     public HSLColor(float h, float s, float l, float alpha) {
         this.hsl = new float[] { h, s, l };
         this.alpha = alpha;
-        this.rgb = HSLColor.toRGB(this.hsl, alpha);
+        this.calcRGB();
     }
 
     /**
@@ -307,6 +307,11 @@ public class HSLColor {
         return HSLColor.toRGB(this.hsl[0], this.hsl[1], l, this.alpha);
     }
 
+    protected Color calcRGB() {
+        this.rgb = HSLColor.toRGB(this.hsl, this.alpha);
+        return this.rgb;
+    }
+
     /**
      * Get the Alpha value.
      * 
@@ -370,6 +375,18 @@ public class HSLColor {
      */
     public float getSaturation() {
         return this.hsl[1];
+    }
+
+    public void setHue(float h) {
+        this.hsl[0] = h;
+    }
+
+    public void setLuminance(float l) {
+        this.hsl[2] = l;
+    }
+
+    public void setSaturation(float s) {
+        this.hsl[1] = s;
     }
 
     @Override
