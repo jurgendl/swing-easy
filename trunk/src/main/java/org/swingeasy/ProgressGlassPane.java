@@ -8,6 +8,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.RenderingHints;
+import java.awt.Window;
 
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
@@ -52,7 +53,7 @@ public class ProgressGlassPane extends NonBlockingGlassPane {
 
     protected Boolean running = Boolean.FALSE;
 
-    public ProgressGlassPane(JFrame parent) {
+    public ProgressGlassPane(Window parent) {
         super(parent);
         this.parent = parent;
         this.font = this.getFont().deriveFont(22f).deriveFont(Font.BOLD);

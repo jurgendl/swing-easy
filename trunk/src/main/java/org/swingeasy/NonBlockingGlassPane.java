@@ -3,10 +3,10 @@ package org.swingeasy;
 import java.awt.AWTEvent;
 import java.awt.Cursor;
 import java.awt.Toolkit;
+import java.awt.Window;
 import java.awt.event.AWTEventListener;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -22,9 +22,9 @@ public class NonBlockingGlassPane extends JPanel implements AWTEventListener {
     /** serialVersionUID */
     private static final long serialVersionUID = -2073312139654377382L;
 
-    private final JFrame frame;
+    private final Window frame;
 
-    public NonBlockingGlassPane(JFrame frame) {
+    public NonBlockingGlassPane(Window frame) {
         super(null);
         this.frame = frame;
         this.setOpaque(false);
