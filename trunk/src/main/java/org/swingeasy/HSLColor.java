@@ -307,7 +307,7 @@ public class HSLColor {
         return HSLColor.toRGB(this.hsl[0], this.hsl[1], l, this.alpha);
     }
 
-    protected Color calcRGB() {
+    public Color calcRGB() {
         this.rgb = HSLColor.toRGB(this.hsl, this.alpha);
         return this.rgb;
     }
