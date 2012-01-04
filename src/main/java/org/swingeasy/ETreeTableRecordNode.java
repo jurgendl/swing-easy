@@ -21,7 +21,7 @@ public class ETreeTableRecordNode implements Iterable<ETreeTableRecordNode> {
     protected boolean selected = true;
 
     public ETreeTableRecordNode() {
-        this.setValues(Collections.singletonList("ROOT"));
+        this.setValues(Collections.singletonList("ROOT")); //$NON-NLS-1$
     }
 
     public ETreeTableRecordNode(List values) {

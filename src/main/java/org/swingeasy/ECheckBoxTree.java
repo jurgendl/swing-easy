@@ -16,7 +16,7 @@ public class ECheckBoxTree<T> extends JTree implements ECheckBoxTreeI<T> {
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     protected ECheckBoxTree() {
-        super(new ECheckBoxTreeNode("root"));
+        super(new ECheckBoxTreeNode("root")); //$NON-NLS-1$
     }
 
     public ECheckBoxTree(ECheckBoxTreeConfig cfg, ECheckBoxTreeNode<T> root) {

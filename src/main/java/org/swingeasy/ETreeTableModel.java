@@ -172,7 +172,7 @@ public class ETreeTableModel implements TableModel, TreeModel {
     @Override
     public String getColumnName(int columnIndex) {
         if (columnIndex == 0) {
-            return "";
+            return ""; //$NON-NLS-1$
         }
         return this.headers.getColumnName(columnIndex - 1);
     }

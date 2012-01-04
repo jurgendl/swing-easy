@@ -548,10 +548,10 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable {
     @Override
     protected void createDefaultEditors() {
         super.createDefaultEditors();
-        this.defaultEditorsByColumnClass.put(Boolean.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.BooleanTableCellEditor"));
-        this.defaultEditorsByColumnClass.put(Date.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.DateTableCellEditor"));
-        this.defaultEditorsByColumnClass.put(Color.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.ColorTableCellEditor"));
-        this.defaultEditorsByColumnClass.put(Number.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.NumberTableCellEditor"));
+        this.defaultEditorsByColumnClass.put(Boolean.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.BooleanTableCellEditor")); //$NON-NLS-1$
+        this.defaultEditorsByColumnClass.put(Date.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.DateTableCellEditor")); //$NON-NLS-1$
+        this.defaultEditorsByColumnClass.put(Color.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.ColorTableCellEditor")); //$NON-NLS-1$
+        this.defaultEditorsByColumnClass.put(Number.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.NumberTableCellEditor")); //$NON-NLS-1$
     }
 
     /**
@@ -562,12 +562,12 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable {
     @Override
     protected void createDefaultRenderers() {
         super.createDefaultRenderers();
-        this.defaultRenderersByColumnClass.put(Boolean.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.BooleanTableCellRenderer"));
-        this.defaultRenderersByColumnClass.put(Date.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.DateTableCellRenderer"));
-        this.defaultRenderersByColumnClass.put(Color.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.ColorTableCellRenderer"));
-        this.defaultRenderersByColumnClass.put(Number.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.NumberTableCellRenderer"));
-        this.defaultRenderersByColumnClass.put(Float.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.NumberTableCellRenderer"));
-        this.defaultRenderersByColumnClass.put(Double.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.NumberTableCellRenderer"));
+        this.defaultRenderersByColumnClass.put(Boolean.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.BooleanTableCellRenderer")); //$NON-NLS-1$
+        this.defaultRenderersByColumnClass.put(Date.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.DateTableCellRenderer")); //$NON-NLS-1$
+        this.defaultRenderersByColumnClass.put(Color.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.ColorTableCellRenderer")); //$NON-NLS-1$
+        this.defaultRenderersByColumnClass.put(Number.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.NumberTableCellRenderer")); //$NON-NLS-1$
+        this.defaultRenderersByColumnClass.put(Float.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.NumberTableCellRenderer")); //$NON-NLS-1$
+        this.defaultRenderersByColumnClass.put(Double.class, new javax.swing.UIDefaults.ProxyLazyValue("org.swingeasy.NumberTableCellRenderer")); //$NON-NLS-1$
     }
 
     /**
@@ -600,7 +600,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable {
                     headerValue += "<br/><br/>right click to edit filter<br/>enter to preview filter<br/>tab to accept filter";
                 }
 
-                return "<html><body>" + headerValue + "</body></html>";
+                return "<html><body>" + headerValue + "</body></html>"; //$NON-NLS-1$ //$NON-NLS-2$
             }
         };
         return jTableHeader;

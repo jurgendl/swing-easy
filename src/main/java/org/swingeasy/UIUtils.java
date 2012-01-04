@@ -209,7 +209,7 @@ public class UIUtils {
      */
     public static void registerUncaughtExceptionHandler(UncaughtExceptionHandler handler) {
         UncaughtExceptionHandlerDelegate.delegate = handler;
-        System.setProperty("sun.awt.exception.handler", UncaughtExceptionHandlerDelegate.class.getName());
+        System.setProperty("sun.awt.exception.handler", UncaughtExceptionHandlerDelegate.class.getName()); //$NON-NLS-1$
     }
 
     /**
