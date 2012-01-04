@@ -7,12 +7,10 @@ import java.awt.event.ActionListener;
 import java.util.Locale;
 
 import javax.swing.AbstractCellEditor;
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JTable;
-import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.table.TableCellEditor;
 
 /**
@@ -70,10 +68,6 @@ public class ColorTableCellEditor extends AbstractCellEditor implements TableCel
         }
     }
 
-    protected AbstractColorChooserPanel createHSLColorChooserPanel() {
-        return new HSLColorChooserPanel();
-    }
-
     /**
      * 
      * @see javax.swing.CellEditor#getCellEditorValue()
@@ -86,8 +80,6 @@ public class ColorTableCellEditor extends AbstractCellEditor implements TableCel
     public JColorChooser getColorChooser() {
         if (this.cc == null) {
             this.cc = new JColorChooser();
-            this.cc.getChooserPanels()[0].setBorder(BorderFactory.createRaisedBevelBorder());
-            this.cc.addChooserPanel(this.createHSLColorChooserPanel());
             this.cc.setLocale(this.locale);
 
         }
