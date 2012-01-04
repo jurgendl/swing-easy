@@ -50,8 +50,8 @@ public class RowNumberTable extends JTable implements ChangeListener, PropertyCh
                 this.setFont(this.getFont().deriveFont(Font.BOLD));
             }
 
-            this.setText((value == null) ? "" : value.toString());
-            this.setBorder(UIManager.getBorder("TableHeader.cellBorder"));
+            this.setText((value == null) ? "" : value.toString()); //$NON-NLS-1$
+            this.setBorder(UIManager.getBorder("TableHeader.cellBorder")); //$NON-NLS-1$
 
             return this;
         }
@@ -71,7 +71,7 @@ public class RowNumberTable extends JTable implements ChangeListener, PropertyCh
         this.setSelectionModel(this.main.getSelectionModel());
 
         TableColumn column = new TableColumn();
-        column.setHeaderValue(" ");
+        column.setHeaderValue(" "); //$NON-NLS-1$
         this.addColumn(column);
 
         column.setCellRenderer(this.getTableHeader().getDefaultRenderer());
@@ -131,11 +131,11 @@ public class RowNumberTable extends JTable implements ChangeListener, PropertyCh
     public void propertyChange(PropertyChangeEvent e) {
         // Keep the row table in sync with the main table
 
-        if ("selectionModel".equals(e.getPropertyName())) {
+        if ("selectionModel".equals(e.getPropertyName())) { //$NON-NLS-1$
             this.setSelectionModel(this.main.getSelectionModel());
         }
 
-        if ("model".equals(e.getPropertyName())) {
+        if ("model".equals(e.getPropertyName())) { //$NON-NLS-1$
             this.setModel(this.main.getModel());
         }
     }

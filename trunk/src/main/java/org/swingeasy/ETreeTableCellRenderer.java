@@ -108,8 +108,8 @@ public class ETreeTableCellRenderer extends JTree implements TableCellRenderer {
             // exception to be thrown if the border selection color is
             // null.
             // dtcr.setBorderSelectionColor(null);
-            dtcr.setTextSelectionColor(UIManager.getColor("Table.selectionForeground"));
-            dtcr.setBackgroundSelectionColor(UIManager.getColor("Table.selectionBackground"));
+            dtcr.setTextSelectionColor(UIManager.getColor("Table.selectionForeground")); //$NON-NLS-1$
+            dtcr.setBackgroundSelectionColor(UIManager.getColor("Table.selectionBackground")); //$NON-NLS-1$
         }
     }
 }
