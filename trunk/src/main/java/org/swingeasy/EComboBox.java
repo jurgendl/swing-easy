@@ -4,6 +4,7 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 import javax.swing.JComboBox;
 
@@ -208,6 +209,16 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T> {
     @Override
     public void removeRecord(EComboBoxRecord<T> record) {
         this.records.remove(record);
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.ETableI#setLocale(java.util.Locale)
+     */
+    @Override
+    public void setLocale(Locale l) {
+        super.setLocale(l);
+        this.repaint();
     }
 
     /**

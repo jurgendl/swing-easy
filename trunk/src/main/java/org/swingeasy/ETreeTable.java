@@ -5,6 +5,9 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Locale;
 
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -81,6 +84,25 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI {
 
     public CheckMode getCheckMode() {
         return this.checkMode;
+    }
+
+    /**
+     * 
+     * @see javax.swing.JTable#getDefaultRenderer(java.lang.Class)
+     */
+    @Override
+    public TableCellRenderer getDefaultRenderer(Class<?> columnClass) {
+        TableCellRenderer dr = super.getDefaultRenderer(columnClass);
+        if (dr instanceof Component) {
+            final Component c = Component.class.cast(dr);
+            this.addPropertyChangeListener("locale", new PropertyChangeListener() {
+                @Override
+                public void propertyChange(PropertyChangeEvent evt) {
+                    c.setLocale(Locale.class.cast(evt.getNewValue()));
+                }
+            });
+        }
+        return dr;
     }
 
     /**
@@ -238,6 +260,16 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI {
                 break;
         }
 
+        this.repaint();
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.ETableI#setLocale(java.util.Locale)
+     */
+    @Override
+    public void setLocale(Locale l) {
+        super.setLocale(l);
         this.repaint();
     }
 

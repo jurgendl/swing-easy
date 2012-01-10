@@ -1,5 +1,7 @@
 package org.swingeasy;
 
+import java.util.Locale;
+
 import javax.swing.JTree;
 import javax.swing.ToolTipManager;
 
@@ -45,6 +47,16 @@ public class ETree<T> extends JTree implements ETreeI<T> {
             System.err.println(ex);
             return this; // no javassist
         }
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.ETableI#setLocale(java.util.Locale)
+     */
+    @Override
+    public void setLocale(Locale l) {
+        super.setLocale(l);
+        this.repaint();
     }
 
     /**
