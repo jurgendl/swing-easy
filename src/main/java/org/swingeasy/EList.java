@@ -64,6 +64,14 @@ public class EList<T> extends JList implements EListI<T> {
         public void setDefaultRenderer(Class<?> columnClass, ListCellRenderer renderer) {
             this.defaultRenderersByClass.put(columnClass, renderer);
         }
+
+        public void setLocale(Locale l) {
+            for (ListCellRenderer renderer : this.defaultRenderersByClass.values()) {
+                if (renderer instanceof Component) {
+                    Component.class.cast(renderer).setLocale(l);
+                }
+            }
+        }
     }
 
     private static class EListModel<T> extends EventListModel<EListRecord<T>> {
@@ -265,6 +273,7 @@ public class EList<T> extends JList implements EListI<T> {
     @Override
     public void setLocale(Locale l) {
         super.setLocale(l);
+        this.delegatingListCellRenderer.setLocale(l);
         this.repaint();
     }
 

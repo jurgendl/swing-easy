@@ -49,3 +49,4 @@ major version changes (first number) are possibly not backwards compatible!
   * Color renderer is now small circle
   * ETable, ETreeTable: setting locale, renderers react to changes, field being edited reacts after commit
   * ETreeTable: bug (nullpointer) fixed
+  * EList: setting locale
