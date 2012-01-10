@@ -19,7 +19,8 @@ public class NumberTableCellRenderer extends DefaultTableCellRenderer.UIResource
     }
 
     protected void newFormatter() {
-        this.formatter = NumberFormat.getInstance(this.getLocale());
+        Locale locale = this.getLocale();
+        this.formatter = NumberFormat.getInstance(locale);
     }
 
     /**

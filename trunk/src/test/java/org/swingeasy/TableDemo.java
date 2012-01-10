@@ -10,6 +10,7 @@ import java.beans.PropertyChangeListener;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 
 import javax.swing.JFrame;
@@ -80,7 +81,8 @@ public class TableDemo {
             localegroup.addPropertyChangeListener(EButtonGroup.SELECTION, new PropertyChangeListener() {
                 @Override
                 public void propertyChange(PropertyChangeEvent evt) {
-                    System.out.println(evt.getNewValue());
+                    Locale l = new Locale(String.valueOf(evt.getNewValue()));
+                    safetable.setLocale(l);
                 }
             });
             frame.getContentPane().add(localepanel, BorderLayout.NORTH);
@@ -123,7 +125,6 @@ public class TableDemo {
             }
             table.setDefaultEditor(EnumTest.class, new EnumTableCellEditor<EnumTest>(EnumTest.class));
 
-            // table.setLocale(Config.LOCALE);
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
