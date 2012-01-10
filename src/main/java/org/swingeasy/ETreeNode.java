@@ -2,6 +2,7 @@ package org.swingeasy;
 
 import java.util.Collection;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Vector;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -15,11 +16,12 @@ public class ETreeNode<T> extends DefaultMutableTreeNode {
 
     public ETreeNode(T userObject) {
         super(userObject);
+        this.children = null; // not initialized (lazy)
     }
 
     public ETreeNode(T userObject, Collection<ETreeNode<T>> children) {
         super(userObject);
-        this.children = new Vector<ETreeNode<T>>(children);
+        this.children = new Vector<ETreeNode<T>>(children); // initialized (eager)
     }
 
     /**
@@ -72,7 +74,7 @@ public class ETreeNode<T> extends DefaultMutableTreeNode {
      * 
      * @param list
      */
-    protected void initChildren(@SuppressWarnings("unused") Vector<ETreeNode<T>> list) {
+    protected void initChildren(@SuppressWarnings("unused") List<ETreeNode<T>> list) {
         // override
     }
 

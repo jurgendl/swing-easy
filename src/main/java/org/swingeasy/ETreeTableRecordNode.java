@@ -14,7 +14,7 @@ import java.util.List;
 public class ETreeTableRecordNode implements Iterable<ETreeTableRecordNode> {
     protected ETreeTableRecordNode parent = null;
 
-    protected final List<ETreeTableRecordNode> children = new ArrayList<ETreeTableRecordNode>();
+    protected List<ETreeTableRecordNode> children;
 
     protected final List values = new ArrayList();
 
@@ -22,6 +22,7 @@ public class ETreeTableRecordNode implements Iterable<ETreeTableRecordNode> {
 
     public ETreeTableRecordNode() {
         this.setValues(Collections.singletonList("ROOT")); //$NON-NLS-1$
+        this.children = null; // not initialized (lazy)
     }
 
     public ETreeTableRecordNode(List values) {
@@ -36,6 +37,9 @@ public class ETreeTableRecordNode implements Iterable<ETreeTableRecordNode> {
     public void add(ETreeTableRecordNode child) {
         if (child.parent != null) {
             throw new IllegalArgumentException();
+        }
+        if (this.children == null) {
+            this.children = new ArrayList<ETreeTableRecordNode>();
         }
         this.children.add(child);
         child.parent = this;
@@ -54,6 +58,14 @@ public class ETreeTableRecordNode implements Iterable<ETreeTableRecordNode> {
 
     // init
     public List<ETreeTableRecordNode> getChildren() {
+        if (this.children == null) {
+            this.children = new ArrayList<ETreeTableRecordNode>();
+            this.initChildren(this.children);
+            for (ETreeTableRecordNode child : this.children) {
+                child.parent = this;
+            }
+        }
+
         return Collections.unmodifiableList(this.children);
     }
 
@@ -76,6 +88,15 @@ public class ETreeTableRecordNode implements Iterable<ETreeTableRecordNode> {
     // init
     public List getValues() {
         return Collections.unmodifiableList(this.values);
+    }
+
+    /**
+     * called when children is not initialized
+     * 
+     * @param list
+     */
+    protected void initChildren(@SuppressWarnings("unused") List<ETreeTableRecordNode> list) {
+        // override
     }
 
     public boolean isSelected() {
