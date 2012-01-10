@@ -1,7 +1,7 @@
 package org.swingeasy;
 
 import java.awt.BorderLayout;
-import java.util.Vector;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -24,7 +24,7 @@ public class TreeDemo {
         }
 
         @Override
-        protected void initChildren(Vector<ETreeNode<String>> list) {
+        protected void initChildren(List<ETreeNode<String>> list) {
             System.out.println("lazy-init " + this); //$NON-NLS-1$
             if (!this.getUserObject().toString().endsWith("5")) { //$NON-NLS-1$
                 for (int i = 0; i < 10; i++) {
