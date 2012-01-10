@@ -280,7 +280,9 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI {
     @Override
     public void setRowHeight(int rowHeight) {
         super.setRowHeight(rowHeight);
-        this.tree.setRowHeight(18);
+        if (this.tree != null) {
+            this.tree.setRowHeight(18);
+        }
     }
 
     /**
