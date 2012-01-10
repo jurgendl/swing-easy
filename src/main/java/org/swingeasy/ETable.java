@@ -16,6 +16,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -627,6 +629,25 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable {
     }
 
     /**
+     * 
+     * @see javax.swing.JTable#getDefaultRenderer(java.lang.Class)
+     */
+    @Override
+    public TableCellRenderer getDefaultRenderer(Class<?> columnClass) {
+        TableCellRenderer dr = super.getDefaultRenderer(columnClass);
+        if (dr instanceof Component) {
+            final Component c = Component.class.cast(dr);
+            this.addPropertyChangeListener("locale", new PropertyChangeListener() {
+                @Override
+                public void propertyChange(PropertyChangeEvent evt) {
+                    c.setLocale(Locale.class.cast(evt.getNewValue()));
+                }
+            });
+        }
+        return dr;
+    }
+
+    /**
      * JDOC
      * 
      * @param comp
@@ -821,11 +842,12 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable {
 
     /**
      * 
-     * @see java.awt.Component#setLocale(java.util.Locale)
+     * @see org.swingeasy.ETableI#setLocale(java.util.Locale)
      */
     @Override
     public void setLocale(Locale l) {
         super.setLocale(l);
+        this.repaint();
     }
 
     /**
