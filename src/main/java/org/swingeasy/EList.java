@@ -8,6 +8,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Locale;
 
 import javax.swing.JList;
 import javax.swing.JTextField;
@@ -255,6 +256,16 @@ public class EList<T> extends JList implements EListI<T> {
      */
     public void setDefaultRenderer(Class<?> columnClass, ListCellRenderer renderer) {
         this.delegatingListCellRenderer.setDefaultRenderer(columnClass, renderer);
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.ETableI#setLocale(java.util.Locale)
+     */
+    @Override
+    public void setLocale(Locale l) {
+        super.setLocale(l);
+        this.repaint();
     }
 
     /**

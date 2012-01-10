@@ -2,6 +2,7 @@ package org.swingeasy;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Locale;
 
 import javax.swing.JTree;
 import javax.swing.ToolTipManager;
@@ -60,6 +61,16 @@ public class ECheckBoxTree<T> extends JTree implements ECheckBoxTreeI<T> {
             System.err.println(ex);
             return this; // no javassist
         }
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.ETableI#setLocale(java.util.Locale)
+     */
+    @Override
+    public void setLocale(Locale l) {
+        super.setLocale(l);
+        this.repaint();
     }
 
     /**

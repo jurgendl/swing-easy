@@ -47,4 +47,4 @@ major version changes (first number) are possibly not backwards compatible!
  * 2.0.1 (not released)
   * ETable: Boolean editor centered
   * Color renderer is now small circle
-  * ETable: setting locale, renderers react to changes, field being edited reacts after commit
+  * ETable, ETreeTable: setting locale, renderers react to changes, field being edited reacts after commit
