@@ -38,7 +38,7 @@ major version changes (first number) are possibly not backwards compatible!
  * 1.3.0 (featured)
   * initial release of ETreeTable
   * UIUtils: renamed method (look-and-feel) breaks backwards compatibility
- * 2.0.0 (deprecated)
+ * 2.0.0
   * every component has a configuration and interface which extends common class
   * commons-beanutils-core is now optional unless you want to use ETableRecordBean
   * ETable: hasChanged is part of interface ETableRecord
