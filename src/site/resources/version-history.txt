@@ -44,10 +44,11 @@ major version changes (first number) are possibly not backwards compatible!
   * ETable: hasChanged is part of interface ETableRecord
   * ETable: generified last classes
   * javassist is now optional but if not included the component interfaces do not permit safe access from any thread
- * 2.0.1 (not released)
+ * 2.1.0 (not released)
   * ETable: Boolean editor centered
   * Color renderer is now small circle
   * ETable, ETreeTable: setting locale, renderers react to changes, field being edited reacts after commit
   * ETreeTable: bug (nullpointer) fixed
   * EList: setting locale
   * ETreeTable: nodes can be lazy initialized just like ETree
+  * EList: drag-and-drop (internal/intra jvm as objects or as string)
