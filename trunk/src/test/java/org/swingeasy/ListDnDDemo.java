@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import javax.activation.DataHandler;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
@@ -75,6 +76,11 @@ public class ListDnDDemo {
         }
 
         @SuppressWarnings("unchecked")
+        protected Collection<T> castDataCollection(Object obj) {
+            return (Collection<T>) obj;
+        }
+
+        @SuppressWarnings("unchecked")
         protected EList<T> castEList(JComponent comp) {
             return (EList<T>) comp;
         }
@@ -88,8 +94,11 @@ public class ListDnDDemo {
         protected Transferable createTransferable(JComponent comp) {
             EList<T> elist = this.castEList(comp);
             Collection<EListRecord<T>> records = elist.getSelectedRecords();
-            // return new DelegatingTransferable(new DataHandler(records, DataFlavor.javaJVMLocalObjectMimeType), new StringSelection("bah"));
-            return new StringSelection("bah");
+            Collection<T> data = new ArrayList<T>();
+            for (EListRecord<T> record : records) {
+                data.add(record.get());
+            }
+            return new DelegatingTransferable(new DataHandler(data, DataFlavor.javaJVMLocalObjectMimeType), new StringSelection(String.valueOf(data)));
         }
 
         @Override
@@ -104,9 +113,11 @@ public class ListDnDDemo {
         @Override
         public boolean importData(JComponent comp, Transferable t) {
             EList<T> elist = this.castEList(comp);
-            Collection<EListRecord<T>> records;
+            Collection<EListRecord<T>> records = new ArrayList<EListRecord<T>>();
             try {
-                records = this.castEListRecordCollection(t.getTransferData(t.getTransferDataFlavors()[0]));
+                for (T data : this.castDataCollection(t.getTransferData(t.getTransferDataFlavors()[0]))) {
+                    records.add(new EListRecord<T>(data));
+                }
             } catch (UnsupportedFlavorException ex) {
                 throw new RuntimeException(ex);
             } catch (IOException ex) {
