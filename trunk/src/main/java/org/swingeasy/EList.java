@@ -139,6 +139,10 @@ public class EList<T> extends JList implements EListI<T> {
         elistModel.filtercomponent = null;
         this.delegatingListCellRenderer = new DelegatingListCellRenderer(this.getCellRenderer());
         this.setCellRenderer(this.delegatingListCellRenderer);
+
+        // drag and drop test jvm internally, intra jvm, tostring
+        this.setDragEnabled(true);
+        this.setTransferHandler(new EListTransferHandler<T>());
     }
 
     /**
