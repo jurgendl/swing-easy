@@ -42,6 +42,7 @@ public class TreeDemo {
             frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             ETree<String> tree = new ETree<String>(new DummyNode());
             frame.getContentPane().add(new JScrollPane(tree), BorderLayout.CENTER);
+            frame.getContentPane().add(tree.getSearchComponent(), BorderLayout.NORTH);
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
