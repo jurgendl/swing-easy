@@ -53,4 +53,5 @@ major version changes (first number) are possibly not backwards compatible!
   * ETreeTable: nodes can be lazy initialized just like ETree
   * EList: drag-and-drop (internal/intra jvm as objects or as string)
  * 2.1.1 (not released)
+  * ETree: search component and methods
  * 2.2.0 (not released)

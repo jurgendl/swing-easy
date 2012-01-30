@@ -4,12 +4,17 @@ import java.util.Locale;
 
 import javax.swing.JTree;
 import javax.swing.ToolTipManager;
+import javax.swing.tree.TreePath;
+
+import ca.odell.glazedlists.matchers.Matcher;
 
 /**
  * @author Jurgen
  */
 public class ETree<T> extends JTree implements ETreeI<T> {
     private static final long serialVersionUID = -2866936668266217327L;
+
+    private ETreeSearchComponent<T> searchComponent = null;
 
     protected ETree() {
         this(new ETreeNode<T>(null));
@@ -32,6 +37,42 @@ public class ETree<T> extends JTree implements ETreeI<T> {
 
     public ETree(ETreeNode<T> rootNode) {
         this(new ETreeConfig(), rootNode);
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.ETreeI#getNextMatch(TreePath, String)
+     */
+    @Override
+    public TreePath getNextMatch(TreePath current, Matcher<T> matcher) {
+        int startingRow = this.getRowForPath(current) + 1;
+        int max = this.getRowCount();
+        if ((startingRow < 0) || (startingRow >= max)) {
+            throw new IllegalArgumentException();
+        }
+        int row = startingRow;
+        do {
+            TreePath path = this.getPathForRow(row);
+            @SuppressWarnings("unchecked")
+            ETreeNode<T> treeNode = (ETreeNode<T>) path.getLastPathComponent();
+            @SuppressWarnings("unchecked")
+            T t = (T) treeNode.getUserObject();
+            if (matcher.matches(t)) {
+                return path;
+            }
+            row = (row + 1 + max) % max;
+        } while (row != startingRow);
+        return null;
+    }
+
+    /**
+     * returns and creates if necessary {@link ETreeSearchComponent}
+     */
+    public ETreeSearchComponent<T> getSearchComponent() {
+        if (this.searchComponent == null) {
+            this.searchComponent = new ETreeSearchComponent<T>(this);
+        }
+        return this.searchComponent;
     }
 
     /**
