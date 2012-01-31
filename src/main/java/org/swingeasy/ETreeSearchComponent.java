@@ -69,13 +69,26 @@ public class ETreeSearchComponent<T> extends JComponent {
         }
         final Pattern pattern = Pattern.compile(this.input.getText(), Pattern.CASE_INSENSITIVE);
         ETreeI<T> stsi = this.eTree.stsi();
-        TreePath nextMatch = stsi.getNextMatch(current, new Matcher<T>() {
-            @Override
-            public boolean matches(T item) {
-                return pattern.matcher(String.valueOf(item)).find();
-            }
-        });
-        stsi.expandPath(nextMatch);
-        stsi.setSelectionPath(nextMatch);
+        TreePath nextMatch;
+        try {
+            nextMatch = stsi.getNextMatch(current, new Matcher<T>() {
+                @Override
+                public boolean matches(T item) {
+                    return pattern.matcher(String.valueOf(item)).find();
+                }
+            });
+        } catch (IllegalArgumentException ex) {
+            current = new TreePath(this.eTree.getModel().getRoot());
+            nextMatch = stsi.getNextMatch(current, new Matcher<T>() {
+                @Override
+                public boolean matches(T item) {
+                    return pattern.matcher(String.valueOf(item)).find();
+                }
+            });
+        }
+        if (nextMatch != null) {
+            stsi.expandPath(nextMatch);
+            stsi.setSelectionPath(nextMatch);
+        }
     }
 }

@@ -41,6 +41,15 @@ public class ETree<T> extends JTree implements ETreeI<T> {
 
     /**
      * 
+     * @see javax.swing.JTree#expandPath(javax.swing.tree.TreePath)
+     */
+    @Override
+    public void expandPath(TreePath path) {
+        super.expandPath(path);
+    }
+
+    /**
+     * 
      * @see org.swingeasy.ETreeI#getNextMatch(TreePath, String)
      */
     @Override
@@ -85,6 +94,7 @@ public class ETree<T> extends JTree implements ETreeI<T> {
         try {
             return EventThreadSafeWrapper.getSimpleThreadSafeInterface(ETree.class, this, ETreeI.class);
         } catch (Exception ex) {
+            System.err.println("javassist error");
             System.err.println(ex);
             return this; // no javassist
         }
@@ -98,6 +108,15 @@ public class ETree<T> extends JTree implements ETreeI<T> {
     public void setLocale(Locale l) {
         super.setLocale(l);
         this.repaint();
+    }
+
+    /**
+     * 
+     * @see javax.swing.JTree#setSelectionPath(javax.swing.tree.TreePath)
+     */
+    @Override
+    public void setSelectionPath(TreePath path) {
+        super.setSelectionPath(path);
     }
 
     /**
