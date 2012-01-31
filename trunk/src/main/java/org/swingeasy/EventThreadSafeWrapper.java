@@ -86,6 +86,12 @@ public class EventThreadSafeWrapper {
         } catch (IllegalAccessException ex) {
             ex.printStackTrace();
             throw new RuntimeException(ex);
+        } catch (RuntimeException ex) {
+            ex.printStackTrace();
+            throw ex;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            throw new RuntimeException(ex);
         }
         ((ProxyObject) proxy).setHandler(mi);
         return componentClass.cast(proxy);
