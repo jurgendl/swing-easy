@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 import javax.swing.tree.TreePath;
@@ -53,7 +54,7 @@ public class ETreeSearchComponent<T> extends JComponent {
             }
         });
         this.add(commit, BorderLayout.EAST);
-        JLabel label = new JLabel("Search:");
+        JLabel label = new JLabel("Search" + ":");
         this.add(label, BorderLayout.WEST);
     }
 
@@ -89,6 +90,8 @@ public class ETreeSearchComponent<T> extends JComponent {
         if (nextMatch != null) {
             stsi.expandPath(nextMatch);
             stsi.setSelectionPath(nextMatch);
+        } else {
+            JOptionPane.showMessageDialog(this, "No match", "Search match", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 }
