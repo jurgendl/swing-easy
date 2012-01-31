@@ -107,6 +107,6 @@ public class ETreeNode<T> extends DefaultMutableTreeNode {
      */
     @Override
     public String toString() {
-        return this.getUserObject().toString() + "=" + this.isInitialized(); //$NON-NLS-1$
+        return String.valueOf(this.getUserObject()) + "=" + this.isInitialized(); //$NON-NLS-1$
     }
 }
