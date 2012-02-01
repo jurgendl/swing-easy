@@ -21,20 +21,25 @@ import ca.odell.glazedlists.matchers.Matcher;
 /**
  * @author Jurgen
  */
-public class ETreeSearchComponent<T> extends JComponent {
+public class ETreeSearchComponent<T> extends JComponent implements Matcher<T> {
     /** serialVersionUID */
     private static final long serialVersionUID = 5196244125968828897L;
 
     protected final ETree<T> eTree;
 
+    protected final ETreeI<T> sTree;
+
     protected JTextComponent input;
+
+    protected Pattern pattern = null;
 
     public ETreeSearchComponent(ETree<T> eTree) {
         this.eTree = eTree;
-        this.init();
+        this.sTree = eTree.stsi();
+        this.createComponent();
     }
 
-    protected void init() {
+    protected void createComponent() {
         this.setLayout(new BorderLayout());
         this.input = new JTextField();
         this.input.setBorder(null);
@@ -54,7 +59,6 @@ public class ETreeSearchComponent<T> extends JComponent {
             @Override
             public void actionPerformed(ActionEvent e) {
                 ETreeSearchComponent.this.search();
-
             }
         });
         this.add(commit, BorderLayout.EAST);
@@ -62,45 +66,51 @@ public class ETreeSearchComponent<T> extends JComponent {
         this.add(label, BorderLayout.WEST);
     }
 
+    /**
+     * 
+     * @see ca.odell.glazedlists.matchers.Matcher#matches(java.lang.Object)
+     */
+    @Override
+    public boolean matches(T item) {
+        return this.pattern.matcher(String.valueOf(item)).find();
+    }
+
+    protected TreePath nextMatchTryTop() {
+        try {
+            TreePath current = this.sTree.getSelectedOrTopNodePath();
+            return this.sTree.getNextMatch(current, this);
+        } catch (IllegalArgumentException ex1) {
+            try {
+                TreePath current = this.sTree.getTopNodePath();
+                return this.sTree.getNextMatch(current, this);
+            } catch (IllegalArgumentException ex2) {
+                return null;
+            }
+        }
+    }
+
+    protected void onMatch(TreePath nextMatch) {
+        this.eTree.scrollPathToVisible(nextMatch);
+        this.sTree.setSelectionPath(nextMatch);
+    }
+
+    protected void onNoMatch() {
+        String message = Messages.getString("ETree.SearchComponent.nomatch");//$NON-NLS-1$
+        String title = Messages.getString("ETree.SearchComponent.searchmatch");//$NON-NLS-1$
+        JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
+    }
+
     protected void search() {
         String text = this.input.getText();
         if (text.length() == 0) {
             return;
         }
-        TreePath current;
-        try {
-            current = this.eTree.getSelectionPath();
-            if (current == null) {
-                throw new NullPointerException();
-            }
-        } catch (Exception ex) {
-            current = new TreePath(this.eTree.getModel().getRoot());
-        }
-        final Pattern pattern = Pattern.compile(text, Pattern.CASE_INSENSITIVE);
-        ETreeI<T> stsi = this.eTree.stsi();
-        TreePath nextMatch;
-        try {
-            nextMatch = stsi.getNextMatch(current, new Matcher<T>() {
-                @Override
-                public boolean matches(T item) {
-                    return pattern.matcher(String.valueOf(item)).find();
-                }
-            });
-        } catch (IllegalArgumentException ex) {
-            current = new TreePath(this.eTree.getModel().getRoot());
-            nextMatch = stsi.getNextMatch(current, new Matcher<T>() {
-                @Override
-                public boolean matches(T item) {
-                    return pattern.matcher(String.valueOf(item)).find();
-                }
-            });
-        }
+        this.pattern = Pattern.compile(text, Pattern.CASE_INSENSITIVE);
+        TreePath nextMatch = this.nextMatchTryTop();
         if (nextMatch != null) {
-            stsi.setSelectionPath(nextMatch);
+            this.onMatch(nextMatch);
         } else {
-            String message = Messages.getString("ETree.SearchComponent.nomatch");//$NON-NLS-1$
-            String title = Messages.getString("ETree.SearchComponent.searchmatch");//$NON-NLS-1$
-            JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
+            this.onNoMatch();
         }
     }
 }

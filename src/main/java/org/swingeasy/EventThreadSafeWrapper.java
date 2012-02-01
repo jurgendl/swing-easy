@@ -15,12 +15,12 @@ import javax.swing.SwingUtilities;
 /**
  * @author Jurgen
  */
-public class EventThreadSafeWrapper {
+public class EventThreadSafeWrapper<C> implements MethodHandler {
     public static interface EventSafe {
         //
     }
 
-    private static class ValueHolder<T> {
+    protected class ValueHolder<T> {
         private T value;
 
         public ValueHolder() {
@@ -36,50 +36,38 @@ public class EventThreadSafeWrapper {
         if (component instanceof EventSafe) {
             return component;
         }
-        ProxyFactory f = new ProxyFactory();
-        f.setSuperclass(componentClass);
-        f.setInterfaces(new Class[] { interfaced, EventSafe.class });
-        final List<String> interfacedMethods = new ArrayList<String>();
+
+        return new EventThreadSafeWrapper<C>(componentClass, component, interfaced).createProxy();
+    }
+
+    protected final List<String> interfacedMethods;
+
+    protected final C component;
+
+    protected final ProxyFactory factory;
+
+    protected final Class<C> componentClass;
+
+    protected C proxy;
+
+    protected <I> EventThreadSafeWrapper(final Class<C> componentClass, final C component, final Class<I> interfaced) {
+        this.component = component;
+        this.componentClass = componentClass;
+        this.factory = new ProxyFactory();
+        this.factory.setSuperclass(componentClass);
+        this.factory.setInterfaces(new Class[] { interfaced, EventSafe.class });
+        this.interfacedMethods = new ArrayList<String>();
         for (Method method : interfaced.getDeclaredMethods()) {
             String sig = method.getReturnType() + " " + method.getName() + "(" + Arrays.toString(method.getParameterTypes()) + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            interfacedMethods.add(sig);
+            this.interfacedMethods.add(sig);
         }
-        MethodHandler mi = new MethodHandler() {
-            @Override
-            public Object invoke(final Object self, final Method method, final Method proceed, final Object[] args) throws Throwable {
-                String sig = method.getReturnType() + " " + method.getName() + "(" + Arrays.toString(method.getParameterTypes()) + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                boolean interfacedMethod = interfacedMethods.contains(sig);
-                if (!interfacedMethod) {
-                    return method.invoke(component, args);
-                }
-                boolean edt = SwingUtilities.isEventDispatchThread();
-                if (edt) {
-                    return method.invoke(component, args);
-                }
-                final ValueHolder<Object> returnValue = new ValueHolder<Object>(Void.TYPE);
-                final ValueHolder<Throwable> exceptionThrown = new ValueHolder<Throwable>();
-                Runnable doRun = new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            returnValue.value = method.invoke(component, args);
-                        } catch (InvocationTargetException ex) {
-                            exceptionThrown.value = ex.getTargetException();
-                        } catch (Exception ex) {
-                            exceptionThrown.value = ex;
-                        }
-                    }
-                };
-                SwingUtilities.invokeAndWait(doRun);
-                if (exceptionThrown.value != null) {
-                    throw exceptionThrown.value;
-                }
-                return returnValue.value;
-            }
-        };
-        Object proxy;
+    }
+
+    protected C createProxy() {
         try {
-            proxy = f.createClass().newInstance();
+            this.proxy = this.componentClass.cast(this.factory.createClass().newInstance());
+            ((ProxyObject) this.proxy).setHandler(this);
+            return this.proxy;
         } catch (InstantiationException ex) {
             ex.printStackTrace();
             throw new RuntimeException(ex);
@@ -93,7 +81,51 @@ public class EventThreadSafeWrapper {
             ex.printStackTrace();
             throw new RuntimeException(ex);
         }
-        ((ProxyObject) proxy).setHandler(mi);
-        return componentClass.cast(proxy);
+    }
+
+    /**
+     * 
+     * @see javassist.util.proxy.MethodHandler#invoke(java.lang.Object, java.lang.reflect.Method, java.lang.reflect.Method, java.lang.Object[])
+     */
+    @Override
+    public Object invoke(final Object self, final Method method, final Method proceed, final Object[] args) throws Throwable {
+        String sig = method.getReturnType() + " " + method.getName() + "(" + Arrays.toString(method.getParameterTypes()) + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+        boolean interfacedMethod = this.interfacedMethods.contains(sig);
+        if (!interfacedMethod) {
+            return method.invoke(this.component, args);
+        }
+        boolean edt = SwingUtilities.isEventDispatchThread();
+        if (edt) {
+            try {
+                return method.invoke(this.component, args);
+            } catch (InvocationTargetException ex) {
+                ex.printStackTrace();
+                throw ex.getTargetException();
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                throw ex;
+            }
+        }
+        final ValueHolder<Throwable> exceptionThrown = new ValueHolder<Throwable>();
+        final ValueHolder<Object> returnValue = new ValueHolder<Object>(Void.TYPE);
+        Runnable doRun = new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    returnValue.value = method.invoke(EventThreadSafeWrapper.this.component, args);
+                } catch (InvocationTargetException ex) {
+                    ex.printStackTrace();
+                    exceptionThrown.value = ex.getTargetException();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    exceptionThrown.value = ex;
+                }
+            }
+        };
+        SwingUtilities.invokeAndWait(doRun);
+        if (exceptionThrown.value != null) {
+            throw exceptionThrown.value;
+        }
+        return returnValue.value;
     }
 }
