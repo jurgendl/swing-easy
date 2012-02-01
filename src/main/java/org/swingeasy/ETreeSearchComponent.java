@@ -96,7 +96,6 @@ public class ETreeSearchComponent<T> extends JComponent {
             });
         }
         if (nextMatch != null) {
-            stsi.expandPath(nextMatch);
             stsi.setSelectionPath(nextMatch);
         } else {
             String message = Messages.getString("ETree.SearchComponent.nomatch");//$NON-NLS-1$
