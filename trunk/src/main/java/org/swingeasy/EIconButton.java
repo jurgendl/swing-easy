@@ -9,7 +9,7 @@ import javax.swing.JButton;
 /**
  * @author Jurgen
  */
-public class EIconButton extends JButton {
+public class EIconButton extends JButton implements EComponentI {
     /** serialVersionUID */
     private static final long serialVersionUID = -6193067407274776197L;
 

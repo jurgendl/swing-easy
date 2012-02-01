@@ -54,4 +54,5 @@ major version changes (first number) are possibly not backwards compatible!
   * EList: drag-and-drop (internal/intra jvm as objects or as string)
  * 2.1.1 (not released)
   * ETree: search component and methods
+  * initial release of EIconButton
  * 2.2.0 (not released)
