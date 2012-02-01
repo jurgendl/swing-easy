@@ -94,7 +94,7 @@ public class ETree<T> extends JTree implements ETreeI<T> {
         try {
             return EventThreadSafeWrapper.getSimpleThreadSafeInterface(ETree.class, this, ETreeI.class);
         } catch (Exception ex) {
-            System.err.println("javassist error");
+            System.err.println("javassist error"); //$NON-NLS-1$
             System.err.println(ex);
             return this; // no javassist
         }

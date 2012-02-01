@@ -15,10 +15,11 @@ public class Messages {
         try {
             return Messages.RESOURCE_BUNDLE.getString(key);
         } catch (MissingResourceException e) {
-            return '!' + key + '!';
+            return key;
         }
     }
 
     private Messages() {
+        super();
     }
 }
