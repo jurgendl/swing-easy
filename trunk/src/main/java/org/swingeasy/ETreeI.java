@@ -27,4 +27,8 @@ public interface ETreeI<T> {
      * @see JTree#setSelectionPath(TreePath)
      */
     public abstract void setSelectionPath(TreePath nextMatch);
+
+    public abstract TreePath getTopNodePath();
+
+    public abstract TreePath getSelectedOrTopNodePath();
 }

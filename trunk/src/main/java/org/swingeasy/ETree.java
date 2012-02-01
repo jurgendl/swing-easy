@@ -85,6 +85,19 @@ public class ETree<T> extends JTree implements ETreeI<T> {
     }
 
     /**
+     * 
+     * @see org.swingeasy.ETreeI#getSelectedOrTopNodePath()
+     */
+    @Override
+    public TreePath getSelectedOrTopNodePath() {
+        try {
+            return this.getSelectionPath();
+        } catch (Exception ex) {
+            return this.getTopNodePath();
+        }
+    }
+
+    /**
      * JDOC
      * 
      * @return
@@ -98,6 +111,15 @@ public class ETree<T> extends JTree implements ETreeI<T> {
             System.err.println(ex);
             return this; // no javassist
         }
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.ETreeI#getTopNodePath()
+     */
+    @Override
+    public TreePath getTopNodePath() {
+        return new TreePath(this.getModel().getRoot());
     }
 
     /**
