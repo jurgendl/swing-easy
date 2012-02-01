@@ -55,4 +55,5 @@ major version changes (first number) are possibly not backwards compatible!
  * 2.1.1 (not released)
   * ETree: search component and methods
   * initial release of EIconButton
+  * initial release of EventThreadTask (alternative for SwingWorker)
  * 2.2.0 (not released)
