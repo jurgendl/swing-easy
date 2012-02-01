@@ -594,12 +594,12 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable {
                     String filter = ETable.this.filtering.getFilterPopup().popupFilters.get(index);
 
                     if ((filter != null) && (filter.trim().length() > 0)) {
-                        headerValue += "<br/>" + "filter: '" + filter + "'";
+                        headerValue += "<br/>" + "filter: '" + filter + "'"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                     } else {
-                        headerValue += "<br/>" + "no filter";
+                        headerValue += "<br/>" + "no filter"; //$NON-NLS-1$ //$NON-NLS-2$
                     }
 
-                    headerValue += "<br/><br/>right click to edit filter<br/>enter to preview filter<br/>tab to accept filter";
+                    headerValue += "<br/><br/>right click to edit filter<br/>enter to preview filter<br/>tab to accept filter"; //$NON-NLS-1$
                 }
 
                 return "<html><body>" + headerValue + "</body></html>"; //$NON-NLS-1$ //$NON-NLS-2$
@@ -637,7 +637,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable {
         TableCellRenderer dr = super.getDefaultRenderer(columnClass);
         if (dr instanceof Component) {
             final Component c = Component.class.cast(dr);
-            this.addPropertyChangeListener("locale", new PropertyChangeListener() {
+            this.addPropertyChangeListener("locale", new PropertyChangeListener() { //$NON-NLS-1$
                 @Override
                 public void propertyChange(PropertyChangeEvent evt) {
                     c.setLocale(Locale.class.cast(evt.getNewValue()));

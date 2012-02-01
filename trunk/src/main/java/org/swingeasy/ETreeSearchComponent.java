@@ -1,6 +1,7 @@
 package org.swingeasy;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -36,6 +37,7 @@ public class ETreeSearchComponent<T> extends JComponent {
     protected void init() {
         this.setLayout(new BorderLayout());
         this.input = new JTextField();
+        this.input.setBorder(null);
         this.input.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -45,7 +47,9 @@ public class ETreeSearchComponent<T> extends JComponent {
             }
         });
         this.add(this.input, BorderLayout.CENTER);
-        JButton commit = new JButton("search");
+        JButton commit = new EIconButton(new Dimension(18, 18), Resources.getImageResource("find.png"));//$NON-NLS-1$
+        commit.setActionCommand("search");//$NON-NLS-1$
+        commit.setToolTipText(Messages.getString("ETree.SearchComponent.search"));//$NON-NLS-1$
         commit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -54,11 +58,15 @@ public class ETreeSearchComponent<T> extends JComponent {
             }
         });
         this.add(commit, BorderLayout.EAST);
-        JLabel label = new JLabel("Search" + ":");
+        JLabel label = new JLabel(Messages.getString("ETree.SearchComponent.search") + ": "); //$NON-NLS-1$ //$NON-NLS-2$
         this.add(label, BorderLayout.WEST);
     }
 
     protected void search() {
+        String text = this.input.getText();
+        if (text.length() == 0) {
+            return;
+        }
         TreePath current;
         try {
             current = this.eTree.getSelectionPath();
@@ -68,7 +76,7 @@ public class ETreeSearchComponent<T> extends JComponent {
         } catch (Exception ex) {
             current = new TreePath(this.eTree.getModel().getRoot());
         }
-        final Pattern pattern = Pattern.compile(this.input.getText(), Pattern.CASE_INSENSITIVE);
+        final Pattern pattern = Pattern.compile(text, Pattern.CASE_INSENSITIVE);
         ETreeI<T> stsi = this.eTree.stsi();
         TreePath nextMatch;
         try {
@@ -91,7 +99,9 @@ public class ETreeSearchComponent<T> extends JComponent {
             stsi.expandPath(nextMatch);
             stsi.setSelectionPath(nextMatch);
         } else {
-            JOptionPane.showMessageDialog(this, "No match", "Search match", JOptionPane.INFORMATION_MESSAGE);
+            String message = Messages.getString("ETree.SearchComponent.nomatch");//$NON-NLS-1$
+            String title = Messages.getString("ETree.SearchComponent.searchmatch");//$NON-NLS-1$
+            JOptionPane.showMessageDialog(this, message, title, JOptionPane.INFORMATION_MESSAGE);
         }
     }
 }

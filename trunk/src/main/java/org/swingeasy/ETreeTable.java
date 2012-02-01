@@ -95,7 +95,7 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI {
         TableCellRenderer dr = super.getDefaultRenderer(columnClass);
         if (dr instanceof Component) {
             final Component c = Component.class.cast(dr);
-            this.addPropertyChangeListener("locale", new PropertyChangeListener() {
+            this.addPropertyChangeListener("locale", new PropertyChangeListener() { //$NON-NLS-1$
                 @Override
                 public void propertyChange(PropertyChangeEvent evt) {
                     c.setLocale(Locale.class.cast(evt.getNewValue()));
