@@ -2,7 +2,7 @@
 
 = Version History =
 
-latest change: 2012-01-27
+latest change: 2012-02-06
 
 featured: downloads are available on the frontpage
 
@@ -44,7 +44,7 @@ major version changes (first number) are possibly not backwards compatible!
   * ETable: hasChanged is part of interface ETableRecord
   * ETable: generified last classes
   * javassist is now optional but if not included the component interfaces do not permit safe access from any thread
- * 2.1.0 (featured)
+ * 2.1.0
   * ETable: Boolean editor centered
   * Color renderer is now small circle
   * ETable, ETreeTable: setting locale, renderers react to changes, field being edited reacts after commit
@@ -52,8 +52,12 @@ major version changes (first number) are possibly not backwards compatible!
   * EList: setting locale
   * ETreeTable: nodes can be lazy initialized just like ETree
   * EList: drag-and-drop (internal/intra jvm as objects or as string)
- * 2.1.1 (not released)
+ * 2.2.0 (featured)
   * ETree: search component and methods
+  * EList: search component and methods
   * initial release of EIconButton
   * initial release of EventThreadTask (alternative for SwingWorker)
- * 2.2.0 (not released)
+  * easy localisation of JFileChooser, JOptionPane, JColorChooser
+  * eventthread task as alternative for SwingWorker
+ * 2.2.1 (not released)
+ * 2.3.0 (not released)
