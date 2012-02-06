@@ -52,5 +52,12 @@ major version changes (first number) are possibly not backwards compatible!
   * EList: setting locale
   * ETreeTable: nodes can be lazy initialized just like ETree
   * EList: drag-and-drop (internal/intra jvm as objects or as string)
- * 2.1.1 (not released)
  * 2.2.0 (not released)
+  * ETree: search component and methods
+  * EList: search component and methods
+  * initial release of EIconButton
+  * initial release of EventThreadTask (alternative for SwingWorker)
+  * easy localisation of JFileChooser, JOptionPane, JColorChooser
+  * eventthread task as alternative for SwingWorker
+ * 2.2.1 (not released)
+ * 2.3.0 (not released)
