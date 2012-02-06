@@ -9,9 +9,19 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.RoundRectangle2D;
+import java.util.Enumeration;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.MissingResourceException;
+import java.util.Properties;
+import java.util.PropertyResourceBundle;
+import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 
@@ -121,6 +131,28 @@ public class UIUtils {
         public void handle(Throwable t) {
             UncaughtExceptionHandlerDelegate.delegate.handle(t);
         }
+    }
+
+    public static final Locale DEFAULT_LOCALE;
+
+    static {
+        Locale defaultLocale;
+        try {
+            // (1) Java 1.7 compilable in Java 1.6 but gives Exception at runtimee so we can fall back to (2)
+            @SuppressWarnings("rawtypes")
+            Class type = Class.forName("java.util.Locale$Category");
+            @SuppressWarnings("unchecked")
+            Object enumvalue = Enum.valueOf(type, "FORMAT");
+            defaultLocale = Locale.class.cast(Locale.class.getMethod("getDefault", type).invoke(null, enumvalue));
+        } catch (Exception ex) {
+            // (2) Java 1.6 (gives wrong info in Java 1.7)
+            defaultLocale = Locale.getDefault();
+        }
+        DEFAULT_LOCALE = defaultLocale;
+    }
+
+    static {
+        UIUtils.setUILanguage(null);
     }
 
     /**
@@ -234,6 +266,79 @@ public class UIUtils {
         sharedInstance.setReshowDelay(10);
         sharedInstance.setInitialDelay(10);
         sharedInstance.setDismissDelay(20000);
+    }
+
+    public static final void setUILanguage(Locale locale) {
+        UIUtils.setUILanguage(locale, JOptionPane.class);
+        UIUtils.setUILanguage(locale, JFileChooser.class);
+    }
+
+    private static final void setUILanguage(Locale locale, Class<? extends JComponent> componentClass) {
+        String p1 = componentClass.getName().replace('.', '/') + ".keys.properties";
+        String p2 = componentClass.getName();
+        Locale p3 = locale == null ? UIUtils.DEFAULT_LOCALE : locale;
+        String p4 = componentClass.getSimpleName();
+        UIUtils.setUILanguage(p1, p2, p3, p4);
+    }
+
+    /**
+     * sets localization, expects a properties file with name {prefix}_{locale.toString()}.properties in the directory javax/swing; for all possible
+     * keys, see source documentation
+     * 
+     * @param resource
+     * @param baseName
+     * @param locale Locale
+     * @param prefix
+     */
+    private static final void setUILanguage(String resource, String baseName, Locale locale, String prefix) {
+        if (locale == null) {
+            locale = UIUtils.DEFAULT_LOCALE;
+        }
+
+        PropertyResourceBundle rb = (PropertyResourceBundle) ResourceBundle.getBundle(baseName, locale);
+
+        try {
+            Properties props = new Properties();
+            props.load(UIUtils.class.getClassLoader().getResourceAsStream(resource));
+
+            Set<String> missing = new HashSet<String>();
+
+            for (Object k : props.keySet()) {
+                String key = (String) k;
+                String type = props.getProperty(key);
+                String value = null;
+
+                try {
+                    value = rb.getString(key);
+                } catch (MissingResourceException ex) {
+                    //
+                }
+
+                if (key.startsWith(prefix + ".") && "String".equals(type)) {
+                    if (value == null) {
+                        missing.add(key);
+                    }
+                }
+            }
+
+            if (missing.size() > 0) {
+                System.err.println("missing translations for " + baseName + " for locale " + locale);
+
+                for (String key : missing) {
+                    System.err.println(key + "=" + UIManager.get(key));
+                }
+            }
+        } catch (Exception ex) {
+            // kon niet controleren
+            ex.printStackTrace();
+        }
+
+        final Enumeration<String> keys = rb.getKeys();
+
+        while (keys.hasMoreElements()) {
+            String key = keys.nextElement();
+            UIManager.put(key.toString(), rb.getString(key));
+        }
     }
 
     /**

@@ -10,6 +10,7 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Locale;
 
+import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
@@ -114,13 +115,15 @@ public class EList<T> extends JList implements EListI<T> {
         return model;
     }
 
-    protected final JTextField filtercomponent;
+    protected JComponent filtercomponent;
 
     protected EListConfig cfg;
 
     protected EventList<EListRecord<T>> records;
 
     protected DelegatingListCellRenderer delegatingListCellRenderer;
+
+    protected EListSearchComponent<T> searchComponent = null;
 
     /**
      * do not use, do not change access
@@ -186,7 +189,7 @@ public class EList<T> extends JList implements EListI<T> {
         }
     }
 
-    public JTextField getFiltercomponent() {
+    public JComponent getFiltercomponent() {
         return this.filtercomponent;
     }
 
@@ -197,6 +200,26 @@ public class EList<T> extends JList implements EListI<T> {
     @Override
     public EventList<EListRecord<T>> getRecords() {
         return this.records;
+    }
+
+    /**
+     * returns and creates if necessary {@link EListSearchComponent}
+     */
+    public EListSearchComponent<T> getSearchComponent() {
+        if (this.searchComponent == null) {
+            this.searchComponent = new EListSearchComponent<T>(this);
+        }
+        return this.searchComponent;
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EListI#getSelectedRecord()
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public EListRecord<T> getSelectedRecord() {
+        return (EListRecord<T>) this.getSelectedValue();
     }
 
     /**
