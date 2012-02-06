@@ -16,6 +16,8 @@ public interface EListI<T> extends EComponentI {
 
     public abstract EventList<EListRecord<T>> getRecords();
 
+    public abstract EListRecord<T> getSelectedRecord();
+
     public abstract Collection<EListRecord<T>> getSelectedRecords();
 
     public abstract void removeAllRecords();

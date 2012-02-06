@@ -14,7 +14,7 @@ import ca.odell.glazedlists.matchers.Matcher;
 public class ETree<T> extends JTree implements ETreeI<T> {
     private static final long serialVersionUID = -2866936668266217327L;
 
-    private ETreeSearchComponent<T> searchComponent = null;
+    protected ETreeSearchComponent<T> searchComponent = null;
 
     protected ETree() {
         this(new ETreeNode<T>(null));
