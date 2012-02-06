@@ -1,0 +1,9 @@
+localisation of dialogs etc
+
+        UIManager.put("OptionPane.okButtonText", ResourceBundle.getMessage("OptionPane.okButtonText"));
+        UIManager.put("OptionPane.yesButtonText", ResourceBundle.getMessage("OptionPane.yesButtonText"));
+        UIManager.put("OptionPane.noButtonText", ResourceBundle.getMessage("OptionPane.noButtonText"));
+        UIManager.put("OptionPane.cancelButtonText", ResourceBundle.getMessage("OptionPane.cancelButtonText"));
+        UIManager.put("OptionPane.inputDialogTitle", ResourceBundle.getMessage("OptionPane.inputDialogTitle"));
+        UIManager.put("OptionPane.messageDialogTitle", ResourceBundle.getMessage("OptionPane.messageDialogTitle"));
+        UIManager.put("OptionPane.Title", ResourceBundle.getMessage("OptionPane.Title"));
