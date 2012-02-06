@@ -18,6 +18,7 @@ import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import javax.swing.JColorChooser;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -26,7 +27,7 @@ import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 
 /**
- * @see http://java.sun.com/developer/technicalArticles/GUI/translucent_shaped_windows/
+ * @author Jurgen
  */
 public class UIUtils {
     /**
@@ -246,6 +247,8 @@ public class UIUtils {
 
     /**
      * sets rounded borders with arc of 20
+     * 
+     * @see http://java.sun.com/developer/technicalArticles/GUI/translucent_shaped_windows/
      */
     public static void rounded(Window w) {
         if (AWTUtilitiesWrapper.isTranslucencySupported(AWTUtilitiesWrapper.PERPIXEL_TRANSPARENT)) {
@@ -268,9 +271,27 @@ public class UIUtils {
         sharedInstance.setDismissDelay(20000);
     }
 
+    /**
+     * @see http://www.java2s.com/Tutorial/Java/0240__Swing/CustomizingaJFileChooserLookandFeel.htm
+     * @see http://www.java2s.com/Tutorial/Java/0240__Swing/CustomizingaJOptionPaneLookandFeel.htm
+     * @see http://www.java2s.com/Tutorial/Java/0240__Swing/CustomizingaJColorChooserLookandFeel.htm
+     */
     public static final void setUILanguage(Locale locale) {
         UIUtils.setUILanguage(locale, JOptionPane.class);
         UIUtils.setUILanguage(locale, JFileChooser.class);
+        UIUtils.setUILanguage(locale, JColorChooser.class);
+
+        // BufferedReader br = new BufferedReader(new InputStreamReader(ListInDialogDemo.class.getClassLoader().getResourceAsStream(
+        // "javax/swing/"+simpleClassName+".keys.properties")));
+        // String line;
+        // while ((line = br.readLine()) != null) {
+        // String key = line.split("\t")[0];
+        // try {
+        // System.out.println(key + "=" + UIManager.getString(key).toString());
+        // } catch (Exception ex) {
+        // //
+        // }
+        // }
     }
 
     private static final void setUILanguage(Locale locale, Class<? extends JComponent> componentClass) {
@@ -354,6 +375,8 @@ public class UIUtils {
 
     /**
      * sets translucency with default value of .93
+     * 
+     * @see http://java.sun.com/developer/technicalArticles/GUI/translucent_shaped_windows/
      */
     public static void translucent(Window w) {
         UIUtils.translucent(w, .93f);
@@ -361,6 +384,8 @@ public class UIUtils {
 
     /**
      * sets window translucency value
+     * 
+     * @see http://java.sun.com/developer/technicalArticles/GUI/translucent_shaped_windows/
      */
     @SuppressWarnings("restriction")
     public static void translucent(Window w, Float f) {
