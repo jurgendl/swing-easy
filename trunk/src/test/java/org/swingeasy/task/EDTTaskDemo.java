@@ -1,4 +1,4 @@
-package org.swingeasy.tast;
+package org.swingeasy.task;
 
 import javax.swing.JFrame;
 import javax.swing.SwingWorker;
