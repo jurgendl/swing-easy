@@ -8,7 +8,7 @@ import ca.odell.glazedlists.matchers.Matcher;
 /**
  * @author Jurgen
  */
-public interface ETreeI<T> {
+public interface ETreeI<T> extends EComponentI {
     /**
      * @see JTree#expandPath(TreePath)
      */
@@ -23,12 +23,12 @@ public interface ETreeI<T> {
      */
     public abstract TreePath getNextMatch(TreePath current, Matcher<T> matcher);
 
+    public abstract TreePath getSelectedOrTopNodePath();
+
+    public abstract TreePath getTopNodePath();
+
     /**
      * @see JTree#setSelectionPath(TreePath)
      */
     public abstract void setSelectionPath(TreePath nextMatch);
-
-    public abstract TreePath getTopNodePath();
-
-    public abstract TreePath getSelectedOrTopNodePath();
 }
