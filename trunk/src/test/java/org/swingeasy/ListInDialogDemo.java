@@ -55,8 +55,8 @@ public class ListInDialogDemo {
                 list.addRecord(new EListRecord<DemoValue>(new DemoValue(r.nextInt(1000))));
             }
 
-            ResultType returnValue = CustomizableOptionPane.showDialog(parent, container, "List selection", MessageType.QUESTION,
-                    OptionType.OK_CANCEL, parent.getIconImage() == null ? null : new ImageIcon(parent.getIconImage()), new OptionPaneCustomizer() {
+            ResultType returnValue = CustomizableOptionPane.showDialog(parent, container, "Demo", MessageType.QUESTION, OptionType.OK_CANCEL,
+                    parent.getIconImage() == null ? null : new ImageIcon(parent.getIconImage()), new OptionPaneCustomizer() {
                         @Override
                         public void customize(Component parentComponent, MessageType messageType, OptionType optionType, final JOptionPane pane,
                                 final JDialog dialog) {

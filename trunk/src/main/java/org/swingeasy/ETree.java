@@ -33,6 +33,8 @@ public class ETree<T> extends JTree implements ETreeI<T> {
 
         this.setEditable(true);
         this.setCellEditor(new ETreeNodeEditor());
+
+        this.setLocale(UIUtils.getCurrentLocale());
     }
 
     public ETree(ETreeNode<T> rootNode) {
@@ -80,6 +82,7 @@ public class ETree<T> extends JTree implements ETreeI<T> {
     public ETreeSearchComponent<T> getSearchComponent() {
         if (this.searchComponent == null) {
             this.searchComponent = new ETreeSearchComponent<T>(this);
+            this.searchComponent.setLocale(this.getLocale());
         }
         return this.searchComponent;
     }
@@ -129,6 +132,9 @@ public class ETree<T> extends JTree implements ETreeI<T> {
     @Override
     public void setLocale(Locale l) {
         super.setLocale(l);
+        if (this.searchComponent != null) {
+            this.searchComponent.setLocale(l);
+        }
         this.repaint();
     }
 

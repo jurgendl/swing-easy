@@ -136,6 +136,8 @@ public class UIUtils {
 
     public static final Locale DEFAULT_LOCALE;
 
+    public static Locale currentLocale;
+
     static {
         Locale defaultLocale;
         try {
@@ -150,6 +152,7 @@ public class UIUtils {
             defaultLocale = Locale.getDefault();
         }
         DEFAULT_LOCALE = defaultLocale;
+        UIUtils.currentLocale = UIUtils.DEFAULT_LOCALE;
     }
 
     static {
@@ -166,6 +169,10 @@ public class UIUtils {
             }
         }
         return null;
+    }
+
+    public static Locale getCurrentLocale() {
+        return UIUtils.currentLocale;
     }
 
     /**
@@ -259,6 +266,10 @@ public class UIUtils {
                 UIUtils.log(ex);
             }
         }
+    }
+
+    public static void setCurrentLocale(Locale currentLocale) {
+        UIUtils.currentLocale = currentLocale;
     }
 
     /**
