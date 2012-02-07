@@ -15,5 +15,7 @@ public class Wtf {
         UIUtils.setCurrentLocale(new Locale("tr", "TR"));
         System.out.println("\"windows\".toUpperCase().equals(\"WINDOWS\"): " + UIUtils.getCurrentLocale() + ": "
                 + "windows".toUpperCase().equals("WINDOWS") + " = WTF!");
+        System.out.println("                         equalsIgnoreCase: " + UIUtils.getCurrentLocale() + ": " + "windows".equalsIgnoreCase("WINDOWS")
+                + " = ouph!!!");
     }
 }
