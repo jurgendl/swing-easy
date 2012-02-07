@@ -134,10 +134,6 @@ public class UIUtils {
         }
     }
 
-    public static final Locale DEFAULT_LOCALE;
-
-    public static Locale currentLocale;
-
     static {
         Locale defaultLocale;
         try {
@@ -151,8 +147,7 @@ public class UIUtils {
             // (2) Java 1.6 (gives wrong info in Java 1.7)
             defaultLocale = Locale.getDefault();
         }
-        DEFAULT_LOCALE = defaultLocale;
-        UIUtils.currentLocale = UIUtils.DEFAULT_LOCALE;
+        Locale.setDefault(defaultLocale);
     }
 
     static {
@@ -172,7 +167,7 @@ public class UIUtils {
     }
 
     public static Locale getCurrentLocale() {
-        return UIUtils.currentLocale;
+        return Locale.getDefault();
     }
 
     /**
@@ -269,7 +264,7 @@ public class UIUtils {
     }
 
     public static void setCurrentLocale(Locale currentLocale) {
-        UIUtils.currentLocale = currentLocale;
+        Locale.setDefault(currentLocale);
     }
 
     /**
@@ -308,7 +303,7 @@ public class UIUtils {
     private static final void setUILanguage(Locale locale, Class<? extends JComponent> componentClass) {
         String p1 = componentClass.getName().replace('.', '/') + ".keys.properties";
         String p2 = componentClass.getName();
-        Locale p3 = locale == null ? UIUtils.DEFAULT_LOCALE : locale;
+        Locale p3 = locale == null ? UIUtils.getCurrentLocale() : locale;
         String p4 = componentClass.getSimpleName();
         UIUtils.setUILanguage(p1, p2, p3, p4);
     }
@@ -324,7 +319,7 @@ public class UIUtils {
      */
     private static final void setUILanguage(String resource, String baseName, Locale locale, String prefix) {
         if (locale == null) {
-            locale = UIUtils.DEFAULT_LOCALE;
+            locale = UIUtils.getCurrentLocale();
         }
 
         PropertyResourceBundle rb = (PropertyResourceBundle) ResourceBundle.getBundle(baseName, locale);
