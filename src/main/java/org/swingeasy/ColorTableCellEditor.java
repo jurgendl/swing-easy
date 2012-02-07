@@ -88,7 +88,7 @@ public class ColorTableCellEditor extends AbstractCellEditor implements TableCel
 
     public JDialog getDialog() {
         if (this.d == null) {
-            this.d = JColorChooser.createDialog(this.button, Messages.getString("ColorTableCellEditor.pickAColor"), true, // modal //$NON-NLS-1$
+            this.d = JColorChooser.createDialog(this.button, Messages.getString(null, "ColorTableCellEditor.pickAColor"), true, // modal //$NON-NLS-1$
                     this.getColorChooser(), this, // OK button handler
                     null); // no CANCEL button handler
             this.d.setLocale(this.locale);

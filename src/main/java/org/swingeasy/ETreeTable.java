@@ -49,6 +49,8 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI {
         this.setIntercellSpacing(new Dimension(0, 0));
         this.setRowHeight(18);
         this.addMouseListener(this);
+
+        this.setLocale(UIUtils.getCurrentLocale());
     }
 
     public ETreeTable(ETreeTableConfig cfg, ETreeTableRecordNode root, ETreeTableHeaders headers) {
@@ -96,11 +98,11 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI {
         if (dr instanceof Component) {
             final Component c = Component.class.cast(dr);
             this.addPropertyChangeListener("locale", new PropertyChangeListener() { //$NON-NLS-1$
-                @Override
-                public void propertyChange(PropertyChangeEvent evt) {
-                    c.setLocale(Locale.class.cast(evt.getNewValue()));
-                }
-            });
+                        @Override
+                        public void propertyChange(PropertyChangeEvent evt) {
+                            c.setLocale(Locale.class.cast(evt.getNewValue()));
+                        }
+                    });
         }
         return dr;
     }

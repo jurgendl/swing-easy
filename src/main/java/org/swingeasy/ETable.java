@@ -510,6 +510,8 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable {
         this.filtering.install();
         this.getTableHeader().setReorderingAllowed(this.cfg.isReorderable());
         this.getTableHeader().setResizingAllowed(this.cfg.isResizable());
+
+        this.setLocale(UIUtils.getCurrentLocale());
     }
 
     /**
@@ -638,11 +640,11 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable {
         if (dr instanceof Component) {
             final Component c = Component.class.cast(dr);
             this.addPropertyChangeListener("locale", new PropertyChangeListener() { //$NON-NLS-1$
-                @Override
-                public void propertyChange(PropertyChangeEvent evt) {
-                    c.setLocale(Locale.class.cast(evt.getNewValue()));
-                }
-            });
+                        @Override
+                        public void propertyChange(PropertyChangeEvent evt) {
+                            c.setLocale(Locale.class.cast(evt.getNewValue()));
+                        }
+                    });
         }
         return dr;
     }
