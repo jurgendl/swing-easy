@@ -1,8 +1,13 @@
 package org.swingeasy;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Random;
 
+import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -40,7 +45,7 @@ public class ListInDialogDemo {
             parent.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             parent.setVisible(true);
 
-            EList<DemoValue> list = new EList<DemoValue>(new EListConfig());
+            final EList<DemoValue> list = new EList<DemoValue>(new EListConfig());
             JPanel container = new JPanel(new BorderLayout());
             container.add(new JScrollPane(list), BorderLayout.CENTER);
             container.add(list.getSearchComponent(), BorderLayout.NORTH);
@@ -50,9 +55,23 @@ public class ListInDialogDemo {
                 list.addRecord(new EListRecord<DemoValue>(new DemoValue(r.nextInt(1000))));
             }
 
-            int returnValue = JOptionPane.showConfirmDialog(parent, container, "List selection", JOptionPane.WARNING_MESSAGE, JOptionPane.OK_OPTION);
-            System.out.println(returnValue);
-            System.out.println(list.getSelectedRecord());
+            ResultType returnValue = CustomizableOptionPane.showDialog(parent, container, "List selection", MessageType.QUESTION,
+                    OptionType.OK_CANCEL, parent.getIconImage() == null ? null : new ImageIcon(parent.getIconImage()), new OptionPaneCustomizer() {
+                        @Override
+                        public void customize(Component parentComponent, MessageType messageType, OptionType optionType, final JOptionPane pane,
+                                final JDialog dialog) {
+                            list.addMouseListener(new MouseAdapter() {
+                                @Override
+                                public void mouseClicked(MouseEvent e) {
+                                    if ((e.getClickCount() == 2) && (e.getButton() == MouseEvent.BUTTON1)) {
+                                        pane.setValue(new Integer(0));
+                                        dialog.dispose();
+                                    }
+                                }
+                            });
+                        }
+                    });
+            System.out.println(returnValue + ": " + list.getSelectedRecord());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
