@@ -11,7 +11,7 @@ import javax.swing.event.EventListenerList;
 /**
  * @author Jurgen
  */
-public class ListenerTest {
+public class ListenerDemo {
     private static class PropertyChangeListenerAdapter implements PropertyChangeListener {
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
@@ -84,7 +84,7 @@ public class ListenerTest {
         PropertyChangeListener l1 = new PropertyChangeListenerAdapter();
         PropertyChangeListener l2 = new WeakPropertyChangeListener<PropertyChangeListenerAdapter>(new PropertyChangeListenerAdapter());
         PropertyChangeListener weakproxy = WeakReferencedListener.wrap(PropertyChangeListener.class, new PropertyChangeListenerAdapter());
-        ListenerTest listenerTest = new ListenerTest();
+        ListenerDemo listenerTest = new ListenerDemo();
         listenerTest.addPropertyChangeListener(l1);
         listenerTest.addPropertyChangeListener(l2);
         System.out.println(weakproxy);
