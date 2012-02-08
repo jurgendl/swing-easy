@@ -58,7 +58,9 @@ major version changes (first number) are possibly not backwards compatible!
   * initial release of EIconButton
   * initial release of EventThreadTask (alternative for SwingWorker)
   * easy localization of JFileChooser, JOptionPane, JColorChooser
-  * eventthread task as alternative for SwingWorker
+  * EventThreadTask as alternative for SwingWorker, see other classes
  * 2.2.1 (featured)
-  * component localization, dynamic, including JFileChooser, JOptionPane, JColorChooser
+  * initial release of PropertyChangeParent implementing all methods (also used for dynamic component localization)
+  * initial release of WeakReferencedListener (also used for dynamic component localization)
+  * localization redone: dynamic component localization including JFileChooser, JOptionPane, JColorChooser via UIUtils (all EComponents are registered by default; JComponents are supported)
  * 2.3.0 (not released)
