@@ -43,7 +43,7 @@ public class ECheckBoxTree<T> extends JTree implements ECheckBoxTreeI<T> {
 
         ToolTipManager.sharedInstance().registerComponent(this);
 
-        this.setLocale(UIUtils.getCurrentLocale());
+        UIUtils.registerLocaleChangeListener(this);
     }
 
     public ECheckBoxTree(ECheckBoxTreeNode<T> root) {

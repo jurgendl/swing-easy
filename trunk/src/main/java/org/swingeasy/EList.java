@@ -147,7 +147,7 @@ public class EList<T> extends JList implements EListI<T> {
         this.setDragEnabled(true);
         this.setTransferHandler(new EListTransferHandler<T>());
 
-        this.setLocale(UIUtils.getCurrentLocale());
+        UIUtils.registerLocaleChangeListener(this);
     }
 
     /**
@@ -304,12 +304,6 @@ public class EList<T> extends JList implements EListI<T> {
     public void setLocale(Locale l) {
         super.setLocale(l);
         this.delegatingListCellRenderer.setLocale(l);
-        if (this.filtercomponent != null) {
-            this.filtercomponent.setLocale(l);
-        }
-        if (this.searchComponent != null) {
-            this.searchComponent.setLocale(l);
-        }
         this.repaint();
     }
 

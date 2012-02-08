@@ -50,7 +50,7 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI {
         this.setRowHeight(18);
         this.addMouseListener(this);
 
-        this.setLocale(UIUtils.getCurrentLocale());
+        UIUtils.registerLocaleChangeListener(this);
     }
 
     public ETreeTable(ETreeTableConfig cfg, ETreeTableRecordNode root, ETreeTableHeaders headers) {

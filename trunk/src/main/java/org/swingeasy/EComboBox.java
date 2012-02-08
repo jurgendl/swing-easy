@@ -84,7 +84,8 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T> {
         if (this.cfg.isScrolling()) {
             this.activateScrolling();
         }
-        this.setLocale(UIUtils.getCurrentLocale());
+
+        UIUtils.registerLocaleChangeListener(this);
     }
 
     /**

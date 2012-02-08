@@ -2,9 +2,16 @@ package org.swingeasy;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Date;
+import java.util.Locale;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
@@ -25,9 +32,36 @@ public class ListDemo2 {
                     new JScrollPane(cc, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED),
                     BorderLayout.CENTER);
             f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            f.setVisible(true);
             cc = cc.stsi();
             f.setSize(200, 200);
+            {
+                JPanel jp = new JPanel(new FlowLayout());
+                ButtonGroup bg = new ButtonGroup();
+                {
+                    JRadioButton jrben = new JRadioButton("en");
+                    bg.add(jrben);
+                    jrben.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            UIUtils.setCurrentLocale(Locale.ENGLISH);
+                        }
+                    });
+                    jp.add(jrben);
+                }
+                {
+                    JRadioButton jrbnl = new JRadioButton("nl");
+                    bg.add(jrbnl);
+                    jrbnl.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            UIUtils.setCurrentLocale(new Locale("nl"));
+                        }
+                    });
+                    jp.add(jrbnl);
+                }
+                f.getContentPane().add(jp, BorderLayout.NORTH);
+            }
+            f.setVisible(true);
         }
         cc.addRecord(new EListRecord<Date>(new Date()));
         cc.addRecord(new EListRecord<Color>(Color.red));
