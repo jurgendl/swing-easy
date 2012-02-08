@@ -9,7 +9,9 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -22,6 +24,7 @@ public class ListDemo2 {
     @SuppressWarnings("unchecked")
     public static void main(String[] args) {
         UIUtils.niceLookAndFeel();
+        UIUtils.setCurrentLocale(Locale.ENGLISH);
         EListConfig cfg = new EListConfig();
         cfg.setSortable(false);
         @SuppressWarnings("rawtypes")
@@ -47,6 +50,7 @@ public class ListDemo2 {
                         }
                     });
                     jp.add(jrben);
+                    jrben.setSelected(true);
                 }
                 {
                     JRadioButton jrbnl = new JRadioButton("nl");
@@ -60,6 +64,17 @@ public class ListDemo2 {
                     jp.add(jrbnl);
                 }
                 f.getContentPane().add(jp, BorderLayout.NORTH);
+            }
+            {
+                JButton btn = new JButton("non localized - dialog");
+                btn.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        CustomizableOptionPane.showDialog(null, new JLabel("non localized - dialogcomponent"), "non localized - title",
+                                MessageType.QUESTION, OptionType.YES_NO_CANCEL, null, null);
+                    }
+                });
+                f.getContentPane().add(btn, BorderLayout.SOUTH);
             }
             f.setVisible(true);
         }
