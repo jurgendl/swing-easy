@@ -82,7 +82,7 @@ public class TableDemo {
                 @Override
                 public void propertyChange(PropertyChangeEvent evt) {
                     Locale l = new Locale(String.valueOf(evt.getNewValue()));
-                    safetable.setLocale(l);
+                    UIUtils.setCurrentLocale(l);
                 }
             });
             frame.getContentPane().add(localepanel, BorderLayout.NORTH);
