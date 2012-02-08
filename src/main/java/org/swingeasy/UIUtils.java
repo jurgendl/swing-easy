@@ -9,6 +9,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.geom.RoundRectangle2D;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Locale;
@@ -29,7 +31,7 @@ import javax.swing.UIManager;
 /**
  * @author Jurgen
  */
-public class UIUtils {
+public class UIUtils extends PropertyChangeParent {
     /**
      * {@link MouseListener} that moves around a {@link Window} when dragged
      */
@@ -134,6 +136,9 @@ public class UIUtils {
         }
     }
 
+    /** "locale" */
+    public static final String LOCALE = "locale";
+
     static {
         Locale defaultLocale;
         try {
@@ -152,6 +157,12 @@ public class UIUtils {
 
     static {
         UIUtils.setUILanguage(null);
+    }
+
+    protected static final UIUtils singleton;
+
+    static {
+        singleton = new UIUtils();
     }
 
     /**
@@ -212,6 +223,23 @@ public class UIUtils {
         });
     }
 
+    public static void registerLocaleChangeListener(final JComponent component) {
+        component.setLocale(UIUtils.getCurrentLocale());
+
+        UIUtils.singleton.addPropertyChangeListener(UIUtils.LOCALE,
+                WeakReferencedListener.wrap(PropertyChangeListener.class, new PropertyChangeListener() {
+                    @Override
+                    public void propertyChange(PropertyChangeEvent evt) {
+                        component.setLocale(Locale.class.cast(evt.getNewValue()));
+                    }
+
+                    @Override
+                    public String toString() {
+                        return "PropertyChangeListener[" + UIUtils.LOCALE + "]@" + Integer.toHexString(this.hashCode());
+                    }
+                }));
+    }
+
     /**
      * register uncaught exception handler
      */
@@ -264,7 +292,10 @@ public class UIUtils {
     }
 
     public static void setCurrentLocale(Locale currentLocale) {
+        Locale oldLocale = Locale.getDefault();
         Locale.setDefault(currentLocale);
+        UIUtils.setUILanguage(currentLocale);
+        UIUtils.singleton.firePropertyChange(UIUtils.LOCALE, oldLocale, currentLocale);
     }
 
     /**
@@ -282,7 +313,7 @@ public class UIUtils {
      * @see http://www.java2s.com/Tutorial/Java/0240__Swing/CustomizingaJOptionPaneLookandFeel.htm
      * @see http://www.java2s.com/Tutorial/Java/0240__Swing/CustomizingaJColorChooserLookandFeel.htm
      */
-    public static final void setUILanguage(Locale locale) {
+    private static final void setUILanguage(Locale locale) {
         UIUtils.setUILanguage(locale, JOptionPane.class);
         UIUtils.setUILanguage(locale, JFileChooser.class);
         UIUtils.setUILanguage(locale, JColorChooser.class);
@@ -402,5 +433,12 @@ public class UIUtils {
                 UIUtils.log(ex);
             }
         }
+    }
+
+    /**
+     * singleton
+     */
+    private UIUtils() {
+        super();
     }
 }

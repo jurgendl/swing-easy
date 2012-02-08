@@ -511,7 +511,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable {
         this.getTableHeader().setReorderingAllowed(this.cfg.isReorderable());
         this.getTableHeader().setResizingAllowed(this.cfg.isResizable());
 
-        this.setLocale(UIUtils.getCurrentLocale());
+        UIUtils.registerLocaleChangeListener(this);
     }
 
     /**

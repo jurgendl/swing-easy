@@ -42,6 +42,7 @@ public class EListSearchComponent<T> extends JComponent implements Matcher<T>, E
         this.eList = eList;
         this.sList = eList.stsi();
         this.createComponent();
+        UIUtils.registerLocaleChangeListener(this);
     }
 
     protected void createComponent() {

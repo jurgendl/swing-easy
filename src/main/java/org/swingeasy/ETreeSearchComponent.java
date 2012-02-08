@@ -42,6 +42,7 @@ public class ETreeSearchComponent<T> extends JComponent implements Matcher<T>, E
         this.eTree = eTree;
         this.sTree = eTree.stsi();
         this.createComponent();
+        UIUtils.registerLocaleChangeListener(this);
     }
 
     protected void createComponent() {
