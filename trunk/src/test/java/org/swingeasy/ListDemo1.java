@@ -72,11 +72,11 @@ public class ListDemo1 {
         cc.addRecord(record0);
         EListRecord<DemoValue> record = new EListRecord<DemoValue>(new DemoValue(333));
         cc.addRecord(record);
-        try {
-            cc.setSelectedRecord(new EListRecord<DemoValue>(new DemoValue(666)));
-        } catch (IllegalArgumentException ex) {
-            System.out.println("expected: " + ex); //$NON-NLS-1$
-        }
+        // try {
+        // cc.setSelectedRecord(new EListRecord<DemoValue>(new DemoValue(666)));
+        // } catch (IllegalArgumentException ex) {
+        //            System.out.println("expected: " + ex); //$NON-NLS-1$
+        // }
         cc.setSelectedRecords(Arrays.asList(record, record0));
         f.setVisible(true);
         cc.scrollToVisibleRecord(record);
