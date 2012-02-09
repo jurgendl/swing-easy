@@ -8,7 +8,7 @@ import javax.swing.JComponent;
 /**
  * @author Jurgen
  */
-public class EComponentLocaleListenerTest {
+public class EComponentLocaleListenerDemo {
     public static void main(String[] args) {
         JComponent tester = new JComponent() {
             private static final long serialVersionUID = 438899386009488658L;
