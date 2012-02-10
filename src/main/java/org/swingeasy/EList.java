@@ -12,19 +12,15 @@ import java.util.Locale;
 
 import javax.swing.JComponent;
 import javax.swing.JList;
-import javax.swing.JTextField;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
-import ca.odell.glazedlists.FilterList;
 import ca.odell.glazedlists.GlazedLists;
 import ca.odell.glazedlists.SortedList;
-import ca.odell.glazedlists.TextFilterator;
 import ca.odell.glazedlists.swing.EventListModel;
 import ca.odell.glazedlists.swing.EventSelectionModel;
-import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 
 /**
  * @author Jurgen
@@ -78,7 +74,7 @@ public class EList<T> extends JList implements EListI<T> {
     private static class EListModel<T> extends EventListModel<EListRecord<T>> {
         protected EventList<EListRecord<T>> source;
 
-        protected JTextField filtercomponent;
+        protected EListFilterComponent<T> filtercomponent;
 
         public EListModel(EventList<EListRecord<T>> source) {
             super(source);
@@ -93,19 +89,10 @@ public class EList<T> extends JList implements EListI<T> {
         if (cfg.isSortable()) {
             records = new SortedList<EListRecord<T>>(records);
         }
-        JTextField filtercomponent = null;
+        EListFilterComponent<T> filtercomponent = null;
         if (cfg.isFilterable()) {
-            filtercomponent = new JTextField();
-            TextFilterator<EListRecord<T>> textFilterator = new TextFilterator<EListRecord<T>>() {
-                @Override
-                public void getFilterStrings(List<String> baseList, EListRecord<T> element) {
-                    if (element != null) {
-                        baseList.add(element.getStringValue());
-                    }
-                }
-            };
-            TextComponentMatcherEditor<EListRecord<T>> filter = new TextComponentMatcherEditor<EListRecord<T>>(filtercomponent, textFilterator, true);
-            records = new FilterList<EListRecord<T>>(records, filter);
+            filtercomponent = new EListFilterComponent<T>(records);
+            records = filtercomponent.grabRecords();
         }
         if (cfg.isThreadSafe()) {
             records = GlazedLists.threadSafeList(records);
@@ -115,8 +102,6 @@ public class EList<T> extends JList implements EListI<T> {
         return model;
     }
 
-    protected JComponent filtercomponent;
-
     protected EListConfig cfg;
 
     protected EventList<EListRecord<T>> records;
@@ -124,6 +109,8 @@ public class EList<T> extends JList implements EListI<T> {
     protected DelegatingListCellRenderer delegatingListCellRenderer;
 
     protected EListSearchComponent<T> searchComponent = null;
+
+    protected EListFilterComponent<T> filtercomponent = null;
 
     /**
      * do not use, do not change access
@@ -139,6 +126,7 @@ public class EList<T> extends JList implements EListI<T> {
         EListModel elistModel = EListModel.class.cast(this.getModel());
         this.records = elistModel.source;
         this.filtercomponent = elistModel.filtercomponent;
+        this.filtercomponent.setList(this);
         elistModel.filtercomponent = null;
         this.delegatingListCellRenderer = new DelegatingListCellRenderer(this.getCellRenderer());
         this.setCellRenderer(this.delegatingListCellRenderer);

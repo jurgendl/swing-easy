@@ -38,5 +38,6 @@ public class EIconButton extends JButton implements EComponentI {
         this.setContentAreaFilled(false);
         this.setHideActionText(true);
         this.setBorderPainted(false);
+        this.setOpaque(false);
     }
 }
