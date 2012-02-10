@@ -4,7 +4,9 @@ import java.util.Locale;
 import java.util.regex.Pattern;
 
 import javax.swing.Icon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.matchers.Matcher;
@@ -33,7 +35,7 @@ public class EListSearchComponent<T> extends ELabeledTextFieldButtonComponent im
      */
     @Override
     protected void doAction() {
-        String text = this.input.getText();
+        String text = JTextField.class.cast(this.getInput()).getText();
         if (text.length() == 0) {
             return;
         }
@@ -117,7 +119,7 @@ public class EListSearchComponent<T> extends ELabeledTextFieldButtonComponent im
     @Override
     public void setLocale(Locale l) {
         super.setLocale(l);
-        this.commit.setToolTipText(Messages.getString(l, "EList.SearchComponent.search"));//$NON-NLS-1$
-        this.label.setText(Messages.getString(l, "EList.SearchComponent.search") + ": ");//$NON-NLS-1$ //$NON-NLS-2$
+        this.getButton().setToolTipText(Messages.getString(l, "EList.SearchComponent.search"));//$NON-NLS-1$
+        JLabel.class.cast(this.getLabel()).setText(Messages.getString(l, "EList.SearchComponent.search") + ": ");//$NON-NLS-1$ //$NON-NLS-2$
     }
 }
