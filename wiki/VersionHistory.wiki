@@ -1,8 +1,9 @@
 #summary Version History
+#labels Featured
 
 = Version History =
 
-latest change: 2012-02-06
+latest change: 2012-02-10
 
 featured: downloads are available on the frontpage
 
@@ -52,12 +53,20 @@ major version changes (first number) are possibly not backwards compatible!
   * EList: setting locale
   * ETreeTable: nodes can be lazy initialized just like ETree
   * EList: drag-and-drop (internal/intra jvm as objects or as string)
- * 2.2.0 (featured)
+ * 2.2.0
   * ETree: search component and methods
   * EList: search component and methods
   * initial release of EIconButton
   * initial release of EventThreadTask (alternative for SwingWorker)
-  * easy localisation of JFileChooser, JOptionPane, JColorChooser
-  * eventthread task as alternative for SwingWorker
- * 2.2.1 (not released)
- * 2.3.0 (not released)
+  * easy localization of JFileChooser, JOptionPane, JColorChooser
+  * EventThreadTask as alternative for SwingWorker, see other classes
+ * 2.2.1 (featured)
+  * initial release of PropertyChangeParent implementing all methods (also used for dynamic component localization)
+  * initial release of WeakReferencedListener (also used for dynamic component localization)
+  * localization redone: dynamic component localization including JFileChooser, JOptionPane, JColorChooser via UIUtils (all EComponents are registered by default; JComponents are supported)
+ * 2.2.2 (featured, not backwards compatible)
+  * EList: reworked filtercomponent
+  * ELabeledTextFieldButtonComponent: all filter and searchcompontn have common superclass
+  * UIUtils: focused button is default button 
+ * 2.2.3 (not released)
+ * 2.3.0 (not released) 
