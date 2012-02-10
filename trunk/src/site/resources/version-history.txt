@@ -64,4 +64,7 @@ major version changes (first number) are possibly not backwards compatible!
   * initial release of WeakReferencedListener (also used for dynamic component localization)
   * localization redone: dynamic component localization including JFileChooser, JOptionPane, JColorChooser via UIUtils (all EComponents are registered by default; JComponents are supported)
  * 2.2.2 (not released)
+  * EList: reworked filtercomponent
+  * ELabeledTextFieldButtonComponent: all filter and searchcompontn have common superclass
+  * UIUtils: focused button is default button 
  * 2.3.0 (not released)
