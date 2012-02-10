@@ -136,6 +136,11 @@ public class UIUtils extends PropertyChangeParent {
         }
     }
 
+    static {
+        // http://tips4java.wordpress.com/2008/10/25/enter-key-and-button/
+        UIManager.put("Button.defaultButtonFollowsFocus", Boolean.TRUE);
+    }
+
     /** "locale" */
     public static final String LOCALE = "locale";
 
@@ -424,7 +429,6 @@ public class UIUtils extends PropertyChangeParent {
      * 
      * @see http://java.sun.com/developer/technicalArticles/GUI/translucent_shaped_windows/
      */
-    @SuppressWarnings("restriction")
     public static void translucent(Window w, Float f) {
         if (AWTUtilitiesWrapper.isTranslucencySupported(com.sun.awt.AWTUtilities.Translucency.TRANSLUCENT)) {
             try {

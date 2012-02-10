@@ -237,7 +237,7 @@ public class ProgressGlassPane extends NonBlockingGlassPane {
                     this.thread.start();
                     this.running = Boolean.TRUE;
                 } else {
-                    throw new IllegalArgumentException();
+                    // throw new IllegalArgumentException();
                 }
             } else {
                 if (this.thread != null) {
@@ -245,7 +245,7 @@ public class ProgressGlassPane extends NonBlockingGlassPane {
                     this.thread = null;
                     this.running = Boolean.FALSE;
                 } else {
-                    throw new IllegalArgumentException();
+                    // throw new IllegalArgumentException();
                 }
             }
         }
