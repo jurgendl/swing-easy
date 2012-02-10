@@ -1,6 +1,7 @@
 package org.swingeasy;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -63,6 +64,8 @@ public abstract class ELabeledTextFieldButtonComponent extends JComponent implem
         internal.add(this.input, BorderLayout.CENTER);
         internal.add(this.commit, BorderLayout.EAST);
         this.label.setLabelFor(this.input);
+        this.setBackground(Color.WHITE);
+        internal.setBackground(Color.WHITE);
     }
 
     protected abstract void doAction();
