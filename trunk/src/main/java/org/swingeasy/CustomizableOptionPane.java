@@ -81,7 +81,11 @@ public class CustomizableOptionPane {
 
             if (selectedValue instanceof Integer) {
                 int counter = Integer.class.cast(selectedValue).intValue();
-                return optionType.getResultType(counter);
+                try {
+                    return optionType.getResultType(counter);
+                } catch (IllegalArgumentException ex) {
+                    return ResultType.CLOSED;
+                }
             }
 
             return ResultType.CLOSED;
