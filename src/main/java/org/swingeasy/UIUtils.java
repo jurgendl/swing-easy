@@ -138,6 +138,7 @@ public class UIUtils extends PropertyChangeParent {
 
     static {
         // http://tips4java.wordpress.com/2008/10/25/enter-key-and-button/
+        // TODO
         UIManager.put("Button.defaultButtonFollowsFocus", Boolean.TRUE);
     }
 
