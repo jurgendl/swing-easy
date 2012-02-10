@@ -2,7 +2,7 @@
 
 = Version History =
 
-latest change: 2012-02-08
+latest change: 2012-02-10
 
 featured: downloads are available on the frontpage
 
@@ -63,8 +63,9 @@ major version changes (first number) are possibly not backwards compatible!
   * initial release of PropertyChangeParent implementing all methods (also used for dynamic component localization)
   * initial release of WeakReferencedListener (also used for dynamic component localization)
   * localization redone: dynamic component localization including JFileChooser, JOptionPane, JColorChooser via UIUtils (all EComponents are registered by default; JComponents are supported)
- * 2.2.2 (not released)
+ * 2.2.2 (featured, not backwards compatible)
   * EList: reworked filtercomponent
   * ELabeledTextFieldButtonComponent: all filter and searchcompontn have common superclass
   * UIUtils: focused button is default button 
- * 2.3.0 (not released)
+ * 2.2.3 (not released)
+ * 2.3.0 (not released) 
