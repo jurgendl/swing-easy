@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.swing.Icon;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.FilterList;
@@ -27,7 +29,7 @@ public class EListFilterComponent<T> extends ELabeledTextFieldButtonComponent im
 
     public EListFilterComponent(EventList<EListRecord<T>> records) {
         this.createComponent();
-        this.filter = new TextComponentMatcherEditor<EListRecord<T>>(this.input, this, false);
+        this.filter = new TextComponentMatcherEditor<EListRecord<T>>(JTextField.class.cast(this.getInput()), this, false);
         this.tmprecords = new FilterList<EListRecord<T>>(records, this.filter);
     }
 
@@ -37,7 +39,7 @@ public class EListFilterComponent<T> extends ELabeledTextFieldButtonComponent im
      */
     @Override
     protected void doAction() {
-        this.filter.setFilterText(new String[] { this.input.getText() });
+        this.filter.setFilterText(new String[] { JTextField.class.cast(this.getInput()).getText() });
     }
 
     /**
@@ -101,7 +103,7 @@ public class EListFilterComponent<T> extends ELabeledTextFieldButtonComponent im
     @Override
     public void setLocale(Locale l) {
         super.setLocale(l);
-        this.commit.setToolTipText(Messages.getString(l, "EList.FilterComponent.filter"));//$NON-NLS-1$
-        this.label.setText(Messages.getString(l, "EList.FilterComponent.filter") + ": ");//$NON-NLS-1$ //$NON-NLS-2$
+        this.getButton().setToolTipText(Messages.getString(l, "EList.FilterComponent.filter"));//$NON-NLS-1$
+        JLabel.class.cast(this.getLabel()).setText(Messages.getString(l, "EList.FilterComponent.filter") + ": ");//$NON-NLS-1$ //$NON-NLS-2$
     }
 }
