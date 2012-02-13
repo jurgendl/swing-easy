@@ -68,4 +68,6 @@ major version changes (first number) are possibly not backwards compatible!
   * ELabeledTextFieldButtonComponent: all filter and searchcompontn have common superclass
   * UIUtils: focused button is default button 
  * 2.2.3 (not released)
+   * EComboBox, ETable nad EList implement iterable
+   * ETable: get selected ... methods
  * 2.3.0 (not released) 
