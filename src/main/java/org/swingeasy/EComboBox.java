@@ -3,6 +3,8 @@ package org.swingeasy;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -20,7 +22,7 @@ import ca.odell.glazedlists.swing.EventComboBoxModel;
 /**
  * @author Jurgen
  */
-public class EComboBox<T> extends JComboBox implements EComboBoxI<T> {
+public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<EComboBoxRecord<T>> {
     protected class MouseValueScroller implements MouseWheelListener {
         @Override
         public synchronized void mouseWheelMoved(MouseWheelEvent e) {
@@ -193,6 +195,16 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T> {
         }
 
         return this.getSelectedRecord().getTooltip();
+    }
+
+    /**
+     * threadsafe unmodifiable iterator
+     * 
+     * @see java.lang.Iterable#iterator()
+     */
+    @Override
+    public Iterator<EComboBoxRecord<T>> iterator() {
+        return Collections.unmodifiableCollection(this.getRecords()).iterator();
     }
 
     /**

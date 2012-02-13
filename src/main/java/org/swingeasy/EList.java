@@ -5,8 +5,10 @@ import java.awt.Component;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
@@ -25,7 +27,7 @@ import ca.odell.glazedlists.swing.EventSelectionModel;
 /**
  * @author Jurgen
  */
-public class EList<T> extends JList implements EListI<T> {
+public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T>> {
     private class DelegatingListCellRenderer implements ListCellRenderer {
         @SuppressWarnings("rawtypes")
         protected transient Hashtable<Class, ListCellRenderer> defaultRenderersByClass = new Hashtable<Class, ListCellRenderer>();
@@ -243,6 +245,16 @@ public class EList<T> extends JList implements EListI<T> {
     }
 
     /**
+     * threadsafe unmodifiable iterator
+     * 
+     * @see java.lang.Iterable#iterator()
+     */
+    @Override
+    public Iterator<EListRecord<T>> iterator() {
+        return Collections.unmodifiableCollection(this.getRecords()).iterator();
+    }
+
+    /**
      * 
      * @see org.swingeasy.EListI#removeAllRecords()
      */
@@ -338,4 +350,5 @@ public class EList<T> extends JList implements EListI<T> {
     public EList<T> STSI() {
         return this.getSimpleThreadSafeInterface();
     }
+
 }
