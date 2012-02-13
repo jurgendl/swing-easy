@@ -19,8 +19,10 @@ import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -59,7 +61,7 @@ import ca.odell.glazedlists.swing.TableComparatorChooser;
 /**
  * @author Jurgen
  */
-public class ETable<T> extends JTable implements ETableI<T>, Reorderable {
+public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterable<ETableRecord<T>> {
     protected class EFiltering {
         /**
          * JDOC
@@ -715,6 +717,16 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable {
     @Override
     public boolean isCellEditable(int row, int column) {
         return this.cfg.isEditable() && super.isCellEditable(row, column);
+    }
+
+    /**
+     * threadsafe unmodifiable iterator
+     * 
+     * @see java.lang.Iterable#iterator()
+     */
+    @Override
+    public Iterator<ETableRecord<T>> iterator() {
+        return Collections.unmodifiableCollection(this.getRecords()).iterator();
     }
 
     /**
