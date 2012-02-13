@@ -19,18 +19,19 @@ public class ETabbedPane extends DnDTabbedPane {
     /** serialVersionUID */
     private static final long serialVersionUID = -46108541490198511L;
 
-    private Rotation rotation = Rotation.DEFAULT;
+    protected ETabbedPaneConfig config;
 
-    protected static DropTargetListener dtl = new DnDTabbedPaneDropTargetListener();
+    protected static DropTargetListener DROP_TARGET_LISTENER = new DnDTabbedPaneDropTargetListener();
 
-    protected static TransferHandler handler = new TabTransferHandler<ETabbedPane>(ETabbedPane.class);
+    protected static TransferHandler TRANSFER_HANDLER = new TabTransferHandler<ETabbedPane>(ETabbedPane.class);
 
     public ETabbedPane() {
-        this.register();
+        this(new ETabbedPaneConfig());
     }
 
-    public Rotation getRotation() {
-        return this.rotation;
+    public ETabbedPane(ETabbedPaneConfig cfg) {
+        this.config = cfg.lock();
+        this.register();
     }
 
     /**
@@ -39,32 +40,18 @@ public class ETabbedPane extends DnDTabbedPane {
      */
     @Override
     public void insertTab(String title, Icon icon, Component component, String tip, int index) {
-        if (icon instanceof RotatedLabel) {
-            RotatedLabel rl = RotatedLabel.class.cast(icon);
-            if (this.rotation == Rotation.DEFAULT) {
-                super.insertTab(rl.getText(), rl.getIcon(), component, tip == null ? title : tip, index);
-            } else {
-                rl.setClockwise(this.rotation == Rotation.CLOCKWISE);
-                super.insertTab(title, icon, component, tip == null ? title : tip, index);
-            }
-        } else if (this.rotation != Rotation.DEFAULT) {
-            super.insertTab(null, new RotatedLabel(title, icon, this.rotation == Rotation.CLOCKWISE), component, tip == null ? title : tip, index);
-        } else {
-            super.insertTab(title, icon, component, tip == null ? title : tip, index);
-        }
+        super.insertTab(title, icon, component, tip == null ? title : tip, index);
+        this.setTabComponentAt(index, new ETabbedPaneHeader(title, icon, this.config));
     }
 
     protected void register() {
         this.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-        this.setTransferHandler(ETabbedPane.handler);
+        this.setTransferHandler(ETabbedPane.TRANSFER_HANDLER);
         try {
-            this.getDropTarget().addDropTargetListener(ETabbedPane.dtl);
+            this.getDropTarget().addDropTargetListener(ETabbedPane.DROP_TARGET_LISTENER);
         } catch (TooManyListenersException ex) {
             throw new RuntimeException(ex);
         }
     }
 
-    public void setRotation(Rotation rotation) {
-        this.rotation = rotation;
-    }
 }
