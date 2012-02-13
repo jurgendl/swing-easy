@@ -111,11 +111,6 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
 
             protected Map<Integer, String> popupFilters = new HashMap<Integer, String>();
 
-            /**
-             * Instantieer een nieuwe FilterPopup
-             * 
-             * @param frame
-             */
             protected FilterPopup(Frame frame) {
                 super(frame);
 
@@ -693,6 +688,40 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     @Override
     public List<ETableRecord<T>> getRecords() {
         return this.filtering.getRecords();
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.ETableI#getSelectedCell()
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public T getSelectedCell() {
+        ETableRecord<T> record = this.getSelectedRecord();
+        if (record == null) {
+            return null;
+        }
+        return (T) record.get(this.getSelectedColumn());
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.ETableI#getSelectedRecord()
+     */
+    @Override
+    public ETableRecord<T> getSelectedRecord() {
+        EventList<ETableRecord<T>> selected = this.tableSelectionModel.getSelected();
+        return selected.size() == 0 ? null : selected.iterator().next();
+
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.ETableI#getSelectedRecords()
+     */
+    @Override
+    public List<ETableRecord<T>> getSelectedRecords() {
+        return this.tableSelectionModel.getSelected();
     }
 
     /**

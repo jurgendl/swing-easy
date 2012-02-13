@@ -3,6 +3,8 @@ package org.swingeasy;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
@@ -13,6 +15,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -124,6 +127,19 @@ public class TableDemo {
                 table.packColumn(i, 3);
             }
             table.setDefaultEditor(EnumTest.class, new EnumTableCellEditor<EnumTest>(EnumTest.class));
+
+            JButton selectedButton = new JButton("what is selected?");
+            selectedButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println(safetable.getSelectedCell());
+
+                    for (Object row : safetable.getSelectedRecords()) {
+                        System.out.println(row);
+                    }
+                }
+            });
+            frame.getContentPane().add(selectedButton, BorderLayout.SOUTH);
 
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
