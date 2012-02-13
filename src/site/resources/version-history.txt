@@ -70,4 +70,6 @@ major version changes (first number) are possibly not backwards compatible!
  * 2.2.3 (not released)
    * EComboBox, ETable nad EList implement iterable
    * ETable: get selected ... methods
+   * initial release of RotatedLabel
+   * initial release of ETabbedPane
  * 2.3.0 (not released) 
