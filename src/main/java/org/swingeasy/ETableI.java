@@ -21,6 +21,22 @@ public interface ETableI<T> extends EComponentI {
 
     public abstract List<ETableRecord<T>> getRecords();
 
+    public T getSelectedCell();
+
+    /**
+     * gets selected record (first one if multiple ones are selected
+     * 
+     * @return
+     */
+    public ETableRecord<T> getSelectedRecord();
+
+    /**
+     * gets selected record (first one if multiple ones are selected
+     * 
+     * @return
+     */
+    public List<ETableRecord<T>> getSelectedRecords();
+
     public abstract void packColumn(int vColIndex);
 
     public abstract void packColumn(int vColIndex, int margin);
