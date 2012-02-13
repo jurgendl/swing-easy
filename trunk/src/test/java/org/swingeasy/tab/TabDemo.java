@@ -12,6 +12,7 @@ import javax.swing.WindowConstants;
 import javax.swing.filechooser.FileSystemView;
 
 import org.swingeasy.ETabbedPane;
+import org.swingeasy.ETabbedPaneConfig;
 import org.swingeasy.Rotation;
 import org.swingeasy.UIUtils;
 
@@ -35,13 +36,13 @@ public class TabDemo {
         demo.middle.setDividerLocation(.5);
     }
 
-    private JTabbedPane tablefttop = new ETabbedPane();
+    private JTabbedPane tablefttop = new ETabbedPane(new ETabbedPaneConfig(true, true));
 
-    private JTabbedPane tabrighttop = new ETabbedPane();
+    private JTabbedPane tabrighttop = new ETabbedPane(new ETabbedPaneConfig(Rotation.COUNTER_CLOCKWISE, true, true));
 
-    private JTabbedPane tableftbottom = new ETabbedPane();
+    private JTabbedPane tableftbottom = new ETabbedPane(new ETabbedPaneConfig(Rotation.CLOCKWISE, true, true));
 
-    private JTabbedPane tabrightbottom = new ETabbedPane();
+    private JTabbedPane tabrightbottom = new ETabbedPane(new ETabbedPaneConfig(true, true));
 
     private JSplitPane top = new JSplitPane(JSplitPane.VERTICAL_SPLIT, this.tablefttop, this.tabrighttop);
 
@@ -66,7 +67,6 @@ public class TabDemo {
 
         this.tableftbottom.setTabPlacement(SwingConstants.RIGHT);
         this.tableftbottom.setName("tableftbottom");
-        ETabbedPane.class.cast(this.tableftbottom).setRotation(Rotation.CLOCKWISE);
 
         this.tablefttop.setTabPlacement(SwingConstants.TOP);
         this.tablefttop.setName("tablefttop");
@@ -76,7 +76,6 @@ public class TabDemo {
 
         this.tabrighttop.setTabPlacement(SwingConstants.LEFT);
         this.tabrighttop.setName("tabrighttop");
-        ETabbedPane.class.cast(this.tabrighttop).setRotation(Rotation.COUNTER_CLOCKWISE);
 
         this.add(this.tablefttop);
         this.add(this.tabrighttop);
