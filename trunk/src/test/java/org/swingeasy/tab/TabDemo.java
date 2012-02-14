@@ -21,6 +21,7 @@ import org.swingeasy.UIUtils;
  * @see http://www.exampledepot.com/taxonomy/term/319
  */
 public class TabDemo {
+
     public static void main(String[] args) {
         UIUtils.niceLookAndFeel();
         JFrame frame = new JFrame();
@@ -31,56 +32,63 @@ public class TabDemo {
         frame.setLocationRelativeTo(null);
         frame.setTitle("Demo");
         frame.setVisible(true);
-        demo.top.setDividerLocation(.5);
-        demo.bottom.setDividerLocation(.5);
-        demo.middle.setDividerLocation(.5);
+        demo.TL.setDividerLocation(.4);
+        demo.TR.setDividerLocation(.6);
+        demo.TM.setDividerLocation(.3);
     }
 
-    private JTabbedPane tablefttop = new ETabbedPane(new ETabbedPaneConfig(true, true));
+    private ETabbedPane TLT = new ETabbedPane(new ETabbedPaneConfig(false, true));
 
-    private JTabbedPane tabrighttop = new ETabbedPane(new ETabbedPaneConfig(Rotation.COUNTER_CLOCKWISE, true, true));
+    private ETabbedPane TLB = new ETabbedPane(new ETabbedPaneConfig(Rotation.COUNTER_CLOCKWISE, true, false));
 
-    private JTabbedPane tableftbottom = new ETabbedPane(new ETabbedPaneConfig(Rotation.CLOCKWISE, true, true));
+    private ETabbedPane TRT = new ETabbedPane(new ETabbedPaneConfig(Rotation.CLOCKWISE, false, true));
 
-    private JTabbedPane tabrightbottom = new ETabbedPane(new ETabbedPaneConfig(true, true));
+    private ETabbedPane TRB = new ETabbedPane(new ETabbedPaneConfig(true, false));
 
-    private JSplitPane top = new JSplitPane(JSplitPane.VERTICAL_SPLIT, this.tablefttop, this.tabrighttop);
+    private JSplitPane TL = new JSplitPane(JSplitPane.VERTICAL_SPLIT, this.TLT, this.TLB);
 
-    private JSplitPane bottom = new JSplitPane(JSplitPane.VERTICAL_SPLIT, this.tableftbottom, this.tabrightbottom);
+    private JSplitPane TR = new JSplitPane(JSplitPane.VERTICAL_SPLIT, this.TRT, this.TRB);
 
-    private JSplitPane middle = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, this.top, this.bottom);
+    private JSplitPane TM = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, this.TL, this.TR);
 
     private void add(JTabbedPane tab) {
         for (int i = 0; i < 5; i++) {
             tab.addTab("tab " + tab.getName() + " - " + i, FileSystemView.getFileSystemView().getSystemIcon(new File(".")), new JTextField("content "
                     + tab.getName() + " - " + i), "tooltip " + tab.getName() + " - " + i);
-            tab.setEnabledAt(i, (i % 2) == 0);
+            // tab.setEnabledAt(i, (i % 2) == 0);
         }
     }
 
     private void addComponents(Container container) {
-        container.add(this.middle);
+        container.add(this.TM);
 
-        this.top.setDividerSize(1);
-        this.bottom.setDividerSize(1);
-        this.middle.setDividerSize(1);
+        this.TL.setDividerSize(2);
+        this.TR.setDividerSize(2);
+        this.TM.setDividerSize(2);
 
-        this.tableftbottom.setTabPlacement(SwingConstants.RIGHT);
-        this.tableftbottom.setName("tableftbottom");
+        this.TRT.setTabPlacement(SwingConstants.RIGHT);
+        this.TRT.setName("TRT");
 
-        this.tablefttop.setTabPlacement(SwingConstants.TOP);
-        this.tablefttop.setName("tablefttop");
+        this.TLT.setTabPlacement(SwingConstants.TOP);
+        this.TLT.setName("TLT");
 
-        this.tabrightbottom.setTabPlacement(SwingConstants.BOTTOM);
-        this.tabrightbottom.setName("tabrightbottom");
+        this.TRB.setTabPlacement(SwingConstants.BOTTOM);
+        this.TRB.setName("TRB");
 
-        this.tabrighttop.setTabPlacement(SwingConstants.LEFT);
-        this.tabrighttop.setName("tabrighttop");
+        this.TLB.setTabPlacement(SwingConstants.LEFT);
+        this.TLB.setName("TLB");
 
-        this.add(this.tablefttop);
-        this.add(this.tabrighttop);
-        this.add(this.tableftbottom);
-        this.add(this.tabrightbottom);
+        this.add(this.TLT);
+        this.add(this.TLB);
+        this.add(this.TRT);
+        this.add(this.TRB);
+
+        // ETabToolbar minimized = new ETabToolbar();
+        // container.add(minimized, BorderLayout.NORTH);
+        //
+        // this.TRB.setMinimizeTo(minimized);
+        // this.TRT.setMinimizeTo(minimized);
+        // this.TLB.setMinimizeTo(minimized);
+        // this.TLT.setMinimizeTo(minimized);
     }
-
 }
