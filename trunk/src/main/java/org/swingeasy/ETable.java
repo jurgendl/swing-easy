@@ -535,6 +535,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
      */
     @Override
     public void clear() {
+        this.tableSelectionModel.clearSelection();
         this.records.clear();
         this.sorting.dispose();
         this.tableModel.setTableFormat(new ETableHeaders<T>());
@@ -877,6 +878,11 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
      */
     @Override
     public void setHeaders(final ETableHeaders<T> headers) {
+        // we do not want null here, use an empty header object instead
+        if (headers == null) {
+            throw new NullPointerException();
+        }
+
         this.tableFormat = headers;
         this.sorting.dispose();
         this.tableModel.setTableFormat(headers);
