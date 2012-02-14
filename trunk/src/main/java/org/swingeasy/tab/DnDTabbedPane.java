@@ -251,7 +251,7 @@ public class DnDTabbedPane extends JTabbedPane {
         target.setEnabledAt(targetIndex, flg);
         // //ButtonTabComponent
         // if(tab instanceof ButtonTabComponent) tab = new ButtonTabComponent(target);
-        target.setTabComponentAt(targetIndex, tab);
+        // target.setTabComponentAt(targetIndex, tab);
         target.setSelectedIndex(targetIndex);
         if ((tab != null) && (tab instanceof JComponent)) {
             ((JComponent) tab).scrollRectToVisible(tab.getBounds());
@@ -270,11 +270,17 @@ public class DnDTabbedPane extends JTabbedPane {
             return null;
         }
         boolean isZero = index == 0;
-        Rectangle r = this.getBoundsAt(isZero ? 0 : index - 1);
-        if ((this.getTabPlacement() == SwingConstants.TOP) || (this.getTabPlacement() == SwingConstants.BOTTOM)) {
-            this.lineRect.setRect((r.x - (DnDTabbedPane.LINEWIDTH / 2)) + (r.width * (isZero ? 0 : 1)), r.y, DnDTabbedPane.LINEWIDTH, r.height);
-        } else {
-            this.lineRect.setRect(r.x, (r.y - (DnDTabbedPane.LINEWIDTH / 2)) + (r.height * (isZero ? 0 : 1)), r.width, DnDTabbedPane.LINEWIDTH);
+        try {
+            Rectangle r = this.getBoundsAt(isZero ? 0 : index - 1);
+            if ((this.getTabPlacement() == SwingConstants.TOP) || (this.getTabPlacement() == SwingConstants.BOTTOM)) {
+                this.lineRect.setRect((r.x - (DnDTabbedPane.LINEWIDTH / 2)) + (r.width * (isZero ? 0 : 1)), r.y, DnDTabbedPane.LINEWIDTH, r.height);
+            } else {
+                this.lineRect.setRect(r.x, (r.y - (DnDTabbedPane.LINEWIDTH / 2)) + (r.height * (isZero ? 0 : 1)), r.width, DnDTabbedPane.LINEWIDTH);
+            }
+        } catch (ArrayIndexOutOfBoundsException ex) {
+            this.lineRect.setRect(0, 0, 0, 0);
+        } catch (IndexOutOfBoundsException ex) {
+            this.lineRect.setRect(0, 0, 0, 0);
         }
         return this.lineRect;
     }

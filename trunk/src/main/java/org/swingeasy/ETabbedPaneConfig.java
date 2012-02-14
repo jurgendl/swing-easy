@@ -8,13 +8,11 @@ public class ETabbedPaneConfig extends EComponentConfig<ETabbedPaneConfig> {
     protected Rotation rotation = Rotation.DEFAULT;
 
     public ETabbedPaneConfig() {
-        super();
+        this(false, false);
     }
 
     public ETabbedPaneConfig(boolean closable, boolean minimizable) {
-        super();
-        this.closable = closable;
-        this.minimizable = minimizable;
+        this(Rotation.DEFAULT, closable, minimizable);
     }
 
     public ETabbedPaneConfig(Rotation rotation, boolean closable, boolean minimizable) {
