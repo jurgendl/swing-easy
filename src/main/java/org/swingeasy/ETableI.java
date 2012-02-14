@@ -49,6 +49,10 @@ public interface ETableI<T> extends EComponentI {
 
     public abstract void scrollToVisibleRecord(final ETableRecord<T> record);
 
+    /**
+     * 
+     * @param headers we do not want null here, use an empty header object instead
+     */
     public abstract void setHeaders(final ETableHeaders<T> headers);
 
     public abstract void sort(final int col);
