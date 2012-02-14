@@ -1,5 +1,6 @@
 package org.swingeasy.tab;
 
+import java.awt.BorderLayout;
 import java.awt.Container;
 import java.io.File;
 
@@ -12,6 +13,7 @@ import javax.swing.WindowConstants;
 import javax.swing.filechooser.FileSystemView;
 
 import org.swingeasy.ETabbedPane;
+import org.swingeasy.ETabbedPane.ETabToolbar;
 import org.swingeasy.ETabbedPaneConfig;
 import org.swingeasy.Rotation;
 import org.swingeasy.UIUtils;
@@ -83,12 +85,12 @@ public class TabDemo {
         this.add(this.TRT);
         this.add(this.TRB);
 
-        // ETabToolbar minimized = new ETabToolbar();
-        // container.add(minimized, BorderLayout.NORTH);
-        //
-        // this.TRB.setMinimizeTo(minimized);
-        // this.TRT.setMinimizeTo(minimized);
-        // this.TLB.setMinimizeTo(minimized);
-        // this.TLT.setMinimizeTo(minimized);
+        ETabToolbar minimized = new ETabToolbar();
+        container.add(minimized, BorderLayout.NORTH);
+
+        this.TRB.setMinimizeTo(minimized);
+        this.TRT.setMinimizeTo(minimized);
+        this.TLB.setMinimizeTo(minimized);
+        this.TLT.setMinimizeTo(minimized);
     }
 }

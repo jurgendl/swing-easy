@@ -1,11 +1,9 @@
 package org.swingeasy;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
@@ -18,7 +16,7 @@ import javax.swing.SwingConstants;
 /**
  * @author Jurgen
  */
-public class ETabbedPaneHeader extends JComponent implements ActionListener {
+public class ETabbedPaneHeader extends JComponent {
     /** serialVersionUID */
     private static final long serialVersionUID = -1987585120165138408L;
 
@@ -38,11 +36,8 @@ public class ETabbedPaneHeader extends JComponent implements ActionListener {
         this.tip = tip;
 
         this.setLayout(new BorderLayout());
-        this.setOpaque(false);
-        this.setToolTipText(tip);
 
         JPanel container = new JPanel(new FlowLayout());
-        container.setBackground(Color.black);
         container.setOpaque(false);
 
         if (config.getRotation() == Rotation.DEFAULT) {
@@ -60,7 +55,7 @@ public class ETabbedPaneHeader extends JComponent implements ActionListener {
             RotatedLabel label = new RotatedLabel(title, icon, true);
             label.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
             this.add(label, BorderLayout.CENTER);
-            this.add(container, BorderLayout.NORTH);
+            this.add(container, BorderLayout.SOUTH);
             if (config.isClosable()) {
                 this.makeClosable(container, actionlistener);
             }
@@ -71,7 +66,7 @@ public class ETabbedPaneHeader extends JComponent implements ActionListener {
             RotatedLabel label = new RotatedLabel(title, icon, false);
             label.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
             this.add(label, BorderLayout.CENTER);
-            this.add(container, BorderLayout.SOUTH);
+            this.add(container, BorderLayout.NORTH);
             if (config.isClosable()) {
                 this.makeClosable(container, actionlistener);
             }
@@ -79,15 +74,6 @@ public class ETabbedPaneHeader extends JComponent implements ActionListener {
                 this.makeMinimizable(container, actionlistener);
             }
         }
-    }
-
-    /**
-     * 
-     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-     */
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        System.out.println("wants to close");
     }
 
     private void makeClosable(Container container, ActionListener actionlistener) {
