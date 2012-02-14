@@ -2,6 +2,8 @@ package org.swingeasy;
 
 import java.awt.Component;
 import java.awt.dnd.DropTargetListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.TooManyListenersException;
 
 import javax.swing.Icon;
@@ -41,7 +43,12 @@ public class ETabbedPane extends DnDTabbedPane {
     @Override
     public void insertTab(String title, Icon icon, Component component, String tip, int index) {
         super.insertTab(title, icon, component, tip == null ? title : tip, index);
-        this.setTabComponentAt(index, new ETabbedPaneHeader(title, icon, this.config));
+        this.setTabComponentAt(index, new ETabbedPaneHeader(title, icon, tip, this.config, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO Auto-generated method stub
+            }
+        }));
     }
 
     protected void register() {

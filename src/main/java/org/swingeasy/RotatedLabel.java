@@ -7,7 +7,6 @@ import java.awt.Graphics2D;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -37,7 +36,6 @@ public class RotatedLabel extends JPanel implements Icon {
         this.label.setText(value);
         this.label.setIcon(icon);
         this.clockwise = clockwise;
-        this.label.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
     }
 
     public Icon getIcon() {
