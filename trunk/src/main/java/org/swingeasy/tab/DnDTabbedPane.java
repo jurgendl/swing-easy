@@ -88,7 +88,7 @@ public class DnDTabbedPane extends JTabbedPane {
         @Override
         public void mousePressed(MouseEvent e) {
             DnDTabbedPane src = (DnDTabbedPane) e.getSource();
-            if (src.getTabCount() <= 1) {
+            if (src.getTabCount() <= 0) {
                 this.startPt = null;
                 return;
             }

@@ -12,6 +12,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 
 /**
  * @author Jurgen
@@ -39,16 +40,17 @@ public class ETabbedPaneHeader extends JComponent {
 
         if (config.getRotation() == Rotation.DEFAULT) {
             JLabel label = new JLabel(title, icon, SwingConstants.LEADING);
+            label.setBorder(BorderFactory.createEmptyBorder(0, 3, 0, 3));
             this.add(label, BorderLayout.CENTER);
 
             JPanel container = new JPanel(new GridLayout(1, -1));
             container.setOpaque(false);
             this.add(container, BorderLayout.EAST);
-            if (config.isClosable()) {
-                this.makeClosable(container, actionlistener);
-            }
             if (config.isMinimizable()) {
                 this.makeMinimizable(container, actionlistener);
+            }
+            if (config.isClosable()) {
+                this.makeClosable(container, actionlistener);
             }
         } else if (config.getRotation() == Rotation.CLOCKWISE) {
             RotatedLabel label = new RotatedLabel(title, icon, true);
@@ -58,11 +60,11 @@ public class ETabbedPaneHeader extends JComponent {
             JPanel container = new JPanel(new GridLayout(-1, 1));
             container.setOpaque(false);
             this.add(container, BorderLayout.SOUTH);
-            if (config.isClosable()) {
-                this.makeClosable(container, actionlistener);
-            }
             if (config.isMinimizable()) {
                 this.makeMinimizable(container, actionlistener);
+            }
+            if (config.isClosable()) {
+                this.makeClosable(container, actionlistener);
             }
         } else {
             RotatedLabel label = new RotatedLabel(title, icon, false);
@@ -72,24 +74,33 @@ public class ETabbedPaneHeader extends JComponent {
             JPanel container = new JPanel(new GridLayout(-1, 1));
             container.setOpaque(false);
             this.add(container, BorderLayout.NORTH);
-            if (config.isClosable()) {
-                this.makeClosable(container, actionlistener);
-            }
             if (config.isMinimizable()) {
                 this.makeMinimizable(container, actionlistener);
+            }
+            if (config.isClosable()) {
+                this.makeClosable(container, actionlistener);
             }
         }
     }
 
     private void makeClosable(Container container, ActionListener actionlistener) {
-        EIconButton closeButton = new EIconButton(new Dimension(10, 10), Resources.getImageResource("cross-small.png"));
+        Icon _icon = UIManager.getIcon("InternalFrame.closeIcon");
+        if (_icon == null) {
+            return;
+        }
+        EIconButton closeButton = new EIconButton(new Dimension(_icon.getIconWidth(), _icon.getIconHeight()), _icon);
         closeButton.setActionCommand(ETabbedPaneHeader.ACTION_CLOSE);
         closeButton.addActionListener(actionlistener);
         container.add(closeButton);
     }
 
     private void makeMinimizable(Container container, ActionListener actionlistener) {
-        EIconButton minimizeButton = new EIconButton(new Dimension(10, 10), Resources.getImageResource("bullet_arrow_up_small.png"));
+        // see for keys: com.sun.java.swing.plaf.windows.WindowsLookAndFeel
+        Icon _icon = UIManager.getIcon("InternalFrame.iconifyIcon");
+        if (_icon == null) {
+            return;
+        }
+        EIconButton minimizeButton = new EIconButton(new Dimension(_icon.getIconWidth(), _icon.getIconHeight()), _icon);
         minimizeButton.setActionCommand(ETabbedPaneHeader.ACTION_MINIMIZE);
         minimizeButton.addActionListener(actionlistener);
         container.add(minimizeButton);
