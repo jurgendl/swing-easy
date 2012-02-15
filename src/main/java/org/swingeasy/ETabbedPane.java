@@ -65,7 +65,7 @@ public class ETabbedPane extends DnDTabbedPane {
     public ETabbedPane(ETabbedPaneConfig cfg) {
         this.config = cfg.lock();
         this.register();
-        Dimension dim = new Dimension(25, 25); // TODO minimum height (=width for vertical) => how do we calculate this?
+        Dimension dim = new Dimension(20, 20); // TODO minimum height (=width for vertical) => how do we calculate this?
         this.setMinimumSize(dim);
         this.setPreferredSize(dim);
         this.setSize(dim);
