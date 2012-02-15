@@ -30,6 +30,9 @@ public class ECheckBoxTree<T> extends JTree implements ECheckBoxTreeI<T> {
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                if (e.getButton() != MouseEvent.BUTTON1) {
+                    return;
+                }
                 TreePath path = ECheckBoxTree.this.getPathForLocation(e.getPoint().x, e.getPoint().y);
                 if (path != null) {
                     @SuppressWarnings("unchecked")
