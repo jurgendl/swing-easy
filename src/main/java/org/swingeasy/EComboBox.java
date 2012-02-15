@@ -65,7 +65,7 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
     protected MouseValueScroller mouseValueScroller = null;
 
     protected EComboBox() {
-        //
+        super();
     }
 
     public EComboBox(EComboBoxConfig cfg) {

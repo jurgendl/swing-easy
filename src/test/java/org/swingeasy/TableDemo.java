@@ -16,11 +16,15 @@ import java.util.Locale;
 import java.util.Random;
 
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
+import javax.swing.undo.UndoManager;
+
+import org.swingeasy.EComponentPopupMenu.PopupMenuInterface;
 
 /**
  * @author Jurgen
@@ -140,6 +144,23 @@ public class TableDemo {
                 }
             });
             frame.getContentPane().add(selectedButton, BorderLayout.SOUTH);
+
+            EComponentPopupMenu.installTextComponentPopupMenu(new PopupMenuInterface() {
+                @Override
+                public void addUndoableEditListener(UndoManager manager) {
+                    //
+                }
+
+                @Override
+                public boolean canEdit() {
+                    return false;
+                }
+
+                @Override
+                public JComponent getComponent() {
+                    return table;
+                }
+            });
 
             SwingUtilities.invokeLater(new Runnable() {
                 @Override

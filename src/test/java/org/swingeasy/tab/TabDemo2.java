@@ -19,7 +19,7 @@ import org.swingeasy.UIUtils;
  */
 public class TabDemo2 {
     public static void main(String[] args) {
-        UIUtils.niceLookAndFeel();
+        UIUtils.systemLookAndFeel();
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         TabDemo2 demo = new TabDemo2();
@@ -33,13 +33,13 @@ public class TabDemo2 {
         demo.TM.setDividerLocation(.3);
     }
 
-    private ETabbedPane TLT = new ETabbedPane(new ETabbedPaneConfig(false, true));
+    private ETabbedPane TLT = new ETabbedPane(new ETabbedPaneConfig(true, true));
 
-    private ETabbedPane TLB = new ETabbedPane(new ETabbedPaneConfig(false, true));
+    private ETabbedPane TLB = new ETabbedPane(new ETabbedPaneConfig(true, true));
 
-    private ETabbedPane TRT = new ETabbedPane(new ETabbedPaneConfig(false, true));
+    private ETabbedPane TRT = new ETabbedPane(new ETabbedPaneConfig(true, true));
 
-    private ETabbedPane TRB = new ETabbedPane(new ETabbedPaneConfig(false, true));
+    private ETabbedPane TRB = new ETabbedPane(new ETabbedPaneConfig(true, true));
 
     private JSplitPane TL = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, this.TLT, this.TRT);
 
