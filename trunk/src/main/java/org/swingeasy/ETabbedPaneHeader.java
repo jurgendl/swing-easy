@@ -3,7 +3,7 @@ package org.swingeasy;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
@@ -37,13 +37,12 @@ public class ETabbedPaneHeader extends JComponent {
 
         this.setLayout(new BorderLayout());
 
-        JPanel container = new JPanel(new FlowLayout());
-        container.setOpaque(false);
-
         if (config.getRotation() == Rotation.DEFAULT) {
             JLabel label = new JLabel(title, icon, SwingConstants.LEADING);
-            label.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5));
             this.add(label, BorderLayout.CENTER);
+
+            JPanel container = new JPanel(new GridLayout(1, -1));
+            container.setOpaque(false);
             this.add(container, BorderLayout.EAST);
             if (config.isClosable()) {
                 this.makeClosable(container, actionlistener);
@@ -53,8 +52,11 @@ public class ETabbedPaneHeader extends JComponent {
             }
         } else if (config.getRotation() == Rotation.CLOCKWISE) {
             RotatedLabel label = new RotatedLabel(title, icon, true);
-            label.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
+            label.setBorder(BorderFactory.createEmptyBorder(3, 0, 3, 0));
             this.add(label, BorderLayout.CENTER);
+
+            JPanel container = new JPanel(new GridLayout(-1, 1));
+            container.setOpaque(false);
             this.add(container, BorderLayout.SOUTH);
             if (config.isClosable()) {
                 this.makeClosable(container, actionlistener);
@@ -64,8 +66,11 @@ public class ETabbedPaneHeader extends JComponent {
             }
         } else {
             RotatedLabel label = new RotatedLabel(title, icon, false);
-            label.setBorder(BorderFactory.createEmptyBorder(5, 0, 5, 0));
+            label.setBorder(BorderFactory.createEmptyBorder(3, 0, 3, 0));
             this.add(label, BorderLayout.CENTER);
+
+            JPanel container = new JPanel(new GridLayout(-1, 1));
+            container.setOpaque(false);
             this.add(container, BorderLayout.NORTH);
             if (config.isClosable()) {
                 this.makeClosable(container, actionlistener);
@@ -84,9 +89,10 @@ public class ETabbedPaneHeader extends JComponent {
     }
 
     private void makeMinimizable(Container container, ActionListener actionlistener) {
-        EIconButton minimizeButton = new EIconButton(new Dimension(10, 10), Resources.getImageResource("bullet_arrow_down_small.png"));
+        EIconButton minimizeButton = new EIconButton(new Dimension(10, 10), Resources.getImageResource("bullet_arrow_up_small.png"));
         minimizeButton.setActionCommand(ETabbedPaneHeader.ACTION_MINIMIZE);
         minimizeButton.addActionListener(actionlistener);
         container.add(minimizeButton);
     }
+
 }
