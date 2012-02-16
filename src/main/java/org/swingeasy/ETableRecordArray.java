@@ -2,6 +2,7 @@ package org.swingeasy;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
@@ -63,6 +64,15 @@ public class ETableRecordArray<E> implements ETableRecord<E[]> {
     public boolean hasChanged(int column) {
         Object ov = this.originalValues.get(column);
         return (ov != null) && !new EqualsBuilder().append(ov, this.get(column)).isEquals();
+    }
+
+    /**
+     * 
+     * @see java.lang.Iterable#iterator()
+     */
+    @Override
+    public Iterator<?> iterator() {
+        return Arrays.asList(this.array).iterator();
     }
 
     /**

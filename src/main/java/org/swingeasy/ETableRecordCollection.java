@@ -2,7 +2,9 @@ package org.swingeasy;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -78,6 +80,15 @@ public class ETableRecordCollection<E> implements ETableRecord<List<E>> {
     public boolean hasChanged(int column) {
         Object ov = this.originalValues.get(column);
         return (ov != null) && !new EqualsBuilder().append(ov, this.get(column)).isEquals();
+    }
+
+    /**
+     * 
+     * @see java.lang.Iterable#iterator()
+     */
+    @Override
+    public Iterator<?> iterator() {
+        return Collections.unmodifiableList(this.collection).iterator();
     }
 
     /**
