@@ -21,6 +21,7 @@ public class PopupMenuDemo {
     }
 
     public static void main(String[] args) {
+        UIUtils.systemLookAndFeel();
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         PopupMenuDemo.addComponents(frame.getContentPane());
