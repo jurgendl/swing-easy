@@ -4,6 +4,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Locale;
 
+import javax.swing.JComponent;
 import javax.swing.JTree;
 import javax.swing.ToolTipManager;
 import javax.swing.tree.DefaultTreeModel;
@@ -47,10 +48,32 @@ public class ECheckBoxTree<T> extends JTree implements ECheckBoxTreeI<T> {
         ToolTipManager.sharedInstance().registerComponent(this);
 
         UIUtils.registerLocaleChangeListener(this);
+
+        if (cfg.isDefaultPopupMenu()) {
+            EComponentPopupMenu.installTextComponentPopupMenu(this);
+        }
     }
 
     public ECheckBoxTree(ECheckBoxTreeNode<T> root) {
         this(new ECheckBoxTreeConfig(), root);
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy()
+     */
+    @Override
+    public void copy() {
+        throw new UnsupportedOperationException("not implemented"); // TODO implement
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getComponent()
+     */
+    @Override
+    public JComponent getComponent() {
+        return this;
     }
 
     /**

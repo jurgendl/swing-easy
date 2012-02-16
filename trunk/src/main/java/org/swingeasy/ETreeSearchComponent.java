@@ -4,6 +4,7 @@ import java.util.Locale;
 import java.util.regex.Pattern;
 
 import javax.swing.Icon;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -27,6 +28,15 @@ public class ETreeSearchComponent<T> extends ELabeledTextFieldButtonComponent im
     public ETreeSearchComponent(ETree<T> eTree) {
         this.eTree = eTree;
         this.sTree = eTree.stsi();
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy()
+     */
+    @Override
+    public void copy() {
+        throw new UnsupportedOperationException("not implemented"); // TODO implement
     }
 
     /**
@@ -55,6 +65,15 @@ public class ETreeSearchComponent<T> extends ELabeledTextFieldButtonComponent im
     @Override
     protected String getAction() {
         return "search";//$NON-NLS-1$
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getComponent()
+     */
+    @Override
+    public JComponent getComponent() {
+        return this;
     }
 
     /**
@@ -110,4 +129,5 @@ public class ETreeSearchComponent<T> extends ELabeledTextFieldButtonComponent im
         this.getButton().setToolTipText(Messages.getString(l, "ETree.SearchComponent.search"));//$NON-NLS-1$
         JLabel.class.cast(this.getLabel()).setText(Messages.getString(l, "ETree.SearchComponent.search") + ": "); //$NON-NLS-1$ //$NON-NLS-2$
     }
+
 }

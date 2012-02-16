@@ -9,6 +9,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Locale;
 
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
@@ -51,6 +52,10 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI {
         this.addMouseListener(this);
 
         UIUtils.registerLocaleChangeListener(this);
+
+        if (cfg.isDefaultPopupMenu()) {
+            EComponentPopupMenu.installTextComponentPopupMenu(this);
+        }
     }
 
     public ETreeTable(ETreeTableConfig cfg, ETreeTableRecordNode root, ETreeTableHeaders headers) {
@@ -59,6 +64,15 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI {
 
     public ETreeTable(ETreeTableRecordNode root, ETreeTableHeaders headers) {
         this(new ETreeTableConfig(), root, headers);
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy()
+     */
+    @Override
+    public void copy() {
+        throw new UnsupportedOperationException("not implemented"); // TODO implement
     }
 
     /**
@@ -86,6 +100,15 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI {
 
     public CheckMode getCheckMode() {
         return this.checkMode;
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getComponent()
+     */
+    @Override
+    public JComponent getComponent() {
+        return this;
     }
 
     /**
@@ -308,4 +331,5 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI {
     public Component super_prepareRenderer(TableCellRenderer renderer, int row, int column) {
         return super.prepareRenderer(renderer, row, column);
     }
+
 }

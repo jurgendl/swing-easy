@@ -138,6 +138,10 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         this.setTransferHandler(new EListTransferHandler<T>());
 
         UIUtils.registerLocaleChangeListener(this);
+
+        if (cfg.isDefaultPopupMenu()) {
+            EComponentPopupMenu.installTextComponentPopupMenu(this);
+        }
     }
 
     /**
@@ -168,6 +172,15 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
 
     /**
      * 
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy()
+     */
+    @Override
+    public void copy() {
+        throw new UnsupportedOperationException("not implemented"); // TODO implement
+    }
+
+    /**
+     * 
      * @see javax.swing.JList#createSelectionModel()
      */
     @Override
@@ -179,6 +192,15 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         } catch (ClassCastException ex) {
             return super.createSelectionModel();
         }
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getComponent()
+     */
+    @Override
+    public JComponent getComponent() {
+        return this;
     }
 
     public JComponent getFiltercomponent() {
@@ -350,5 +372,4 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     public EList<T> STSI() {
         return this.getSimpleThreadSafeInterface();
     }
-
 }

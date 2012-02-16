@@ -4,6 +4,7 @@ import java.util.Locale;
 import java.util.regex.Pattern;
 
 import javax.swing.Icon;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -27,6 +28,15 @@ public class EListSearchComponent<T> extends ELabeledTextFieldButtonComponent im
     public EListSearchComponent(EList<T> eList) {
         this.eList = eList;
         this.sList = eList.stsi();
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy()
+     */
+    @Override
+    public void copy() {
+        throw new UnsupportedOperationException("not implemented"); // TODO implement
     }
 
     /**
@@ -55,6 +65,15 @@ public class EListSearchComponent<T> extends ELabeledTextFieldButtonComponent im
     @Override
     protected String getAction() {
         return "search";
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getComponent()
+     */
+    @Override
+    public JComponent getComponent() {
+        return this;
     }
 
     /**
@@ -122,4 +141,5 @@ public class EListSearchComponent<T> extends ELabeledTextFieldButtonComponent im
         this.getButton().setToolTipText(Messages.getString(l, "EList.SearchComponent.search"));//$NON-NLS-1$
         JLabel.class.cast(this.getLabel()).setText(Messages.getString(l, "EList.SearchComponent.search") + ": ");//$NON-NLS-1$ //$NON-NLS-2$
     }
+
 }

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
@@ -88,6 +89,10 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
         }
 
         UIUtils.registerLocaleChangeListener(this);
+
+        if (cfg.isDefaultPopupMenu()) {
+            EComponentPopupMenu.installTextComponentPopupMenu(this);
+        }
     }
 
     /**
@@ -140,6 +145,19 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
 
     /**
      * 
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy()
+     */
+    @Override
+    public void copy() {
+        StringBuilder sb = new StringBuilder();
+        for (EComboBoxRecord<T> record : this) {
+            sb.append(record).append(EComponentPopupMenu.newline);
+        }
+        EComponentPopupMenu.copy(sb.toString());
+    }
+
+    /**
+     * 
      * @see org.swingeasy.EComboBoxI#deactivateScrolling()
      */
     @Override
@@ -148,6 +166,15 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
             this.removeMouseWheelListener(this.mouseValueScroller);
             this.mouseValueScroller = null;
         }
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getComponent()
+     */
+    @Override
+    public JComponent getComponent() {
+        return this;
     }
 
     /**
@@ -257,4 +284,5 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
     public EComboBox<T> STSI() {
         return this.getSimpleThreadSafeInterface();
     }
+
 }
