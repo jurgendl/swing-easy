@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ServiceLoader;
 import java.util.regex.Pattern;
 
 import javax.swing.DropMode;
@@ -33,6 +34,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JWindow;
@@ -512,7 +514,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
         UIUtils.registerLocaleChangeListener(this);
 
         if (this.cfg.isDefaultPopupMenu()) {
-            EComponentPopupMenu.installTextComponentPopupMenu(this);
+            this.installPopupMenuAction(EComponentPopupMenu.installTextComponentPopupMenu(this));
         }
     }
 
@@ -774,6 +776,21 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
+     * JDOC
+     */
+    protected void installPopupMenuAction(JPopupMenu menu) {
+        menu.addSeparator();
+        @SuppressWarnings("unchecked")
+        ServiceLoader<ETableExporter<T>> exporterService = (ServiceLoader) ServiceLoader.load(ETableExporter.class);
+        Iterator<ETableExporter<T>> iterator = exporterService.iterator();
+        while (iterator.hasNext()) {
+            ETableExporter<T> exporter = iterator.next();
+            ETableExporterAction<T> action = new ETableExporterAction<T>(exporter, this);
+            menu.add(action);
+        }
+    }
+
+    /**
      * 
      * @see javax.swing.JTable#isCellEditable(int, int)
      */
@@ -975,5 +992,4 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     public void unsort() {
         this.sorting.unsort();
     }
-
 }

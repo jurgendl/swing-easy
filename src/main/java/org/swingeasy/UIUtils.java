@@ -11,15 +11,20 @@ import java.awt.event.MouseMotionListener;
 import java.awt.geom.RoundRectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.Properties;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import javax.swing.Icon;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
 import javax.swing.JFileChooser;
@@ -27,6 +32,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
+import javax.swing.filechooser.FileSystemView;
 
 /**
  * @author Jurgen
@@ -171,6 +177,8 @@ public class UIUtils extends PropertyChangeParent {
         singleton = new UIUtils();
     }
 
+    protected static Map<String, Icon> cachedIcons = new HashMap<String, Icon>();
+
     /**
      * gets first displayable {@link JFrame}
      */
@@ -183,8 +191,30 @@ public class UIUtils extends PropertyChangeParent {
         return null;
     }
 
+    /**
+     * {@link Locale#getDefault()}
+     */
     public static Locale getCurrentLocale() {
         return Locale.getDefault();
+    }
+
+    /**
+     * JDOC
+     */
+    public static Icon getIconForFileType(String ext) {
+        try {
+            ext = ext.toLowerCase();
+            Icon icon = UIUtils.cachedIcons.get(ext);
+            if (icon == null) {
+                File createTempFile = File.createTempFile("test", "." + ext);
+                icon = FileSystemView.getFileSystemView().getSystemIcon(createTempFile);
+                UIUtils.cachedIcons.put(ext, icon);
+            }
+            return icon;
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
     /**
