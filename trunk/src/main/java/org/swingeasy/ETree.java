@@ -7,12 +7,14 @@ import javax.swing.JTree;
 import javax.swing.ToolTipManager;
 import javax.swing.tree.TreePath;
 
+import org.swingeasy.EComponentPopupMenu.ReadableComponent;
+
 import ca.odell.glazedlists.matchers.Matcher;
 
 /**
  * @author Jurgen
  */
-public class ETree<T> extends JTree implements ETreeI<T> {
+public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
     private static final long serialVersionUID = -2866936668266217327L;
 
     protected ETreeSearchComponent<T> searchComponent = null;
@@ -66,15 +68,6 @@ public class ETree<T> extends JTree implements ETreeI<T> {
 
     /**
      * 
-     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getComponent()
-     */
-    @Override
-    public JComponent getComponent() {
-        return this;
-    }
-
-    /**
-     * 
      * @see org.swingeasy.ETreeI#getNextMatch(TreePath, String)
      */
     @Override
@@ -97,6 +90,15 @@ public class ETree<T> extends JTree implements ETreeI<T> {
             row = (row + 1 + max) % max;
         } while (row != startingRow);
         return null;
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getPopupParentComponent()
+     */
+    @Override
+    public JComponent getPopupParentComponent() {
+        return this;
     }
 
     /**

@@ -2,12 +2,12 @@ package org.swingeasy;
 
 import java.awt.event.ActionEvent;
 
-import javax.swing.AbstractAction;
+import org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction;
 
 /**
  * @author Jurgen
  */
-public class ETableExporterAction<T> extends AbstractAction {
+public class ETableExporterAction<T> extends EComponentPopupMenuAction {
     /** serialVersionUID */
     private static final long serialVersionUID = -4509106311973499954L;
 
@@ -21,6 +21,10 @@ public class ETableExporterAction<T> extends AbstractAction {
         this.table = table;
     }
 
+    /**
+     * 
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         this.exporter.export(this.table);

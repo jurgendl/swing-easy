@@ -179,6 +179,8 @@ public class UIUtils extends PropertyChangeParent {
 
     protected static Map<String, Icon> cachedIcons = new HashMap<String, Icon>();
 
+    protected static Map<String, String> cachedDescriptions = new HashMap<String, String>();
+
     /**
      * gets first displayable {@link JFrame}
      */
@@ -196,6 +198,25 @@ public class UIUtils extends PropertyChangeParent {
      */
     public static Locale getCurrentLocale() {
         return Locale.getDefault();
+    }
+
+    /**
+     * JDOC
+     */
+    public static String getDescriptionForFileType(String ext) {
+        try {
+            ext = ext.toLowerCase();
+            String description = UIUtils.cachedDescriptions.get(ext);
+            if (description == null) {
+                File createTempFile = File.createTempFile("test", "." + ext);
+                description = FileSystemView.getFileSystemView().getSystemTypeDescription(createTempFile);
+                UIUtils.cachedDescriptions.put(ext, description);
+            }
+            return description;
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
     /**

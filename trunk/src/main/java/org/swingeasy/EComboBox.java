@@ -11,6 +11,8 @@ import java.util.Locale;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 
+import org.swingeasy.EComponentPopupMenu.ReadableComponent;
+
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
@@ -23,7 +25,7 @@ import ca.odell.glazedlists.swing.EventComboBoxModel;
 /**
  * @author Jurgen
  */
-public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<EComboBoxRecord<T>> {
+public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<EComboBoxRecord<T>>, ReadableComponent {
     protected class MouseValueScroller implements MouseWheelListener {
         @Override
         public synchronized void mouseWheelMoved(MouseWheelEvent e) {
@@ -170,10 +172,10 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
 
     /**
      * 
-     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getComponent()
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getPopupParentComponent()
      */
     @Override
-    public JComponent getComponent() {
+    public JComponent getPopupParentComponent() {
         return this;
     }
 

@@ -17,11 +17,12 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
 import org.apache.commons.lang.StringUtils;
+import org.swingeasy.EComponentPopupMenu.ReadableComponent;
 
 /**
  * @author Jurgen
  */
-public class ETreeTable extends JTable implements MouseListener, ETreeTableI {
+public class ETreeTable extends JTable implements MouseListener, ETreeTableI, ReadableComponent {
     public static enum CheckMode {
         NONE, NODE, NODE_AND_PARENTS, NODE_AND_CHILDREN;
     }
@@ -104,15 +105,6 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI {
 
     /**
      * 
-     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getComponent()
-     */
-    @Override
-    public JComponent getComponent() {
-        return this;
-    }
-
-    /**
-     * 
      * @see javax.swing.JTable#getDefaultRenderer(java.lang.Class)
      */
     @Override
@@ -128,6 +120,15 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI {
                     });
         }
         return dr;
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getPopupParentComponent()
+     */
+    @Override
+    public JComponent getPopupParentComponent() {
+        return this;
     }
 
     /**
