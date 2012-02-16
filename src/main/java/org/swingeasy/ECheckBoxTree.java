@@ -10,10 +10,12 @@ import javax.swing.ToolTipManager;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 
+import org.swingeasy.EComponentPopupMenu.ReadableComponent;
+
 /**
  * @author Jurgen
  */
-public class ECheckBoxTree<T> extends JTree implements ECheckBoxTreeI<T> {
+public class ECheckBoxTree<T> extends JTree implements ECheckBoxTreeI<T>, ReadableComponent {
     private static final long serialVersionUID = 6378784816121886802L;
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -69,10 +71,10 @@ public class ECheckBoxTree<T> extends JTree implements ECheckBoxTreeI<T> {
 
     /**
      * 
-     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getComponent()
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getPopupParentComponent()
      */
     @Override
-    public JComponent getComponent() {
+    public JComponent getPopupParentComponent() {
         return this;
     }
 

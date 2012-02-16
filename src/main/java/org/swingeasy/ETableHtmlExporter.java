@@ -1,5 +1,9 @@
 package org.swingeasy;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 /**
  * @author Jurgen
  */
@@ -9,12 +13,12 @@ public class ETableHtmlExporter<T> extends ETableExporterImpl<T> {
      * @see org.swingeasy.ETableExporterImpl#exportString(org.swingeasy.ETable)
      */
     @Override
-    public String exportString(ETable<T> table) {
-        StringBuilder sb = new StringBuilder("<html><body><th>");
+    public InputStream exportStream(ETable<T> table) throws IOException {
+        StringBuilder sb = new StringBuilder("<html><body border=1><table><tr>");
         for (String name : table.getHeadernames()) {
-            sb.append("<td>").append(name).append("</td>");
+            sb.append("<th>").append(name).append("</th>");
         }
-        sb.append("</th>");
+        sb.append("</tr>");
         for (ETableRecord<T> record : table) {
             sb.append("<tr>");
             for (int column = 0; column < record.size(); column++) {
@@ -22,8 +26,8 @@ public class ETableHtmlExporter<T> extends ETableExporterImpl<T> {
             }
             sb.append("</tr>\n");
         }
-        sb.append("<html><body>");
-        return sb.toString();
+        sb.append("</table></html></body>");
+        return new ByteArrayInputStream(sb.toString().getBytes());
     }
 
     /**

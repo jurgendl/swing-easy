@@ -15,10 +15,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+import org.swingeasy.EComponentPopupMenu.ReadableComponent;
+
 /**
  * @author Jurgen
  */
-public abstract class ELabeledTextFieldButtonComponent extends JComponent implements EComponentI {
+public abstract class ELabeledTextFieldButtonComponent extends JComponent implements EComponentI, ReadableComponent {
     private static final long serialVersionUID = 3916693177023150847L;
 
     protected JComponent input;

@@ -1,5 +1,8 @@
 package org.swingeasy;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+
 /**
  * @author Jurgen
  */
@@ -9,7 +12,7 @@ public class ETableCsvExporter<T> extends ETableExporterImpl<T> {
      * @see org.swingeasy.ETableExporterImpl#exportString(org.swingeasy.ETable)
      */
     @Override
-    public String exportString(ETable<T> table) {
+    public InputStream exportStream(ETable<T> table) {
         StringBuilder sb = new StringBuilder();
         for (ETableRecord<T> record : table) {
             for (int column = 0; column < record.size(); column++) {
@@ -24,7 +27,7 @@ public class ETableCsvExporter<T> extends ETableExporterImpl<T> {
             }
             sb.append(EComponentPopupMenu.newline);
         }
-        return sb.toString();
+        return new ByteArrayInputStream(sb.toString().getBytes());
     }
 
     /**

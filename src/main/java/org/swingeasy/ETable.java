@@ -45,6 +45,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import org.apache.commons.lang.StringUtils;
+import org.swingeasy.EComponentPopupMenu.ReadableComponent;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
@@ -64,7 +65,7 @@ import ca.odell.glazedlists.swing.TableComparatorChooser;
 /**
  * @author Jurgen
  */
-public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterable<ETableRecord<T>> {
+public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterable<ETableRecord<T>>, ReadableComponent {
     protected class EFiltering {
         /**
          * JDOC
@@ -656,15 +657,6 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
 
     /**
      * 
-     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getComponent()
-     */
-    @Override
-    public JComponent getComponent() {
-        return this;
-    }
-
-    /**
-     * 
      * @see javax.swing.JTable#getDefaultRenderer(java.lang.Class)
      */
     @Override
@@ -715,6 +707,15 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
      */
     public ETableHeaders<T> getHeaders() {
         return this.tableFormat;
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getPopupParentComponent()
+     */
+    @Override
+    public JComponent getPopupParentComponent() {
+        return this;
     }
 
     /**

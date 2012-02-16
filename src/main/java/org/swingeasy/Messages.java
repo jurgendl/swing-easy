@@ -29,6 +29,7 @@ public class Messages {
         try {
             return Messages.getResourceBundle(locale).getString(key);
         } catch (MissingResourceException e) {
+            System.out.println(key);
             return key;
         }
     }

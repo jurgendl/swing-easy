@@ -69,10 +69,10 @@ public class EListSearchComponent<T> extends ELabeledTextFieldButtonComponent im
 
     /**
      * 
-     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getComponent()
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getPopupParentComponent()
      */
     @Override
-    public JComponent getComponent() {
+    public JComponent getPopupParentComponent() {
         return this;
     }
 

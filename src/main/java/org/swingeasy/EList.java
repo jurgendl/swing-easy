@@ -17,6 +17,8 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 
+import org.swingeasy.EComponentPopupMenu.ReadableComponent;
+
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
@@ -27,7 +29,7 @@ import ca.odell.glazedlists.swing.EventSelectionModel;
 /**
  * @author Jurgen
  */
-public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T>> {
+public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T>>, ReadableComponent {
     private class DelegatingListCellRenderer implements ListCellRenderer {
         @SuppressWarnings("rawtypes")
         protected transient Hashtable<Class, ListCellRenderer> defaultRenderersByClass = new Hashtable<Class, ListCellRenderer>();
@@ -198,17 +200,17 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         }
     }
 
-    /**
-     * 
-     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getComponent()
-     */
-    @Override
-    public JComponent getComponent() {
-        return this;
-    }
-
     public JComponent getFiltercomponent() {
         return this.filtercomponent;
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getPopupParentComponent()
+     */
+    @Override
+    public JComponent getPopupParentComponent() {
+        return this;
     }
 
     /**
