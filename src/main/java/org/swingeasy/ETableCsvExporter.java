@@ -3,26 +3,27 @@ package org.swingeasy;
 /**
  * @author Jurgen
  */
-public class ETableHtmlExporter<T> extends ETableExporterImpl<T> {
+public class ETableCsvExporter<T> extends ETableExporterImpl<T> {
     /**
      * 
      * @see org.swingeasy.ETableExporterImpl#exportString(org.swingeasy.ETable)
      */
     @Override
     public String exportString(ETable<T> table) {
-        StringBuilder sb = new StringBuilder("<html><body><th>");
-        for (String name : table.getHeadernames()) {
-            sb.append("<td>").append(name).append("</td>");
-        }
-        sb.append("</th>");
+        StringBuilder sb = new StringBuilder();
         for (ETableRecord<T> record : table) {
-            sb.append("<tr>");
             for (int column = 0; column < record.size(); column++) {
-                sb.append("<td>").append(record.getStringValue(column)).append("</td>");
+                if (Number.class.isAssignableFrom(table.getHeaders().getColumnClass(column))) {
+                    sb.append(record.getStringValue(column));
+                } else {
+                    sb.append("'").append(record.getStringValue(column)).append("'");
+                }
+                if (column < (record.size() - 1)) {
+                    sb.append(",");
+                }
             }
-            sb.append("</tr>\n");
+            sb.append(EComponentPopupMenu.newline);
         }
-        sb.append("<html><body>");
         return sb.toString();
     }
 
@@ -32,7 +33,7 @@ public class ETableHtmlExporter<T> extends ETableExporterImpl<T> {
      */
     @Override
     public String getAction() {
-        return "html-export";
+        return "csv-export";
     }
 
     /**
@@ -41,6 +42,6 @@ public class ETableHtmlExporter<T> extends ETableExporterImpl<T> {
      */
     @Override
     public String getFileExtension() {
-        return "html";
+        return "csv";
     }
 }
