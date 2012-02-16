@@ -709,6 +709,15 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
+     * gets tableFormat
+     * 
+     * @return Returns the tableFormat.
+     */
+    public ETableHeaders<T> getHeaders() {
+        return this.tableFormat;
+    }
+
+    /**
      * 
      * @see org.swingeasy.ETableI#getRecordAtVisualRow(int)
      */
