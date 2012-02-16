@@ -31,6 +31,7 @@ import java.util.regex.Pattern;
 import javax.swing.DropMode;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -509,6 +510,10 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
         this.getTableHeader().setResizingAllowed(this.cfg.isResizable());
 
         UIUtils.registerLocaleChangeListener(this);
+
+        if (this.cfg.isDefaultPopupMenu()) {
+            EComponentPopupMenu.installTextComponentPopupMenu(this);
+        }
     }
 
     /**
@@ -540,6 +545,15 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
         this.sorting.dispose();
         this.tableModel.setTableFormat(new ETableHeaders<T>());
         this.filtering.clear();
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy()
+     */
+    @Override
+    public void copy() {
+        throw new UnsupportedOperationException("not implemented"); // TODO implement
     }
 
     /**
@@ -626,6 +640,15 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     @Override
     public Object getColumnValueAtVisualColumn(int i) {
         return this.getColumnModel().getColumn(i).getHeaderValue();
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getComponent()
+     */
+    @Override
+    public JComponent getComponent() {
+        return this;
     }
 
     /**
@@ -942,4 +965,5 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     public void unsort() {
         this.sorting.unsort();
     }
+
 }

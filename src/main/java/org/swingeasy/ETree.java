@@ -2,6 +2,7 @@ package org.swingeasy;
 
 import java.util.Locale;
 
+import javax.swing.JComponent;
 import javax.swing.JTree;
 import javax.swing.ToolTipManager;
 import javax.swing.tree.TreePath;
@@ -35,10 +36,23 @@ public class ETree<T> extends JTree implements ETreeI<T> {
         this.setCellEditor(new ETreeNodeEditor());
 
         UIUtils.registerLocaleChangeListener(this);
+
+        if (cfg.isDefaultPopupMenu()) {
+            EComponentPopupMenu.installTextComponentPopupMenu(this);
+        }
     }
 
     public ETree(ETreeNode<T> rootNode) {
         this(new ETreeConfig(), rootNode);
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy()
+     */
+    @Override
+    public void copy() {
+        throw new UnsupportedOperationException("not implemented"); // TODO implement
     }
 
     /**
@@ -48,6 +62,15 @@ public class ETree<T> extends JTree implements ETreeI<T> {
     @Override
     public void expandPath(TreePath path) {
         super.expandPath(path);
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getComponent()
+     */
+    @Override
+    public JComponent getComponent() {
+        return this;
     }
 
     /**
@@ -157,4 +180,5 @@ public class ETree<T> extends JTree implements ETreeI<T> {
     public ETreeI<T> STSI() {
         return this.getSimpleThreadSafeInterface();
     }
+
 }

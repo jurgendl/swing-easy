@@ -6,6 +6,12 @@ package org.swingeasy;
 public abstract class EComponentConfig<T> {
     protected boolean locked;
 
+    protected boolean defaultPopupMenu = true;
+
+    public boolean isDefaultPopupMenu() {
+        return this.defaultPopupMenu;
+    }
+
     final public boolean isLocked() {
         return this.locked;
     }
@@ -20,6 +26,11 @@ public abstract class EComponentConfig<T> {
         if (this.isLocked()) {
             throw new IllegalArgumentException();
         }
+    }
+
+    public void setDefaultPopupMenu(boolean defaultPopupMenu) {
+        this.lockCheck();
+        this.defaultPopupMenu = defaultPopupMenu;
     }
 
     final private void setLocked(boolean locked) {

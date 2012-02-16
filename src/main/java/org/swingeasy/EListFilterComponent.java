@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.swing.Icon;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -35,6 +36,15 @@ public class EListFilterComponent<T> extends ELabeledTextFieldButtonComponent im
 
     /**
      * 
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy()
+     */
+    @Override
+    public void copy() {
+        throw new UnsupportedOperationException("not implemented"); // TODO implement
+    }
+
+    /**
+     * 
      * @see org.swingeasy.ELabeledTextFieldButtonComponent#doAction()
      */
     @Override
@@ -49,6 +59,15 @@ public class EListFilterComponent<T> extends ELabeledTextFieldButtonComponent im
     @Override
     protected String getAction() {
         return "filter";
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getComponent()
+     */
+    @Override
+    public JComponent getComponent() {
+        return this;
     }
 
     /**

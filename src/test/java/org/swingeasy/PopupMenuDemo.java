@@ -8,8 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-import org.swingeasy.EComponentPopupMenu.TextComponentPopupMenuInterface;
-
 /**
  * @author Jurgen
  */
@@ -17,7 +15,7 @@ public class PopupMenuDemo {
     private static void addComponents(Container container) {
         container.setLayout(new GridLayout(-1, 1));
         JTextField jtf = new JTextField("popup menu");
-        EComponentPopupMenu.installTextComponentPopupMenu(new TextComponentPopupMenuInterface(jtf));
+        EComponentPopupMenu.installTextComponentPopupMenu(jtf);
         container.add(jtf);
         container.add(new JEditorPane());
     }
