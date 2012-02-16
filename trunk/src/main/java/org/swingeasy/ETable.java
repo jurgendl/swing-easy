@@ -553,7 +553,17 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
      */
     @Override
     public void copy() {
-        throw new UnsupportedOperationException("not implemented"); // TODO implement
+        StringBuilder sb = new StringBuilder();
+        for (ETableRecord<T> record : this) {
+            for (int column = 0; column < (record.size() - 1); column++) {
+                sb.append(record.getStringValue(column)).append("\t");
+            }
+            if (record.size() > 0) {
+                sb.append(record.getStringValue(record.size() - 1)).append("\t");
+            }
+            sb.append(EComponentPopupMenu.newline);
+        }
+        EComponentPopupMenu.copy(sb.toString());
     }
 
     /**

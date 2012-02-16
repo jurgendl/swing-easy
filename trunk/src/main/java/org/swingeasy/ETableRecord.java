@@ -3,7 +3,8 @@ package org.swingeasy;
 /**
  * @author Jurgen
  */
-public interface ETableRecord<T> {
+@SuppressWarnings("rawtypes")
+public interface ETableRecord<T> extends Iterable {
     public abstract Object get(int column);
 
     public abstract T getBean();

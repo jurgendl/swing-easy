@@ -176,7 +176,11 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
      */
     @Override
     public void copy() {
-        throw new UnsupportedOperationException("not implemented"); // TODO implement
+        StringBuilder sb = new StringBuilder();
+        for (EListRecord<T> record : this) {
+            sb.append(record.getStringValue()).append(EComponentPopupMenu.newline);
+        }
+        EComponentPopupMenu.copy(sb.toString());
     }
 
     /**

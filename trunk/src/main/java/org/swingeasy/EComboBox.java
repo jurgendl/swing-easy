@@ -151,7 +151,7 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
     public void copy() {
         StringBuilder sb = new StringBuilder();
         for (EComboBoxRecord<T> record : this) {
-            sb.append(record).append(EComponentPopupMenu.newline);
+            sb.append(record.getStringValue()).append(EComponentPopupMenu.newline);
         }
         EComponentPopupMenu.copy(sb.toString());
     }

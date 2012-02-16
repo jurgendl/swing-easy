@@ -2,6 +2,7 @@ package org.swingeasy;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -91,6 +92,33 @@ public class ETableRecordBean<T> implements ETableRecord<T> {
         } catch (NoSuchMethodException ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    /**
+     * 
+     * @see java.lang.Iterable#iterator()
+     */
+    @SuppressWarnings("rawtypes")
+    @Override
+    public Iterator<?> iterator() {
+        return new Iterator() {
+            int i = 0;
+
+            @Override
+            public boolean hasNext() {
+                return this.i < ETableRecordBean.this.orderedFields.size();
+            }
+
+            @Override
+            public Object next() {
+                return ETableRecordBean.this.get(this.i++);
+            }
+
+            @Override
+            public void remove() {
+                //
+            }
+        };
     }
 
     /**
