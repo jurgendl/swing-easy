@@ -25,13 +25,14 @@ public class ETablePdfExporter<T> extends ETableHtmlExporter<T> {
     @Override
     public InputStream exportStream(ETable<T> table) throws IOException {
         try {
-            InputStream data = super.exportStream(table);
+            String data = this.createHtml(table);
+            String css = new String(Resources.getDataResource("exporter/css.txt"));
+            data = data.replace("<head>", "<head><style type=\"text/css\">" + css + "</style>");
+
             ITextRenderer itextRenderer = new ITextRenderer();
             DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 
-            byte[] buffer = new byte[data.available()];
-
-            org.w3c.dom.Document doc = builder.parse(new ByteArrayInputStream(buffer));
+            org.w3c.dom.Document doc = builder.parse(new ByteArrayInputStream(data.getBytes("UTF-8")));
             itextRenderer.setDocument(doc, null);
 
             ByteArrayOutputStream os = new ByteArrayOutputStream();
@@ -39,8 +40,8 @@ public class ETablePdfExporter<T> extends ETableHtmlExporter<T> {
             itextRenderer.layout();
             itextRenderer.createPDF(os);
             os.close();
-            return new ByteArrayInputStream(os.toByteArray());
 
+            return new ByteArrayInputStream(os.toByteArray());
         } catch (ParserConfigurationException ex) {
             throw new IOException(ex);
         } catch (DocumentException ex) {
