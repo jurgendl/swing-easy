@@ -8,13 +8,9 @@ import java.io.InputStream;
  * @author Jurgen
  */
 public class ETableHtmlExporter<T> extends ETableExporterImpl<T> {
-    /**
-     * 
-     * @see org.swingeasy.ETableExporterImpl#exportString(org.swingeasy.ETable)
-     */
-    @Override
-    public InputStream exportStream(ETable<T> table) throws IOException {
-        StringBuilder sb = new StringBuilder("<html><body border=1><table><tr>");
+    protected String createHtml(ETable<T> table) {
+        StringBuilder sb = new StringBuilder(
+                "<html xmlns=\"http://www.w3.org/1999/xhtml\"><head><title></title></head><body><table border=\"1\"><tr>");
         for (String name : table.getHeadernames()) {
             sb.append("<th>").append(name).append("</th>");
         }
@@ -26,8 +22,19 @@ public class ETableHtmlExporter<T> extends ETableExporterImpl<T> {
             }
             sb.append("</tr>\n");
         }
-        sb.append("</table></html></body>");
-        return new ByteArrayInputStream(sb.toString().getBytes());
+        sb.append("</table></body></html>");
+        String html = sb.toString();
+        return html;
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.ETableExporterImpl#exportString(org.swingeasy.ETable)
+     */
+    @Override
+    public InputStream exportStream(ETable<T> table) throws IOException {
+        String html = this.createHtml(table);
+        return new ByteArrayInputStream(html.getBytes());
     }
 
     /**
