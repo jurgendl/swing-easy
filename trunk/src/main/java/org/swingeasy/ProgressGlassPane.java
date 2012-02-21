@@ -200,8 +200,8 @@ public class ProgressGlassPane extends NonBlockingGlassPane {
      */
     @Override
     public void setVisible(boolean visible) {
-        this.toggle(visible);
         super.setVisible(visible);
+        this.toggle(visible);
     }
 
     protected void toggle(boolean enabled) {
