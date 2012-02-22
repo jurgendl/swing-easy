@@ -70,7 +70,7 @@ public class ListDemo2 {
                 btn.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        CustomizableOptionPane.showDialog(null, new JLabel("non localized - dialogcomponent"), "non localized - title",
+                        CustomizableOptionPane.showCustomDialog(null, new JLabel("non localized - dialogcomponent"), "non localized - title",
                                 MessageType.QUESTION, OptionType.YES_NO_CANCEL, null, null);
                     }
                 });
