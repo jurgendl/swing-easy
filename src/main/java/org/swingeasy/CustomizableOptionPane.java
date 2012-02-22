@@ -2,20 +2,68 @@ package org.swingeasy;
 
 import java.awt.Component;
 import java.awt.HeadlessException;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import javax.swing.Icon;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
- * see {@link CustomizableOptionPane#showDialog(Component, JComponent, String, MessageType, OptionType, Icon, OptionPaneCustomizer)}
+ * see {@link CustomizableOptionPane#showCustomDialog(Component, JComponent, String, MessageType, OptionType, Icon, OptionPaneCustomizer)}
  * 
  * @author Jurgen
  */
 public class CustomizableOptionPane {
+    private static class CustomizableFileChooserImpl extends JFileChooser {
+        private static final long serialVersionUID = -2847691366004582199L;
+
+        FileChooserCustomizer customizer;
+
+        private int getReturnValue() {
+            return new ObjectWrapper(this).get(Integer.class, "returnValue");
+        }
+
+        private void setDialog(JDialog dialog) {
+            new ObjectWrapper(this).set("dialog", dialog);
+        }
+
+        private void setReturnValue(int rv) {
+            new ObjectWrapper(this).set("returnValue", rv);
+        }
+
+        @Override
+        public int showDialog(Component parent, String approveButtonText) throws HeadlessException {
+            if (approveButtonText != null) {
+                this.setApproveButtonText(approveButtonText);
+                this.setDialogType(JFileChooser.CUSTOM_DIALOG);
+            }
+            JDialog dialog = this.createDialog(parent);
+            this.setDialog(dialog);
+            dialog.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    CustomizableFileChooserImpl.this.setReturnValue(JFileChooser.CANCEL_OPTION);
+                }
+            });
+            this.setReturnValue(JFileChooser.ERROR_OPTION);
+            this.rescanCurrentDirectory();
+            this.customizer.customize(parent, dialog);
+            dialog.setVisible(true);
+            this.firePropertyChange("JFileChooserDialogIsClosingProperty", dialog, null);
+            dialog.removeAll();
+            dialog.dispose();
+            dialog = null;
+            return this.getReturnValue();
+        }
+
+    }
+
     private static class CustomizableOptionPaneImpl extends JOptionPane {
         /** serialVersionUID */
         private static final long serialVersionUID = 6539025260851538675L;
@@ -131,8 +179,22 @@ public class CustomizableOptionPane {
      * 
      * @throws HeadlessException
      */
-    public static ResultType showDialog(Component parentComponent, JComponent component, String title, MessageType messageType,
+    public static ResultType showCustomDialog(Component parentComponent, JComponent component, String title, MessageType messageType,
             OptionType optionType, Icon icon, OptionPaneCustomizer customizer) throws HeadlessException {
         return CustomizableOptionPaneImpl.showDialog(parentComponent, component, title, messageType, optionType, icon, customizer);
+    }
+
+    public static File showFileChooserDialog(Component parent, FileChooserType type, FileChooserCustomizer customizer) {
+        CustomizableFileChooserImpl jfc = new CustomizableFileChooserImpl();
+        customizer.customize(jfc);
+        jfc.customizer = customizer;
+        int returnValue = type == FileChooserType.SAVE ? jfc.showSaveDialog(parent) : jfc.showOpenDialog(parent);
+        if (JFileChooser.APPROVE_OPTION == returnValue) {
+            File exportTo = jfc.getSelectedFile();
+            if (exportTo != null) {
+                return exportTo;
+            }
+        }
+        return null;
     }
 }

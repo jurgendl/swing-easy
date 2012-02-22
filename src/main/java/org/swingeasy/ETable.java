@@ -790,13 +790,17 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
      */
     protected void installPopupMenuAction(JPopupMenu menu) {
         menu.addSeparator();
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({ "unchecked", "rawtypes" })
         ServiceLoader<ETableExporter<T>> exporterService = (ServiceLoader) ServiceLoader.load(ETableExporter.class);
         Iterator<ETableExporter<T>> iterator = exporterService.iterator();
         while (iterator.hasNext()) {
-            ETableExporter<T> exporter = iterator.next();
-            ETableExporterAction<T> action = new ETableExporterAction<T>(exporter, this);
-            menu.add(action);
+            try {
+                ETableExporter<T> exporter = iterator.next();
+                ETableExporterAction<T> action = new ETableExporterAction<T>(exporter, this);
+                menu.add(action);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 

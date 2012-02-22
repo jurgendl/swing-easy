@@ -1,5 +1,6 @@
 package org.swingeasy;
 
+import java.awt.Component;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -7,6 +8,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import javax.swing.Icon;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 
@@ -104,18 +106,6 @@ public abstract class ETableExporterImpl<T> implements ETableExporter<T> {
 
     protected static File lastFile = null;
 
-    protected static JFileChooser getFileChooser() {
-        if (ETableExporterImpl.fileChooser == null) {
-            try {
-                ETableExporterImpl.lastFile = new File("tmp").getCanonicalFile().getParentFile();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-            ETableExporterImpl.fileChooser = new JFileChooser();
-        }
-        return ETableExporterImpl.fileChooser;
-    }
-
     public ETableExporterImpl() {
         super();
     }
@@ -129,29 +119,38 @@ public abstract class ETableExporterImpl<T> implements ETableExporter<T> {
         try {
             InputStream data = this.exportStream(table);
             if (data != null) {
-                JFileChooser jfc = ETableExporterImpl.getFileChooser();
-                jfc.setCurrentDirectory(ETableExporterImpl.lastFile.isDirectory() ? ETableExporterImpl.lastFile : ETableExporterImpl.lastFile
-                        .getParentFile());
-                jfc.resetChoosableFileFilters();
-                String ext = this.getFileExtension();
-                String description = this.getFileExtensionDescription() + " (" + ext + ")";
-                jfc.addChoosableFileFilter(new ExtensionFileFilter(description, ext));
-                if (JFileChooser.APPROVE_OPTION == jfc.showSaveDialog(table)) {
-                    File exportTo = jfc.getSelectedFile();
-                    if (exportTo != null) {
-                        if (!exportTo.getName().endsWith(ext)) {
-                            exportTo = new File(exportTo.getParentFile(), exportTo.getName() + "." + ext);
-                        }
-                        ETableExporterImpl.lastFile = exportTo;
-                        FileOutputStream fout = new FileOutputStream(exportTo);
-                        byte[] buffer = new byte[1024 * 8];
-                        int read;
-                        while ((read = data.read(buffer)) != -1) {
-                            fout.write(buffer, 0, read);
-                        }
-                        data.close();
-                        fout.close();
+                final String ext = this.getFileExtension();
+
+                File exportTo = CustomizableOptionPane.showFileChooserDialog(table, FileChooserType.SAVE, new FileChooserCustomizer() {
+                    @Override
+                    public void customize(Component parentComponent, JDialog dialog) {
+                        dialog.setLocationRelativeTo(null);
                     }
+
+                    @Override
+                    public void customize(JFileChooser jfc) {
+                        jfc.setCurrentDirectory(ETableExporterImpl.lastFile.isDirectory() ? ETableExporterImpl.lastFile : ETableExporterImpl.lastFile
+                                .getParentFile());
+                        jfc.resetChoosableFileFilters();
+                        jfc.addChoosableFileFilter(new ExtensionFileFilter(ETableExporterImpl.this.getFileExtensionDescription() + " (" + ext + ")",
+                                ext));
+                    }
+
+                });
+
+                if (exportTo != null) {
+                    if (!exportTo.getName().endsWith(ext)) {
+                        exportTo = new File(exportTo.getParentFile(), exportTo.getName() + "." + ext);
+                    }
+                    ETableExporterImpl.lastFile = exportTo;
+                    FileOutputStream fout = new FileOutputStream(exportTo);
+                    byte[] buffer = new byte[1024 * 8];
+                    int read;
+                    while ((read = data.read(buffer)) != -1) {
+                        fout.write(buffer, 0, read);
+                    }
+                    data.close();
+                    fout.close();
                 }
             }
         } catch (IOException ex) {
