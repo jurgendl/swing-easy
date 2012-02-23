@@ -88,6 +88,34 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
 
     private static final long serialVersionUID = -3602504810131193505L;
 
+    /**
+     * convert type
+     * 
+     * @param records
+     * @return
+     */
+    public static <T> List<EListRecord<T>> convert(Collection<T> records) {
+        List<EListRecord<T>> list = new ArrayList<EListRecord<T>>();
+        for (T r : records) {
+            list.add(new EListRecord<T>(r));
+        }
+        return list;
+    }
+
+    /**
+     * convert type
+     * 
+     * @param records
+     * @return
+     */
+    public static <T> List<T> convertRecords(Collection<EListRecord<T>> records) {
+        List<T> list = new ArrayList<T>();
+        for (EListRecord<T> r : records) {
+            list.add(r.get());
+        }
+        return list;
+    }
+
     private static <T> EListModel<T> createModel(EListConfig cfg) {
         EventList<EListRecord<T>> records = new BasicEventList<EListRecord<T>>();
         if (cfg.isSortable()) {
@@ -130,7 +158,9 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         EListModel elistModel = EListModel.class.cast(this.getModel());
         this.records = elistModel.source;
         this.filtercomponent = elistModel.filtercomponent;
-        this.filtercomponent.setList(this);
+        if (this.filtercomponent != null) {
+            this.filtercomponent.setList(this);
+        }
         elistModel.filtercomponent = null;
         this.delegatingListCellRenderer = new DelegatingListCellRenderer(this.getCellRenderer());
         this.setCellRenderer(this.delegatingListCellRenderer);
@@ -284,6 +314,50 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
 
     /**
      * 
+     * @see org.swingeasy.EListI#moveSelectedDown()
+     */
+    @Override
+    public void moveSelectedDown() {
+        int selectedIndex = this.getSelectedIndex();
+
+        // none selected
+        if (selectedIndex == -1) {
+            return;
+        }
+
+        // EListModel<T> model = EListModel.class.cast(getModel());
+        //
+        // if ((selectedIndex == -1) || ((selectedIndex + 1) == model.getSize())) {
+        // return;
+        // }
+        //
+        // Object element = model.getElementAt(selectedIndex);
+        // model.removeElementAt(selectedIndex);
+        // model.insertElementAt(element, selectedIndex + 1);
+
+        @SuppressWarnings("unchecked")
+        List<EListRecord<T>> list = EListModel.class.cast(this.getModel()).source;
+
+        // last selected
+        if (list.size() == (selectedIndex + 1)) {
+            return;
+        }
+
+        EListRecord<T> object = list.get(selectedIndex);
+        list.add(selectedIndex + 1, object);
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EListI#moveSelectedDown()
+     */
+    @Override
+    public void moveSelectedUp() {
+        // TODO
+    }
+
+    /**
+     * 
      * @see org.swingeasy.EListI#removeAllRecords()
      */
     @Override
@@ -298,6 +372,24 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     @Override
     public void removeRecord(EListRecord<T> record) {
         this.records.remove(record);
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EListI#removeRecords(java.util.Collection)
+     */
+    @Override
+    public void removeRecords(Collection<EListRecord<T>> recordsToRemove) {
+        this.records.removeAll(recordsToRemove);
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EListI#removeSelectedRecords()
+     */
+    @Override
+    public void removeSelectedRecords() {
+        this.records.remove(this.getSelectedRecords());
     }
 
     /**
