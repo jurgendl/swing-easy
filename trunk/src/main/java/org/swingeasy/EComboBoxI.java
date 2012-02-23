@@ -1,8 +1,7 @@
 package org.swingeasy;
 
 import java.util.Collection;
-
-import ca.odell.glazedlists.EventList;
+import java.util.List;
 
 /**
  * @author Jurgen
@@ -18,7 +17,7 @@ public interface EComboBoxI<T> extends EComponentI {
 
     public abstract void deactivateScrolling();
 
-    public abstract EventList<EComboBoxRecord<T>> getRecords();
+    public abstract List<EComboBoxRecord<T>> getRecords();
 
     public abstract EComboBoxRecord<T> getSelectedRecord();
 

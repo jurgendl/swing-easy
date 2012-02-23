@@ -230,7 +230,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         }
     }
 
-    public JComponent getFiltercomponent() {
+    public EListFilterComponent<T> getFiltercomponent() {
         return this.filtercomponent;
     }
 
@@ -248,7 +248,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
      * @see org.swingeasy.EListI#getRecords()
      */
     @Override
-    public EventList<EListRecord<T>> getRecords() {
+    public List<EListRecord<T>> getRecords() {
         return this.records;
     }
 
@@ -279,7 +279,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
      */
     @SuppressWarnings("unchecked")
     @Override
-    public Collection<EListRecord<T>> getSelectedRecords() {
+    public List<EListRecord<T>> getSelectedRecords() {
         List<EListRecord<T>> list = new ArrayList<EListRecord<T>>();
         for (Object o : this.getSelectedValues()) {
             list.add(EListRecord.class.cast(o));
@@ -325,26 +325,13 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
             return;
         }
 
-        // EListModel<T> model = EListModel.class.cast(getModel());
-        //
-        // if ((selectedIndex == -1) || ((selectedIndex + 1) == model.getSize())) {
-        // return;
-        // }
-        //
-        // Object element = model.getElementAt(selectedIndex);
-        // model.removeElementAt(selectedIndex);
-        // model.insertElementAt(element, selectedIndex + 1);
-
-        @SuppressWarnings("unchecked")
-        List<EListRecord<T>> list = EListModel.class.cast(this.getModel()).source;
-
         // last selected
-        if (list.size() == (selectedIndex + 1)) {
+        if (this.records.size() == (selectedIndex + 1)) {
             return;
         }
 
-        EListRecord<T> object = list.get(selectedIndex);
-        list.add(selectedIndex + 1, object);
+        Collections.rotate(this.records, 1);
+        this.setSelectedIndex(selectedIndex + 1);
     }
 
     /**
@@ -353,7 +340,20 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
      */
     @Override
     public void moveSelectedUp() {
-        // TODO
+        int selectedIndex = this.getSelectedIndex();
+
+        // none selected
+        if (selectedIndex == -1) {
+            return;
+        }
+
+        // first selected
+        if (selectedIndex == 0) {
+            return;
+        }
+
+        Collections.rotate(this.records, -1);
+        this.setSelectedIndex(selectedIndex - 1);
     }
 
     /**
@@ -389,7 +389,8 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
      */
     @Override
     public void removeSelectedRecords() {
-        this.records.remove(this.getSelectedRecords());
+        Collection<EListRecord<T>> selectedRecords = this.getSelectedRecords();
+        this.records.removeAll(selectedRecords);
     }
 
     /**
