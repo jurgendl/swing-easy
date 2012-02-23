@@ -52,7 +52,7 @@ public class TabTransferHandler<T extends org.swingeasy.tab.DnDTabbedPane> exten
         Point pt = tdl.getDropPoint();
         T target = (T) support.getComponent();
         target.autoScrollTest(pt);
-        T.DropLocation dl = target.dropLocationForPoint(pt);
+        DnDTabbedPane.DropLocation dl = target.dropLocationForPoint(pt);
         int idx = dl.getIndex();
         boolean isDropable = false;
 
@@ -138,7 +138,7 @@ public class TabTransferHandler<T extends org.swingeasy.tab.DnDTabbedPane> exten
         }
 
         T target = (T) support.getComponent();
-        T.DropLocation dl = target.getDropLocation();
+        DnDTabbedPane.DropLocation dl = target.getDropLocation();
         try {
             T _source = (T) support.getTransferable().getTransferData(this.localObjectFlavor);
             int index = dl.getIndex(); // boolean insert = dl.isInsert();
