@@ -67,9 +67,19 @@ major version changes (first number) are possibly not backwards compatible!
   * EList: reworked filtercomponent
   * ELabeledTextFieldButtonComponent: all filter and searchcompontn have common superclass
   * UIUtils: focused button is default button 
- * 2.2.3 (not released)
+ * 2.3.0 (featured, not backwards compatible)
    * EComboBox, ETable nad EList implement iterable
-   * ETable: get selected ... methods
+   * ETable: more utilitymethods
    * initial release of RotatedLabel
-   * initial release of ETabbedPane
- * 2.3.0 (not released) 
+   * initial release of ETabbedPane (not finished)
+   * E-interfaces do not return EventList but List
+   * EList: more utilitymethods
+   * EList: fixed nullpointer when filtering was disabled
+   * initial release of ObjectWrapper (helper)
+   * initial release of customizable OptionPane
+   * initial release of customizable FileChooser
+   * EComponents default (expandable) popup menu
+   * ETable: exporters (also actions in default popup menu)
+   * progress glasspane: fixed visibility
+ * 2.3.1 (not released) 
+ * 2.4.0 (not released) 
