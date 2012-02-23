@@ -184,7 +184,7 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
      * @see org.swingeasy.EComboBoxI#getRecords()
      */
     @Override
-    public EventList<EComboBoxRecord<T>> getRecords() {
+    public List<EComboBoxRecord<T>> getRecords() {
         return this.records;
     }
 

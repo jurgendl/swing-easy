@@ -1,5 +1,6 @@
 package org.swingeasy;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
@@ -9,7 +10,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
-import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.matchers.Matcher;
 
 /**
@@ -69,20 +69,20 @@ public class EListSearchComponent<T> extends ELabeledTextFieldButtonComponent im
 
     /**
      * 
-     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getPopupParentComponent()
-     */
-    @Override
-    public JComponent getPopupParentComponent() {
-        return this;
-    }
-
-    /**
-     * 
      * @see org.swingeasy.ELabeledTextFieldButtonComponent#getIcon()
      */
     @Override
     protected Icon getIcon() {
         return Resources.getImageResource("find.png");
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getPopupParentComponent()
+     */
+    @Override
+    public JComponent getPopupParentComponent() {
+        return this;
     }
 
     /**
@@ -95,7 +95,7 @@ public class EListSearchComponent<T> extends ELabeledTextFieldButtonComponent im
     }
 
     protected EListRecord<T> nextMatchTryTop() {
-        EventList<EListRecord<T>> records = this.eList.getRecords();
+        List<EListRecord<T>> records = this.eList.getRecords();
 
         if (records.size() == 0) {
             return null;

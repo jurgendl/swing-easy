@@ -1,8 +1,7 @@
 package org.swingeasy;
 
 import java.util.Collection;
-
-import ca.odell.glazedlists.EventList;
+import java.util.List;
 
 /**
  * @author Jurgen
@@ -16,11 +15,11 @@ public interface EListI<T> extends EComponentI {
 
     public abstract void clearSelection();
 
-    public abstract EventList<EListRecord<T>> getRecords();
+    public abstract List<EListRecord<T>> getRecords();
 
     public abstract EListRecord<T> getSelectedRecord();
 
-    public abstract Collection<EListRecord<T>> getSelectedRecords();
+    public abstract List<EListRecord<T>> getSelectedRecords();
 
     public abstract void moveSelectedDown();
 
