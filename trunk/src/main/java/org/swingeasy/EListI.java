@@ -14,15 +14,25 @@ public interface EListI<T> extends EComponentI {
 
     public abstract void addRecords(Collection<EListRecord<T>> EListRecords);
 
+    public abstract void clearSelection();
+
     public abstract EventList<EListRecord<T>> getRecords();
 
     public abstract EListRecord<T> getSelectedRecord();
 
     public abstract Collection<EListRecord<T>> getSelectedRecords();
 
+    public abstract void moveSelectedDown();
+
+    public abstract void moveSelectedUp();
+
     public abstract void removeAllRecords();
 
     public abstract void removeRecord(final EListRecord<T> record);
+
+    public abstract void removeRecords(Collection<EListRecord<T>> records);
+
+    public abstract void removeSelectedRecords();
 
     public abstract void scrollToVisibleRecord(EListRecord<T> record);
 
