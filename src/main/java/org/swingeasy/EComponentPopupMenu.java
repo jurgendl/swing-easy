@@ -37,30 +37,51 @@ import javax.swing.undo.UndoManager;
  * @author jdlandsh
  */
 public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
+    /**
+     * JDOC
+     */
     public static class AncestorAdapter implements AncestorListener {
+        /**
+         * 
+         * @see javax.swing.event.AncestorListener#ancestorAdded(javax.swing.event.AncestorEvent)
+         */
         @Override
         public void ancestorAdded(AncestorEvent event) {
             //
         }
 
+        /**
+         * 
+         * @see javax.swing.event.AncestorListener#ancestorMoved(javax.swing.event.AncestorEvent)
+         */
         @Override
         public void ancestorMoved(AncestorEvent event) {
             //
         }
 
+        /**
+         * 
+         * @see javax.swing.event.AncestorListener#ancestorRemoved(javax.swing.event.AncestorEvent)
+         */
         @Override
         public void ancestorRemoved(AncestorEvent event) {
             //
         }
     }
 
+    /**
+     * JDOC
+     */
     public static class ClipboardOwnerAdapter implements ClipboardOwner {
         @Override
-        public void lostOwnership(Clipboard clipboard, Transferable contents) {
+        public void lostOwnership(@SuppressWarnings("hiding") Clipboard clipboard, Transferable contents) {
             //
         }
     }
 
+    /**
+     * JDOC
+     */
     private static class CopyAction extends EComponentPopupMenuAction {
         private static final long serialVersionUID = 3044725124645042202L;
 
@@ -82,6 +103,9 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
     }
 
+    /**
+     * JDOC
+     */
     private static class CutAction extends EComponentPopupMenuAction {
         private static final long serialVersionUID = 4328082010034890480L;
 
@@ -103,6 +127,9 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
     }
 
+    /**
+     * JDOC
+     */
     private static class DeleteAction extends EComponentPopupMenuAction {
         private static final long serialVersionUID = -7609111337852520512L;
 
@@ -124,6 +151,9 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
     }
 
+    /**
+     * JDOC
+     */
     private static class DeleteAllAction extends EComponentPopupMenuAction {
         private static final long serialVersionUID = -6873629703224034266L;
 
@@ -135,6 +165,10 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
             this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0));
         }
 
+        /**
+         * 
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             this.component.selectAll();
@@ -142,6 +176,9 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
     }
 
+    /**
+     * JDOC
+     */
     public abstract static class EComponentPopupMenuAction extends AbstractAction implements EComponentI {
         private static final long serialVersionUID = 3408961844539862485L;
 
@@ -152,12 +189,19 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
             this.key = name;
         }
 
+        /**
+         * 
+         * @see org.swingeasy.EComponentI#setLocale(java.util.Locale)
+         */
         @Override
         public void setLocale(Locale l) {
             super.putValue(Action.NAME, Messages.getString(l, "EComponentPopupMenuAction." + this.key));
         }
     }
 
+    /**
+     * JDOC
+     */
     private static class FindAction extends EComponentPopupMenuAction {
         private static final long serialVersionUID = 4328082010034890480L;
 
@@ -179,6 +223,9 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
     }
 
+    /**
+     * JDOC
+     */
     private static class FindNextAction extends EComponentPopupMenuAction {
         private static final long serialVersionUID = 4328082010034890480L;
 
@@ -200,6 +247,9 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
     }
 
+    /**
+     * JDOC
+     */
     private static class FindPreviousAction extends EComponentPopupMenuAction {
         private static final long serialVersionUID = 4328082010034890480L;
 
@@ -221,6 +271,9 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
     }
 
+    /**
+     * JDOC
+     */
     private static class GotoBeginAction extends EComponentPopupMenuAction {
         private static final long serialVersionUID = 3085509525399492253L;
 
@@ -232,12 +285,19 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
             this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_HOME, Event.CTRL_MASK));
         }
 
+        /**
+         * 
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             this.component.gotoBegin();
         }
     }
 
+    /**
+     * JDOC
+     */
     private static class GotoEndAction extends EComponentPopupMenuAction {
         private static final long serialVersionUID = 6262977802889470104L;
 
@@ -249,12 +309,19 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
             this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_END, Event.CTRL_MASK));
         }
 
+        /**
+         * 
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             this.component.gotoEnd();
         }
     }
 
+    /**
+     * JDOC
+     */
     private static class PasteAction extends EComponentPopupMenuAction {
         private static final long serialVersionUID = -7609111337852520512L;
 
@@ -276,29 +343,50 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
     }
 
+    /**
+     * JDOC
+     */
     public static class PopupMenuAdapter implements PopupMenuListener {
+        /**
+         * 
+         * @see javax.swing.event.PopupMenuListener#popupMenuCanceled(javax.swing.event.PopupMenuEvent)
+         */
         @Override
         public void popupMenuCanceled(PopupMenuEvent e) {
             //
         }
 
+        /**
+         * 
+         * @see javax.swing.event.PopupMenuListener#popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent)
+         */
         @Override
         public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
             //
         }
 
+        /**
+         * 
+         * @see javax.swing.event.PopupMenuListener#popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent)
+         */
         @Override
         public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
             //
         }
     }
 
+    /**
+     * JDOC
+     */
     public static interface ReadableComponent {
         public void copy();
 
         public JComponent getPopupParentComponent();
     }
 
+    /**
+     * JDOC
+     */
     private static class RedoAction extends EComponentPopupMenuAction {
         private static final long serialVersionUID = 700221902961828425L;
 
@@ -324,6 +412,9 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
     }
 
+    /**
+     * JDOC
+     */
     private static class ReplaceAction extends EComponentPopupMenuAction {
         private static final long serialVersionUID = 4328082010034890480L;
 
@@ -345,6 +436,9 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
     }
 
+    /**
+     * JDOC
+     */
     private static class SelectAllAction extends EComponentPopupMenuAction {
         private static final long serialVersionUID = -6873629703224034266L;
 
@@ -362,6 +456,9 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
     }
 
+    /**
+     * JDOC
+     */
     public static class TextComponentWritableComponent implements WritableComponent {
         protected final JTextComponent component;
 
@@ -521,6 +618,9 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
     }
 
+    /**
+     * JDOC
+     */
     private static class UndoAction extends EComponentPopupMenuAction {
         private static final long serialVersionUID = -2639363038955484287L;
 
@@ -532,6 +632,10 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
             this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_Z, Event.CTRL_MASK));
         }
 
+        /**
+         * 
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
@@ -542,8 +646,10 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
     }
 
+    /**
+     * JDOC
+     */
     private static class UnselectAction extends EComponentPopupMenuAction {
-
         private static final long serialVersionUID = -736429406339064829L;
 
         private final WritableComponent component;
@@ -553,12 +659,19 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
             this.component = component;
         }
 
+        /**
+         * 
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             this.component.unselect();
         }
     }
 
+    /**
+     * JDOC
+     */
     public static interface WritableComponent extends ReadableComponent {
         public void addUndoableEditListener(UndoManager manager);
 
@@ -644,6 +757,9 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         return EComponentPopupMenu.clipboard;
     }
 
+    /**
+     * JDOC
+     */
     public static JPopupMenu installPopupMenu(final ReadableComponent component) {
         final EComponentPopupMenuAction copyAction = new CopyAction(component);
         EComponentPopupMenu popup = new EComponentPopupMenu();
@@ -664,6 +780,9 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         return popup;
     }
 
+    /**
+     * JDOC
+     */
     public static JPopupMenu installPopupMenu(final WritableComponent component) {
         final UndoManager manager = new UndoManager();
         final EComponentPopupMenuAction copyAction = new CopyAction(component);
@@ -761,10 +880,16 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         return popup;
     }
 
+    /**
+     * JDOC
+     */
     public static JPopupMenu installReadOnlyTextComponentPopupMenu(final JTextComponent component) {
         return EComponentPopupMenu.installPopupMenu((ReadableComponent) new TextComponentWritableComponent(component));
     }
 
+    /**
+     * JDOC
+     */
     public static JPopupMenu installTextComponentPopupMenu(final JTextComponent component) {
         return EComponentPopupMenu.installPopupMenu(new TextComponentWritableComponent(component));
     }
@@ -795,10 +920,16 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         return result;
     }
 
-    protected static void setClipboard(Clipboard clipboard) {
+    /**
+     * JDOC
+     */
+    public static void setClipboard(Clipboard clipboard) {
         EComponentPopupMenu.clipboard = clipboard;
     }
 
+    /**
+     * hidden contructor
+     */
     protected EComponentPopupMenu() {
         UIUtils.registerLocaleChangeListener(this);
     }
@@ -817,6 +948,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     }
 
     /**
+     * actions should implement {@link EComponentI} or extend {@link EComponentPopupMenuAction} so they listen to {@link Locale} changes
      * 
      * @see java.awt.Component#setLocale(java.util.Locale)
      */
