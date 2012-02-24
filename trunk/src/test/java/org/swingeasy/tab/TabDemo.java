@@ -25,7 +25,7 @@ import org.swingeasy.UIUtils;
 public class TabDemo {
 
     public static void main(String[] args) {
-        UIUtils.niceLookAndFeel();
+        UIUtils.systemLookAndFeel();
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         TabDemo demo = new TabDemo();

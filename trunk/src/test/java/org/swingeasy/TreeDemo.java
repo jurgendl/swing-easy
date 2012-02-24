@@ -37,7 +37,7 @@ public class TreeDemo {
 
     public static void main(String[] args) {
         try {
-            UIUtils.niceLookAndFeel();
+            UIUtils.systemLookAndFeel();
             final JFrame frame = new JFrame();
             frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             ETree<String> tree = new ETree<String>(new DummyNode());

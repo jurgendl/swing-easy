@@ -37,7 +37,7 @@ public class ListDemo1 {
 
     @SuppressWarnings("unchecked")
     public static void main(String[] args) {
-        UIUtils.niceLookAndFeel();
+        UIUtils.systemLookAndFeel();
         EListConfig cfg = new EListConfig();
         cfg.setSortable(true);
         cfg.setFilterable(true);

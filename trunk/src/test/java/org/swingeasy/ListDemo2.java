@@ -23,7 +23,7 @@ import javax.swing.ScrollPaneConstants;
 public class ListDemo2 {
     @SuppressWarnings("unchecked")
     public static void main(String[] args) {
-        UIUtils.niceLookAndFeel();
+        UIUtils.systemLookAndFeel();
         UIUtils.setCurrentLocale(Locale.ENGLISH);
         EListConfig cfg = new EListConfig();
         cfg.setSortable(false);
