@@ -172,10 +172,10 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
 
     /**
      * 
-     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getPopupParentComponent()
+     * @see org.swingeasy.HasParentComponent#getParentComponent()
      */
     @Override
-    public JComponent getPopupParentComponent() {
+    public JComponent getParentComponent() {
         return this;
     }
 

@@ -16,19 +16,16 @@ public class EIconButton extends JButton implements EComponentI {
     public EIconButton(Dimension d) {
         super();
         this.init(d);
-        UIUtils.registerLocaleChangeListener(this);
     }
 
     public EIconButton(Dimension d, Action a) {
         super(a);
         this.init(d);
-        UIUtils.registerLocaleChangeListener(this);
     }
 
     public EIconButton(Dimension d, Icon icon) {
         super(icon);
         this.init(d);
-        UIUtils.registerLocaleChangeListener(this);
     }
 
     protected void init(Dimension d) {
@@ -39,6 +36,6 @@ public class EIconButton extends JButton implements EComponentI {
         this.setHideActionText(true);
         this.setBorderPainted(false);
         this.setOpaque(false);
+        UIUtils.registerLocaleChangeListener(this);
     }
-
 }

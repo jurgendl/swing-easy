@@ -69,20 +69,20 @@ public class ETreeSearchComponent<T> extends ELabeledTextFieldButtonComponent im
 
     /**
      * 
-     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getPopupParentComponent()
-     */
-    @Override
-    public JComponent getPopupParentComponent() {
-        return this;
-    }
-
-    /**
-     * 
      * @see org.swingeasy.ELabeledTextFieldButtonComponent#getIcon()
      */
     @Override
     protected Icon getIcon() {
         return Resources.getImageResource("find.png");//$NON-NLS-1$
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.HasParentComponent#getParentComponent()
+     */
+    @Override
+    public JComponent getParentComponent() {
+        return this;
     }
 
     /**

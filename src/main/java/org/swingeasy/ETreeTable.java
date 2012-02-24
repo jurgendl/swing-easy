@@ -124,10 +124,10 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI, Re
 
     /**
      * 
-     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getPopupParentComponent()
+     * @see org.swingeasy.HasParentComponent#getParentComponent()
      */
     @Override
-    public JComponent getPopupParentComponent() {
+    public JComponent getParentComponent() {
         return this;
     }
 

@@ -94,10 +94,10 @@ public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
 
     /**
      * 
-     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getPopupParentComponent()
+     * @see org.swingeasy.HasParentComponent#getParentComponent()
      */
     @Override
-    public JComponent getPopupParentComponent() {
+    public JComponent getParentComponent() {
         return this;
     }
 
