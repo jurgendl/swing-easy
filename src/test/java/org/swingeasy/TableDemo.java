@@ -32,7 +32,7 @@ public class TableDemo {
 
     public static void main(String[] args) {
         try {
-            UIUtils.niceLookAndFeel();
+            UIUtils.systemLookAndFeel();
             ETableConfig configuration = new ETableConfig(true);
             configuration.setVertical(true);
             final ETable<Object[]> table = new ETable<Object[]>(configuration);

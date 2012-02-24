@@ -10,7 +10,7 @@ import javax.swing.JScrollPane;
  */
 public class TableDemoBooleanOrdering {
     public static void main(String[] args) {
-        UIUtils.niceLookAndFeel();
+        UIUtils.systemLookAndFeel();
         ETableConfig configuration = new ETableConfig(true);
         configuration.setVertical(false);
         final JFrame frame = new JFrame();

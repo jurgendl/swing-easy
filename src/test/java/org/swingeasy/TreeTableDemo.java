@@ -33,7 +33,7 @@ public class TreeTableDemo {
         try {
             boolean lazyNodeTest = true;
 
-            UIUtils.niceLookAndFeel();
+            UIUtils.systemLookAndFeel();
 
             final JFrame frame = new JFrame();
             frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);

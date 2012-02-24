@@ -39,7 +39,7 @@ public class ListInDialogDemo {
 
     public static void main(String[] args) {
         try {
-            UIUtils.niceLookAndFeel();
+            UIUtils.systemLookAndFeel();
 
             JFrame parent = new JFrame();
             parent.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

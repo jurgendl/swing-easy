@@ -13,7 +13,7 @@ import javax.swing.WindowConstants;
 public class CheckBoxTreeDemo {
     public static void main(String[] args) {
         try {
-            UIUtils.niceLookAndFeel();
+            UIUtils.systemLookAndFeel();
             final JFrame frame = new JFrame();
             frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
             ECheckBoxTreeNode<String> root = new ECheckBoxTreeNode<String>("on1", true); //$NON-NLS-1$
