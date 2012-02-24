@@ -170,6 +170,8 @@ public abstract class ETableExporterImpl<T> implements ETableExporter<T> {
      */
     @Override
     public Icon getIcon() {
-        return UIUtils.getIconForFileType(this.getFileExtension());
+        Icon iconForFileType = UIUtils.getIconForFileType(this.getFileExtension());
+        // System.out.println(this.getFileExtension() + ":" + iconForFileType);
+        return iconForFileType;
     }
 }
