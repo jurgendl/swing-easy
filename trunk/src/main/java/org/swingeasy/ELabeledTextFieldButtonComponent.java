@@ -57,7 +57,7 @@ public abstract class ELabeledTextFieldButtonComponent extends JComponent implem
 
     protected JComponent getButton() {
         if (this.button == null) {
-            EIconButton _button = new EIconButton(new Dimension(20, 20), this.getIcon());
+            EToolBarButton _button = new EToolBarButton(new Dimension(20, 20), this.getIcon());
             _button.setActionCommand(this.getAction());
             _button.addActionListener(new ActionListener() {
                 @Override

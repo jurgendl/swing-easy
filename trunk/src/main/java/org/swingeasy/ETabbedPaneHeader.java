@@ -88,7 +88,7 @@ public class ETabbedPaneHeader extends JComponent {
         if (_icon == null) {
             return;
         }
-        EIconButton closeButton = new EIconButton(new Dimension(_icon.getIconWidth(), _icon.getIconHeight()), _icon);
+        EToolBarButton closeButton = new EToolBarButton(new Dimension(_icon.getIconWidth(), _icon.getIconHeight()), _icon);
         closeButton.setActionCommand(ETabbedPaneHeader.ACTION_CLOSE);
         closeButton.addActionListener(actionlistener);
         container.add(closeButton);
@@ -100,7 +100,7 @@ public class ETabbedPaneHeader extends JComponent {
         if (_icon == null) {
             return;
         }
-        EIconButton minimizeButton = new EIconButton(new Dimension(_icon.getIconWidth(), _icon.getIconHeight()), _icon);
+        EToolBarButton minimizeButton = new EToolBarButton(new Dimension(_icon.getIconWidth(), _icon.getIconHeight()), _icon);
         minimizeButton.setActionCommand(ETabbedPaneHeader.ACTION_MINIMIZE);
         minimizeButton.addActionListener(actionlistener);
         container.add(minimizeButton);
