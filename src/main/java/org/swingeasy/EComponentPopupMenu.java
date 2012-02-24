@@ -19,6 +19,7 @@ import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
@@ -69,6 +70,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         public CopyAction(ReadableComponent component) {
             super(EComponentPopupMenu.COPY, Resources.getImageResource("page_copy.png"));
             this.component = component;
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_C, Event.CTRL_MASK));
         }
 
         /**
@@ -89,6 +91,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         public CutAction(WritableComponent component) {
             super(EComponentPopupMenu.CUT, Resources.getImageResource("cut.png"));
             this.component = component;
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_X, Event.CTRL_MASK));
         }
 
         /**
@@ -109,6 +112,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         public DeleteAction(WritableComponent component) {
             super(EComponentPopupMenu.DELETE, Resources.getImageResource("bin_closed.png"));
             this.component = component;
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, 0));
         }
 
         /**
@@ -117,6 +121,24 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
+            this.component.delete();
+        }
+    }
+
+    private static class DeleteAllAction extends EComponentPopupMenuAction {
+        private static final long serialVersionUID = -6873629703224034266L;
+
+        private final WritableComponent component;
+
+        public DeleteAllAction(WritableComponent component) {
+            super(EComponentPopupMenu.DELETE_ALL, null);
+            this.component = component;
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0));
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            this.component.selectAll();
             this.component.delete();
         }
     }
@@ -137,6 +159,103 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
     }
 
+    private static class FindAction extends EComponentPopupMenuAction {
+        private static final long serialVersionUID = 4328082010034890480L;
+
+        private final WritableComponent component;
+
+        public FindAction(WritableComponent component) {
+            super(EComponentPopupMenu.FIND, Resources.getImageResource("find.png"));
+            this.component = component;
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_F, Event.CTRL_MASK));
+        }
+
+        /**
+         * 
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            this.component.find();
+        }
+    }
+
+    private static class FindNextAction extends EComponentPopupMenuAction {
+        private static final long serialVersionUID = 4328082010034890480L;
+
+        private final WritableComponent component;
+
+        public FindNextAction(WritableComponent component) {
+            super(EComponentPopupMenu.FIND_NEXT, null);
+            this.component = component;
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0));
+        }
+
+        /**
+         * 
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            this.component.findNext();
+        }
+    }
+
+    private static class FindPreviousAction extends EComponentPopupMenuAction {
+        private static final long serialVersionUID = 4328082010034890480L;
+
+        private final WritableComponent component;
+
+        public FindPreviousAction(WritableComponent component) {
+            super(EComponentPopupMenu.FIND_PREVIOUS, null);
+            this.component = component;
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_F3, Event.SHIFT_MASK));
+        }
+
+        /**
+         * 
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            this.component.findNext();
+        }
+    }
+
+    private static class GotoBeginAction extends EComponentPopupMenuAction {
+        private static final long serialVersionUID = 3085509525399492253L;
+
+        private final WritableComponent component;
+
+        public GotoBeginAction(WritableComponent component) {
+            super(EComponentPopupMenu.GOTO_BEGIN, Resources.getImageResource("arrow_up.png"));
+            this.component = component;
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_HOME, Event.CTRL_MASK));
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            this.component.gotoBegin();
+        }
+    }
+
+    private static class GotoEndAction extends EComponentPopupMenuAction {
+        private static final long serialVersionUID = 6262977802889470104L;
+
+        private final WritableComponent component;
+
+        public GotoEndAction(WritableComponent component) {
+            super(EComponentPopupMenu.GOTO_END, Resources.getImageResource("arrow_down.png"));
+            this.component = component;
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_END, Event.CTRL_MASK));
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            this.component.gotoEnd();
+        }
+    }
+
     private static class PasteAction extends EComponentPopupMenuAction {
         private static final long serialVersionUID = -7609111337852520512L;
 
@@ -145,6 +264,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         public PasteAction(WritableComponent component) {
             super(EComponentPopupMenu.PASTE, Resources.getImageResource("page_paste.png"));
             this.component = component;
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_V, Event.CTRL_MASK));
         }
 
         /**
@@ -188,6 +308,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         public RedoAction(UndoManager manager) {
             super(EComponentPopupMenu.REDO, Resources.getImageResource("arrow_redo.png"));
             this.undoManager = manager;
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_Y, Event.CTRL_MASK));
         }
 
         /**
@@ -204,6 +325,27 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
     }
 
+    private static class ReplaceAction extends EComponentPopupMenuAction {
+        private static final long serialVersionUID = 4328082010034890480L;
+
+        private final WritableComponent component;
+
+        public ReplaceAction(WritableComponent component) {
+            super(EComponentPopupMenu.REPLACE, Resources.getImageResource("text_replace.png"));
+            this.component = component;
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_H, Event.CTRL_MASK));
+        }
+
+        /**
+         * 
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            this.component.replace();
+        }
+    }
+
     private static class SelectAllAction extends EComponentPopupMenuAction {
         private static final long serialVersionUID = -6873629703224034266L;
 
@@ -212,6 +354,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         public SelectAllAction(WritableComponent component) {
             super(EComponentPopupMenu.SELECT_ALL, null);
             this.component = component;
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_A, Event.CTRL_MASK));
         }
 
         @Override
@@ -220,7 +363,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
     }
 
-    private static class TextComponentWritableComponent implements WritableComponent {
+    public static class TextComponentWritableComponent implements WritableComponent {
         protected final JTextComponent component;
 
         public TextComponentWritableComponent(JTextComponent component) {
@@ -242,7 +385,14 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public void copy() {
-            this.component.copy();
+            if (this.hasSelection()) {
+                this.component.copy();
+            } else {
+                this.selectAll();
+                this.component.copy();
+                this.unselect();
+                this.gotoBegin();
+            }
         }
 
         /**
@@ -265,11 +415,51 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
         /**
          * 
+         * @see org.swingeasy.EComponentPopupMenu.WritableComponent#find()
+         */
+        @Override
+        public void find() {
+            CustomizableOptionPane.showCustomDialog(this.component,
+                    new JLabel(Messages.getString(this.component.getLocale(), "not.implemented.message")),
+                    Messages.getString(this.component.getLocale(), "not.implemented.title"), MessageType.ERROR, OptionType.OK, null, null);
+        }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.WritableComponent#findNext()
+         */
+        @Override
+        public void findNext() {
+            CustomizableOptionPane.showCustomDialog(this.component,
+                    new JLabel(Messages.getString(this.component.getLocale(), "not.implemented.message")),
+                    Messages.getString(this.component.getLocale(), "not.implemented.title"), MessageType.ERROR, OptionType.OK, null, null);
+        }
+
+        /**
+         * 
          * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getPopupParentComponent()
          */
         @Override
         public JComponent getPopupParentComponent() {
             return this.component;
+        }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.WritableComponent#gotoBegin()
+         */
+        @Override
+        public void gotoBegin() {
+            this.component.setCaretPosition(0);
+        }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.WritableComponent#gotoEnd()
+         */
+        @Override
+        public void gotoEnd() {
+            this.component.setCaretPosition(this.component.getText().length());
         }
 
         /**
@@ -283,11 +473,31 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
         /**
          * 
+         * @see org.swingeasy.EComponentPopupMenu.WritableComponent#hasText()
+         */
+        @Override
+        public boolean hasText() {
+            return this.component.getText().length() > 0;
+        }
+
+        /**
+         * 
          * @see org.swingeasy.EComponentPopupMenu.WritableComponent#paste()
          */
         @Override
         public void paste() {
             this.component.paste();
+        }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.WritableComponent#replace()
+         */
+        @Override
+        public void replace() {
+            CustomizableOptionPane.showCustomDialog(this.component,
+                    new JLabel(Messages.getString(this.component.getLocale(), "not.implemented.message")),
+                    Messages.getString(this.component.getLocale(), "not.implemented.title"), MessageType.ERROR, OptionType.OK, null, null);
         }
 
         /**
@@ -320,6 +530,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         public UndoAction(UndoManager manager) {
             super(EComponentPopupMenu.UNDO, Resources.getImageResource("arrow_undo.png"));
             this.undoManager = manager;
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_Z, Event.CTRL_MASK));
         }
 
         @Override
@@ -356,9 +567,21 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
         public void delete();
 
+        public void find();
+
+        public void findNext();
+
+        public void gotoBegin();
+
+        public void gotoEnd();
+
         public boolean hasSelection();
 
+        public boolean hasText();
+
         public void paste();
+
+        public void replace();
 
         public void selectAll();
 
@@ -381,7 +604,21 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
     public static final String SELECT_ALL = "select-all";
 
+    public static final String DELETE_ALL = "delete-all";
+
+    public static final String GOTO_BEGIN = "goto-begin";
+
+    public static final String GOTO_END = "goto-end";
+
     public static final String UNSELECT = "unselect";
+
+    public static final String FIND = "find";
+
+    public static final String REPLACE = "replace";
+
+    public static final String FIND_NEXT = "find-next";
+
+    public static final String FIND_PREVIOUS = "find-previous";
 
     public static String newline = System.getProperty("line.separator");
 
@@ -392,6 +629,10 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
      */
     public static void copy(String content) {
         java.awt.Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(content), new ClipboardOwnerAdapter());
+    }
+
+    public static JPopupMenu installReadOnlyTextComponentPopupMenu(final JTextComponent component) {
+        return EComponentPopupMenu.installTextComponentPopupMenu((ReadableComponent) new TextComponentWritableComponent(component));
     }
 
     public static JPopupMenu installTextComponentPopupMenu(final JTextComponent component) {
@@ -428,6 +669,13 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         final EComponentPopupMenuAction deleteAction = new DeleteAction(component);
         final EComponentPopupMenuAction selectAllAction = new SelectAllAction(component);
         final EComponentPopupMenuAction unselectAction = new UnselectAction(component);
+        final EComponentPopupMenuAction deleteAllAction = new DeleteAllAction(component);
+        final EComponentPopupMenuAction gotoBeginAction = new GotoBeginAction(component);
+        final EComponentPopupMenuAction gotoEndAction = new GotoEndAction(component);
+        final EComponentPopupMenuAction findAction = new FindAction(component);
+        final EComponentPopupMenuAction findNextAction = new FindNextAction(component);
+        final EComponentPopupMenuAction findPreviousAction = new FindPreviousAction(component);
+        final EComponentPopupMenuAction replaceAction = new ReplaceAction(component);
 
         component.getPopupParentComponent().addAncestorListener(new AncestorAdapter() {
             @Override
@@ -446,6 +694,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         imap.put(KeyStroke.getKeyStroke(KeyEvent.VK_Y, Event.CTRL_MASK), EComponentPopupMenu.REDO);
 
         EComponentPopupMenu popup = new EComponentPopupMenu();
+        popup.add(undoAction);
         popup.add(redoAction);
         popup.addSeparator();
         popup.add(cutAction);
@@ -455,26 +704,52 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         popup.addSeparator();
         popup.add(selectAllAction);
         popup.add(unselectAction);
+        popup.add(deleteAllAction);
+        popup.add(gotoBeginAction);
+        popup.add(gotoEndAction);
+        popup.addSeparator();
+        popup.add(findAction);
+        popup.add(findNextAction);
+        popup.add(findPreviousAction);
+        popup.add(replaceAction);
 
         popup.addPopupMenuListener(new PopupMenuAdapter() {
+            /**
+             * 
+             * @see org.swingeasy.EComponentPopupMenu.PopupMenuAdapter#popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent)
+             */
             @Override
             public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-                undoAction.setEnabled(true);
-                redoAction.setEnabled(true);
+                // undoAction.setEnabled(true);
+                // redoAction.setEnabled(true);
             }
 
+            /**
+             * 
+             * @see org.swingeasy.EComponentPopupMenu.PopupMenuAdapter#popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent)
+             */
             @Override
             public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
                 undoAction.setEnabled(manager.canUndo());
                 redoAction.setEnabled(manager.canRedo());
 
                 boolean flg = component.hasSelection();
+
+                boolean ht = component.hasText();
+
                 cutAction.setEnabled(flg);
                 copyAction.setEnabled(flg);
                 deleteAction.setEnabled(flg);
                 unselectAction.setEnabled(flg);
 
-                selectAllAction.setEnabled(true);
+                deleteAllAction.setEnabled(ht);
+                selectAllAction.setEnabled(ht);
+                gotoBeginAction.setEnabled(ht);
+                gotoEndAction.setEnabled(ht);
+                findAction.setEnabled(ht);
+                findPreviousAction.setEnabled(ht);
+                findNextAction.setEnabled(ht);
+                replaceAction.setEnabled(ht);
             }
         });
         component.getPopupParentComponent().setComponentPopupMenu(popup);
@@ -512,12 +787,17 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         UIUtils.registerLocaleChangeListener(this);
     }
 
+    /**
+     * 
+     * @see javax.swing.JPopupMenu#add(javax.swing.Action)
+     */
     @Override
     public JMenuItem add(Action a) {
         if (a instanceof EComponentI) {
             EComponentI.class.cast(a).setLocale(this.getLocale());
         }
-        return super.add(a);
+        JMenuItem mi = super.add(a);
+        return mi;
     }
 
     /**
