@@ -711,10 +711,10 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
 
     /**
      * 
-     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getPopupParentComponent()
+     * @see org.swingeasy.HasParentComponent#getParentComponent()
      */
     @Override
-    public JComponent getPopupParentComponent() {
+    public JComponent getParentComponent() {
         return this;
     }
 

@@ -236,10 +236,10 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
 
     /**
      * 
-     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getPopupParentComponent()
+     * @see org.swingeasy.HasParentComponent#getParentComponent()
      */
     @Override
-    public JComponent getPopupParentComponent() {
+    public JComponent getParentComponent() {
         return this;
     }
 

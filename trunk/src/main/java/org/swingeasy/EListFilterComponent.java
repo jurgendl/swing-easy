@@ -63,15 +63,6 @@ public class EListFilterComponent<T> extends ELabeledTextFieldButtonComponent im
 
     /**
      * 
-     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#getPopupParentComponent()
-     */
-    @Override
-    public JComponent getPopupParentComponent() {
-        return this;
-    }
-
-    /**
-     * 
      * @see ca.odell.glazedlists.TextFilterator#getFilterStrings(java.util.List, java.lang.Object)
      */
     @Override
@@ -88,6 +79,15 @@ public class EListFilterComponent<T> extends ELabeledTextFieldButtonComponent im
     @Override
     protected Icon getIcon() {
         return Resources.getImageResource("hourglass.png");
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.HasParentComponent#getParentComponent()
+     */
+    @Override
+    public JComponent getParentComponent() {
+        return this;
     }
 
     protected EventList<EListRecord<T>> grabRecords() {

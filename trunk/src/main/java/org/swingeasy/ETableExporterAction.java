@@ -7,18 +7,15 @@ import org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction;
 /**
  * @author Jurgen
  */
-public class ETableExporterAction<T> extends EComponentPopupMenuAction {
+public class ETableExporterAction<T> extends EComponentPopupMenuAction<ETable<T>> {
     /** serialVersionUID */
     private static final long serialVersionUID = -4509106311973499954L;
 
     protected final ETableExporter<T> exporter;
 
-    protected final ETable<T> table;
-
     public ETableExporterAction(ETableExporter<T> exporter, ETable<T> table) {
-        super(exporter.getAction(), exporter.getIcon());
+        super(table, exporter.getAction(), exporter.getIcon());
         this.exporter = exporter;
-        this.table = table;
     }
 
     /**
@@ -27,6 +24,6 @@ public class ETableExporterAction<T> extends EComponentPopupMenuAction {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.exporter.export(this.table);
+        this.exporter.export(this.delegate);
     }
 }
