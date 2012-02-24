@@ -55,7 +55,7 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI, Re
         UIUtils.registerLocaleChangeListener(this);
 
         if (cfg.isDefaultPopupMenu()) {
-            EComponentPopupMenu.installTextComponentPopupMenu(this);
+            EComponentPopupMenu.installPopupMenu(this);
         }
     }
 

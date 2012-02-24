@@ -2,7 +2,6 @@ package org.swingeasy;
 
 import java.awt.Component;
 import java.awt.Event;
-import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.DataFlavor;
@@ -622,24 +621,30 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
     public static String newline = System.getProperty("line.separator");
 
+    protected static Clipboard clipboard;
+
     /**
      * copy to clipboard
      * 
      * @param content
      */
-    public static void copy(String content) {
-        java.awt.Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(content), new ClipboardOwnerAdapter());
+    public static void copyToClipboard(String content) {
+        EComponentPopupMenu.getClipboard().setContents(new StringSelection(content), new ClipboardOwnerAdapter());
     }
 
-    public static JPopupMenu installReadOnlyTextComponentPopupMenu(final JTextComponent component) {
-        return EComponentPopupMenu.installTextComponentPopupMenu((ReadableComponent) new TextComponentWritableComponent(component));
+    /**
+     * gets default (system) clipboard
+     * 
+     * @return
+     */
+    public static Clipboard getClipboard() {
+        if (EComponentPopupMenu.clipboard == null) {
+            EComponentPopupMenu.clipboard = java.awt.Toolkit.getDefaultToolkit().getSystemClipboard();
+        }
+        return EComponentPopupMenu.clipboard;
     }
 
-    public static JPopupMenu installTextComponentPopupMenu(final JTextComponent component) {
-        return EComponentPopupMenu.installTextComponentPopupMenu(new TextComponentWritableComponent(component));
-    }
-
-    public static JPopupMenu installTextComponentPopupMenu(final ReadableComponent component) {
+    public static JPopupMenu installPopupMenu(final ReadableComponent component) {
         final EComponentPopupMenuAction copyAction = new CopyAction(component);
         EComponentPopupMenu popup = new EComponentPopupMenu();
         popup.add(copyAction);
@@ -659,7 +664,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         return popup;
     }
 
-    public static JPopupMenu installTextComponentPopupMenu(final WritableComponent component) {
+    public static JPopupMenu installPopupMenu(final WritableComponent component) {
         final UndoManager manager = new UndoManager();
         final EComponentPopupMenuAction copyAction = new CopyAction(component);
         final EComponentPopupMenuAction undoAction = new UndoAction(manager);
@@ -756,17 +761,24 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         return popup;
     }
 
+    public static JPopupMenu installReadOnlyTextComponentPopupMenu(final JTextComponent component) {
+        return EComponentPopupMenu.installPopupMenu((ReadableComponent) new TextComponentWritableComponent(component));
+    }
+
+    public static JPopupMenu installTextComponentPopupMenu(final JTextComponent component) {
+        return EComponentPopupMenu.installPopupMenu(new TextComponentWritableComponent(component));
+    }
+
     /**
      * get text data on clipboard or null
      * 
      * @return
      */
     @SuppressWarnings("null")
-    public static String paste() {
+    public static String pasteFromClipboard() {
         String result = "";
-        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         // odd: the Object param of getContents is not currently used
-        Transferable contents = clipboard.getContents(null);
+        Transferable contents = EComponentPopupMenu.getClipboard().getContents(null);
         boolean hasTransferableText = (contents != null) && contents.isDataFlavorSupported(DataFlavor.stringFlavor);
         if (hasTransferableText) {
             try {
@@ -781,6 +793,10 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
             }
         }
         return result;
+    }
+
+    protected static void setClipboard(Clipboard clipboard) {
+        EComponentPopupMenu.clipboard = clipboard;
     }
 
     protected EComponentPopupMenu() {

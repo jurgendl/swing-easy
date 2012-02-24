@@ -172,7 +172,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         UIUtils.registerLocaleChangeListener(this);
 
         if (cfg.isDefaultPopupMenu()) {
-            EComponentPopupMenu.installTextComponentPopupMenu(this);
+            EComponentPopupMenu.installPopupMenu(this);
         }
     }
 
@@ -212,7 +212,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         for (EListRecord<T> record : this) {
             sb.append(record.getStringValue()).append(EComponentPopupMenu.newline);
         }
-        EComponentPopupMenu.copy(sb.toString());
+        EComponentPopupMenu.copyToClipboard(sb.toString());
     }
 
     /**

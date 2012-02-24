@@ -40,7 +40,7 @@ public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
         UIUtils.registerLocaleChangeListener(this);
 
         if (cfg.isDefaultPopupMenu()) {
-            EComponentPopupMenu.installTextComponentPopupMenu(this);
+            EComponentPopupMenu.installPopupMenu(this);
         }
     }
 

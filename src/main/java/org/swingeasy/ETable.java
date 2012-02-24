@@ -515,7 +515,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
         UIUtils.registerLocaleChangeListener(this);
 
         if (this.cfg.isDefaultPopupMenu()) {
-            this.installPopupMenuAction(EComponentPopupMenu.installTextComponentPopupMenu(this));
+            this.installPopupMenuAction(EComponentPopupMenu.installPopupMenu(this));
         }
     }
 
@@ -566,7 +566,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
             }
             sb.append(EComponentPopupMenu.newline);
         }
-        EComponentPopupMenu.copy(sb.toString());
+        EComponentPopupMenu.copyToClipboard(sb.toString());
     }
 
     /**
