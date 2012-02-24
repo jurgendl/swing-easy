@@ -93,7 +93,7 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
         UIUtils.registerLocaleChangeListener(this);
 
         if (cfg.isDefaultPopupMenu()) {
-            EComponentPopupMenu.installTextComponentPopupMenu(this);
+            EComponentPopupMenu.installPopupMenu(this);
         }
     }
 
@@ -155,7 +155,7 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
         for (EComboBoxRecord<T> record : this) {
             sb.append(record.getStringValue()).append(EComponentPopupMenu.newline);
         }
-        EComponentPopupMenu.copy(sb.toString());
+        EComponentPopupMenu.copyToClipboard(sb.toString());
     }
 
     /**

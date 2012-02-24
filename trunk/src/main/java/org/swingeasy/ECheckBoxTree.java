@@ -52,7 +52,7 @@ public class ECheckBoxTree<T> extends JTree implements ECheckBoxTreeI<T>, Readab
         UIUtils.registerLocaleChangeListener(this);
 
         if (cfg.isDefaultPopupMenu()) {
-            EComponentPopupMenu.installTextComponentPopupMenu(this);
+            EComponentPopupMenu.installPopupMenu(this);
         }
     }
 
