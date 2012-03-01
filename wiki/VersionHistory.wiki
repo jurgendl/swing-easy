@@ -3,7 +3,7 @@
 
 = Version History =
 
-latest change: 2012-02-23
+latest change: 2012-03-01
 
 featured: downloads are available on the frontpage
 
@@ -69,7 +69,7 @@ major version changes (first number) are possibly not backwards compatible!
   * ELabeledTextFieldButtonComponent: all filter and searchcompontn have common superclass
   * UIUtils: focused button is default button 
  * 2.3.0 (featured, not backwards compatible)
-   * EComboBox, ETable nad EList implement iterable
+   * EComboBox, ETable and EList implement iterable
    * ETable: more utilitymethods
    * initial release of RotatedLabel
    * initial release of ETabbedPane (not finished)
@@ -82,5 +82,13 @@ major version changes (first number) are possibly not backwards compatible!
    * EComponents default (expandable) popup menu
    * ETable: exporters (also actions in default popup menu)
    * progress glasspane: fixed visibility
- * 2.3.1 (not released) 
- * 2.4.0 (not released) 
+ * 2.4.0 (featured, not backwards compatible) 
+   * EComponents default (expandable) popup menu reworked
+   * initial release of ETextArea and ETextField
+   * default popup menu for text components
+   * initial release of SearchDialog
+   * extra methods to get resources
+   * renamed EToolbarButton to EButton
+   * EButton customisation
+ * 2.4.1 (not released)
+ * 2.5.0 (not planned, not released) 
