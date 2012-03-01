@@ -1,5 +1,6 @@
 #labels Featured
 <code>
+
 <repositories>
 
 <repository>
@@ -11,9 +12,13 @@
 </repository>
 
 </repositories>
+
 </code>
 
+
+
 <code>
+
 <dependency>
 
 <groupId>org.swingeasy</groupId>
@@ -23,4 +28,5 @@
 <version>VERSION</version>
 
 </dependency>
+
 </code>
