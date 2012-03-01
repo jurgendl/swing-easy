@@ -2,13 +2,13 @@
 <code>
 <repositories>
 
-	<repository>
+<repository>
 
-		<id>swing-easy.googlecode</id>
+<id>swing-easy.googlecode</id>
 
-		<url>http://swing-easy.googlecode.com/svn/maven2</url>
+<url>http://swing-easy.googlecode.com/svn/maven2</url>
 
-	</repository>
+</repository>
 
 </repositories>
 </code>
@@ -16,11 +16,11 @@
 <code>
 <dependency>
 
-	<groupId>org.swingeasy</groupId>
+<groupId>org.swingeasy</groupId>
 
-	<artifactId>swing-easy</artifactId>
+<artifactId>swing-easy</artifactId>
 
-	<version>VERSION</version>
+<version>VERSION</version>
 
 </dependency>
 </code>
