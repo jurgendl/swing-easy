@@ -1,15 +1,17 @@
 #labels Featured
+<pre>
 <repositories>
 	<repository>
 		<id>swing-easy.googlecode</id>
 		<url>http://swing-easy.googlecode.com/svn/maven2</url>
 	</repository>
 </repositories>
+</pre>
 
-
+<pre>
 <dependency>
 	<groupId>org.swingeasy</groupId>
 	<artifactId>swing-easy</artifactId>
 	<version>VERSION</version>
 </dependency>
-
+</pre>
