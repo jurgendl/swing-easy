@@ -21,7 +21,6 @@ import javax.swing.ComponentInputMap;
 import javax.swing.Icon;
 import javax.swing.InputMap;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
@@ -152,8 +151,8 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         private static final long serialVersionUID = -6873629703224034266L;
 
         public DeleteAllAction(WritableComponent component) {
-            super(component, EComponentPopupMenu.DELETE_ALL, null);
-            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0));
+            super(component, EComponentPopupMenu.DELETE_ALL, Resources.getImageResource("bin_closed.png"));
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_DELETE, Event.CTRL_MASK));
         }
 
         /**
@@ -232,29 +231,8 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         private static final long serialVersionUID = 4328082010034890480L;
 
         public FindNextAction(WritableComponent component) {
-            super(component, EComponentPopupMenu.FIND_NEXT, null);
+            super(component, EComponentPopupMenu.FIND_NEXT, Resources.getImageResource("find.png"));
             this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0));
-        }
-
-        /**
-         * 
-         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-         */
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            this.delegate.findNext();
-        }
-    }
-
-    /**
-     * JDOC
-     */
-    private static class FindPreviousAction extends EComponentPopupMenuAction<WritableComponent> {
-        private static final long serialVersionUID = 4328082010034890480L;
-
-        public FindPreviousAction(WritableComponent component) {
-            super(component, EComponentPopupMenu.FIND_PREVIOUS, null);
-            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_F3, Event.SHIFT_MASK));
         }
 
         /**
@@ -425,7 +403,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         private static final long serialVersionUID = -6873629703224034266L;
 
         public SelectAllAction(WritableComponent component) {
-            super(component, EComponentPopupMenu.SELECT_ALL, null);
+            super(component, EComponentPopupMenu.SELECT_ALL, Resources.getImageResource("page_white_text_width.png"));
             this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_A, Event.CTRL_MASK));
         }
 
@@ -494,9 +472,9 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public void find() {
-            CustomizableOptionPane.showCustomDialog(this.parentComponent,
-                    new JLabel(Messages.getString(this.parentComponent.getLocale(), "not.implemented.message")),
-                    Messages.getString(this.parentComponent.getLocale(), "not.implemented.title"), MessageType.ERROR, OptionType.OK, null, null);
+            if (this.parentComponent instanceof ETextArea) {
+                new SearchDialog(false, ETextArea.class.cast(this.parentComponent)).setVisible(true);
+            }
         }
 
         /**
@@ -505,9 +483,9 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public void findNext() {
-            CustomizableOptionPane.showCustomDialog(this.parentComponent,
-                    new JLabel(Messages.getString(this.parentComponent.getLocale(), "not.implemented.message")),
-                    Messages.getString(this.parentComponent.getLocale(), "not.implemented.title"), MessageType.ERROR, OptionType.OK, null, null);
+            if (this.parentComponent instanceof ETextArea) {
+                ETextArea.class.cast(this.parentComponent).findNext();
+            }
         }
 
         /**
@@ -579,9 +557,9 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public void replace() {
-            CustomizableOptionPane.showCustomDialog(this.parentComponent,
-                    new JLabel(Messages.getString(this.parentComponent.getLocale(), "not.implemented.message")),
-                    Messages.getString(this.parentComponent.getLocale(), "not.implemented.title"), MessageType.ERROR, OptionType.OK, null, null);
+            if (this.parentComponent instanceof ETextArea) {
+                new SearchDialog(true, ETextArea.class.cast(this.parentComponent)).setVisible(true);
+            }
         }
 
         /**
@@ -593,7 +571,6 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
             Document doc = this.parentComponent.getDocument();
             this.parentComponent.setCaretPosition(0);
             this.parentComponent.moveCaretPosition(doc.getLength());
-
         }
 
         /**
@@ -641,7 +618,8 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         private static final long serialVersionUID = -736429406339064829L;
 
         public UnselectAction(WritableComponent component) {
-            super(component, EComponentPopupMenu.UNSELECT, null);
+            super(component, EComponentPopupMenu.UNSELECT, Resources.getImageResource("page_white_width.png"));
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0));
         }
 
         /**
@@ -716,8 +694,6 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     public static final String REPLACE = "replace";
 
     public static final String FIND_NEXT = "find-next";
-
-    public static final String FIND_PREVIOUS = "find-previous";
 
     public static String newline = System.getProperty("line.separator");
 
@@ -807,9 +783,9 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         final EComponentPopupMenuAction<WritableComponent> deleteAllAction = new DeleteAllAction(component);
         final EComponentPopupMenuAction<WritableComponent> gotoBeginAction = new GotoBeginAction(component);
         final EComponentPopupMenuAction<WritableComponent> gotoEndAction = new GotoEndAction(component);
+
         final EComponentPopupMenuAction<WritableComponent> findAction = new FindAction(component);
         final EComponentPopupMenuAction<WritableComponent> findNextAction = new FindNextAction(component);
-        final EComponentPopupMenuAction<WritableComponent> findPreviousAction = new FindPreviousAction(component);
         final EComponentPopupMenuAction<WritableComponent> replaceAction = new ReplaceAction(component);
 
         final JComponent parentComponent = component.getParentComponent();
@@ -839,11 +815,13 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         popup.add(deleteAllAction);
         popup.add(gotoBeginAction);
         popup.add(gotoEndAction);
-        popup.addSeparator();
-        popup.add(findAction);
-        popup.add(findNextAction);
-        popup.add(findPreviousAction);
-        popup.add(replaceAction);
+
+        if (parentComponent instanceof ETextArea) {
+            popup.addSeparator();
+            popup.add(findAction);
+            popup.add(findNextAction);
+            popup.add(replaceAction);
+        }
 
         popup.addPopupMenuListener(new PopupMenuAdapter() {
             /**
@@ -878,7 +856,6 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
                 gotoBeginAction.setEnabled(ht);
                 gotoEndAction.setEnabled(ht);
                 findAction.setEnabled(ht);
-                findPreviousAction.setEnabled(ht);
                 findNextAction.setEnabled(ht);
                 replaceAction.setEnabled(ht);
             }
