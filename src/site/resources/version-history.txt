@@ -2,7 +2,7 @@
 
 = Version History =
 
-latest change: 2012-03-01
+latest change: 2012-03-02
 
 featured: downloads are available on the frontpage
 
@@ -90,4 +90,6 @@ major version changes (first number) are possibly not backwards compatible!
    * renamed EToolbarButton to EButton
    * EButton customisation
  * 2.4.1 (not released)
+   * several fixes SearchDialog (and ETextArea) and translation
+   * use of MigLayout for SearchDialog
  * 2.5.0 (not planned, not released) 

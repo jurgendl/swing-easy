@@ -1,55 +1,52 @@
 package org.swingeasy;
 
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Locale;
 
-import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
+
+import net.miginfocom.swing.MigLayout;
 
 /**
  * @author Jurgen
- * @see http://www.exampledepot.com/egs/javax.swing.text/style_HiliteWords.html
- * @see http://www.exampledepot.com/egs/javax.swing.text/style_HiliteWords2.html
  */
-public class SearchDialog extends JDialog {
+public class SearchDialog extends JDialog implements EComponentI {
     private static final long serialVersionUID = -7658724511534306863L;
-
-    protected final int gap = 4;
 
     protected final ETextArea textComponent;
 
     protected boolean replacing;
 
-    protected EButton btnReplaceAll = new EButton("Replace all");
+    protected EButton btnReplaceAll;
 
-    protected EButton btnClose = new EButton("Close");
+    protected EButton btnClose;
 
-    protected JLabel lblFind = new JLabel("Find" + ": ");
+    protected JLabel lblFind;
 
-    protected EButton btnHighlightAll = new EButton("Highlight all");
+    protected EButton btnHighlightAll;
 
-    protected JTextField tfFind = new JTextField();
+    protected JTextField tfFind;
 
-    protected EButton btnFind = new EButton("Find");
+    protected EButton btnFind;
 
-    protected JLabel lblReplace = new JLabel("Replace by" + ": ");
+    protected JLabel lblReplace;
 
-    protected JTextField tfReplace = new JTextField();
+    protected JTextField tfReplace;
 
-    protected EButton btnReplace = new EButton("Replace");
+    protected EButton btnReplace;
 
     public SearchDialog(boolean replacing, ETextArea textComponent) {
-        super((Window) SwingUtilities.getRoot(textComponent), ModalityType.MODELESS);
+        super(UIUtils.getRootWindow(textComponent), Messages.getString(null, "SearchDialog.title"), ModalityType.MODELESS);
         this.textComponent = textComponent;
         this.init();
-        this.setReplacing(replacing);
         this.setLocationRelativeTo(null);
+        this.setReplacing(replacing);
+        UIUtils.registerLocaleChangeListener(this);
     }
 
     protected void closed() {
@@ -58,6 +55,69 @@ public class SearchDialog extends JDialog {
 
     protected void find(String find) {
         this.textComponent.find(find);
+    }
+
+    protected EButton getBtnClose() {
+        if (this.btnClose == null) {
+            this.btnClose = new EButton();
+        }
+        return this.btnClose;
+    }
+
+    protected EButton getBtnFind() {
+        if (this.btnFind == null) {
+            this.btnFind = new EButton();
+        }
+        return this.btnFind;
+    }
+
+    protected EButton getBtnHighlightAll() {
+        if (this.btnHighlightAll == null) {
+            this.btnHighlightAll = new EButton();
+        }
+        return this.btnHighlightAll;
+    }
+
+    protected EButton getBtnReplace() {
+        if (this.btnReplace == null) {
+            this.btnReplace = new EButton();
+        }
+        return this.btnReplace;
+    }
+
+    protected EButton getBtnReplaceAll() {
+        if (this.btnReplaceAll == null) {
+            this.btnReplaceAll = new EButton();
+        }
+        return this.btnReplaceAll;
+    }
+
+    protected JLabel getLblFind() {
+        if (this.lblFind == null) {
+            this.lblFind = new JLabel();
+        }
+        return this.lblFind;
+    }
+
+    protected JLabel getLblReplace() {
+        if (this.lblReplace == null) {
+            this.lblReplace = new JLabel();
+        }
+        return this.lblReplace;
+    }
+
+    protected JTextField getTfFind() {
+        if (this.tfFind == null) {
+            this.tfFind = new JTextField();
+        }
+        return this.tfFind;
+    }
+
+    protected JTextField getTfReplace() {
+        if (this.tfReplace == null) {
+            this.tfReplace = new JTextField();
+        }
+        return this.tfReplace;
     }
 
     protected void highlightAll(String find) {
@@ -76,117 +136,87 @@ public class SearchDialog extends JDialog {
             }
         });
 
-        int h = 22;
-        int bw = 100;
-        int lw = 80;
-        int iw = 160;
-        this.setLayout(null);
-        this.setSize(484, 126);
-        this.setResizable(false);
+        this.setLayout(new MigLayout("wrap 4", "[right,fill]rel[grow,fill,220::]14px[fill,sg grp1]14px[fill,sg grp1]", ""));
 
-        {
-            this.lblFind.setLocation(16, 16);
-            this.lblFind.setSize(lw, h);
-            this.add(this.lblFind);
-        }
-        {
-            this.tfFind.setSize(iw, h);
-            this.setRight(this.tfFind, this.lblFind);
-            this.add(this.tfFind);
-        }
-        {
-            this.lblReplace.setSize(lw, h);
-            this.setBelow(this.lblReplace, this.lblFind);
-            this.add(this.lblReplace);
-        }
-        {
-            this.tfReplace.setSize(iw, h);
-            this.setRight(this.tfReplace, this.lblReplace);
-            this.add(this.tfReplace);
-        }
-        {
-            this.btnFind.setSize(bw, h);
-            this.setRight(this.btnFind, this.tfFind);
-            this.add(this.btnFind);
-            this.btnFind.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (SearchDialog.this.tfFind.getText().trim().length() > 0) {
-                        try {
-                            SearchDialog.this.find(SearchDialog.this.tfFind.getText().trim());
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-                }
-            });
-        }
-        {
-            this.btnHighlightAll.setSize(bw, h);
-            this.setRight(this.btnHighlightAll, this.btnFind);
-            this.add(this.btnHighlightAll);
-            this.btnHighlightAll.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (SearchDialog.this.tfFind.getText().trim().length() > 0) {
-                        try {
-                            SearchDialog.this.highlightAll(SearchDialog.this.tfFind.getText().trim());
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-                }
-            });
-        }
-        {
-            this.btnReplace.setSize(bw, h);
-            this.setRight(this.btnReplace, this.tfReplace);
-            this.add(this.btnReplace);
-            this.btnReplace.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (SearchDialog.this.tfFind.getText().trim().length() > 0) {
-                        try {
-                            SearchDialog.this.replace(SearchDialog.this.tfFind.getText().trim(), SearchDialog.this.tfReplace.getText().trim());
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-                }
-            });
-        }
-        {
-            this.btnReplaceAll.setSize(bw, h);
-            this.setRight(this.btnReplaceAll, this.btnReplace);
-            this.add(this.btnReplaceAll);
-            this.btnReplaceAll.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (SearchDialog.this.tfFind.getText().trim().length() > 0) {
-                        try {
-                            SearchDialog.this.replaceAll(SearchDialog.this.tfFind.getText().trim(), SearchDialog.this.tfReplace.getText().trim());
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-                }
-            });
-        }
-        {
-            this.btnClose.setSize(bw, h);
-            this.setBelow(this.btnClose, this.btnReplaceAll);
-            this.add(this.btnClose);
-            this.btnClose.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
+        this.add(this.getLblFind());
+        this.add(this.getTfFind());
+        this.add(this.getBtnFind());
+        this.add(this.getBtnHighlightAll(), "wrap");
+
+        this.add(this.getLblReplace());
+        this.add(this.getTfReplace());
+        this.add(this.getBtnReplace());
+        this.add(this.getBtnReplaceAll(), "wrap");
+
+        this.add(new JLabel(), "span 3");
+        this.add(this.getBtnClose());
+
+        ActionListener findAction = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (SearchDialog.this.getTfFind().getText().trim().length() > 0) {
                     try {
-                        SearchDialog.this.dispose();
+                        SearchDialog.this.find(SearchDialog.this.getTfFind().getText().trim());
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
                 }
-            });
-        }
+            }
+        };
+        this.tfFind.addActionListener(findAction);
+        this.getBtnFind().addActionListener(findAction);
+        this.getBtnHighlightAll().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (SearchDialog.this.getTfFind().getText().trim().length() > 0) {
+                    try {
+                        SearchDialog.this.highlightAll(SearchDialog.this.getTfFind().getText().trim());
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
+        ActionListener replaceAtion = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (SearchDialog.this.getTfFind().getText().trim().length() > 0) {
+                    try {
+                        SearchDialog.this.replace(SearchDialog.this.getTfFind().getText().trim(), SearchDialog.this.getTfReplace().getText().trim());
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        };
+        this.getTfReplace().addActionListener(replaceAtion);
+        this.getBtnReplace().addActionListener(replaceAtion);
+        this.getBtnReplaceAll().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (SearchDialog.this.getTfFind().getText().trim().length() > 0) {
+                    try {
+                        SearchDialog.this.replaceAll(SearchDialog.this.getTfFind().getText().trim(), SearchDialog.this.getTfReplace().getText()
+                                .trim());
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+        });
+        this.getBtnClose().addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    SearchDialog.this.dispose();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        this.pack();
+        this.setResizable(false);
     }
 
     public boolean isReplacing() {
@@ -201,18 +231,27 @@ public class SearchDialog extends JDialog {
         this.textComponent.replaceAll(find, replace);
     }
 
-    protected void setBelow(JComponent component, JComponent relative) {
-        component.setLocation(relative.getLocation().x, relative.getLocation().y + relative.getHeight() + this.gap);
+    /**
+     * 
+     * @see java.awt.Component#setLocale(java.util.Locale)
+     */
+    @Override
+    public void setLocale(Locale l) {
+        super.setLocale(l);
+        this.setTitle(Messages.getString(l, "SearchDialog.title"));
+        this.getBtnReplaceAll().setText(Messages.getString(l, "SearchDialog.replace-all"));
+        this.getBtnClose().setText(Messages.getString(l, "SearchDialog.cancelButtonText"));
+        this.getLblFind().setText(Messages.getString(l, "SearchDialog.find") + ": ");
+        this.getBtnHighlightAll().setText(Messages.getString(l, "SearchDialog.highlight-all"));
+        this.getBtnFind().setText(Messages.getString(l, "SearchDialog.find"));
+        this.getLblReplace().setText(Messages.getString(l, "SearchDialog.replace-by") + ": ");
+        this.getBtnReplace().setText(Messages.getString(l, "SearchDialog.replace"));
     }
 
     public void setReplacing(boolean replacing) {
         this.replacing = replacing;
-        this.tfReplace.setEnabled(replacing);
-        this.btnReplace.setEnabled(replacing);
-        this.btnReplaceAll.setEnabled(replacing);
-    }
-
-    protected void setRight(JComponent component, JComponent relative) {
-        component.setLocation(relative.getLocation().x + relative.getWidth() + this.gap, relative.getLocation().y);
+        this.getTfReplace().setEnabled(replacing);
+        this.getBtnReplace().setEnabled(replacing);
+        this.getBtnReplaceAll().setEnabled(replacing);
     }
 }
