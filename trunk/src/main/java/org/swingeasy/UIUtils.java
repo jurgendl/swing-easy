@@ -1,5 +1,6 @@
 package org.swingeasy;
 
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Frame;
 import java.awt.Point;
@@ -30,6 +31,7 @@ import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileSystemView;
@@ -238,6 +240,14 @@ public class UIUtils extends PropertyChangeParent {
         }
     }
 
+    public static Window getRootWindow(Component component) {
+        Component root = SwingUtilities.getRoot(component);
+        if (root instanceof Window) {
+            return (Window) root;
+        }
+        return null;
+    }
+
     /**
      * prints exception to system error outputstream
      */
@@ -280,7 +290,7 @@ public class UIUtils extends PropertyChangeParent {
         });
     }
 
-    public static void registerLocaleChangeListener(final JComponent component) {
+    public static void registerLocaleChangeListener(final Component component) {
         component.setLocale(UIUtils.getCurrentLocale());
 
         UIUtils.singleton.addPropertyChangeListener(UIUtils.LOCALE,

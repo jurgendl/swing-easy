@@ -7,7 +7,6 @@ import java.util.regex.Pattern;
 import javax.swing.JTextArea;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
-import javax.swing.text.Document;
 import javax.swing.text.Highlighter;
 import javax.swing.text.Highlighter.Highlight;
 
@@ -51,8 +50,11 @@ public class ETextArea extends JTextArea implements EComponentI {
             int selectionStart = matcher.start();
             if (selectionStart == start) {
                 // search from caret +1
-                matcher.find(start + 1);
-                selectionStart = matcher.start();
+                if (matcher.find(start + 1)) {
+                    selectionStart = matcher.start();
+                } else {
+                    selectionStart = -1;
+                }
             }
             if (selectionStart != -1) {
                 // result found
@@ -88,21 +90,21 @@ public class ETextArea extends JTextArea implements EComponentI {
     }
 
     /** Creates highlights around all occurrences of pattern in textComp */
-    public void highlightAll(String pattern) {
+    public void highlightAll(String patternText) {
         // First remove all old highlights
         this.removeHighlights();
 
         try {
             Highlighter hilite = this.getHighlighter();
-            Document doc = this.getDocument();
-            String text = doc.getText(0, doc.getLength());
-            int pos = 0;
-
-            // Search for pattern
-            while ((pos = text.indexOf(pattern, pos)) >= 0) {
+            Pattern pattern = Pattern.compile(patternText, Pattern.CASE_INSENSITIVE);
+            String text = this.getText();
+            System.out.println("finding " + text);
+            Matcher matcher = pattern.matcher(text);
+            while (matcher.find()) {
+                // System.out.println("highlighting: " + matcher.start() + " -> " + matcher.end());
                 // Create highlighter using private painter and apply around pattern
-                hilite.addHighlight(pos, pos + pattern.length(), this.getHighlightPainter());
-                pos += pattern.length();
+                hilite.addHighlight(matcher.start(), matcher.end(), this.getHighlightPainter());
+                this.lastSearch = patternText;
             }
         } catch (BadLocationException e) {
             //

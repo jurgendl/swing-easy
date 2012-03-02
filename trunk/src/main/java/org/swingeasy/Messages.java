@@ -26,6 +26,9 @@ public class Messages {
     }
 
     public static String getString(Locale locale, String key) {
+        if (locale == null) {
+            locale = UIUtils.getCurrentLocale();
+        }
         try {
             return Messages.getResourceBundle(locale).getString(key);
         } catch (MissingResourceException e) {
