@@ -18,6 +18,7 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 
 import org.apache.commons.lang.StringUtils;
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
+import org.swingeasy.table.renderer.ETreeTableCellRenderer;
 
 /**
  * @author Jurgen
@@ -52,7 +53,7 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI, Re
         this.setRowHeight(18);
         this.addMouseListener(this);
 
-        UIUtils.registerLocaleChangeListener(this);
+        UIUtils.registerLocaleChangeListener((EComponentI) this);
 
         if (cfg.isDefaultPopupMenu()) {
             EComponentPopupMenu.installPopupMenu(this);

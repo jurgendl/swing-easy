@@ -1,4 +1,4 @@
-package org.swingeasy;
+package org.swingeasy.table.renderer;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -8,10 +8,12 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableCellRenderer;
 
+import org.swingeasy.EComponentI;
+
 /**
  * @author Jurgen
  */
-public class ColorTableCellRenderer extends DefaultTableCellRenderer.UIResource {
+public class ColorTableCellRenderer extends DefaultTableCellRenderer.UIResource implements EComponentI {
     /** serialVersionUID */
     private static final long serialVersionUID = -7605301072046365348L;
 

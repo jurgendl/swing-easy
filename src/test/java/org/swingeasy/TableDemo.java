@@ -22,6 +22,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
+import org.swingeasy.system.SystemSettings;
+import org.swingeasy.table.editor.EnumTableCellEditor;
+
 /**
  * @author Jurgen
  */
@@ -85,7 +88,7 @@ public class TableDemo {
                 @Override
                 public void propertyChange(PropertyChangeEvent evt) {
                     Locale l = new Locale(String.valueOf(evt.getNewValue()));
-                    UIUtils.setCurrentLocale(l);
+                    SystemSettings.setCurrentLocale(l);
                 }
             });
             frame.getContentPane().add(localepanel, BorderLayout.NORTH);

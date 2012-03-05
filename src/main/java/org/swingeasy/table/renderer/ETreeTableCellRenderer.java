@@ -1,4 +1,4 @@
-package org.swingeasy;
+package org.swingeasy.table.renderer;
 
 import java.awt.Component;
 import java.awt.Graphics;
@@ -10,10 +10,14 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeCellRenderer;
 
+import org.swingeasy.EComponentI;
+import org.swingeasy.ETreeTable;
+import org.swingeasy.ETreeTableModel;
+
 /**
  * @author Jurgen
  */
-public class ETreeTableCellRenderer extends JTree implements TableCellRenderer {
+public class ETreeTableCellRenderer extends JTree implements TableCellRenderer, EComponentI {
     private static final long serialVersionUID = -4228448827157089089L;
 
     protected int currentRow = 0;

@@ -1,4 +1,4 @@
-package org.swingeasy;
+package org.swingeasy.list.renderer;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -10,10 +10,12 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JList;
 
+import org.swingeasy.EComponentI;
+
 /**
  * @author Jurgen
  */
-public class ColorListCellRenderer extends DefaultListCellRenderer.UIResource {
+public class ColorListCellRenderer extends DefaultListCellRenderer.UIResource implements EComponentI {
     /** serialVersionUID */
     private static final long serialVersionUID = -7605301072046365348L;
 

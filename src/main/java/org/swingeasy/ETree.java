@@ -37,7 +37,7 @@ public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
         this.setEditable(true);
         this.setCellEditor(new ETreeNodeEditor());
 
-        UIUtils.registerLocaleChangeListener(this);
+        UIUtils.registerLocaleChangeListener((EComponentI) this);
 
         if (cfg.isDefaultPopupMenu()) {
             EComponentPopupMenu.installPopupMenu(this);

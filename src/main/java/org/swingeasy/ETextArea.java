@@ -113,7 +113,7 @@ public class ETextArea extends JTextArea implements EComponentI {
 
     protected void init() {
         EComponentPopupMenu.installTextComponentPopupMenu(this);
-        UIUtils.registerLocaleChangeListener(this);
+        UIUtils.registerLocaleChangeListener((EComponentI) this);
     }
 
     /** Removes only our private highlights */

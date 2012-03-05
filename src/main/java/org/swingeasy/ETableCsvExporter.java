@@ -3,6 +3,8 @@ package org.swingeasy;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
+import org.swingeasy.system.SystemSettings;
+
 /**
  * @author Jurgen
  */
@@ -25,7 +27,7 @@ public class ETableCsvExporter<T> extends ETableExporterImpl<T> {
                     sb.append(",");
                 }
             }
-            sb.append(EComponentPopupMenu.newline);
+            sb.append(SystemSettings.getNewline());
         }
         return new ByteArrayInputStream(sb.toString().getBytes());
     }

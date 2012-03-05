@@ -16,8 +16,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -40,12 +38,14 @@ import javax.swing.JTextField;
 import javax.swing.JWindow;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import org.apache.commons.lang.StringUtils;
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
+import org.swingeasy.system.SystemSettings;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
@@ -512,7 +512,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
         this.getTableHeader().setReorderingAllowed(this.cfg.isReorderable());
         this.getTableHeader().setResizingAllowed(this.cfg.isResizable());
 
-        UIUtils.registerLocaleChangeListener(this);
+        UIUtils.registerLocaleChangeListener((EComponentI) this);
 
         if (this.cfg.isDefaultPopupMenu()) {
             this.installPopupMenuAction(EComponentPopupMenu.installPopupMenu(this));
@@ -564,7 +564,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
             if (record.size() > 0) {
                 sb.append(record.getStringValue(record.size() - 1)).append("\t");
             }
-            sb.append(EComponentPopupMenu.newline);
+            sb.append(SystemSettings.getNewline());
         }
         EComponentPopupMenu.copyToClipboard(sb.toString());
     }
@@ -657,19 +657,30 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
 
     /**
      * 
+     * @see javax.swing.JTable#getDefaultEditor(java.lang.Class)
+     */
+    @Override
+    public TableCellEditor getDefaultEditor(Class<?> columnClass) {
+        TableCellEditor de = super.getDefaultEditor(columnClass);
+        if (de instanceof EComponentI) {
+            UIUtils.registerLocaleChangeListener(EComponentI.class.cast(de));
+        } else if (de instanceof Component) {
+            UIUtils.registerLocaleChangeListener(Component.class.cast(de));
+        }
+        return de;
+    }
+
+    /**
+     * 
      * @see javax.swing.JTable#getDefaultRenderer(java.lang.Class)
      */
     @Override
     public TableCellRenderer getDefaultRenderer(Class<?> columnClass) {
         TableCellRenderer dr = super.getDefaultRenderer(columnClass);
-        if (dr instanceof Component) {
-            final Component c = Component.class.cast(dr);
-            this.addPropertyChangeListener("locale", new PropertyChangeListener() { //$NON-NLS-1$
-                        @Override
-                        public void propertyChange(PropertyChangeEvent evt) {
-                            c.setLocale(Locale.class.cast(evt.getNewValue()));
-                        }
-                    });
+        if (dr instanceof EComponentI) {
+            UIUtils.registerLocaleChangeListener(EComponentI.class.cast(dr));
+        } else if (dr instanceof Component) {
+            UIUtils.registerLocaleChangeListener(Component.class.cast(dr));
         }
         return dr;
     }

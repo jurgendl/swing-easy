@@ -1,4 +1,4 @@
-package org.swingeasy;
+package org.swingeasy.list.renderer;
 
 import java.awt.Component;
 import java.text.DateFormat;
@@ -7,11 +7,13 @@ import java.util.Locale;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
 
+import org.swingeasy.EComponentI;
+
 // javax.swing.text.DateFormatter
 /**
  * @author Jurgen
  */
-public class DateListCellRenderer extends DefaultListCellRenderer.UIResource {
+public class DateListCellRenderer extends DefaultListCellRenderer.UIResource implements EComponentI {
     public enum Type {
         DATE, TIME, DATE_TIME;
     }

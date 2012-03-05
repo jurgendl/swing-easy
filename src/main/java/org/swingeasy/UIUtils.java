@@ -36,10 +36,12 @@ import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.filechooser.FileSystemView;
 
+import org.swingeasy.system.SystemSettings;
+
 /**
  * @author Jurgen
  */
-public class UIUtils extends PropertyChangeParent {
+public class UIUtils {
     /**
      * {@link MouseListener} that moves around a {@link Window} when dragged
      */
@@ -144,40 +146,26 @@ public class UIUtils extends PropertyChangeParent {
         }
     }
 
+    {
+        SystemSettings.getSingleton().addPropertyChangeListener(SystemSettings.LOCALE, new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                UIUtils.setUILanguage(Locale.class.cast(evt.getNewValue()));
+            }
+        });
+    }
+
     static {
         // http://tips4java.wordpress.com/2008/10/25/enter-key-and-button/
         // TODO
         UIManager.put("Button.defaultButtonFollowsFocus", Boolean.TRUE);
     }
 
-    /** "locale" */
-    public static final String LOCALE = "locale";
-
-    static {
-        Locale defaultLocale;
-        try {
-            // (1) Java 1.7 compilable in Java 1.6 but gives Exception at runtimee so we can fall back to (2)
-            @SuppressWarnings("rawtypes")
-            Class type = Class.forName("java.util.Locale$Category");
-            @SuppressWarnings("unchecked")
-            Object enumvalue = Enum.valueOf(type, "FORMAT");
-            defaultLocale = Locale.class.cast(Locale.class.getMethod("getDefault", type).invoke(null, enumvalue));
-        } catch (Exception ex) {
-            // (2) Java 1.6 (gives wrong info in Java 1.7)
-            defaultLocale = Locale.getDefault();
-        }
-        Locale.setDefault(defaultLocale);
-    }
-
     static {
         UIUtils.setUILanguage(null);
     }
 
-    protected static final UIUtils singleton;
-
-    static {
-        singleton = new UIUtils();
-    }
+    protected static final UIUtils singleton = new UIUtils();
 
     protected static Map<String, Icon> cachedIcons = new HashMap<String, Icon>();
 
@@ -193,13 +181,6 @@ public class UIUtils extends PropertyChangeParent {
             }
         }
         return null;
-    }
-
-    /**
-     * {@link Locale#getDefault()}
-     */
-    public static Locale getCurrentLocale() {
-        return Locale.getDefault();
     }
 
     /**
@@ -291,9 +272,9 @@ public class UIUtils extends PropertyChangeParent {
     }
 
     public static void registerLocaleChangeListener(final Component component) {
-        component.setLocale(UIUtils.getCurrentLocale());
+        component.setLocale(SystemSettings.getCurrentLocale());
 
-        UIUtils.singleton.addPropertyChangeListener(UIUtils.LOCALE,
+        SystemSettings.getSingleton().addPropertyChangeListener(SystemSettings.LOCALE,
                 WeakReferencedListener.wrap(PropertyChangeListener.class, new PropertyChangeListener() {
                     @Override
                     public void propertyChange(PropertyChangeEvent evt) {
@@ -302,7 +283,24 @@ public class UIUtils extends PropertyChangeParent {
 
                     @Override
                     public String toString() {
-                        return "PropertyChangeListener[" + UIUtils.LOCALE + "]@" + Integer.toHexString(this.hashCode());
+                        return "PropertyChangeListener[" + SystemSettings.LOCALE + "]@" + Integer.toHexString(this.hashCode());
+                    }
+                }));
+    }
+
+    public static void registerLocaleChangeListener(final EComponentI component) {
+        component.setLocale(SystemSettings.getCurrentLocale());
+
+        SystemSettings.getSingleton().addPropertyChangeListener(SystemSettings.LOCALE,
+                WeakReferencedListener.wrap(PropertyChangeListener.class, new PropertyChangeListener() {
+                    @Override
+                    public void propertyChange(PropertyChangeEvent evt) {
+                        component.setLocale(Locale.class.cast(evt.getNewValue()));
+                    }
+
+                    @Override
+                    public String toString() {
+                        return "PropertyChangeListener[" + SystemSettings.LOCALE + "]@" + Integer.toHexString(this.hashCode());
                     }
                 }));
     }
@@ -358,13 +356,6 @@ public class UIUtils extends PropertyChangeParent {
         }
     }
 
-    public static void setCurrentLocale(Locale currentLocale) {
-        Locale oldLocale = Locale.getDefault();
-        Locale.setDefault(currentLocale);
-        UIUtils.setUILanguage(currentLocale);
-        UIUtils.singleton.firePropertyChange(UIUtils.LOCALE, oldLocale, currentLocale);
-    }
-
     /**
      * (re-)shows tooltips earlier (10 milliseconds) and longer (20 seconds)
      */
@@ -401,7 +392,7 @@ public class UIUtils extends PropertyChangeParent {
     private static final void setUILanguage(Locale locale, Class<? extends JComponent> componentClass) {
         String p1 = componentClass.getName().replace('.', '/') + ".keys.properties";
         String p2 = componentClass.getName();
-        Locale p3 = locale == null ? UIUtils.getCurrentLocale() : locale;
+        Locale p3 = locale == null ? SystemSettings.getCurrentLocale() : locale;
         String p4 = componentClass.getSimpleName();
         UIUtils.setUILanguage(p1, p2, p3, p4);
     }
@@ -417,7 +408,7 @@ public class UIUtils extends PropertyChangeParent {
      */
     private static final void setUILanguage(String resource, String baseName, Locale locale, String prefix) {
         if (locale == null) {
-            locale = UIUtils.getCurrentLocale();
+            locale = SystemSettings.getCurrentLocale();
         }
 
         PropertyResourceBundle rb = (PropertyResourceBundle) ResourceBundle.getBundle(baseName, locale);
