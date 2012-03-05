@@ -1,4 +1,4 @@
-package org.swingeasy;
+package org.swingeasy.table.editor;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -13,18 +13,15 @@ import javax.swing.JDialog;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 
+import org.swingeasy.EComponentI;
+import org.swingeasy.Messages;
+
 /**
  * @author Jurgen
  */
-public class ColorTableCellEditor extends AbstractCellEditor implements TableCellEditor, ActionListener {
+public class ColorTableCellEditor extends AbstractCellEditor implements TableCellEditor, ActionListener, EComponentI {
     /** serialVersionUID */
     private static final long serialVersionUID = 819809458892249679L;
-
-    public static void main(String[] args) {
-        ColorTableCellEditor colorTableCellEditor = new ColorTableCellEditor();
-        colorTableCellEditor.getColorChooser().setColor(new Color(100, 150, 250));
-        colorTableCellEditor.getDialog().setVisible(true);
-    }
 
     protected Locale locale;
 
@@ -80,9 +77,9 @@ public class ColorTableCellEditor extends AbstractCellEditor implements TableCel
     public JColorChooser getColorChooser() {
         if (this.cc == null) {
             this.cc = new JColorChooser();
-            this.cc.setLocale(this.locale);
 
         }
+        this.cc.setLocale(this.locale);
         return this.cc;
     }
 
@@ -91,8 +88,8 @@ public class ColorTableCellEditor extends AbstractCellEditor implements TableCel
             this.d = JColorChooser.createDialog(this.button, Messages.getString(null, "ColorTableCellEditor.pickAColor"), true, // modal //$NON-NLS-1$
                     this.getColorChooser(), this, // OK button handler
                     null); // no CANCEL button handler
-            this.d.setLocale(this.locale);
         }
+        this.d.setLocale(this.locale);
         return this.d;
     }
 
@@ -106,7 +103,23 @@ public class ColorTableCellEditor extends AbstractCellEditor implements TableCel
         return this.button;
     }
 
+    /**
+     * 
+     * @see org.swingeasy.EComponentI#setEnabled(boolean)
+     */
+    @Override
+    public void setEnabled(boolean b) {
+        //
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComponentI#setLocale(java.util.Locale)
+     */
+    @Override
     public void setLocale(Locale l) {
         this.locale = l;
+        this.d = null;
+        this.cc = null;
     }
 }

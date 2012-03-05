@@ -12,6 +12,7 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
+import org.swingeasy.system.SystemSettings;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
@@ -90,7 +91,7 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
             this.activateScrolling();
         }
 
-        UIUtils.registerLocaleChangeListener(this);
+        UIUtils.registerLocaleChangeListener((EComponentI) this);
 
         if (cfg.isDefaultPopupMenu()) {
             EComponentPopupMenu.installPopupMenu(this);
@@ -153,7 +154,7 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
     public void copy() {
         StringBuilder sb = new StringBuilder();
         for (EComboBoxRecord<T> record : this) {
-            sb.append(record.getStringValue()).append(EComponentPopupMenu.newline);
+            sb.append(record.getStringValue()).append(SystemSettings.getNewline());
         }
         EComponentPopupMenu.copyToClipboard(sb.toString());
     }

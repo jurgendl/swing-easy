@@ -17,6 +17,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+import org.swingeasy.system.SystemSettings;
+
 /**
  * @author Jurgen
  */
@@ -24,7 +26,7 @@ public class ListDemo2 {
     @SuppressWarnings("unchecked")
     public static void main(String[] args) {
         UIUtils.systemLookAndFeel();
-        UIUtils.setCurrentLocale(Locale.ENGLISH);
+        SystemSettings.setCurrentLocale(Locale.ENGLISH);
         EListConfig cfg = new EListConfig();
         cfg.setSortable(false);
         @SuppressWarnings("rawtypes")
@@ -46,7 +48,7 @@ public class ListDemo2 {
                     jrben.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            UIUtils.setCurrentLocale(Locale.ENGLISH);
+                            SystemSettings.setCurrentLocale(Locale.ENGLISH);
                         }
                     });
                     jp.add(jrben);
@@ -58,7 +60,7 @@ public class ListDemo2 {
                     jrbnl.addActionListener(new ActionListener() {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                            UIUtils.setCurrentLocale(new Locale("nl"));
+                            SystemSettings.setCurrentLocale(new Locale("nl"));
                         }
                     });
                     jp.add(jrbnl);

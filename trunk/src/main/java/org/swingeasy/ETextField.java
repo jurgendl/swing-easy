@@ -22,6 +22,6 @@ public class ETextField extends JTextField implements EComponentI {
 
     protected void init() {
         EComponentPopupMenu.installTextComponentPopupMenu(this);
-        UIUtils.registerLocaleChangeListener(this);
+        UIUtils.registerLocaleChangeListener((EComponentI) this);
     }
 }

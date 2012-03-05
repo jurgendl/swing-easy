@@ -1,22 +1,34 @@
-package org.swingeasy;
+package org.swingeasy.table.editor;
 
-import java.text.NumberFormat;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JTextField;
 
-// javax.swing.text.NumberFormatter
+import org.swingeasy.EComponentI;
+
+// javax.swing.text.DateFormatter
 /**
  * @author Jurgen
  */
-public class NumberTableCellEditor extends DefaultCellEditor {
+public class DateTableCellEditor extends DefaultCellEditor implements EComponentI {
+    public enum Type {
+        DATE, TIME, DATE_TIME;
+    }
+
     private static final long serialVersionUID = 5169127745067354714L;
 
-    protected NumberFormat formatter;
+    protected DateFormat formatter;
 
-    public NumberTableCellEditor() {
+    protected Type type;
+
+    public DateTableCellEditor() {
+        this(Type.DATE_TIME);
+    }
+
+    public DateTableCellEditor(Type type) {
         super(new JTextField());
 
         final JTextField jtf = JTextField.class.cast(this.getComponent());
@@ -31,7 +43,7 @@ public class NumberTableCellEditor extends DefaultCellEditor {
                     return null;
                 }
                 try {
-                    return NumberTableCellEditor.this.formatter.parseObject(jtf.getText());
+                    return DateTableCellEditor.this.formatter.parseObject(jtf.getText());
                 } catch (ParseException ex) {
                     throw new RuntimeException(ex);
                 }
@@ -43,11 +55,12 @@ public class NumberTableCellEditor extends DefaultCellEditor {
              */
             @Override
             public void setValue(Object value) {
-                jtf.setText((value != null) ? NumberTableCellEditor.this.formatter.format(value) : ""); //$NON-NLS-1$
+                jtf.setText((value != null) ? DateTableCellEditor.this.formatter.format(value) : ""); //$NON-NLS-1$
             }
         };
         jtf.addActionListener(this.delegate);
 
+        this.type = type;
         this.newFormatter();
     }
 
@@ -56,11 +69,36 @@ public class NumberTableCellEditor extends DefaultCellEditor {
     }
 
     protected void newFormatter() {
-        this.formatter = NumberFormat.getInstance(this.getLocale());
+        switch (this.type) {
+            case DATE:
+                this.formatter = DateFormat.getDateInstance(DateFormat.SHORT, this.getLocale());
+                break;
+            case DATE_TIME:
+                this.formatter = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, this.getLocale());
+                break;
+            case TIME:
+                this.formatter = DateFormat.getTimeInstance(DateFormat.SHORT, this.getLocale());
+                break;
+        }
     }
 
+    /**
+     * 
+     * @see org.swingeasy.EComponentI#setEnabled(boolean)
+     */
+    @Override
+    public void setEnabled(boolean b) {
+        //
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComponentI#setLocale(java.util.Locale)
+     */
+    @Override
     public void setLocale(Locale l) {
         this.getComponent().setLocale(l);
         this.newFormatter();
     }
+
 }

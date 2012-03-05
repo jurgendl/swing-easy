@@ -33,7 +33,7 @@ public abstract class ELabeledTextFieldButtonComponent extends JComponent implem
 
     public ELabeledTextFieldButtonComponent() {
         this.createComponent();
-        UIUtils.registerLocaleChangeListener(this);
+        UIUtils.registerLocaleChangeListener((EComponentI) this);
     }
 
     protected void createComponent() {

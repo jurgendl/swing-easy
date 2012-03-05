@@ -18,6 +18,10 @@ import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
+import org.swingeasy.list.renderer.ColorListCellRenderer;
+import org.swingeasy.list.renderer.DateListCellRenderer;
+import org.swingeasy.list.renderer.NumberListCellRenderer;
+import org.swingeasy.system.SystemSettings;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
@@ -70,6 +74,9 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
             for (ListCellRenderer renderer : this.defaultRenderersByClass.values()) {
                 if (renderer instanceof Component) {
                     Component.class.cast(renderer).setLocale(l);
+                }
+                if (renderer instanceof EComponentI) {
+                    EComponentI.class.cast(renderer).setLocale(l);
                 }
             }
         }
@@ -169,7 +176,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         this.setDragEnabled(true);
         this.setTransferHandler(new EListTransferHandler<T>());
 
-        UIUtils.registerLocaleChangeListener(this);
+        UIUtils.registerLocaleChangeListener((EComponentI) this);
 
         if (cfg.isDefaultPopupMenu()) {
             EComponentPopupMenu.installPopupMenu(this);
@@ -210,7 +217,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     public void copy() {
         StringBuilder sb = new StringBuilder();
         for (EListRecord<T> record : this) {
-            sb.append(record.getStringValue()).append(EComponentPopupMenu.newline);
+            sb.append(record.getStringValue()).append(SystemSettings.getNewline());
         }
         EComponentPopupMenu.copyToClipboard(sb.toString());
     }

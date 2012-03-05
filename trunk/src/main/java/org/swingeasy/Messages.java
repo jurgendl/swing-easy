@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import org.swingeasy.system.SystemSettings;
+
 /**
  * @author Jurgen
  */
@@ -16,7 +18,7 @@ public class Messages {
 
     private static ResourceBundle getResourceBundle(Locale locale) {
         if (locale == null) {
-            locale = UIUtils.getCurrentLocale();
+            locale = SystemSettings.getCurrentLocale();
         }
         ResourceBundle resourceBundle = Messages.RESOURCE_BUNDLES.get(locale);
         if (resourceBundle == null) {
@@ -27,7 +29,7 @@ public class Messages {
 
     public static String getString(Locale locale, String key) {
         if (locale == null) {
-            locale = UIUtils.getCurrentLocale();
+            locale = SystemSettings.getCurrentLocale();
         }
         try {
             return Messages.getResourceBundle(locale).getString(key);

@@ -34,6 +34,8 @@ import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 
+import org.swingeasy.system.SystemSettings;
+
 /**
  * @see http://java-swing-tips.blogspot.com/2010/11/jtable-celleditor-popupmenu.html
  * @author jdlandsh
@@ -76,7 +78,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
      */
     public static class ClipboardOwnerAdapter implements ClipboardOwner {
         @Override
-        public void lostOwnership(@SuppressWarnings("hiding") Clipboard clipboard, Transferable contents) {
+        public void lostOwnership(Clipboard clipboard, Transferable contents) {
             //
         }
     }
@@ -695,17 +697,13 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
     public static final String FIND_NEXT = "find-next";
 
-    public static String newline = System.getProperty("line.separator");
-
-    protected static Clipboard clipboard;
-
     /**
      * copy to clipboard
      * 
      * @param content
      */
     public static void copyToClipboard(String content) {
-        EComponentPopupMenu.getClipboard().setContents(new StringSelection(content), new ClipboardOwnerAdapter());
+        SystemSettings.getClipboard().setContents(new StringSelection(content), new ClipboardOwnerAdapter());
     }
 
     public static void debug(JComponent component) {
@@ -726,18 +724,6 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         EComponentPopupMenu.list(map, map.keys());
         // List keystrokes in all related input maps
         EComponentPopupMenu.list(map, map.allKeys());
-    }
-
-    /**
-     * gets default (system) clipboard
-     * 
-     * @return
-     */
-    public static Clipboard getClipboard() {
-        if (EComponentPopupMenu.clipboard == null) {
-            EComponentPopupMenu.clipboard = java.awt.Toolkit.getDefaultToolkit().getSystemClipboard();
-        }
-        return EComponentPopupMenu.clipboard;
     }
 
     /**
@@ -921,7 +907,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     public static String pasteFromClipboard() {
         String result = "";
         // odd: the Object param of getContents is not currently used
-        Transferable contents = EComponentPopupMenu.getClipboard().getContents(null);
+        Transferable contents = SystemSettings.getClipboard().getContents(null);
         boolean hasTransferableText = (contents != null) && contents.isDataFlavorSupported(DataFlavor.stringFlavor);
         if (hasTransferableText) {
             try {
@@ -951,17 +937,10 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     }
 
     /**
-     * JDOC
-     */
-    public static void setClipboard(Clipboard clipboard) {
-        EComponentPopupMenu.clipboard = clipboard;
-    }
-
-    /**
      * hidden contructor
      */
     protected EComponentPopupMenu() {
-        UIUtils.registerLocaleChangeListener(this);
+        UIUtils.registerLocaleChangeListener((EComponentI) this);
     }
 
     protected void accelerate(Action action) {

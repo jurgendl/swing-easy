@@ -46,7 +46,7 @@ public class SearchDialog extends JDialog implements EComponentI {
         this.init();
         this.setLocationRelativeTo(null);
         this.setReplacing(replacing);
-        UIUtils.registerLocaleChangeListener(this);
+        UIUtils.registerLocaleChangeListener((EComponentI) this);
     }
 
     protected void closed() {
