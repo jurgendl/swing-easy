@@ -15,8 +15,8 @@ import javax.swing.text.Highlighter.Highlight;
  */
 public class ETextArea extends JTextArea implements EComponentI {
     public static class ETextAreaHighlightPainter extends DefaultHighlighter.DefaultHighlightPainter {
-        public ETextAreaHighlightPainter(Color arg0) {
-            super(arg0);
+        public ETextAreaHighlightPainter(Color hLColor) {
+            super(hLColor);
         }
     }
 
@@ -84,7 +84,7 @@ public class ETextArea extends JTextArea implements EComponentI {
 
     public ETextAreaHighlightPainter getHighlightPainter() {
         if (this.highlightPainter == null) {
-            this.highlightPainter = new ETextAreaHighlightPainter(Color.lightGray);
+            this.highlightPainter = new ETextAreaHighlightPainter(new Color(245, 225, 145));
         }
         return this.highlightPainter;
     }
