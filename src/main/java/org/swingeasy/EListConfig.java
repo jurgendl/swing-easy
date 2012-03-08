@@ -26,18 +26,21 @@ public class EListConfig extends EComponentConfig<EListConfig> {
         return this.threadSafe;
     }
 
-    public void setFilterable(boolean filterable) {
+    public EListConfig setFilterable(boolean filterable) {
         this.lockCheck();
         this.filterable = filterable;
+        return this;
     }
 
-    public void setSortable(boolean sortable) {
+    public EListConfig setSortable(boolean sortable) {
         this.lockCheck();
         this.sortable = sortable;
+        return this;
     }
 
-    public void setThreadSafe(boolean threadSafe) {
+    public EListConfig setThreadSafe(boolean threadSafe) {
         this.lockCheck();
         this.threadSafe = threadSafe;
+        return this;
     }
 }

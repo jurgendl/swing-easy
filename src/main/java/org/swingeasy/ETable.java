@@ -75,19 +75,20 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
              * JDOC
              */
             protected class RecordMatcher implements Matcher<ETableRecord<T>> {
-                protected final Pattern pattern;
+                protected final Map<Integer, Pattern> filters = new HashMap<Integer, Pattern>();
 
-                protected final int column;
-
-                /**
-                 * Instantieer een nieuwe RecordMatcher
-                 * 
-                 * @param column
-                 * @param text
-                 */
                 protected RecordMatcher(int column, String text) {
-                    this.column = column;
-                    this.pattern = text == null ? null : Pattern.compile(text, Pattern.CASE_INSENSITIVE);
+                    if (text != null) {
+                        this.filters.put(column, Pattern.compile(text, Pattern.CASE_INSENSITIVE));
+                    }
+                }
+
+                protected RecordMatcher(Map<Integer, String> popupFilters) {
+                    for (Map.Entry<Integer, String> entry : popupFilters.entrySet()) {
+                        if (entry.getValue() != null) {
+                            this.filters.put(entry.getKey(), Pattern.compile(entry.getValue(), Pattern.CASE_INSENSITIVE));
+                        }
+                    }
                 }
 
                 /**
@@ -95,14 +96,13 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
                  */
                 @Override
                 public boolean matches(ETableRecord<T> item) {
-                    if (this.pattern == null) {
-                        return true;
+                    for (Map.Entry<Integer, Pattern> entry : this.filters.entrySet()) {
+                        String value = item.getStringValue(entry.getKey());
+                        if (!entry.getValue().matcher(value).find()) {
+                            return false;
+                        }
                     }
-                    String value = item.getStringValue(this.column);
-                    if (value == null) {
-                        return false;
-                    }
-                    return this.pattern.matcher(value).find();
+                    return true;
                 }
             }
 
@@ -143,10 +143,9 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
                             FilterPopup.this.setVisible(false);
                         } else if (e.getKeyCode() == KeyEvent.VK_TAB) {
                             // commit filtering
-                            System.out.println("filter " + FilterPopup.this.popupTextfield.getText()); //$NON-NLS-1$
-                            ETable.this.filtering.matcherEditor.fire(new RecordMatcher(FilterPopup.this.popupForColumn,
-                                    FilterPopup.this.popupTextfield.getText()));
                             FilterPopup.this.popupFilters.put(FilterPopup.this.popupForColumn, FilterPopup.this.popupTextfield.getText());
+                            System.out.println("filter " + FilterPopup.this.popupFilters); //$NON-NLS-1$
+                            ETable.this.filtering.matcherEditor.fire(new RecordMatcher(FilterPopup.this.popupFilters));
                             FilterPopup.this.setVisible(false);
                         } else {
                             //

@@ -40,6 +40,11 @@ public class ETextArea extends JTextArea implements EComponentI {
         cfg.lock();
     }
 
+    public void addDocumentKeyListener(DocumentKeyListener listener) {
+        this.getDocument().addDocumentListener(listener);
+        this.addKeyListener(listener);
+    }
+
     public void find(String find) {
         int start = this.getSelectionStart();
         Pattern pattern = Pattern.compile(find, Pattern.CASE_INSENSITIVE);
@@ -113,7 +118,13 @@ public class ETextArea extends JTextArea implements EComponentI {
 
     protected void init() {
         EComponentPopupMenu.installTextComponentPopupMenu(this);
+
         UIUtils.registerLocaleChangeListener((EComponentI) this);
+    }
+
+    public void removeDocumentKeyListener(DocumentKeyListener listener) {
+        this.getDocument().removeDocumentListener(listener);
+        this.removeKeyListener(listener);
     }
 
     /** Removes only our private highlights */

@@ -34,18 +34,21 @@ public class ETabbedPaneConfig extends EComponentConfig<ETabbedPaneConfig> {
         return this.minimizable;
     }
 
-    public void setClosable(boolean closable) {
+    public ETabbedPaneConfig setClosable(boolean closable) {
         this.lockCheck();
         this.closable = closable;
+        return this;
     }
 
-    public void setMinimizable(boolean minimizable) {
+    public ETabbedPaneConfig setMinimizable(boolean minimizable) {
         this.lockCheck();
         this.minimizable = minimizable;
+        return this;
     }
 
-    public void setRotation(Rotation rotation) {
+    public ETabbedPaneConfig setRotation(Rotation rotation) {
         this.lockCheck();
         this.rotation = rotation;
+        return this;
     }
 }
