@@ -76,41 +76,49 @@ public class ETableConfig extends EComponentConfig<ETableConfig> {
         return this.vertical;
     }
 
-    public void setDraggable(boolean draggable) {
+    public ETableConfig setDraggable(boolean draggable) {
         this.draggable = draggable;
+        return this;
     }
 
-    public void setEditable(boolean editable) {
+    public ETableConfig setEditable(boolean editable) {
         this.editable = editable;
+        return this;
     }
 
-    public void setFilterable(boolean filterable) {
+    public ETableConfig setFilterable(boolean filterable) {
         this.lockCheck();
         this.filterable = filterable;
+        return this;
     }
 
-    public void setReorderable(boolean reorderable) {
+    public ETableConfig setReorderable(boolean reorderable) {
         this.lockCheck();
         this.reorderable = reorderable;
+        return this;
     }
 
-    public void setResizable(boolean resizable) {
+    public ETableConfig setResizable(boolean resizable) {
         this.lockCheck();
         this.resizable = resizable;
+        return this;
     }
 
-    public void setSortable(boolean sortable) {
+    public ETableConfig setSortable(boolean sortable) {
         this.lockCheck();
         this.sortable = sortable;
+        return this;
     }
 
-    public void setThreadSafe(boolean threadSafe) {
+    public ETableConfig setThreadSafe(boolean threadSafe) {
         this.lockCheck();
         this.threadSafe = threadSafe;
+        return this;
     }
 
-    public void setVertical(boolean vertical) {
+    public ETableConfig setVertical(boolean vertical) {
         this.lockCheck();
         this.vertical = vertical;
+        return this;
     }
 }

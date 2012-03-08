@@ -46,7 +46,7 @@ public class EventHelper {
     }
 
     public static boolean keyEvent(KeyEvent event, char character) {
-        return KeyEvent.getKeyText(event.getKeyCode()).equalsIgnoreCase(KeyEvent.getKeyText(character));
+        return event.getKeyChar() == character;
     }
 
     public static boolean keyEvent(KeyEvent event, EventModifier onmask) {

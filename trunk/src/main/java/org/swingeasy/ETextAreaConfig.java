@@ -38,18 +38,21 @@ public class ETextAreaConfig extends EComponentConfig<ETextAreaConfig> {
         return this.enabled;
     }
 
-    public void setColumns(int columns) {
+    public ETextAreaConfig setColumns(int columns) {
         this.lockCheck();
         this.columns = columns;
+        return this;
     }
 
-    public void setEnabled(boolean enabled) {
+    public ETextAreaConfig setEnabled(boolean enabled) {
         this.lockCheck();
         this.enabled = enabled;
+        return this;
     }
 
-    public void setRows(int rows) {
+    public ETextAreaConfig setRows(int rows) {
         this.lockCheck();
         this.rows = rows;
+        return this;
     }
 }

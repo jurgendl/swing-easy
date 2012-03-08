@@ -32,23 +32,27 @@ public class EComboBoxConfig extends EComponentConfig<EComboBoxConfig> {
         return this.threadSafe;
     }
 
-    public void setAutoComplete(boolean autoComplete) {
+    public EComboBoxConfig setAutoComplete(boolean autoComplete) {
         this.lockCheck();
         this.autoComplete = autoComplete;
+        return this;
     }
 
-    public void setScrolling(boolean scrolling) {
+    public EComboBoxConfig setScrolling(boolean scrolling) {
         this.lockCheck();
         this.scrolling = scrolling;
+        return this;
     }
 
-    public void setSortable(boolean sortable) {
+    public EComboBoxConfig setSortable(boolean sortable) {
         this.lockCheck();
         this.sortable = sortable;
+        return this;
     }
 
-    public void setThreadSafe(boolean threadSafe) {
+    public EComboBoxConfig setThreadSafe(boolean threadSafe) {
         this.lockCheck();
         this.threadSafe = threadSafe;
+        return this;
     }
 }

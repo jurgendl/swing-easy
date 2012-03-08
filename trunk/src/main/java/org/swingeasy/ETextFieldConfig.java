@@ -31,13 +31,15 @@ public class ETextFieldConfig extends EComponentConfig<ETextFieldConfig> {
         return this.enabled;
     }
 
-    public void setColumns(int columns) {
+    public ETextFieldConfig setColumns(int columns) {
         this.lockCheck();
         this.columns = columns;
+        return this;
     }
 
-    public void setEnabled(boolean enabled) {
+    public ETextFieldConfig setEnabled(boolean enabled) {
         this.lockCheck();
         this.enabled = enabled;
+        return this;
     }
 }
