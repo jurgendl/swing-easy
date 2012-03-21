@@ -129,8 +129,10 @@ public abstract class ETableExporterImpl<T> implements ETableExporter<T> {
 
                     @Override
                     public void customize(JFileChooser jfc) {
-                        jfc.setCurrentDirectory(ETableExporterImpl.lastFile.isDirectory() ? ETableExporterImpl.lastFile : ETableExporterImpl.lastFile
-                                .getParentFile());
+                        if (ETableExporterImpl.lastFile != null) {
+                            jfc.setCurrentDirectory(ETableExporterImpl.lastFile.isDirectory() ? ETableExporterImpl.lastFile
+                                    : ETableExporterImpl.lastFile.getParentFile());
+                        }
                         jfc.resetChoosableFileFilters();
                         jfc.addChoosableFileFilter(new ExtensionFileFilter(ETableExporterImpl.this.getFileExtensionDescription() + " (" + ext + ")",
                                 ext));
