@@ -12,6 +12,8 @@ not released: downloads are not available yet, only available by checking out th
 
 major version changes (first number) are possibly not backwards compatible!
 
+all releases can also be downloaded from https://swing-easy.googlecode.com/svn/maven2/org/swingeasy/swing-easy
+
  * 0.1.0 (deprecated)
   * initial release of ETable
   * initial release of UIUtils
