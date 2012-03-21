@@ -93,3 +93,8 @@ major version changes (first number) are possibly not backwards compatible!
    * several fixes SearchDialog (and ETextArea) and translation
    * use of MigLayout for SearchDialog
  * 2.5.0 (not planned, not released) 
+   * elist/etable renderers/editors moved to package
+   * some methods moved from uiutils to systemsettings
+   * new: systemsettings (=propertysupport)
+   * fixed some renderers/editors: locale changes
+   * config object return this in setters

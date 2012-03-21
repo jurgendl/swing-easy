@@ -14,11 +14,17 @@ import javax.swing.tree.TreeNode;
 public class ETreeNode<T> extends DefaultMutableTreeNode {
     private static final long serialVersionUID = -437035560334777359L;
 
+    /**
+     * treenode with lazy init of children
+     */
     public ETreeNode(T userObject) {
         super(userObject);
         this.children = null; // not initialized (lazy)
     }
 
+    /**
+     * treenode with easger init of children, give an empty collection to make a childless eager treenode
+     */
     public ETreeNode(T userObject, Collection<ETreeNode<T>> children) {
         super(userObject);
         this.children = new Vector<ETreeNode<T>>(children); // initialized (eager)
