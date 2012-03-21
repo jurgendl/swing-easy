@@ -42,6 +42,14 @@ public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
         if (cfg.isDefaultPopupMenu()) {
             EComponentPopupMenu.installPopupMenu(this);
         }
+
+        // FIXME does not seem to work because of popupmenu
+        // this.addMouseListener(new MouseAdapter() {
+        // @Override
+        // public void mouseClicked(MouseEvent me) {
+        //
+        // }
+        // });
     }
 
     public ETree(ETreeNode<T> rootNode) {
