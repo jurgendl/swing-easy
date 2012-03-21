@@ -92,7 +92,10 @@ public class ETableHeaders<T> implements WritableTableFormat<ETableRecord<T>>, A
         return new Comparator<Object>() {
             @Override
             public int compare(Object o1, Object o2) {
-                return new CompareToBuilder().append(o1, o2).toComparison();
+                if (((o1 == null) || (o1 instanceof Comparable)) && ((o2 == null) || (o2 instanceof Comparable))) {
+                    return new CompareToBuilder().append(o1, o2).toComparison();
+                }
+                return new CompareToBuilder().append(String.valueOf(o1), String.valueOf(o2)).toComparison();
             }
         };
     }
