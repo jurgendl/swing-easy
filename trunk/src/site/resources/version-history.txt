@@ -2,7 +2,7 @@
 
 = Version History =
 
-latest change: 2012-03-02
+latest change: 2012-03-21
 
 featured: downloads are available on the frontpage
 
@@ -89,12 +89,13 @@ major version changes (first number) are possibly not backwards compatible!
    * extra methods to get resources
    * renamed EToolbarButton to EButton
    * EButton customisation
- * 2.4.1 (not released)
+ * 2.5.0 (featured, not backwards compatible)
    * several fixes SearchDialog (and ETextArea) and translation
    * use of MigLayout for SearchDialog
- * 2.5.0 (not planned, not released) 
-   * elist/etable renderers/editors moved to package
-   * some methods moved from uiutils to systemsettings
-   * new: systemsettings (=propertysupport)
+   * EList/ETable renderers/editors moved to package
+   * some methods moved from UIUtils to SystemSettings
+   * initial release of SystemSettings with propertysupport
    * fixed some renderers/editors: locale changes
-   * config object return this in setters
+   * config objects return this in setters
+ * 2.5.1 (not released) 
+ * 2.6.0 (not planned, not released) 
