@@ -33,10 +33,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JWindow;
 import javax.swing.ListSelectionModel;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
@@ -64,6 +66,8 @@ import ca.odell.glazedlists.swing.TableComparatorChooser;
 
 /**
  * @author Jurgen
+ * 
+ * @see http://www.chka.de/swing/table/faq.html
  */
 public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterable<ETableRecord<T>>, ReadableComponent {
     protected class EFiltering {
@@ -537,6 +541,15 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
+     * add rowheader to scrollpane
+     */
+    public void addRowHeader(JScrollPane scrollpane) {
+        RowNumberTable rowTable = new RowNumberTable(this);
+        scrollpane.setRowHeaderView(rowTable);
+        scrollpane.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, rowTable.getTableHeader());
+    }
+
+    /**
      * 
      * @see org.swingeasy.ETableI#clear()
      */
@@ -919,6 +932,18 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     @Override
     public void removeRecordAtVisualRow(final int i) {
         this.records.remove(this.sorting.getRecords().get(i));
+    }
+
+    /**
+     * remove rowheader
+     */
+    public void removeRowHeader(JScrollPane scrollpane) {
+        if (scrollpane.getRowHeader().getView() instanceof RowNumberTable) {
+            scrollpane.getRowHeader().removeAll();
+            scrollpane.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, new JComponent() {
+                private static final long serialVersionUID = 1L;
+            });
+        }
     }
 
     /**

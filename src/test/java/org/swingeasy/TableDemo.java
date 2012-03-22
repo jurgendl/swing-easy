@@ -75,6 +75,7 @@ public class TableDemo {
             final ETableI<Object[]> safetable = table.getSimpleThreadSafeInterface();
             final JFrame frame = new JFrame();
             JScrollPane jsp = new JScrollPane(table);
+            table.addRowHeader(jsp);
             frame.getContentPane().add(jsp, BorderLayout.CENTER);
             JPanel localepanel = new JPanel(new FlowLayout());
             final EButtonGroup localegroup = new EButtonGroup();
@@ -93,7 +94,7 @@ public class TableDemo {
             });
             frame.getContentPane().add(localepanel, BorderLayout.NORTH);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(400, 200);
+            frame.setSize(800, 400);
             final Random r = new Random(256955466579946l);
             headers.add("Integer", Integer.class, true); //$NON-NLS-1$
             headers.add("String", String.class, true); //$NON-NLS-1$
