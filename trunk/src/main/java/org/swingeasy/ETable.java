@@ -556,7 +556,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
      * add rowheader to scrollpane
      */
     public void addRowHeader(JScrollPane scrollpane) {
-        RowNumberTable rowTable = new RowNumberTable(this);
+        RowNumberTable rowTable = this.getRowHeader();
         scrollpane.setRowHeaderView(rowTable);
         scrollpane.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, rowTable.getTableHeader());
     }
@@ -770,6 +770,13 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     @Override
     public List<ETableRecord<T>> getRecords() {
         return this.filtering.getRecords();
+    }
+
+    /**
+     * gets row header that can be added to the RowHeaderView of a {@link JScrollPane} or can be docked WEST in a {@link BorderLayout}
+     */
+    public RowNumberTable getRowHeader() {
+        return new RowNumberTable(this);
     }
 
     /**
