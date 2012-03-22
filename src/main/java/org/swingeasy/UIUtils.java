@@ -482,14 +482,22 @@ public class UIUtils {
      * 
      * @see http://java.sun.com/developer/technicalArticles/GUI/translucent_shaped_windows/
      */
-    public static void translucent(Window w, Float f) {
-        if (AWTUtilitiesWrapper.isTranslucencySupported(com.sun.awt.AWTUtilities.Translucency.TRANSLUCENT)) {
-            try {
-                AWTUtilitiesWrapper.setWindowOpacity(w, f);
-            } catch (Exception ex) {
-                UIUtils.log(ex);
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static boolean translucent(Window w, Float f) {
+        try {
+            if (AWTUtilitiesWrapper.isTranslucencySupported(Enum.valueOf(
+                    (Class<? extends Enum>) Class.forName("com.sun.awt.AWTUtilities.Translucency"), "TRANSLUCENT"))) {
+                try {
+                    AWTUtilitiesWrapper.setWindowOpacity(w, f);
+                    return true;
+                } catch (Exception ex) {
+                    UIUtils.log(ex);
+                }
             }
+        } catch (Exception ex) {
+            UIUtils.log(ex);
         }
+        return false;
     }
 
     /**
