@@ -61,7 +61,7 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * initial release of EventThreadTask (alternative for SwingWorker)
   * easy localization of JFileChooser, JOptionPane, JColorChooser
   * EventThreadTask as alternative for SwingWorker, see other classes
- * 2.2.1 (featured)
+ * 2.2.1
   * initial release of PropertyChangeParent implementing all methods (also used for dynamic component localization)
   * initial release of WeakReferencedListener (also used for dynamic component localization)
   * localization redone: dynamic component localization including JFileChooser, JOptionPane, JColorChooser via UIUtils (all EComponents are registered by default; JComponents are supported)
@@ -91,7 +91,7 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
    * extra methods to get resources
    * renamed EToolbarButton to EButton
    * EButton customisation
- * 2.5.0 (featured, not backwards compatible)
+ * 2.5.0 (not backwards compatible)
    * several fixes SearchDialog (and ETextArea) and translation
    * use of MigLayout for SearchDialog
    * EList/ETable renderers/editors moved to package
@@ -99,5 +99,10 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
    * initial release of SystemSettings with propertysupport
    * fixed some renderers/editors: locale changes
    * config objects return this in setters
- * 2.5.1 (not released) 
- * 2.6.0 (not planned, not released) 
+ * 2.5.1 (featured)
+   * ETable: rowheader
+   * fixed: ETable: renderers/editors listen to Locale changes
+   * upgrade javassist library
+   * can now use cglib for EDT safe proxies
+ * 2.5.2 (not released)
+ * 2.6.0 (not planned, not released)
