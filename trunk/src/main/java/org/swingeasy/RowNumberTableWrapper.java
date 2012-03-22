@@ -15,7 +15,7 @@ public class RowNumberTableWrapper extends JScrollPane {
 
     public RowNumberTableWrapper(JTable wrapped) {
         super(wrapped);
-        JTable rowTable = new RowNumberTable(wrapped);
+        RowNumberTable rowTable = new RowNumberTable(wrapped);
         this.setRowHeaderView(rowTable);
         this.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, rowTable.getTableHeader());
     }
