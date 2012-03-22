@@ -700,9 +700,6 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
      */
     @Override
     public TableCellRenderer getDefaultRenderer(Class<?> columnClass) {
-        if (columnClass.equals(Date.class)) {
-            System.out.println();
-        }
         TableCellRenderer dr = super.getDefaultRenderer(columnClass);
 
         if (dr instanceof EComponentI) {
