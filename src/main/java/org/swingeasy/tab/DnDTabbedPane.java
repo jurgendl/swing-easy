@@ -316,6 +316,7 @@ public class DnDTabbedPane extends JTabbedPane {
         return tabbedRect;
     }
 
+    @SuppressWarnings("unused")
     public Object setDropLocation(TransferHandler.DropLocation location, Object state, boolean forDrop) {
         DropLocation old = this.dropLocation;
         if ((location == null) || !forDrop) {
