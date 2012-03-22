@@ -20,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 
 import org.swingeasy.system.SystemSettings;
@@ -74,7 +75,7 @@ public class TableDemo {
 
             final ETableI<Object[]> safetable = table.getSimpleThreadSafeInterface();
             final JFrame frame = new JFrame();
-            JScrollPane jsp = new JScrollPane(table);
+            JScrollPane jsp = new JScrollPane(table, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
             table.addRowHeader(jsp);
             frame.getContentPane().add(jsp, BorderLayout.CENTER);
             JPanel localepanel = new JPanel(new FlowLayout());
