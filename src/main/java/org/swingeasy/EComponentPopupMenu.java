@@ -959,9 +959,9 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
     }
 
-    protected int x = 0;
+    protected int cpx = 0;
 
-    protected int y = 0;
+    protected int cpy = 0;
 
     /**
      * hidden contructor
@@ -1037,7 +1037,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     @Override
     public void setLocation(int x, int y) {
         super.setLocation(x, y);
-        this.x = x;
-        this.y = y;
+        this.cpx = x;
+        this.cpy = y;
     }
 }
