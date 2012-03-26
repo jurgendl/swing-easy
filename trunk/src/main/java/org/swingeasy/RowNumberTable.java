@@ -1,20 +1,18 @@
 package org.swingeasy;
 
 import java.awt.Component;
-import java.awt.Font;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JViewport;
 import javax.swing.SwingConstants;
-import javax.swing.UIManager;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 /**
@@ -24,46 +22,6 @@ import javax.swing.table.TableColumn;
  * @see http://tips4java.wordpress.com/2008/11/18/row-number-table/
  */
 public class RowNumberTable extends JTable implements ChangeListener, PropertyChangeListener {
-    /**
-     * Borrow the renderer from JDK1.4.2 table header
-     */
-    @SuppressWarnings("unused")
-    private static class RowNumberRenderer extends DefaultTableCellRenderer.UIResource {
-        private static final long serialVersionUID = -4438439969007063384L;
-
-        public RowNumberRenderer() {
-            this.setHorizontalTextPosition(SwingConstants.RIGHT);
-            this.setHorizontalAlignment(SwingConstants.RIGHT);
-        }
-
-        /**
-         * 
-         * @see javax.swing.table.DefaultTableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int,
-         *      int)
-         */
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-            if (table != null) {
-                JTableHeader header = table.getTableHeader();
-
-                if (header != null) {
-                    this.setForeground(header.getForeground());
-                    this.setBackground(header.getBackground());
-                    this.setFont(header.getFont());
-                }
-            }
-
-            if (isSelected) {
-                this.setFont(this.getFont().deriveFont(Font.BOLD));
-            }
-
-            this.setText((value == null) ? "" : value.toString()); //$NON-NLS-1$
-            this.setBorder(UIManager.getBorder("TableHeader.cellBorder")); //$NON-NLS-1$
-
-            return this;
-        }
-    }
-
     private static final long serialVersionUID = 1854035830771958284L;
 
     private JTable main;
@@ -85,7 +43,11 @@ public class RowNumberTable extends JTable implements ChangeListener, PropertyCh
         column.setHeaderValue(" "); //$NON-NLS-1$
         this.addColumn(column);
 
-        column.setCellRenderer(this.getTableHeader().getDefaultRenderer());
+        TableCellRenderer renderer = this.getTableHeader().getDefaultRenderer();
+        if (renderer instanceof JLabel) {
+            JLabel.class.cast(renderer).setHorizontalAlignment(SwingConstants.RIGHT);
+        }
+        column.setCellRenderer(renderer);
 
         this.getColumnModel().getColumn(0).setPreferredWidth((int) w);
         this.setPreferredScrollableViewportSize(this.getPreferredSize());
@@ -95,6 +57,10 @@ public class RowNumberTable extends JTable implements ChangeListener, PropertyCh
         this(table, new JTextField(chars).getPreferredSize().getWidth());
     }
 
+    /**
+     * 
+     * @see javax.swing.JTable#addNotify()
+     */
     @Override
     public void addNotify() {
         super.addNotify();
