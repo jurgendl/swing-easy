@@ -26,7 +26,7 @@ public class ETableConfig extends EComponentConfig<ETableConfig> {
     }
 
     public ETableConfig(boolean all) {
-        this(all, all, all, all, all, all, all, all);
+        this(all, all, all, all, all, all, all, false);
         this.threadSafe = true;
         this.vertical = false;
     }
