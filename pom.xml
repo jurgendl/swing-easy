@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.swingeasy</groupId>
 	<artifactId>swing-easy</artifactId>
-	<version>2.5.2</version>
+	<version>2.5.3-SNAPSHOT</version>
 	<name>swing-easy</name>
 	<description>swing-easy</description>
 	<url>http://swing-easy.googlecode.com</url>
@@ -48,9 +48,9 @@
 	</developers>
 	<contributors />
 	<scm>
-		<connection>scm:svn:http://swing-easy.googlecode.com/svn/tags/swing-easy-2.5.2</connection>
-		<developerConnection>scm:svn:https://swing-easy.googlecode.com/svn/tags/swing-easy-2.5.2</developerConnection>
-		<url>http://swing-easy.googlecode.com/svn/tags/swing-easy-2.5.2</url>
+		<connection>scm:svn:http://swing-easy.googlecode.com/svn/tags/swing-easy-2.3.0</connection>
+		<developerConnection>scm:svn:https://swing-easy.googlecode.com/svn/tags/swing-easy-2.3.0</developerConnection>
+		<url>http://swing-easy.googlecode.com/svn/tags/swing-easy-2.3.0</url>
 	</scm>
 	<repositories>
 		<repository>
