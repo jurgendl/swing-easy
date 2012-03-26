@@ -16,6 +16,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -46,6 +47,7 @@ import javax.swing.table.TableColumnModel;
 
 import org.apache.commons.lang.StringUtils;
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
+import org.swingeasy.system.SystemSettings;
 import org.swingeasy.table.editor.BooleanTableCellEditor;
 import org.swingeasy.table.editor.ColorTableCellEditor;
 import org.swingeasy.table.editor.DateTableCellEditor;
@@ -595,12 +597,11 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
      */
     @Override
     public void copy() {
-        try {
-            EComponentPopupMenu.copyToClipboard(String.valueOf(this.getSelectedCell()));
-        } catch (Exception ex) {
-            // TODO: handle exception
-            ex.printStackTrace();
+        StringBuilder sb = new StringBuilder();
+        for (Object cell : this.getSelectedCells()) {
+            sb.append(String.valueOf(cell)).append(SystemSettings.getNewline());
         }
+        EComponentPopupMenu.copyToClipboard(sb.toString());
     }
 
     /**
@@ -812,6 +813,19 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
 
     /**
      * 
+     * @see org.swingeasy.ETableI#getSelectedCells()
+     */
+    @Override
+    public List<Object> getSelectedCells() {
+        List<Object> cells = new ArrayList<Object>();
+        for (ETableRecord<T> record : this.getSelectedRecords()) {
+            cells.add(record.get(this.getSelectedColumn()));
+        }
+        return cells;
+    }
+
+    /**
+     * 
      * @see org.swingeasy.ETableI#getSelectedRecord()
      */
     @Override
@@ -1015,7 +1029,13 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     @Override
     public void selectCell(Point p) {
         int r = this.rowAtPoint(p);
+        if (r == -1) {
+            return;
+        }
         int c = this.columnAtPoint(p);
+        if (c == -1) {
+            return;
+        }
         // if already selected: do nothing (this keeps multiple selection when current cell is part of it
         for (int sr : this.getSelectedRows()) {
             if (sr == r) {
