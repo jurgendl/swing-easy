@@ -37,7 +37,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JWindow;
-import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellEditor;
@@ -47,7 +46,6 @@ import javax.swing.table.TableColumnModel;
 
 import org.apache.commons.lang.StringUtils;
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
-import org.swingeasy.system.SystemSettings;
 import org.swingeasy.table.editor.BooleanTableCellEditor;
 import org.swingeasy.table.editor.ColorTableCellEditor;
 import org.swingeasy.table.editor.DateTableCellEditor;
@@ -61,6 +59,7 @@ import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.FilterList;
 import ca.odell.glazedlists.GlazedLists;
+import ca.odell.glazedlists.ListSelection;
 import ca.odell.glazedlists.SortedList;
 import ca.odell.glazedlists.gui.AbstractTableComparatorChooser;
 import ca.odell.glazedlists.gui.TableFormat;
@@ -527,7 +526,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
         this.tableModel = new ETableModel(this.filtering.getRecords(), this.tableFormat);
         this.setModel(this.tableModel);
         this.tableSelectionModel = new EventSelectionModel<ETableRecord<T>>(this.records);
-        this.tableSelectionModel.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        this.tableSelectionModel.setSelectionMode(ListSelection.MULTIPLE_INTERVAL_SELECTION_DEFENSIVE);
         this.setColumnSelectionAllowed(true);
         this.setRowSelectionAllowed(true);
         this.setSelectionModel(this.tableSelectionModel);
@@ -596,17 +595,12 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
      */
     @Override
     public void copy() {
-        StringBuilder sb = new StringBuilder();
-        for (ETableRecord<T> record : this) {
-            for (int column = 0; column < (record.size() - 1); column++) {
-                sb.append(record.getStringValue(column)).append("\t");
-            }
-            if (record.size() > 0) {
-                sb.append(record.getStringValue(record.size() - 1)).append("\t");
-            }
-            sb.append(SystemSettings.getNewline());
+        try {
+            EComponentPopupMenu.copyToClipboard(String.valueOf(this.getSelectedCell()));
+        } catch (Exception ex) {
+            // TODO: handle exception
+            ex.printStackTrace();
         }
-        EComponentPopupMenu.copyToClipboard(sb.toString());
     }
 
     /**
@@ -1022,6 +1016,16 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     public void selectCell(Point p) {
         int r = this.rowAtPoint(p);
         int c = this.columnAtPoint(p);
+        // if already selected: do nothing (this keeps multiple selection when current cell is part of it
+        for (int sr : this.getSelectedRows()) {
+            if (sr == r) {
+                for (int sc : this.getSelectedColumns()) {
+                    if (sc == c) {
+                        return;
+                    }
+                }
+            }
+        }
         this.setColumnSelectionInterval(c, c);
         this.setRowSelectionInterval(r, r);
     }
