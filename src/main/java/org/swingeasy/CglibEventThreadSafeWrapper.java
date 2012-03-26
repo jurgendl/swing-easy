@@ -20,18 +20,6 @@ public class CglibEventThreadSafeWrapper<C> implements MethodInterceptor {
         //
     }
 
-    protected class ValueHolder<T> {
-        private T value;
-
-        public ValueHolder() {
-            super();
-        }
-
-        public ValueHolder(T value) {
-            this.value = value;
-        }
-    }
-
     public static <C, I> C getSimpleThreadSafeInterface(final Class<C> componentClass, final C component, final Class<I> interfaced) {
         if (component instanceof EventSafe) {
             return component;
@@ -109,13 +97,13 @@ public class CglibEventThreadSafeWrapper<C> implements MethodInterceptor {
             @Override
             public void run() {
                 try {
-                    returnValue.value = method.invoke(CglibEventThreadSafeWrapper.this.component, args);
+                    returnValue.setValue(method.invoke(CglibEventThreadSafeWrapper.this.component, args));
                 } catch (InvocationTargetException ex) {
                     ex.printStackTrace();
-                    exceptionThrown.value = ex.getTargetException();
+                    exceptionThrown.setValue(ex.getTargetException());
                 } catch (Exception ex) {
                     ex.printStackTrace();
-                    exceptionThrown.value = ex;
+                    exceptionThrown.setValue(ex);
                 }
             }
         };
@@ -126,9 +114,9 @@ public class CglibEventThreadSafeWrapper<C> implements MethodInterceptor {
         } catch (InvocationTargetException ex) {
             throw ex.getCause();
         }
-        if (exceptionThrown.value != null) {
-            throw exceptionThrown.value;
+        if (exceptionThrown.getValue() != null) {
+            throw exceptionThrown.getValue();
         }
-        return returnValue.value;
+        return returnValue.getValue();
     }
 }

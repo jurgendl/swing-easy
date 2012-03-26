@@ -20,18 +20,6 @@ public class JavassistEventThreadSafeWrapper<C> implements MethodHandler {
         //
     }
 
-    protected class ValueHolder<T> {
-        private T value;
-
-        public ValueHolder() {
-            super();
-        }
-
-        public ValueHolder(T value) {
-            this.value = value;
-        }
-    }
-
     public static <C, I> C getSimpleThreadSafeInterface(final Class<C> componentClass, final C component, final Class<I> interfaced) {
         if (component instanceof EventSafe) {
             return component;
