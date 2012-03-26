@@ -99,10 +99,18 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
    * initial release of SystemSettings with propertysupport
    * fixed some renderers/editors: locale changes
    * config objects return this in setters
- * 2.5.1 (featured)
+ * 2.5.1
    * ETable: rowheader
    * fixed: ETable: renderers/editors listen to Locale changes
    * upgrade javassist library
    * can now use cglib for EDT safe proxies
- * 2.5.2 (not released)
+ * 2.5.2 (featured)
+   * EList & ETable: select cell closest to point method & select cell before showing popup
+   * ETable rowheader align right and can set #characters
+   * ETable: dragging is disabled by default
+   * ETable: fix: arrayoutofboundsexception when popup menu not over cell
+   * ValueHolder is standalone class
+   * initial release of exception dialog
+   * ETextArea: highlighting
+ * 2.5.3 (not released)
  * 2.6.0 (not planned, not released)
