@@ -14,6 +14,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
+import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -120,13 +121,6 @@ public class UIUtils {
     }
 
     /**
-     * interface UncaughtExceptionHandler
-     */
-    public static interface UncaughtExceptionHandler {
-        public void handle(Throwable t);
-    }
-
-    /**
      * UncaughtExceptionHandler delegating to given instance
      */
     public static class UncaughtExceptionHandlerDelegate implements UncaughtExceptionHandler {
@@ -140,9 +134,17 @@ public class UIUtils {
          * 
          * @see org.swingeasy.UIUtils.UncaughtExceptionHandler#handle(java.lang.Throwable)
          */
-        @Override
         public void handle(Throwable t) {
-            UncaughtExceptionHandlerDelegate.delegate.handle(t);
+            UncaughtExceptionHandlerDelegate.delegate.uncaughtException(Thread.currentThread(), t);
+        }
+
+        /**
+         * 
+         * @see java.lang.Thread.UncaughtExceptionHandler#uncaughtException(java.lang.Thread, java.lang.Throwable)
+         */
+        @Override
+        public void uncaughtException(Thread t, Throwable e) {
+            UncaughtExceptionHandlerDelegate.delegate.uncaughtException(t, e);
         }
     }
 
@@ -257,9 +259,10 @@ public class UIUtils {
     public static void registerDefaultUncaughtExceptionHandler() {
         UIUtils.registerUncaughtExceptionHandler(new UncaughtExceptionHandler() {
             @Override
-            public void handle(Throwable t) {
+            public void uncaughtException(Thread t, Throwable e) {
                 try {
-                    UIUtils.log(t);
+                    System.out.println(t);
+                    UIUtils.log(e);
                     // insert your exception handling code here
                     // or do nothing to make it go away
                 } catch (Exception tt) {
