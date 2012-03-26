@@ -499,6 +499,15 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     public ETable(ETableConfig configuration, Filter<T> matcher) {
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON3) {
+                    ETable.this.selectCell(new Point(e.getX(), e.getY()));
+                }
+            }
+        });
+
         this.cfg = configuration;
         this.cfg.lock();
         if (this.cfg.isVertical()) {
@@ -989,6 +998,18 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
         int index = this.filtering.getRecords().indexOf(record);
         Rectangle cellbounds = this.getCellRect(index, index, true);
         this.scrollRectToVisible(cellbounds);
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.ETableI#selectCell(java.awt.Point)
+     */
+    @Override
+    public void selectCell(Point p) {
+        int r = this.rowAtPoint(p);
+        int c = this.columnAtPoint(p);
+        this.setColumnSelectionInterval(c, c);
+        this.setRowSelectionInterval(r, r);
     }
 
     /**

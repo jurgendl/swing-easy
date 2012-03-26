@@ -1,5 +1,6 @@
 package org.swingeasy;
 
+import java.awt.Point;
 import java.util.Collection;
 import java.util.List;
 
@@ -48,6 +49,8 @@ public interface ETableI<T> extends EComponentI {
     public abstract void removeRecordAtVisualRow(final int i);
 
     public abstract void scrollToVisibleRecord(final ETableRecord<T> record);
+
+    public abstract void selectCell(Point p);
 
     /**
      * 
