@@ -1,5 +1,6 @@
 package org.swingeasy;
 
+import java.awt.Point;
 import java.util.Collection;
 import java.util.List;
 
@@ -34,6 +35,8 @@ public interface EListI<T> extends EComponentI {
     public abstract void removeSelectedRecords();
 
     public abstract void scrollToVisibleRecord(EListRecord<T> record);
+
+    public abstract void selectCell(Point point);
 
     public abstract void setSelectedRecord(EListRecord<T> record);
 

@@ -2,7 +2,10 @@ package org.swingeasy;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -161,6 +164,16 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public EList(EListConfig cfg) {
         super(EList.createModel(cfg.lock()));
+
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON3) {
+                    EList.this.selectCell(new Point(e.getX(), e.getY()));
+                }
+            }
+        });
+
         this.cfg = cfg;
         EListModel elistModel = EListModel.class.cast(this.getModel());
         this.records = elistModel.source;
@@ -412,6 +425,18 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         int index = this.records.indexOf(record);
         Rectangle cellbounds = this.getCellBounds(index, index);
         this.scrollRectToVisible(cellbounds);
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EListI#selectCell(java.awt.Point)
+     */
+    @Override
+    public void selectCell(Point point) {
+        int idx = this.locationToIndex(point);
+        if (idx != -1) {
+            this.setSelectedIndex(idx);
+        }
     }
 
     /**

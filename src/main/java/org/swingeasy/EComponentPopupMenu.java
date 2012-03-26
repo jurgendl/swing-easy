@@ -739,10 +739,27 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
                 component.getParentComponent().requestFocusInWindow();
             }
         });
-        popup.addPopupMenuListener(new PopupMenuAdapter() {
+        popup.addPopupMenuListener(new PopupMenuListener() {
+            @Override
+            public void popupMenuCanceled(PopupMenuEvent e) {
+                if (component instanceof PopupMenuListener) {
+                    PopupMenuListener.class.cast(component).popupMenuCanceled(e);
+                }
+            }
+
+            @Override
+            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
+                if (component instanceof PopupMenuListener) {
+                    PopupMenuListener.class.cast(component).popupMenuWillBecomeInvisible(e);
+                }
+            }
+
             @Override
             public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
                 copyAction.setEnabled(true);
+                if (component instanceof PopupMenuListener) {
+                    PopupMenuListener.class.cast(component).popupMenuWillBecomeVisible(e);
+                }
             }
         });
         component.getParentComponent().setComponentPopupMenu(popup);
@@ -809,21 +826,23 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
             popup.add(replaceAction);
         }
 
-        popup.addPopupMenuListener(new PopupMenuAdapter() {
-            /**
-             * 
-             * @see org.swingeasy.EComponentPopupMenu.PopupMenuAdapter#popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent)
-             */
+        popup.addPopupMenuListener(new PopupMenuListener() {
+            @Override
+            public void popupMenuCanceled(PopupMenuEvent e) {
+                if (component instanceof PopupMenuListener) {
+                    PopupMenuListener.class.cast(component).popupMenuCanceled(e);
+                }
+            }
+
             @Override
             public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
                 undoAction.setEnabled(true);
                 redoAction.setEnabled(true);
+                if (component instanceof PopupMenuListener) {
+                    PopupMenuListener.class.cast(component).popupMenuWillBecomeInvisible(e);
+                }
             }
 
-            /**
-             * 
-             * @see org.swingeasy.EComponentPopupMenu.PopupMenuAdapter#popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent)
-             */
             @Override
             public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
                 boolean flg = component.hasSelection();
@@ -844,6 +863,10 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
                 findAction.setEnabled(ht);
                 findNextAction.setEnabled(ht);
                 replaceAction.setEnabled(ht);
+
+                if (component instanceof PopupMenuListener) {
+                    PopupMenuListener.class.cast(component).popupMenuWillBecomeVisible(e);
+                }
             }
         });
 
@@ -936,6 +959,10 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
     }
 
+    protected int x = 0;
+
+    protected int y = 0;
+
     /**
      * hidden contructor
      */
@@ -1001,5 +1028,16 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
                 }
             }
         }
+    }
+
+    /**
+     * 
+     * @see javax.swing.JPopupMenu#setLocation(int, int)
+     */
+    @Override
+    public void setLocation(int x, int y) {
+        super.setLocation(x, y);
+        this.x = x;
+        this.y = y;
     }
 }
