@@ -7,6 +7,7 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.JViewport;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -31,9 +32,15 @@ public class RowNumberTable extends JTable implements ChangeListener, PropertyCh
         private static final long serialVersionUID = -4438439969007063384L;
 
         public RowNumberRenderer() {
-            this.setHorizontalAlignment(SwingConstants.CENTER);
+            this.setHorizontalTextPosition(SwingConstants.RIGHT);
+            this.setHorizontalAlignment(SwingConstants.RIGHT);
         }
 
+        /**
+         * 
+         * @see javax.swing.table.DefaultTableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int,
+         *      int)
+         */
         @Override
         public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
             if (table != null) {
@@ -62,6 +69,10 @@ public class RowNumberTable extends JTable implements ChangeListener, PropertyCh
     private JTable main;
 
     public RowNumberTable(JTable table) {
+        this(table, 4);
+    }
+
+    private RowNumberTable(JTable table, double w) {
         this.main = table;
         this.main.addPropertyChangeListener(this);
 
@@ -75,10 +86,13 @@ public class RowNumberTable extends JTable implements ChangeListener, PropertyCh
         this.addColumn(column);
 
         column.setCellRenderer(this.getTableHeader().getDefaultRenderer());
-        // column.setCellRenderer(new RowNumberRenderer());
 
-        this.getColumnModel().getColumn(0).setPreferredWidth(50);
+        this.getColumnModel().getColumn(0).setPreferredWidth((int) w);
         this.setPreferredScrollableViewportSize(this.getPreferredSize());
+    }
+
+    public RowNumberTable(JTable table, int chars) {
+        this(table, new JTextField(chars).getPreferredSize().getWidth());
     }
 
     @Override
@@ -95,7 +109,7 @@ public class RowNumberTable extends JTable implements ChangeListener, PropertyCh
         }
     }
 
-    /*
+    /**
      * Delegate method to main table
      */
     @Override
@@ -103,12 +117,16 @@ public class RowNumberTable extends JTable implements ChangeListener, PropertyCh
         return this.main.getRowCount();
     }
 
+    /**
+     * 
+     * @see javax.swing.JTable#getRowHeight(int)
+     */
     @Override
     public int getRowHeight(int row) {
         return this.main.getRowHeight(row);
     }
 
-    /*
+    /**
      * This table does not use any data from the main TableModel, so just return a value based on the row parameter.
      */
     @Override
@@ -116,7 +134,7 @@ public class RowNumberTable extends JTable implements ChangeListener, PropertyCh
         return Integer.toString(row + 1);
     }
 
-    /*
+    /**
      * Don't edit data in the main TableModel by mistake
      */
     @Override
@@ -124,9 +142,9 @@ public class RowNumberTable extends JTable implements ChangeListener, PropertyCh
         return false;
     }
 
-    //
-    // Implement the PropertyChangeListener
-    //
+    /**
+     * Implement the PropertyChangeListener
+     */
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         // Keep the row table in sync with the main table
@@ -140,9 +158,9 @@ public class RowNumberTable extends JTable implements ChangeListener, PropertyCh
         }
     }
 
-    //
-    // Implement the ChangeListener
-    //
+    /**
+     ** Implement the ChangeListener
+     */
     @Override
     public void stateChanged(ChangeEvent e) {
         // Keep the scrolling of the row table in sync with main table

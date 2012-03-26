@@ -562,10 +562,17 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * add rowheader to scrollpane
+     * add rowheader to scrollpane, 4 digit number
      */
     public void addRowHeader(JScrollPane scrollpane) {
-        RowNumberTable rowTable = this.getRowHeader();
+        this.addRowHeader(scrollpane, 4);
+    }
+
+    /**
+     * add rowheader to scrollpane
+     */
+    public void addRowHeader(JScrollPane scrollpane, int cw) {
+        RowNumberTable rowTable = this.getRowHeader(cw);
         scrollpane.setRowHeaderView(rowTable);
         scrollpane.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, rowTable.getTableHeader());
     }
@@ -782,10 +789,17 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * gets row header that can be added to the RowHeaderView of a {@link JScrollPane} or can be docked WEST in a {@link BorderLayout}
+     * @see #getRowHeader()
      */
     public RowNumberTable getRowHeader() {
-        return new RowNumberTable(this);
+        return this.getRowHeader(4);
+    }
+
+    /**
+     * gets row header that can be added to the RowHeaderView of a {@link JScrollPane} or can be docked WEST in a {@link BorderLayout}
+     */
+    public RowNumberTable getRowHeader(int cw) {
+        return new RowNumberTable(this, cw);
     }
 
     /**
