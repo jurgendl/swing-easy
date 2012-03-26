@@ -203,8 +203,10 @@ public class UIExceptionHandler {
     }
 
     public void show(Thread thread, Exception ex, String message) {
+        System.out.println(thread);
         String stackTrace = (thread == null ? "" : String.valueOf(thread) + SystemSettings.getNewline() + SystemSettings.getNewline())
                 + UIExceptionHandler.getStackTrace(ex);
+        System.out.println(stackTrace);
         final ETextArea view = new ETextArea(new ETextAreaConfig(), stackTrace);
         view.setEditable(false);
         final JScrollPane jsp = new JScrollPane(view);

@@ -14,9 +14,20 @@ import javax.swing.text.Highlighter.Highlight;
  * @author Jurgen
  */
 public class ETextArea extends JTextArea implements EComponentI {
-    public static class ETextAreaHighlightPainter extends DefaultHighlighter.DefaultHighlightPainter {
+    public abstract static class ETextAreaHighlightPainter extends DefaultHighlighter.DefaultHighlightPainter {
+        public static ETextAreaHighlightPainter create(Color color) {
+            return new ETextAreaHighlightPainter(color) {/**/
+            };
+        }
+
         public ETextAreaHighlightPainter(Color hLColor) {
             super(hLColor);
+        }
+    }
+
+    protected class SearchHighlightPainter extends ETextAreaHighlightPainter {
+        public SearchHighlightPainter() {
+            super(new Color(245, 225, 145));
         }
     }
 
@@ -43,6 +54,10 @@ public class ETextArea extends JTextArea implements EComponentI {
     public void addDocumentKeyListener(DocumentKeyListener listener) {
         this.getDocument().addDocumentListener(listener);
         this.addKeyListener(listener);
+    }
+
+    public void addHighlight(int from, int to, ETextAreaHighlightPainter painter) throws BadLocationException {
+        this.getHighlighter().addHighlight(from, to, painter);
     }
 
     public void find(String find) {
@@ -89,7 +104,7 @@ public class ETextArea extends JTextArea implements EComponentI {
 
     public ETextAreaHighlightPainter getHighlightPainter() {
         if (this.highlightPainter == null) {
-            this.highlightPainter = new ETextAreaHighlightPainter(new Color(245, 225, 145));
+            this.highlightPainter = new SearchHighlightPainter();
         }
         return this.highlightPainter;
     }
@@ -100,15 +115,14 @@ public class ETextArea extends JTextArea implements EComponentI {
         this.removeHighlights();
 
         try {
-            Highlighter hilite = this.getHighlighter();
             Pattern pattern = Pattern.compile(patternText, Pattern.CASE_INSENSITIVE);
             String text = this.getText();
-            System.out.println("finding " + text);
+            // System.out.println("finding " + text);
             Matcher matcher = pattern.matcher(text);
             while (matcher.find()) {
                 // System.out.println("highlighting: " + matcher.start() + " -> " + matcher.end());
                 // Create highlighter using private painter and apply around pattern
-                hilite.addHighlight(matcher.start(), matcher.end(), this.getHighlightPainter());
+                this.addHighlight(matcher.start(), matcher.end(), this.getHighlightPainter());
                 this.lastSearch = patternText;
             }
         } catch (BadLocationException e) {
@@ -118,7 +132,6 @@ public class ETextArea extends JTextArea implements EComponentI {
 
     protected void init() {
         EComponentPopupMenu.installTextComponentPopupMenu(this);
-
         UIUtils.registerLocaleChangeListener((EComponentI) this);
     }
 
@@ -129,12 +142,14 @@ public class ETextArea extends JTextArea implements EComponentI {
 
     /** Removes only our private highlights */
     public void removeHighlights() {
-        Highlighter hilite = this.getHighlighter();
-        Highlighter.Highlight[] hilites = hilite.getHighlights();
+        this.removeHighlights(this.getHighlightPainter());
+    }
 
-        for (Highlight _hilite : hilites) {
-            if (_hilite.getPainter() instanceof ETextAreaHighlightPainter) {
-                hilite.removeHighlight(_hilite);
+    public void removeHighlights(ETextAreaHighlightPainter painter) {
+        Highlighter hilite = this.getHighlighter();
+        for (Highlight hi : hilite.getHighlights()) {
+            if (hi.getPainter().equals(painter)) {
+                hilite.removeHighlight(hi);
             }
         }
     }
