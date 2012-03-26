@@ -24,6 +24,8 @@ public interface ETableI<T> extends EComponentI {
 
     public T getSelectedCell();
 
+    public List<Object> getSelectedCells();
+
     /**
      * gets selected record (first one if multiple ones are selected
      * 
