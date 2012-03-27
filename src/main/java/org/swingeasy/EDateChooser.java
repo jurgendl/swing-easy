@@ -30,24 +30,38 @@ public class EDateChooser extends JPanel implements CyclingSpinnerListModelListe
     /** serialVersionUID */
     private static final long serialVersionUID = 4865835185479753960L;
 
-    protected static final String[] days = { "zo", "ma", "di", "wo", "do", "vr", "za" };
+    public static String[] getDayStrings(Locale l) {
+        String[] _days = new java.text.DateFormatSymbols(l).getShortWeekdays();
+        int lastIndex = _days.length - 1;
+
+        if ((_days[lastIndex] == null) || (_days[lastIndex].length() <= 0)) {
+            // last item empty
+            String[] monthStrings = new String[lastIndex];
+            System.arraycopy(_days, 0, monthStrings, 0, lastIndex);
+            return monthStrings;
+        }
+        // last item not empty
+        return _days;
+    }
 
     /**
      * DateFormatSymbols returns an extra, empty value at the end of the array of months. Remove it.
      */
-    public static String[] getMonthStrings() {
-        String[] months = new java.text.DateFormatSymbols().getMonths();
-        int lastIndex = months.length - 1;
+    public static String[] getMonthStrings(Locale l) {
+        String[] _months = new java.text.DateFormatSymbols(l).getMonths();
+        int lastIndex = _months.length - 1;
 
-        if ((months[lastIndex] == null) || (months[lastIndex].length() <= 0)) {
+        if ((_months[lastIndex] == null) || (_months[lastIndex].length() <= 0)) {
             // last item empty
             String[] monthStrings = new String[lastIndex];
-            System.arraycopy(months, 0, monthStrings, 0, lastIndex);
+            System.arraycopy(_months, 0, monthStrings, 0, lastIndex);
             return monthStrings;
         }
         // last item not empty
-        return months;
+        return _months;
     }
+
+    protected List<String> days;
 
     protected Calendar calendar;
 
@@ -55,13 +69,17 @@ public class EDateChooser extends JPanel implements CyclingSpinnerListModelListe
 
     protected boolean cancelled;
 
-    protected List<String> months = Arrays.asList(EDateChooser.getMonthStrings());
+    protected List<String> months;
 
     protected JPanel contentPanel = new JPanel(new MigLayout("wrap 7", "[center]2px[center]2px[center]2px[center]2px[center]2px[center]2px[center]"));
 
     protected ESpinner<String> month;
 
     protected ESpinner<Integer> year;
+
+    protected JLabel ylbl = new JLabel();
+
+    protected JLabel mlbl = new JLabel();
 
     public EDateChooser() {
         this(null);
@@ -76,6 +94,8 @@ public class EDateChooser extends JPanel implements CyclingSpinnerListModelListe
     }
 
     public EDateChooser(Date date, Locale locale, TimeZone tz) {
+        this.setLocale(locale);
+
         // System.out.println(" 1  2  3  4  5  6  7");
         // System.out.println("zo ma di wo do vr za");
         this.date = date;
@@ -89,7 +109,7 @@ public class EDateChooser extends JPanel implements CyclingSpinnerListModelListe
         monthModel.addCyclingSpinnerListModelListener(this);
         this.month = new ESpinner<String>(monthModel);
         this.month.setMinimumSize(new Dimension(110, 1));
-        tp.add(new JLabel(Messages.getString(this.getLocale(), "EDateChooser.month")), "");
+        tp.add(this.mlbl, "");
         tp.add(this.month, "grow");
 
         List<Integer> years = new ArrayList<Integer>();
@@ -100,7 +120,7 @@ public class EDateChooser extends JPanel implements CyclingSpinnerListModelListe
         CyclingSpinnerListModel<Integer> yearModel = new CyclingSpinnerListModel<Integer>(years);
         this.year = new ESpinner<Integer>(yearModel);
         this.year.setMinimumSize(new Dimension(50, 1));
-        tp.add(new JLabel(Messages.getString(this.getLocale(), "EDateChooser.year")), "");
+        tp.add(this.ylbl, "");
         tp.add(this.year, "grow");
 
         this.add(this.contentPanel, BorderLayout.CENTER);
@@ -141,11 +161,11 @@ public class EDateChooser extends JPanel implements CyclingSpinnerListModelListe
 
         for (int i = this.calendar.getFirstDayOfWeek(); i < (this.calendar.getFirstDayOfWeek() + 7); i++) {
             int j = i - 1;
-            if (j >= EDateChooser.days.length) {
-                j -= EDateChooser.days.length;
+            if (j >= this.days.size()) {
+                j -= this.days.size();
             }
             x++;
-            this.contentPanel.add(new JLabel(EDateChooser.days[j]), "");
+            this.contentPanel.add(new JLabel(this.days.get(j)), "");
         }
 
         int dayOfMonth = this.calendar.get(Calendar.DAY_OF_MONTH);
@@ -263,5 +283,18 @@ public class EDateChooser extends JPanel implements CyclingSpinnerListModelListe
 
     public void setDate(Date date) {
         this.calendar.setTime(date);
+    }
+
+    /**
+     * 
+     * @see java.awt.Component#setLocale(java.util.Locale)
+     */
+    @Override
+    public void setLocale(Locale l) {
+        super.setLocale(l);
+        this.months = Arrays.asList(EDateChooser.getMonthStrings(l));
+        this.days = Arrays.asList(EDateChooser.getDayStrings(l));
+        this.mlbl.setText(Messages.getString(l, "EDateChooser.month"));
+        this.ylbl.setText(Messages.getString(l, "EDateChooser.year"));
     }
 }
