@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
@@ -99,10 +100,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     private static final long serialVersionUID = -3602504810131193505L;
 
     /**
-     * convert type
-     * 
-     * @param records
-     * @return
+     * convert
      */
     public static <T> List<EListRecord<T>> convert(Collection<T> records) {
         List<EListRecord<T>> list = new ArrayList<EListRecord<T>>();
@@ -113,10 +111,14 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
-     * convert type
-     * 
-     * @param records
-     * @return
+     * convert
+     */
+    public static <T> List<EListRecord<T>> convert(T[] records) {
+        return EList.convert(Arrays.asList(records));
+    }
+
+    /**
+     * convert
      */
     public static <T> List<T> convertRecords(Collection<EListRecord<T>> records) {
         List<T> list = new ArrayList<T>();
@@ -124,6 +126,13 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
             list.add(r.get());
         }
         return list;
+    }
+
+    /**
+     * convert
+     */
+    public static <T> List<T> convertRecords(EListRecord<T>[] records) {
+        return EList.convertRecords(Arrays.asList(records));
     }
 
     private static <T> EListModel<T> createModel(EListConfig cfg) {

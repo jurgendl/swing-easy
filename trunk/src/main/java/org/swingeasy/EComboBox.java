@@ -2,6 +2,8 @@ package org.swingeasy;
 
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Iterator;
@@ -61,6 +63,42 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
     }
 
     private static final long serialVersionUID = -3602504810131193505L;
+
+    /**
+     * convert
+     */
+    public static <T> List<EComboBoxRecord<T>> convert(Collection<T> records) {
+        List<EComboBoxRecord<T>> list = new ArrayList<EComboBoxRecord<T>>();
+        for (T r : records) {
+            list.add(new EComboBoxRecord<T>(r));
+        }
+        return list;
+    }
+
+    /**
+     * convert
+     */
+    public static <T> List<EComboBoxRecord<T>> convert(T[] records) {
+        return EComboBox.convert(Arrays.asList(records));
+    }
+
+    /**
+     * convert
+     */
+    public static <T> List<T> convertRecords(Collection<EComboBoxRecord<T>> records) {
+        List<T> list = new ArrayList<T>();
+        for (EComboBoxRecord<T> r : records) {
+            list.add(r.get());
+        }
+        return list;
+    }
+
+    /**
+     * convert
+     */
+    public static <T> List<T> convertRecords(EComboBoxRecord<T>[] records) {
+        return EComboBox.convertRecords(Arrays.asList(records));
+    }
 
     protected EComboBoxConfig cfg;
 
@@ -287,5 +325,4 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
     public EComboBox<T> STSI() {
         return this.getSimpleThreadSafeInterface();
     }
-
 }
