@@ -11,22 +11,22 @@ import javax.swing.SpinnerModel;
  * 
  * @author Jurgen
  */
-public class CyclingSpinnerListModel<T> extends SpinnerListModel {
+public class ESpinnerCyclingModel<T> extends SpinnerListModel {
     private static final long serialVersionUID = -6273825685200303306L;
 
     protected T firstValue, lastValue;
 
     protected SpinnerModel linkedModel = null;
 
-    protected List<CyclingSpinnerListModelListener> listeners = new ArrayList<CyclingSpinnerListModelListener>();
+    protected List<ESpinnerCyclingModelListener> listeners = new ArrayList<ESpinnerCyclingModelListener>();
 
-    public CyclingSpinnerListModel(List<T> values) {
+    public ESpinnerCyclingModel(List<T> values) {
         super(values);
         this.firstValue = values.get(0);
         this.lastValue = values.get(values.size() - 1);
     }
 
-    public void addCyclingSpinnerListModelListener(CyclingSpinnerListModelListener l) {
+    public void addCyclingSpinnerListModelListener(ESpinnerCyclingModelListener l) {
         this.listeners.add(l);
     }
 
@@ -43,7 +43,7 @@ public class CyclingSpinnerListModel<T> extends SpinnerListModel {
             if (this.linkedModel != null) {
                 this.linkedModel.setValue(this.linkedModel.getNextValue());
             }
-            for (CyclingSpinnerListModelListener l : this.listeners) {
+            for (ESpinnerCyclingModelListener l : this.listeners) {
                 l.overflow();
             }
         }
@@ -59,14 +59,14 @@ public class CyclingSpinnerListModel<T> extends SpinnerListModel {
             if (this.linkedModel != null) {
                 this.linkedModel.setValue(this.linkedModel.getPreviousValue());
             }
-            for (CyclingSpinnerListModelListener l : this.listeners) {
+            for (ESpinnerCyclingModelListener l : this.listeners) {
                 l.rollback();
             }
         }
         return value;
     }
 
-    public void removeCyclingSpinnerListModelListener(CyclingSpinnerListModelListener l) {
+    public void removeCyclingSpinnerListModelListener(ESpinnerCyclingModelListener l) {
         this.listeners.remove(l);
     }
 

@@ -26,7 +26,7 @@ import net.miginfocom.swing.MigLayout;
 /**
  * @author Jurgen
  */
-public class EDateChooser extends JPanel implements CyclingSpinnerListModelListener {
+public class EDateChooser extends JPanel implements ESpinnerCyclingModelListener {
     /** serialVersionUID */
     private static final long serialVersionUID = 4865835185479753960L;
 
@@ -105,7 +105,7 @@ public class EDateChooser extends JPanel implements CyclingSpinnerListModelListe
         JPanel tp = new JPanel(new MigLayout("", "[]rel[]10px[rel][]"));
         this.add(tp, BorderLayout.NORTH);
 
-        CyclingSpinnerListModel<String> monthModel = new CyclingSpinnerListModel<String>(this.months);
+        ESpinnerCyclingModel<String> monthModel = new ESpinnerCyclingModel<String>(this.months);
         monthModel.addCyclingSpinnerListModelListener(this);
         this.month = new ESpinner<String>(monthModel);
         this.month.setMinimumSize(new Dimension(110, 1));
@@ -117,7 +117,7 @@ public class EDateChooser extends JPanel implements CyclingSpinnerListModelListe
             years.add(i);
         }
 
-        CyclingSpinnerListModel<Integer> yearModel = new CyclingSpinnerListModel<Integer>(years);
+        ESpinnerCyclingModel<Integer> yearModel = new ESpinnerCyclingModel<Integer>(years);
         this.year = new ESpinner<Integer>(yearModel);
         this.year.setMinimumSize(new Dimension(50, 1));
         tp.add(this.ylbl, "");
@@ -261,23 +261,23 @@ public class EDateChooser extends JPanel implements CyclingSpinnerListModelListe
 
     /**
      * 
-     * @see org.swingeasy.CyclingSpinnerListModelListener#overflow()
+     * @see org.swingeasy.ESpinnerCyclingModelListener#overflow()
      */
     @Override
     public void overflow() {
         @SuppressWarnings("unchecked")
-        CyclingSpinnerListModel<Integer> model = CyclingSpinnerListModel.class.cast(this.year.getModel());
+        ESpinnerCyclingModel<Integer> model = ESpinnerCyclingModel.class.cast(this.year.getModel());
         model.setValue(model.getNextValue());
     }
 
     /**
      * 
-     * @see org.swingeasy.CyclingSpinnerListModelListener#rollback()
+     * @see org.swingeasy.ESpinnerCyclingModelListener#rollback()
      */
     @Override
     public void rollback() {
         @SuppressWarnings("unchecked")
-        CyclingSpinnerListModel<Integer> model = CyclingSpinnerListModel.class.cast(this.year.getModel());
+        ESpinnerCyclingModel<Integer> model = ESpinnerCyclingModel.class.cast(this.year.getModel());
         model.setValue(model.getPreviousValue());
     }
 
