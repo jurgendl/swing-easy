@@ -41,10 +41,10 @@ public class EDateTimeEditor extends EDateEditor {
         if (this.input == null) {
             SpinnerDateModel model = new SpinnerDateModel();
             model.setValue(new Date());
-            ESpinner<Date> spin = new ESpinner<Date>(model);
-            spin.setEditor(new JSpinner.DateEditor(spin, SimpleDateFormat.class.cast(
+            this.input = new ESpinner<Date>(model);
+            this.input.setEditor(new JSpinner.DateEditor(this.input, SimpleDateFormat.class.cast(
                     DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.getDefault())).toPattern()));
-            this.input = spin;
+            this.input.setBorder(null);
         }
         return this.input;
     }
