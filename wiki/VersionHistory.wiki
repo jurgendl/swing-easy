@@ -3,7 +3,7 @@
 
 = Version History =
 
-latest change: 2012-03-26
+latest change: 2012-03-28
 
 featured: downloads are available on the frontpage
 
@@ -105,7 +105,7 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
    * fixed: ETable: renderers/editors listen to Locale changes
    * upgrade javassist library
    * can now use cglib for EDT safe proxies
- * 2.5.2 (featured)
+ * 2.5.2
    * EList & ETable: select cell closest to point method & select cell before showing popup
    * ETable rowheader align right and can set #characters
    * ETable: dragging is disabled by default
@@ -113,5 +113,11 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
    * ValueHolder is standalone class
    * initial release of exception dialog
    * ETextArea: highlighting
- * 2.5.3 (not released)
+ * 2.5.3 (featured)
+  * initial release EDateTimeChooser & -Editor
+  * initial release EDateChooser & -Editor
+  * initial release ELabel
+  * EList & EComboBox: convert methods
+  * initial release ESpinner & ESpinnerCyclingModel
+ * 2.5.4 (not released)
  * 2.6.0 (not planned, not released)
