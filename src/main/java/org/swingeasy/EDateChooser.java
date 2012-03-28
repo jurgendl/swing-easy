@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -16,8 +15,8 @@ import java.util.TimeZone;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -26,7 +25,7 @@ import net.miginfocom.swing.MigLayout;
 /**
  * @author Jurgen
  */
-public class EDateChooser extends JPanel implements ESpinnerCyclingModelListener {
+public class EDateChooser extends JPanel {
     /** serialVersionUID */
     private static final long serialVersionUID = 4865835185479753960L;
 
@@ -61,28 +60,34 @@ public class EDateChooser extends JPanel implements ESpinnerCyclingModelListener
         return _months;
     }
 
-    protected List<String> days;
+    private boolean verbose = false;
+
+    protected List<String> dayStrings;
 
     protected Calendar calendar;
 
-    protected Date date;
+    protected JPanel spinnerPanel;
 
-    protected boolean cancelled;
+    protected List<String> monthStrings;
 
-    protected List<String> months;
+    protected JPanel dayPanel;
 
-    protected JPanel contentPanel = new JPanel(new MigLayout("wrap 7", "[center]2px[center]2px[center]2px[center]2px[center]2px[center]2px[center]"));
+    protected ESpinner<String> monthSpinner;
 
-    protected ESpinner<String> month;
+    protected ESpinner<Integer> yearSpinner;
 
-    protected ESpinner<Integer> year;
+    protected ELabel yearLabel;
 
-    protected ELabel ylbl = new ELabel();
+    protected ELabel monthLabel;
 
-    protected ELabel mlbl = new ELabel();
+    protected boolean valueChanging = false;
+
+    protected ChangeListener spinnerChangelistener;
+
+    protected ESpinnerCyclingModelListener spinnerCyclingModelListener;
 
     public EDateChooser() {
-        this(null);
+        this(new Date());
     }
 
     public EDateChooser(Date date) {
@@ -95,104 +100,175 @@ public class EDateChooser extends JPanel implements ESpinnerCyclingModelListener
 
     public EDateChooser(Date date, Locale locale, TimeZone tz) {
         this.setLocale(locale);
-
-        // System.out.println(" 1  2  3  4  5  6  7");
-        // System.out.println("zo ma di wo do vr za");
-        this.date = date;
-
-        this.setLayout(new BorderLayout());
-
-        JPanel tp = new JPanel(new MigLayout("", "[]rel[]10px[rel][]"));
-        this.add(tp, BorderLayout.NORTH);
-
-        ESpinnerCyclingModel<String> monthModel = new ESpinnerCyclingModel<String>(this.months);
-        monthModel.addCyclingSpinnerListModelListener(this);
-        this.month = new ESpinner<String>(monthModel);
-        this.month.setMinimumSize(new Dimension(110, 1));
-        tp.add(this.mlbl, "");
-        tp.add(this.month, "grow");
-
-        List<Integer> years = new ArrayList<Integer>();
-        for (int i = 1900; i <= 2100; i++) {
-            years.add(i);
-        }
-
-        ESpinnerCyclingModel<Integer> yearModel = new ESpinnerCyclingModel<Integer>(years);
-        this.year = new ESpinner<Integer>(yearModel);
-        this.year.setMinimumSize(new Dimension(50, 1));
-        tp.add(this.ylbl, "");
-        tp.add(this.year, "grow");
-
-        this.add(this.contentPanel, BorderLayout.CENTER);
-
         this.calendar = new GregorianCalendar(tz, locale);
-
-        if (date != null) {
-            this.setDate(date);
-        }
-
-        this.month.setValue(this.months.get(this.calendar.get(Calendar.MONTH)));
-        this.year.setValue(this.calendar.get(Calendar.YEAR));
+        this.calendar.setTime(date);
 
         this.buildComponent();
-
-        ChangeListener changelistener = new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                Object m = EDateChooser.this.month.getValue();
-                int mm = EDateChooser.this.months.indexOf(m);
-                EDateChooser.this.changeMonth((Integer) EDateChooser.this.year.getValue(), mm, EDateChooser.this.calendar.get(Calendar.DAY_OF_MONTH));
-            }
-        };
-        yearModel.addChangeListener(changelistener);
-        monthModel.addChangeListener(changelistener);
     }
 
     protected void buildComponent() {
-        // System.out.println(this.calendar.getTime());
-        // System.out.println("* " + this.calendar.getFirstDayOfWeek());
-        // System.out.println("Y " + this.calendar.get(Calendar.YEAR));
-        // System.out.println("M " + this.calendar.get(Calendar.MONTH));
-        // System.out.println("D " + this.calendar.get(Calendar.DAY_OF_MONTH));
+        this.setLayout(new BorderLayout());
 
-        this.contentPanel.removeAll();
+        this.add(this.getSpinnerPanel(), BorderLayout.NORTH);
+        this.add(this.getDayPanel(), BorderLayout.CENTER);
+
+        this.rebuildComponent();
+    }
+
+    public Date getDate() {
+        return this.calendar.getTime();
+    }
+
+    protected JPanel getDayPanel() {
+        if (this.dayPanel == null) {
+            this.dayPanel = new JPanel(new MigLayout("wrap 7", "[center]2px[center]2px[center]2px[center]2px[center]2px[center]2px[center]")); //$NON-NLS-1$ //$NON-NLS-2$
+        }
+        return this.dayPanel;
+    }
+
+    protected ELabel getMonthLabel() {
+        if (this.monthLabel == null) {
+            this.monthLabel = new ELabel();
+        }
+        return this.monthLabel;
+    }
+
+    protected ESpinner<String> getMonthSpinner() {
+        if (this.monthSpinner == null) {
+            ESpinnerCyclingModel<String> monthModel = new ESpinnerCyclingModel<String>(this.monthStrings);
+            monthModel.addCyclingSpinnerListModelListener(this.getSpinnerCyclingModelListener());
+            this.monthSpinner = new ESpinner<String>(monthModel);
+            this.monthSpinner.setMinimumSize(new Dimension(110, 1));
+            monthModel.addChangeListener(this.getSpinnerChangelistener());
+        }
+        return this.monthSpinner;
+    }
+
+    protected ChangeListener getSpinnerChangelistener() {
+        if (this.spinnerChangelistener == null) {
+            this.spinnerChangelistener = new ChangeListener() {
+                @Override
+                public void stateChanged(ChangeEvent e) {
+                    if (!EDateChooser.this.valueChanging) {
+                        Object m = EDateChooser.this.getMonthSpinner().getValue();
+                        int mm = EDateChooser.this.monthStrings.indexOf(m);
+                        EDateChooser.this.setDate((Integer) EDateChooser.this.getYearSpinner().getValue(), mm,
+                                EDateChooser.this.calendar.get(Calendar.DAY_OF_MONTH));
+                    }
+                }
+            };
+        }
+        return this.spinnerChangelistener;
+    }
+
+    protected ESpinnerCyclingModelListener getSpinnerCyclingModelListener() {
+        if (this.spinnerCyclingModelListener == null) {
+            this.spinnerCyclingModelListener = new ESpinnerCyclingModelListener() {
+                @Override
+                public void overflow() {
+                    @SuppressWarnings("unchecked")
+                    ESpinnerCyclingModel<Integer> model = ESpinnerCyclingModel.class.cast(EDateChooser.this.getYearSpinner().getModel());
+                    model.setValue(model.getNextValue());
+                }
+
+                @Override
+                public void rollback() {
+                    @SuppressWarnings("unchecked")
+                    ESpinnerCyclingModel<Integer> model = ESpinnerCyclingModel.class.cast(EDateChooser.this.getYearSpinner().getModel());
+                    model.setValue(model.getPreviousValue());
+                }
+            };
+        }
+        return this.spinnerCyclingModelListener;
+    }
+
+    protected JPanel getSpinnerPanel() {
+        if (this.spinnerPanel == null) {
+            this.spinnerPanel = new JPanel(new MigLayout("", "[]rel[]10px[]rel[]"));
+
+            this.spinnerPanel.add(this.getMonthLabel(), ""); //$NON-NLS-1$
+            this.spinnerPanel.add(this.getMonthSpinner(), "grow"); //$NON-NLS-1$
+
+            this.spinnerPanel.add(this.getYearLabel(), ""); //$NON-NLS-1$
+            this.spinnerPanel.add(this.getYearSpinner(), "grow"); //$NON-NLS-1$
+        }
+        return this.spinnerPanel;
+    }
+
+    protected ELabel getYearLabel() {
+        if (this.yearLabel == null) {
+            this.yearLabel = new ELabel();
+        }
+        return this.yearLabel;
+    }
+
+    protected ESpinner<Integer> getYearSpinner() {
+        if (this.yearSpinner == null) {
+            @SuppressWarnings("deprecation")
+            SpinnerNumberModel yearModel = new SpinnerNumberModel(new Date().getYear() + 1900, 1, 9999, 1);
+            this.yearSpinner = new ESpinner<Integer>(yearModel);
+            ESpinner.NumberEditor numberEditor = new ESpinner.NumberEditor(this.yearSpinner, "0000");
+            this.yearSpinner.setEditor(numberEditor);
+            this.yearSpinner.setMinimumSize(new Dimension(50, 1));
+            yearModel.addChangeListener(this.getSpinnerChangelistener());
+        }
+        return this.yearSpinner;
+    }
+
+    private void log(Object msg) {
+        if (this.verbose) {
+            System.out.println(msg);
+        }
+    }
+
+    protected void rebuildComponent() {
+        this.log(this.calendar.getTime());
+        this.log("FIRST D/O/W " + this.calendar.getFirstDayOfWeek()); //$NON-NLS-1$
+        this.log("Y " + this.calendar.get(Calendar.YEAR)); //$NON-NLS-1$
+        this.log("M " + this.calendar.get(Calendar.MONTH)); //$NON-NLS-1$
+        this.log("D " + this.calendar.get(Calendar.DAY_OF_MONTH)); //$NON-NLS-1$
+
+        this.getMonthSpinner().setValue(this.monthStrings.get(this.calendar.get(Calendar.MONTH)));
+        this.getYearSpinner().setValue(this.calendar.get(Calendar.YEAR));
+
+        this.getDayPanel().removeAll();
 
         int x = 0;
 
         for (int i = this.calendar.getFirstDayOfWeek(); i < (this.calendar.getFirstDayOfWeek() + 7); i++) {
             int j = i - 1;
-            if (j >= this.days.size()) {
-                j -= this.days.size();
+            if (j >= this.dayStrings.size()) {
+                j -= this.dayStrings.size();
             }
             x++;
-            this.contentPanel.add(new ELabel(this.days.get(j)), "");
+            this.getDayPanel().add(new ELabel(this.dayStrings.get(j)), ""); //$NON-NLS-1$
         }
 
         int dayOfMonth = this.calendar.get(Calendar.DAY_OF_MONTH);
         this.calendar.set(Calendar.DAY_OF_MONTH, 1);
 
-        // System.out.println(this.calendar.getTime());
-        // System.out.println("Y " + this.calendar.get(Calendar.YEAR));
-        // System.out.println("M " + this.calendar.get(Calendar.MONTH));
-        // System.out.println("D " + this.calendar.get(Calendar.DAY_OF_MONTH));
-        // System.out.println("** " + this.calendar.get(Calendar.DAY_OF_WEEK));
+        this.log(this.calendar.getTime());
+        this.log("Y " + this.calendar.get(Calendar.YEAR)); //$NON-NLS-1$
+        this.log("M " + this.calendar.get(Calendar.MONTH)); //$NON-NLS-1$
+        this.log("D " + this.calendar.get(Calendar.DAY_OF_MONTH)); //$NON-NLS-1$
+        this.log("CURRENT D/O/W " + this.calendar.get(Calendar.DAY_OF_WEEK)); //$NON-NLS-1$
 
         int empty = this.calendar.get(Calendar.DAY_OF_WEEK) - this.calendar.getFirstDayOfWeek();
         if (empty < 0) {
             empty += 7;
         }
-        // System.out.println("empty " + empty);
+        this.log("empty " + empty); //$NON-NLS-1$
 
         for (int i = 0; i < empty; i++) {
             x++;
-            JLabel el = new JLabel();
-            this.contentPanel.add(el, "");
+            JLabel el = new JLabel(""); //$NON-NLS-1$
+            this.getDayPanel().add(el, ""); //$NON-NLS-1$
         }
 
         ButtonGroup bg = new ButtonGroup();
 
         int maximum = this.calendar.getMaximum(Calendar.DAY_OF_MONTH);
-        // System.out.println("max: " + maximum);
+        this.log("max: " + maximum); //$NON-NLS-1$
 
         Dimension defaultDimension = new Dimension(36, 20);
         int y = 0;
@@ -212,77 +288,50 @@ public class EDateChooser extends JPanel implements ESpinnerCyclingModelListener
             x++;
             if ((((x % 7) == 0) && (x != 0))) {
                 y++;
-                this.contentPanel.add(comp, "wrap");
+                this.getDayPanel().add(comp, "wrap"); //$NON-NLS-1$
             } else {
-                this.contentPanel.add(comp, "");
+                this.getDayPanel().add(comp, ""); //$NON-NLS-1$
             }
 
             if ((i + 1) == dayOfMonth) {
                 comp.setSelected(true);
             }
         }
-        // System.out.println("y " + y);
+        this.log("y " + y); //$NON-NLS-1$
         if (y == 4) {
             for (int i = 0; i < 7; i++) {
-                JLabel el = new JLabel();
+                JLabel el = new JLabel(""); //$NON-NLS-1$
                 el.setMinimumSize(defaultDimension);
-                this.contentPanel.add(el, "");
+                this.getDayPanel().add(el, ""); //$NON-NLS-1$
             }
         }
 
-        this.contentPanel.revalidate();
+        this.getDayPanel().revalidate();
 
         this.calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
     }
 
-    protected void changeMonth(int _year, int _month, int _day) {
-        this.calendar.set(Calendar.YEAR, _year);
-        this.calendar.set(Calendar.MONTH, _month);
-        // System.out.println(_day);
-        int dom = Math.min(this.calendar.getMaximum(Calendar.DAY_OF_MONTH), _day);
-        // System.out.println(">>" + dom);
-        this.calendar.set(Calendar.DAY_OF_MONTH, dom);
-        this.buildComponent();
-    }
-
-    public Date doShow() {
-        this.cancelled = JOptionPane.showOptionDialog(null, this, Messages.getString(this.getLocale(), "EDateChooser.title"),
-                JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, null, null) == JOptionPane.CANCEL_OPTION;
-        return this.getDate();
-    }
-
-    public Date getDate() {
-        return this.cancelled ? this.date : this.calendar.getTime();
-    }
-
-    public boolean isCancelled() {
-        return this.cancelled;
-    }
-
-    /**
-     * 
-     * @see org.swingeasy.ESpinnerCyclingModelListener#overflow()
-     */
-    @Override
-    public void overflow() {
-        @SuppressWarnings("unchecked")
-        ESpinnerCyclingModel<Integer> model = ESpinnerCyclingModel.class.cast(this.year.getModel());
-        model.setValue(model.getNextValue());
-    }
-
-    /**
-     * 
-     * @see org.swingeasy.ESpinnerCyclingModelListener#rollback()
-     */
-    @Override
-    public void rollback() {
-        @SuppressWarnings("unchecked")
-        ESpinnerCyclingModel<Integer> model = ESpinnerCyclingModel.class.cast(this.year.getModel());
-        model.setValue(model.getPreviousValue());
-    }
-
     public void setDate(Date date) {
-        this.calendar.setTime(date);
+        this.valueChanging = true;
+        {
+            this.calendar.setTime(date);
+        }
+        this.rebuildComponent();
+        this.updateValues();
+        this.valueChanging = false;
+    }
+
+    public void setDate(int y, int m, int d) {
+        this.valueChanging = true;
+        {
+            this.calendar.set(Calendar.YEAR, y);
+            this.calendar.set(Calendar.MONTH, m);
+            int dom = Math.min(this.calendar.getMaximum(Calendar.DAY_OF_MONTH), d);
+            this.calendar.set(Calendar.DAY_OF_MONTH, dom);
+        }
+        this.rebuildComponent();
+        this.updateValues();
+        this.valueChanging = false;
     }
 
     /**
@@ -292,9 +341,14 @@ public class EDateChooser extends JPanel implements ESpinnerCyclingModelListener
     @Override
     public void setLocale(Locale l) {
         super.setLocale(l);
-        this.months = Arrays.asList(EDateChooser.getMonthStrings(l));
-        this.days = Arrays.asList(EDateChooser.getDayStrings(l));
-        this.mlbl.setText(Messages.getString(l, "EDateChooser.month"));
-        this.ylbl.setText(Messages.getString(l, "EDateChooser.year"));
+        this.monthStrings = Arrays.asList(EDateChooser.getMonthStrings(l));
+        this.dayStrings = Arrays.asList(EDateChooser.getDayStrings(l));
+        this.getMonthLabel().setText(Messages.getString(l, "EDateChooser.month")); //$NON-NLS-1$
+        this.getYearLabel().setText(Messages.getString(l, "EDateChooser.year")); //$NON-NLS-1$
+    }
+
+    protected void updateValues() {
+        this.getMonthSpinner().setValue(this.monthStrings.get(this.calendar.get(Calendar.MONTH)));
+        this.getYearSpinner().setValue(this.calendar.get(Calendar.YEAR));
     }
 }

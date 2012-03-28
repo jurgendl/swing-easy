@@ -1,5 +1,6 @@
 package org.swingeasy;
 
+import java.awt.BorderLayout;
 import java.awt.Container;
 
 import javax.swing.JFrame;
@@ -10,7 +11,8 @@ import javax.swing.WindowConstants;
  */
 public class DateDemo {
     private static void addComponents(Container container) {
-        container.add(new EDateEditor());
+        container.add(new EDateEditor(), BorderLayout.NORTH);
+        container.add(new EDateTimeEditor(), BorderLayout.SOUTH);
     }
 
     public static void main(String[] args) {
@@ -19,7 +21,7 @@ public class DateDemo {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         DateDemo.addComponents(frame.getContentPane());
-        frame.setSize(400, 60);
+        frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setTitle("Demo");
         frame.setVisible(true);
