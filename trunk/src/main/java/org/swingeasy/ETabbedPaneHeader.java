@@ -9,7 +9,6 @@ import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
@@ -39,7 +38,7 @@ public class ETabbedPaneHeader extends JComponent {
         this.setLayout(new BorderLayout());
 
         if (config.getRotation() == Rotation.DEFAULT) {
-            JLabel label = new JLabel(title, icon, SwingConstants.LEADING);
+            ELabel label = new ELabel(title, icon, SwingConstants.LEADING);
             label.setBorder(BorderFactory.createEmptyBorder(0, 3, 0, 3));
             this.add(label, BorderLayout.CENTER);
 
@@ -100,8 +99,7 @@ public class ETabbedPaneHeader extends JComponent {
         if (_icon == null) {
             return;
         }
-        EButton minimizeButton = new EButton(new EIconButtonCustomizer(new Dimension(_icon.getIconWidth(), _icon.getIconHeight())),
-                _icon);
+        EButton minimizeButton = new EButton(new EIconButtonCustomizer(new Dimension(_icon.getIconWidth(), _icon.getIconHeight())), _icon);
         minimizeButton.setActionCommand(ETabbedPaneHeader.ACTION_MINIMIZE);
         minimizeButton.addActionListener(actionlistener);
         container.add(minimizeButton);

@@ -5,7 +5,6 @@ import java.util.Locale;
 
 import javax.swing.Icon;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 import ca.odell.glazedlists.EventList;
@@ -123,6 +122,6 @@ public class EListFilterComponent<T> extends ELabeledTextFieldButtonComponent im
     public void setLocale(Locale l) {
         super.setLocale(l);
         this.getButton().setToolTipText(Messages.getString(l, "EList.FilterComponent.filter"));//$NON-NLS-1$
-        JLabel.class.cast(this.getLabel()).setText(Messages.getString(l, "EList.FilterComponent.filter") + ": ");//$NON-NLS-1$ //$NON-NLS-2$
+        this.getLabel().setText(Messages.getString(l, "EList.FilterComponent.filter") + ": ");//$NON-NLS-1$ //$NON-NLS-2$
     }
 }
