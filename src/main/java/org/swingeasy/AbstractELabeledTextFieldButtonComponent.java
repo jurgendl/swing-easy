@@ -2,15 +2,9 @@ package org.swingeasy;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 
 import javax.swing.Icon;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
@@ -56,51 +50,13 @@ public abstract class AbstractELabeledTextFieldButtonComponent<LABEL extends JCo
 
     protected abstract String getAction();
 
-    @SuppressWarnings("unchecked")
-    public BUTTON getButton() {
-        if (this.button == null) {
-            EButton _button = new EButton(new EIconButtonCustomizer(new Dimension(20, 20)), this.getIcon());
-            _button.setActionCommand(this.getAction());
-            _button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    AbstractELabeledTextFieldButtonComponent.this.doAction();
-                }
-            });
-            this.button = (BUTTON) _button;
-        }
-        return this.button;
-    }
+    public abstract BUTTON getButton();
 
     protected abstract Icon getIcon();
 
-    @SuppressWarnings("unchecked")
-    public INPUT getInput() {
-        if (this.input == null) {
-            JTextField _input = new JTextField();
-            _input.setBorder(null);
-            _input.addKeyListener(new KeyAdapter() {
-                @Override
-                public void keyReleased(KeyEvent e) {
-                    if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                        AbstractELabeledTextFieldButtonComponent.this.doAction();
-                    }
-                }
-            });
-            this.input = (INPUT) _input;
-        }
-        return this.input;
-    }
+    public abstract INPUT getInput();
 
-    @SuppressWarnings("unchecked")
-    public LABEL getLabel() {
-        if (this.label == null) {
-            JLabel _label = new JLabel();
-            _label.setLabelFor(this.getInput());
-            this.label = (LABEL) _label;
-        }
-        return this.label;
-    }
+    public abstract LABEL getLabel();
 
     public void setButton(BUTTON button) {
         this.button = button;
@@ -112,5 +68,9 @@ public abstract class AbstractELabeledTextFieldButtonComponent<LABEL extends JCo
 
     public void setLabel(LABEL label) {
         this.label = label;
+    }
+
+    public void setShowLabel(boolean showLabel) {
+        this.getLabel().setVisible(showLabel);
     }
 }

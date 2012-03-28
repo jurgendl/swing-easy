@@ -77,9 +77,9 @@ public class EDateChooser extends JPanel implements ESpinnerCyclingModelListener
 
     protected ESpinner<Integer> year;
 
-    protected JLabel ylbl = new JLabel();
+    protected ELabel ylbl = new ELabel();
 
-    protected JLabel mlbl = new JLabel();
+    protected ELabel mlbl = new ELabel();
 
     public EDateChooser() {
         this(null);
@@ -165,7 +165,7 @@ public class EDateChooser extends JPanel implements ESpinnerCyclingModelListener
                 j -= this.days.size();
             }
             x++;
-            this.contentPanel.add(new JLabel(this.days.get(j)), "");
+            this.contentPanel.add(new ELabel(this.days.get(j)), "");
         }
 
         int dayOfMonth = this.calendar.get(Calendar.DAY_OF_MONTH);

@@ -26,7 +26,7 @@ public class SearchDialog extends JDialog implements EComponentI {
 
     protected EButton btnClose;
 
-    protected JLabel lblFind;
+    protected ELabel lblFind;
 
     protected EButton btnHighlightAll;
 
@@ -34,7 +34,7 @@ public class SearchDialog extends JDialog implements EComponentI {
 
     protected EButton btnFind;
 
-    protected JLabel lblReplace;
+    protected ELabel lblReplace;
 
     protected JTextField tfReplace;
 
@@ -92,16 +92,16 @@ public class SearchDialog extends JDialog implements EComponentI {
         return this.btnReplaceAll;
     }
 
-    protected JLabel getLblFind() {
+    protected ELabel getLblFind() {
         if (this.lblFind == null) {
-            this.lblFind = new JLabel();
+            this.lblFind = new ELabel();
         }
         return this.lblFind;
     }
 
-    protected JLabel getLblReplace() {
+    protected ELabel getLblReplace() {
         if (this.lblReplace == null) {
-            this.lblReplace = new JLabel();
+            this.lblReplace = new ELabel();
         }
         return this.lblReplace;
     }

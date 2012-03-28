@@ -1,11 +1,19 @@
 package org.swingeasy;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 import javax.swing.Icon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 
 import org.swingeasy.system.SystemSettings;
 
@@ -21,6 +29,10 @@ public class EDateEditor extends ELabeledTextFieldButtonComponent {
     protected Date date;
 
     protected JComponent parentComponent = null;
+
+    protected EDateChooser dateChooser;
+
+    protected JPopupMenu popup;
 
     public EDateEditor() {
         this(new Date());
@@ -46,11 +58,10 @@ public class EDateEditor extends ELabeledTextFieldButtonComponent {
      */
     @Override
     protected void doAction() {
-        EDateChooser eDateChooser = new EDateChooser(this.date);
-        eDateChooser.doShow();
-        if (!eDateChooser.cancelled) {
-            this.setDate(eDateChooser.getDate());
-        }
+        JPopupMenu _popup = this.getPopup();
+        _popup.setLocation(new Point((this.getLocationOnScreen().x + this.getWidth()) - (int) _popup.getPreferredSize().getWidth(), this
+                .getLocationOnScreen().y + this.getHeight()));
+        _popup.setVisible(true);
     }
 
     /**
@@ -64,6 +75,32 @@ public class EDateEditor extends ELabeledTextFieldButtonComponent {
 
     public Date getDate() {
         return this.date;
+    }
+
+    protected EDateChooser getDateChooser() {
+        if (this.dateChooser == null) {
+            this.dateChooser = new EDateChooser(this.date);
+            JPanel actions = new JPanel(new FlowLayout());
+            JButton okbtn = new JButton(Messages.getString(this.getLocale(), "EDateEditor.OK"));//$NON-NLS-1$
+            okbtn.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    EDateEditor.this.setDate(EDateEditor.this.getDateChooser().getDate());
+                    EDateEditor.this.getPopup().setVisible(false);
+                }
+            });
+            actions.add(okbtn);
+            JButton cancelbtn = new JButton(Messages.getString(this.getLocale(), "EDateEditor.Cancel"));//$NON-NLS-1$
+            cancelbtn.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    EDateEditor.this.getPopup().setVisible(false);
+                }
+            });
+            actions.add(cancelbtn);
+            this.dateChooser.add(actions, BorderLayout.SOUTH);
+        }
+        return this.dateChooser;
     }
 
     /**
@@ -82,6 +119,15 @@ public class EDateEditor extends ELabeledTextFieldButtonComponent {
     @Override
     public JComponent getParentComponent() {
         return this.parentComponent;
+    }
+
+    protected JPopupMenu getPopup() {
+        if (this.popup == null) {
+            this.popup = new JPopupMenu();
+            this.popup.setLightWeightPopupEnabled(true);
+            this.popup.add(this.getDateChooser());
+        }
+        return this.popup;
     }
 
     public void setDate(Date date) {
