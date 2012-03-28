@@ -18,7 +18,6 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 
 /**
@@ -157,8 +156,9 @@ public class EDateEditor extends AbstractELabeledTextFieldButtonComponent<ELabel
             SpinnerDateModel model = new SpinnerDateModel();
             model.setValue(new Date());
             this.input = new ESpinner<Date>(model);
-            this.input.setEditor(new JSpinner.DateEditor(this.input, SimpleDateFormat.class.cast(
+            this.input.setEditor(new ESpinner.DateEditor(this.input, SimpleDateFormat.class.cast(
                     DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault())).toPattern()));
+            this.input.setBorder(null);
         }
         return this.input;
     }
