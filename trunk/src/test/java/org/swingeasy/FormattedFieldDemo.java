@@ -4,10 +4,13 @@ import java.awt.Container;
 import java.awt.GridLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 import javax.swing.WindowConstants;
@@ -21,7 +24,7 @@ import org.swingeasy.system.SystemSettings;
  * @author Jurgen
  */
 public class FormattedFieldDemo {
-    private static void addComponents(Container container) throws ParseException {
+    private static void addComponents(Container container) throws ParseException, MalformedURLException {
         container.setLayout(new GridLayout(-1, 2));
 
         final EButtonGroup localegroup = new EButtonGroup();
@@ -57,6 +60,11 @@ public class FormattedFieldDemo {
         container.add(new EFormattedTextField(new DateFormatBuilder(DateFormatBuilder.Type.Both, DateFormatBuilder.Length.Default), new Date()));
         container.add(new ELabel("mask"));
         container.add(new EFormattedTextField(new MaskFormatter("(###) ###-###"), "(032) 111-222"));
+        {
+            container.add(new ELabel("url"));
+            JFormattedTextField urltf = new JFormattedTextField(new URL("http://www.google.com"));
+            container.add(urltf);
+        }
     }
 
     public static void main(String[] args) {
@@ -64,7 +72,7 @@ public class FormattedFieldDemo {
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         try {
             FormattedFieldDemo.addComponents(frame.getContentPane());
-        } catch (ParseException ex) {
+        } catch (Exception ex) {
             //
         }
         frame.pack();
