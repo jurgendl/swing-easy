@@ -21,7 +21,7 @@ import org.swingeasy.tab.TabTransferHandler;
  */
 public class ETabbedPane extends DnDTabbedPane {
     public static class ETabToolbar extends ETabbedPane {
-        /** serialVersionUID */
+        
         private static final long serialVersionUID = -5439842646697045080L;
 
         public ETabToolbar() {
@@ -47,7 +47,7 @@ public class ETabbedPane extends DnDTabbedPane {
         }
     }
 
-    /** serialVersionUID */
+    
     private static final long serialVersionUID = -46108541490198511L;
 
     protected ETabbedPaneConfig config;

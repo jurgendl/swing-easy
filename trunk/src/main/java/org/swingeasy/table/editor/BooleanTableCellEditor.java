@@ -12,7 +12,7 @@ import org.swingeasy.EComponentI;
  * @author Jurgen
  */
 public class BooleanTableCellEditor extends DefaultCellEditor implements EComponentI {
-    /** serialVersionUID */
+    
     private static final long serialVersionUID = -1148800983303008114L;
 
     public BooleanTableCellEditor() {

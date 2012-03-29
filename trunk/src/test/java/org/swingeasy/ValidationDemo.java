@@ -22,7 +22,7 @@ import javax.swing.WindowConstants;
  */
 public class ValidationDemo {
     public static class EValidationMessage extends EButton implements EValidationMessageI {
-        /** serialVersionUID */
+        
         private static final long serialVersionUID = 2641254029112205898L;
 
         protected final JComponent component;

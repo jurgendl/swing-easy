@@ -19,7 +19,7 @@ public final class MethodInvoker {
      * @author jdlandsh
      */
     public static final class InvocationException extends Exception {
-        /** serialVersionUID */
+        
         private static final long serialVersionUID = -4908577741649536787L;
 
         private InvocationException(String message) {

@@ -14,7 +14,7 @@ import org.swingeasy.EComponentI;
  * @author Jurgen
  */
 public class ColorTableCellRenderer extends DefaultTableCellRenderer.UIResource implements EComponentI {
-    /** serialVersionUID */
+    
     private static final long serialVersionUID = -7605301072046365348L;
 
     protected Icon emptyIcon;

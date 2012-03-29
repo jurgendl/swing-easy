@@ -19,7 +19,7 @@ import javax.swing.SwingUtilities;
  * @see http://java-swing-tips.blogspot.com/2010/02/tabtransferhandler.html
  */
 public class GhostGlassPane extends JPanel {
-    /** serialVersionUID */
+    
     private static final long serialVersionUID = 7483905354859468870L;
 
     private DnDTabbedPane tabbedPane;

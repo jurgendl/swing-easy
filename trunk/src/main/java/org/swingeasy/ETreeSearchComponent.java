@@ -15,7 +15,7 @@ import ca.odell.glazedlists.matchers.Matcher;
  * @author Jurgen
  */
 public class ETreeSearchComponent<T> extends ELabeledTextFieldButtonComponent implements Matcher<T> {
-    /** serialVersionUID */
+    
     private static final long serialVersionUID = 5196244125968828897L;
 
     protected final ETree<T> eTree;

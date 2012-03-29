@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * @author Jurgen
  */
 public class RotatedLabel extends JPanel implements Icon {
-    /** serialVersionUID */
+    
     private static final long serialVersionUID = 8025460362121403426L;
 
     private static final double NINETY_DEGREES = Math.toRadians(90.0);

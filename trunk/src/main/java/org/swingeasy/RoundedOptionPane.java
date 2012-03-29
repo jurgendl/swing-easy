@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
  * @author Jurgen
  */
 public class RoundedOptionPane extends JOptionPane {
-    /** serialVersionUID */
+    
     private static final long serialVersionUID = -4223179632092759961L;
 
     private final RoundedComponentDelegate delegate;

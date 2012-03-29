@@ -15,7 +15,7 @@ import ca.odell.glazedlists.matchers.Matcher;
  * @author Jurgen
  */
 public class EListSearchComponent<T> extends ELabeledTextFieldButtonComponent implements Matcher<T> {
-    /** serialVersionUID */
+    
     private static final long serialVersionUID = -8699648472825404199L;
 
     protected final EList<T> eList;

@@ -119,7 +119,7 @@ public class DnDTabbedPane extends JTabbedPane {
         }
     }
 
-    /** serialVersionUID */
+    
     private static final long serialVersionUID = -2562830669661632426L;
 
     private static final int LINEWIDTH = 3;

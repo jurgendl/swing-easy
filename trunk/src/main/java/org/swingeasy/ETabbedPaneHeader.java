@@ -17,7 +17,7 @@ import javax.swing.UIManager;
  * @author Jurgen
  */
 public class ETabbedPaneHeader extends JComponent {
-    /** serialVersionUID */
+    
     private static final long serialVersionUID = -1987585120165138408L;
 
     public static final String ACTION_MINIMIZE = "minimize";
