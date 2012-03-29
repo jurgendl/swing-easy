@@ -9,7 +9,7 @@ import javax.swing.JPanel;
  * @author Jurgen
  */
 public class RoundedPanel extends JPanel {
-    /** serialVersionUID */
+    
     private static final long serialVersionUID = -4175531991430641355L;
 
     private final RoundedComponentDelegate delegate;

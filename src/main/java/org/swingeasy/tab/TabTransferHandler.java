@@ -24,7 +24,7 @@ import javax.swing.TransferHandler;
  */
 @SuppressWarnings("unchecked")
 public class TabTransferHandler<T extends org.swingeasy.tab.DnDTabbedPane> extends TransferHandler {
-    /** serialVersionUID */
+    
     private static final long serialVersionUID = 7994723426669020551L;
 
     private final DataFlavor localObjectFlavor;

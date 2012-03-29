@@ -26,7 +26,7 @@ import javax.swing.event.AncestorListener;
  * @author Jurgen
  */
 public class EDateEditor extends AbstractELabeledTextFieldButtonComponent<ELabel, ESpinner<Date>, EButton> {
-    /** serialVersionUID */
+    
     private static final long serialVersionUID = 3275532427920825736L;
 
     protected JComponent parentComponent = null;

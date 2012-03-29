@@ -8,7 +8,7 @@ import org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction;
  * @author Jurgen
  */
 public class ETableExporterAction<T> extends EComponentPopupMenuAction<ETable<T>> {
-    /** serialVersionUID */
+    
     private static final long serialVersionUID = -4509106311973499954L;
 
     protected final ETableExporter<T> exporter;

@@ -65,7 +65,7 @@ public class CustomizableOptionPane {
     }
 
     private static class CustomizableOptionPaneImpl extends JOptionPane {
-        /** serialVersionUID */
+        
         private static final long serialVersionUID = 6539025260851538675L;
 
         private static Method styleFromMessageTypeMethod;

@@ -16,7 +16,7 @@ import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
  * @author Jurgen
  */
 public class EListFilterComponent<T> extends ELabeledTextFieldButtonComponent implements TextFilterator<EListRecord<T>> {
-    /** serialVersionUID */
+    
     private static final long serialVersionUID = -8699648472825404199L;
 
     protected EList<T> eList;

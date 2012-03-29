@@ -19,7 +19,7 @@ import javax.swing.SwingUtilities;
  * @author Alexander Potochkin
  */
 public class NonBlockingGlassPane extends JPanel implements AWTEventListener {
-    /** serialVersionUID */
+    
     private static final long serialVersionUID = -2073312139654377382L;
 
     private final Window frame;

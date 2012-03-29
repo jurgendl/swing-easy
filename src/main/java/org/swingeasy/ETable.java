@@ -119,7 +119,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
                 }
             }
 
-            /** serialVersionUID */
+            
             private static final long serialVersionUID = 5033445579635687866L;
 
             protected JTextField popupTextfield = new JTextField();

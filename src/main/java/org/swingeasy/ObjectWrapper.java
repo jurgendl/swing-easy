@@ -40,7 +40,7 @@ public final class ObjectWrapper {
     }
 
     public static class FieldNotFoundException extends RuntimeException {
-        /** serialVersionUID */
+        
         private static final long serialVersionUID = 5863861684947177500L;
 
         /**

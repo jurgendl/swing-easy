@@ -20,7 +20,7 @@ import org.swingeasy.Messages;
  * @author Jurgen
  */
 public class ColorTableCellEditor extends AbstractCellEditor implements TableCellEditor, ActionListener, EComponentI {
-    /** serialVersionUID */
+    
     private static final long serialVersionUID = 819809458892249679L;
 
     protected Locale locale;

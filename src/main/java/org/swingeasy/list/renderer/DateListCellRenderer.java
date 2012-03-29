@@ -18,7 +18,7 @@ public class DateListCellRenderer extends DefaultListCellRenderer.UIResource imp
         DATE, TIME, DATE_TIME;
     }
 
-    /** serialVersionUID */
+    
     private static final long serialVersionUID = -1237135359072682865L;
 
     protected DateFormat formatter;
