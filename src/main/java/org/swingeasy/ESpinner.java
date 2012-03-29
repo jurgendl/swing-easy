@@ -5,13 +5,16 @@ import java.awt.event.MouseWheelListener;
 
 import javax.swing.JSpinner;
 import javax.swing.SpinnerModel;
-import javax.swing.ToolTipManager;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  * @author Jurgen
  */
 public class ESpinner<T> extends JSpinner {
     private static final long serialVersionUID = -5205530967336536976L;
+
+    protected String customTooltip = null;
 
     public ESpinner(SpinnerModel model) {
         super(model);
@@ -29,20 +32,10 @@ public class ESpinner<T> extends JSpinner {
      */
     @Override
     public String getToolTipText() {
-        String toolTipText = super.getToolTipText();
-        if (toolTipText == null) {
-            // FIXME
-            // Object value = this.getValue();
-            // if (value == null) {
-            // return null;
-            // }
-            // String text = String.valueOf(value);
-            // if (text.trim().length() == 0) {
-            // text = null;
-            // }
-            // return text;
+        if (this.customTooltip != null) {
+            return this.customTooltip;
         }
-        return toolTipText;
+        return super.getToolTipText();
     }
 
     public T gotoNextValue() {
@@ -71,6 +64,26 @@ public class ESpinner<T> extends JSpinner {
             }
         });
 
-        ToolTipManager.sharedInstance().registerComponent(this);
+        this.getModel().addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                ESpinner.this.super_setToolTipText(String.valueOf(ESpinner.this.getModel().getValue()));
+            }
+        });
+        ESpinner.this.super_setToolTipText(String.valueOf(ESpinner.this.getModel().getValue()));
+    }
+
+    /**
+     * 
+     * @see javax.swing.JComponent#setToolTipText(java.lang.String)
+     */
+    @Override
+    public void setToolTipText(String text) {
+        super.setToolTipText(text);
+        this.customTooltip = text;
+    }
+
+    private void super_setToolTipText(String text) {
+        super.setToolTipText(text);
     }
 }
