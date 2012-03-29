@@ -359,7 +359,9 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
             return;
         }
 
-        Collections.rotate(this.records, 1);
+        EListRecord<T> rec = this.records.get(selectedIndex);
+        this.records.remove(rec);
+        this.records.add(selectedIndex + 1, rec);
         this.setSelectedIndex(selectedIndex + 1);
     }
 
@@ -381,7 +383,9 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
             return;
         }
 
-        Collections.rotate(this.records, -1);
+        EListRecord<T> rec = this.records.get(selectedIndex);
+        this.records.remove(rec);
+        this.records.add(selectedIndex - 1, rec);
         this.setSelectedIndex(selectedIndex - 1);
     }
 
