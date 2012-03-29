@@ -12,6 +12,7 @@ import java.util.Locale;
 
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.ToolTipManager;
 
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
 import org.swingeasy.system.SystemSettings;
@@ -134,6 +135,8 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
         if (cfg.isDefaultPopupMenu()) {
             EComponentPopupMenu.installPopupMenu(this);
         }
+
+        ToolTipManager.sharedInstance().registerComponent(this);
     }
 
     /**
@@ -258,11 +261,15 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
      */
     @Override
     public String getToolTipText() {
-        if (this.getSelectedRecord() == null) {
-            return null;
-        }
+        String toolTipText = super.getToolTipText();
+        if (toolTipText == null) {
+            if (this.getSelectedRecord() == null) {
+                return null;
+            }
 
-        return this.getSelectedRecord().getTooltip();
+            return this.getSelectedRecord().getTooltip();
+        }
+        return toolTipText;
     }
 
     /**

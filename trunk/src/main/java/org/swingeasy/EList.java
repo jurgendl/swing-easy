@@ -20,6 +20,7 @@ import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
+import javax.swing.ToolTipManager;
 
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
 import org.swingeasy.list.renderer.ColorListCellRenderer;
@@ -203,6 +204,8 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         if (cfg.isDefaultPopupMenu()) {
             EComponentPopupMenu.installPopupMenu(this);
         }
+
+        ToolTipManager.sharedInstance().registerComponent(this);
     }
 
     /**
@@ -329,6 +332,30 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
             System.err.println(ex);
             return this; // no javassist
         }
+    }
+
+    /**
+     * 
+     * @see javax.swing.JList#getToolTipText(java.awt.event.MouseEvent)
+     */
+    @Override
+    public String getToolTipText(MouseEvent evt) {
+        String toolTipText = super.getToolTipText(evt);
+
+        if (toolTipText != null) {
+            return toolTipText;
+        }
+
+        int index = this.locationToIndex(evt.getPoint());
+
+        if (index == -1) {
+            return null;
+        }
+
+        @SuppressWarnings("unchecked")
+        EListRecord<T> item = (EListRecord<T>) this.getModel().getElementAt(index);
+
+        return item.getTooltip();
     }
 
     /**

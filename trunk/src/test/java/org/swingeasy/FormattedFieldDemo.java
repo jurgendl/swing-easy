@@ -11,7 +11,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.swing.JFrame;
-import javax.swing.JRadioButton;
 import javax.swing.WindowConstants;
 import javax.swing.text.MaskFormatter;
 
@@ -28,10 +27,10 @@ public class FormattedFieldDemo {
         container.setLayout(new GridLayout(-1, 2));
 
         final EButtonGroup localegroup = new EButtonGroup();
-        JRadioButton en = new JRadioButton("en");//$NON-NLS-1$
+        ERadioButton en = new ERadioButton("en");//$NON-NLS-1$
         container.add(en);
         localegroup.add(en);
-        JRadioButton nl = new JRadioButton("nl");//$NON-NLS-1$
+        ERadioButton nl = new ERadioButton("nl");//$NON-NLS-1$
         container.add(nl);
         localegroup.add(nl);
         localegroup.addPropertyChangeListener(EButtonGroup.SELECTION, new PropertyChangeListener() {

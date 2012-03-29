@@ -1,43 +1,52 @@
 package org.swingeasy;
 
+import javax.swing.Action;
 import javax.swing.Icon;
-import javax.swing.JLabel;
+import javax.swing.JRadioButton;
 import javax.swing.ToolTipManager;
 
 /**
  * @author Jurgen
  */
-public class ELabel extends JLabel {
-    /** serialVersionUID */
-    private static final long serialVersionUID = 8880462529209952297L;
+public class ERadioButton extends JRadioButton {
+    private static final long serialVersionUID = -1359464901174268318L;
 
-    public ELabel() {
-        super();
+    public ERadioButton() {
         this.init();
     }
 
-    public ELabel(Icon image) {
-        super(image);
+    public ERadioButton(Action a) {
+        super(a);
         this.init();
     }
 
-    public ELabel(Icon image, int horizontalAlignment) {
-        super(image, horizontalAlignment);
+    public ERadioButton(Icon icon) {
+        super(icon);
         this.init();
     }
 
-    public ELabel(String text) {
+    public ERadioButton(Icon icon, boolean selected) {
+        super(icon, selected);
+        this.init();
+    }
+
+    public ERadioButton(String text) {
         super(text);
         this.init();
     }
 
-    public ELabel(String text, Icon icon, int horizontalAlignment) {
-        super(text, icon, horizontalAlignment);
+    public ERadioButton(String text, boolean selected) {
+        super(text, selected);
         this.init();
     }
 
-    public ELabel(String text, int horizontalAlignment) {
-        super(text, horizontalAlignment);
+    public ERadioButton(String text, Icon icon) {
+        super(text, icon);
+        this.init();
+    }
+
+    public ERadioButton(String text, Icon icon, boolean selected) {
+        super(text, icon, selected);
         this.init();
     }
 
