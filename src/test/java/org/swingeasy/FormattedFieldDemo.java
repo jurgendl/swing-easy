@@ -10,13 +10,13 @@ import java.text.ParseException;
 import java.util.Date;
 import java.util.Locale;
 
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 import javax.swing.WindowConstants;
 import javax.swing.text.MaskFormatter;
 
 import org.swingeasy.formatters.DateFormatBuilder;
+import org.swingeasy.formatters.IPAddressFormatter;
 import org.swingeasy.formatters.NumberFormatBuilder;
 import org.swingeasy.system.SystemSettings;
 
@@ -60,11 +60,12 @@ public class FormattedFieldDemo {
         container.add(new EFormattedTextField(new DateFormatBuilder(DateFormatBuilder.Type.Both, DateFormatBuilder.Length.Default), new Date()));
         container.add(new ELabel("mask"));
         container.add(new EFormattedTextField(new MaskFormatter("(###) ###-###"), "(032) 111-222"));
-        {
-            container.add(new ELabel("url"));
-            JFormattedTextField urltf = new JFormattedTextField(new URL("http://www.google.com"));
-            container.add(urltf);
-        }
+        container.add(new ELabel("url"));
+        container.add(new EFormattedTextField(new URL("http://www.google.com")));
+        container.add(new ELabel("ip4"));
+        container.add(new EFormattedTextField(new IPAddressFormatter(), new byte[] { (byte) 130, 65, 86, 66 }));
+        container.add(new ELabel("ip6"));
+        container.add(new EFormattedTextField(new IPAddressFormatter(true), new byte[] { (byte) 130, 65, 86, 66, 2, 3 }));
     }
 
     public static void main(String[] args) {

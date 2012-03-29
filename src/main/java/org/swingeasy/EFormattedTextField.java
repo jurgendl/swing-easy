@@ -38,6 +38,10 @@ public class EFormattedTextField extends JFormattedTextField implements ECompone
         this.setValue(currentValue);
     }
 
+    public EFormattedTextField(Object currentValue) {
+        super(currentValue);
+    }
+
     protected void init() {
         EComponentPopupMenu.installTextComponentPopupMenu(this);
         UIUtils.registerLocaleChangeListener((EComponentI) this);
