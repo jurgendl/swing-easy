@@ -987,7 +987,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         if (component.getActionMap().get(actionCommandKey) != null) {
             return;
         }
-        System.out.println(component.getClass().getName() + " :: " + acceleratorKey + " :: " + actionCommandKey);
+        // System.out.println(component.getClass().getName() + " :: " + acceleratorKey + " :: " + actionCommandKey);
         component.getActionMap().put(actionCommandKey, action);
         component.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(acceleratorKey, actionCommandKey);
     }
