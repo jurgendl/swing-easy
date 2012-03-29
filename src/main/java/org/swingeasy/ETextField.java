@@ -1,6 +1,7 @@
 package org.swingeasy;
 
 import javax.swing.JTextField;
+import javax.swing.ToolTipManager;
 
 /**
  * @author Jurgen
@@ -20,7 +21,25 @@ public class ETextField extends JTextField implements EComponentI {
         this.init();
     }
 
+    /**
+     * 
+     * @see javax.swing.JComponent#getToolTipText()
+     */
+    @Override
+    public String getToolTipText() {
+        String toolTipText = super.getToolTipText();
+        if (toolTipText == null) {
+            String text = this.getText();
+            if (text.trim().length() == 0) {
+                text = null;
+            }
+            return text;
+        }
+        return toolTipText;
+    }
+
     protected void init() {
+        ToolTipManager.sharedInstance().registerComponent(this);
         EComponentPopupMenu.installTextComponentPopupMenu(this);
         UIUtils.registerLocaleChangeListener((EComponentI) this);
     }
