@@ -4,12 +4,14 @@ import java.awt.Container;
 import java.awt.GridLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.Locale;
 
 import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 import javax.swing.WindowConstants;
+import javax.swing.text.MaskFormatter;
 
 import org.swingeasy.formatters.DateFormatBuilder;
 import org.swingeasy.formatters.NumberFormatBuilder;
@@ -19,7 +21,7 @@ import org.swingeasy.system.SystemSettings;
  * @author Jurgen
  */
 public class FormattedFieldDemo {
-    private static void addComponents(Container container) {
+    private static void addComponents(Container container) throws ParseException {
         container.setLayout(new GridLayout(-1, 2));
 
         final EButtonGroup localegroup = new EButtonGroup();
@@ -53,12 +55,18 @@ public class FormattedFieldDemo {
         container.add(new EFormattedTextField(new DateFormatBuilder(DateFormatBuilder.Type.Time, DateFormatBuilder.Length.Default), new Date()));
         container.add(new ELabel("date/time"));
         container.add(new EFormattedTextField(new DateFormatBuilder(DateFormatBuilder.Type.Both, DateFormatBuilder.Length.Default), new Date()));
+        container.add(new ELabel("mask"));
+        container.add(new EFormattedTextField(new MaskFormatter("(###) ###-###"), "(032) 111-222"));
     }
 
     public static void main(String[] args) {
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        FormattedFieldDemo.addComponents(frame.getContentPane());
+        try {
+            FormattedFieldDemo.addComponents(frame.getContentPane());
+        } catch (ParseException ex) {
+            //
+        }
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setTitle("Demo");

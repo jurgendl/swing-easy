@@ -4,8 +4,10 @@ import java.text.Format;
 import java.util.Locale;
 
 import javax.swing.JFormattedTextField;
+import javax.swing.text.DefaultFormatter;
 
 import org.swingeasy.MethodInvoker.InvocationException;
+import org.swingeasy.formatters.EFormatBuilder;
 import org.swingeasy.system.SystemSettings;
 
 /**
@@ -15,6 +17,15 @@ public class EFormattedTextField extends JFormattedTextField implements ECompone
     private static final long serialVersionUID = 3962285208926281649L;
 
     protected EFormatBuilder factory;
+
+    public EFormattedTextField(DefaultFormatter factory) {
+        super(factory);
+    }
+
+    public EFormattedTextField(DefaultFormatter factory, Object currentValue) {
+        super(factory);
+        this.setValue(currentValue);
+    }
 
     public EFormattedTextField(EFormatBuilder factory) {
         super(factory.build(SystemSettings.getCurrentLocale()));
@@ -51,6 +62,8 @@ public class EFormattedTextField extends JFormattedTextField implements ECompone
     @Override
     public void setLocale(Locale l) {
         super.setLocale(l);
-        this.setFormat(this.factory.build(l));
+        if (this.factory != null) {
+            this.setFormat(this.factory.build(l));
+        }
     }
 }
