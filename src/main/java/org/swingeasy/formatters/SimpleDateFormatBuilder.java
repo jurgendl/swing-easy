@@ -4,7 +4,6 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-import org.swingeasy.EFormatBuilder;
 
 /**
  * @author Jurgen
@@ -18,7 +17,7 @@ public class SimpleDateFormatBuilder implements EFormatBuilder {
 
     /**
      * 
-     * @see org.swingeasy.EFormatBuilder#build(java.util.Locale)
+     * @see org.swingeasy.formatters.EFormatBuilder#build(java.util.Locale)
      */
     @Override
     public Format build(Locale locale) {
