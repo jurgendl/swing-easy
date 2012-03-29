@@ -19,6 +19,8 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.SpinnerDateModel;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 
 /**
  * @author Jurgen
@@ -37,10 +39,12 @@ public class EDateEditor extends AbstractELabeledTextFieldButtonComponent<ELabel
 
     public EDateEditor() {
         this(new Date());
+        this.init();
     }
 
     public EDateEditor(Date date) {
         this.setDate(date);
+        this.init();
     }
 
     /**
@@ -203,6 +207,37 @@ public class EDateEditor extends AbstractELabeledTextFieldButtonComponent<ELabel
             });
         }
         return this.popup;
+    }
+
+    protected void hidePopup() {
+        if (this.popup != null) {
+            this.popup.setVisible(false);
+        }
+    }
+
+    protected void init() {
+        this.installAncestorListener();
+    }
+
+    protected void installAncestorListener() {
+        this.addAncestorListener(new AncestorListener() {
+            @Override
+            public void ancestorAdded(AncestorEvent event) {
+                EDateEditor.this.hidePopup();
+            }
+
+            @Override
+            public void ancestorMoved(AncestorEvent event) {
+                if (event.getSource() != EDateEditor.this) {
+                    EDateEditor.this.hidePopup();
+                }
+            }
+
+            @Override
+            public void ancestorRemoved(AncestorEvent event) {
+                EDateEditor.this.hidePopup();
+            }
+        });
     }
 
     public void setDate(Date date) {
