@@ -2,6 +2,7 @@ package org.swingeasy.form;
 
 import java.awt.Component;
 import java.awt.Container;
+import java.util.List;
 
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -9,6 +10,10 @@ import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 
 import org.swingeasy.ELabel;
+import org.swingeasy.HasValue;
+import org.swingeasy.validation.EValidationPane;
+import org.swingeasy.validation.ValidationFactory;
+import org.swingeasy.validation.Validator;
 
 /**
  * @author Jurgen
@@ -26,6 +31,8 @@ public class FormBuilder {
 
     protected final Container container;
 
+    protected final EValidationPane validationPane;
+
     /** wanneer columnWidths is gezet wordt cols = columnWidths.length */
     protected final Integer cols;
 
@@ -35,6 +42,8 @@ public class FormBuilder {
 
     protected String minimum = "25pt";
 
+    protected ValidationFactory validationFactory;
+
     /**
      * absoluut: bv 50,50,*,50 = 50 pixels,50 pixels,de rest,50 pixels<br>
      * relatief: bv 1,2,3,4 = 1x, 2x, 3x, 4x grootte<br>
@@ -42,39 +51,23 @@ public class FormBuilder {
      */
     protected final String[] columnWidths;
 
-    public FormBuilder(Container container, int cols) {
-        this.container = container;
+    public FormBuilder(int cols) {
+        this.container = new JPanel();
+        this.validationPane = new EValidationPane(new JPanel());
         this.cols = cols;
         this.columnWidths = null;
     }
 
-    public FormBuilder(Container container, String[] columnWidths) {
-        this.container = container;
+    public FormBuilder(String[] columnWidths) {
+        this.container = new JPanel();
+        this.validationPane = new EValidationPane(new JPanel());
         this.cols = null;
         this.columnWidths = columnWidths;
     }
 
-    public FormBuilder(int cols) {
-        this(new JPanel(), cols);
-    }
-
-    public FormBuilder(String[] columnWidths) {
-        this(new JPanel(), columnWidths);
-    }
-
-    public FormBuilder addComponent(String label, JComponent component) {
-        return this.addComponent(label, component, 1);
-    }
-
-    public FormBuilder addComponent(String label, JComponent component, int colspan) {
-        return this.addComponent(label, component, colspan, 1);
-    }
-
-    public FormBuilder addComponent(String label, JComponent component, int colspan, int rowspan) {
-        return this.addComponent(label, component, colspan, rowspan, null, null);
-    }
-
-    public FormBuilder addComponent(String label, JComponent component, int colspan, int rowspan, HAlign halign, VAlign valign) {
+    @SuppressWarnings({ "unchecked" })
+    public <T> FormBuilder addComponent(String label, JComponent component, int colspan, int rowspan, HAlign halign, VAlign valign,
+            List<Validator<T>> validators) {
         this.debug(label);
         ELabel labelComponent = new ELabel(label);
         labelComponent.setLabelFor(component);
@@ -87,8 +80,23 @@ public class FormBuilder {
             sb.append(", aligny ").append(valign.name());
         }
         this.addToContainer(component, this.debug(sb.toString()));
-        return this;
 
+        if ((validators != null) && (validators.size() > 0) && (component instanceof HasValue)) {
+            this.getValidationFactory().install(this.validationPane, HasValue.class.cast(component), validators);
+        }
+        return this;
+    }
+
+    public <T> FormBuilder addComponent(String label, JComponent component, int colspan, int rowspan, List<Validator<T>> validators) {
+        return this.addComponent(label, component, colspan, rowspan, null, null, validators);
+    }
+
+    public <T> FormBuilder addComponent(String label, JComponent component, int colspan, List<Validator<T>> validators) {
+        return this.addComponent(label, component, colspan, 1, validators);
+    }
+
+    public <T> FormBuilder addComponent(String label, JComponent component, List<Validator<T>> validators) {
+        return this.addComponent(label, component, 1, validators);
     }
 
     public FormBuilder addTitle(String title) {
@@ -214,11 +222,22 @@ public class FormBuilder {
         return "";
     }
 
+    public ValidationFactory getValidationFactory() {
+        if (this.validationFactory == null) {
+            this.validationFactory = new ValidationFactory();
+        }
+        return this.validationFactory;
+    }
+
     public boolean isDebug() {
         return this.debug;
     }
 
     public void setDebug(boolean debug) {
         this.debug = debug;
+    }
+
+    public void setValidationFactory(ValidationFactory validationFactory) {
+        this.validationFactory = validationFactory;
     }
 }
