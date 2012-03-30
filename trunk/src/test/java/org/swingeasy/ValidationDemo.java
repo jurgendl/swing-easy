@@ -16,12 +16,18 @@ import org.apache.commons.lang.StringUtils;
 import org.swingeasy.validation.EValidationMessage;
 import org.swingeasy.validation.EValidationMessageI;
 import org.swingeasy.validation.EValidationPane;
+import org.swingeasy.validation.NotNullValidator;
+import org.swingeasy.validation.RegexValidator;
+import org.swingeasy.validation.Translator;
+import org.swingeasy.validation.ValidationFactory;
 
 /**
  * @author Jurgen
  */
 public class ValidationDemo {
     public static void main(String[] args) {
+        UIUtils.setLongerTooltips();
+
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -33,10 +39,11 @@ public class ValidationDemo {
 
         frame.getContentPane().add(parent, BorderLayout.CENTER);
 
-        ETextField comp1 = new ETextField(new ETextFieldConfig(), "invalid1");
-        ETextField comp2 = new ETextField(new ETextFieldConfig(), "invalid2");
+        final ETextField comp1 = new ETextField(new ETextFieldConfig(), "invalid1");
+        final ETextField comp2 = new ETextField(new ETextFieldConfig(), "invalid2");
         final ETextField comp3 = new ETextField(new ETextFieldConfig(), "");
         final ETextField comp4 = new ETextField(new ETextFieldConfig(), "");
+        final ETextField comp5 = new ETextField(new ETextFieldConfig(), "");
 
         JPanel inner = new JPanel(new GridLayout(-1, 2));
         inner.add(new JLabel("invalid"));
@@ -60,13 +67,19 @@ public class ValidationDemo {
         inner.add(new JLabel("email (when typing)"));
         inner.add(comp4);
 
+        inner.add(new JLabel("     "));
+        inner.add(new JLabel("     "));
+
+        inner.add(new JLabel("test"));
+        inner.add(comp5);
+
         contents.add(inner, BorderLayout.CENTER);
         contents.add(new JLabel("     "), BorderLayout.NORTH);
         contents.add(new JLabel("     "), BorderLayout.EAST);
         contents.add(new JLabel("     "), BorderLayout.SOUTH);
         contents.add(new JLabel("     "), BorderLayout.WEST);
 
-        frame.setSize(340, 220);
+        frame.setSize(340, 240);
         frame.setLocationRelativeTo(null);
         frame.setTitle("Layer & Validation Demo");
         frame.setVisible(true);
@@ -75,6 +88,7 @@ public class ValidationDemo {
 
         final Pattern pattern = Pattern
                 .compile("(^([a-zA-Z0-9]+([\\.+_-][a-zA-Z0-9]+)*)@(([a-zA-Z0-9]+((\\.|[-]{1,2})[a-zA-Z0-9]+)*)\\.[a-zA-Z]{2,6}))?$");
+
         final EValidationMessageI vm3 = new EValidationMessage(parent, comp3).stsi();
 
         comp3.addFocusListener(new FocusAdapter() {
@@ -104,9 +118,18 @@ public class ValidationDemo {
 
         EValidationMessageI vm1 = new EValidationMessage(parent, comp1).stsi();
         EValidationMessageI vm2 = new EValidationMessage(parent, comp2).stsi();
-        vm1.setIsInvalid("validation text 1"); // !
+        vm1.setIsInvalid("validation text 1");
         vm2.setShowWhenValid(true);
-        vm2.setIsValid(); // !
+        vm2.setIsValid();
+
+        final Translator translator = new Translator() {
+            @Override
+            public String getString(String key, Object... arguments) {
+                return String.format(key, arguments);
+            }
+        };
+
+        ValidationFactory.install(parent, comp5, translator, new NotNullValidator<String>(), new RegexValidator(pattern));
 
         // <== validation code
     }
