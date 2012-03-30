@@ -1,5 +1,10 @@
 package org.swingeasy;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JCheckBox;
@@ -8,8 +13,10 @@ import javax.swing.ToolTipManager;
 /**
  * @author Jurgen
  */
-public class ECheckBox extends JCheckBox {
+public class ECheckBox extends JCheckBox implements EComponentI, HasValue<Boolean> {
     private static final long serialVersionUID = -7050606626337213461L;
+
+    protected final List<ValueChangeListener<Boolean>> valueChangeListeners = new ArrayList<ValueChangeListener<Boolean>>();
 
     public ECheckBox() {
         this.init();
@@ -52,6 +59,24 @@ public class ECheckBox extends JCheckBox {
 
     /**
      * 
+     * @see org.swingeasy.HasValue#addValueChangeListener(org.swingeasy.ValueChangeListener)
+     */
+    @Override
+    public void addValueChangeListener(ValueChangeListener<Boolean> listener) {
+        this.valueChangeListeners.add(listener);
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.HasValue#clearValueChangeListeners()
+     */
+    @Override
+    public void clearValueChangeListeners() {
+        this.valueChangeListeners.clear();
+    }
+
+    /**
+     * 
      * @see javax.swing.JComponent#getToolTipText()
      */
     @Override
@@ -67,7 +92,35 @@ public class ECheckBox extends JCheckBox {
         return toolTipText;
     }
 
+    /**
+     * 
+     * @see org.swingeasy.HasValue#getValue()
+     */
+    @Override
+    public Boolean getValue() {
+        return this.isSelected();
+    }
+
     protected void init() {
         ToolTipManager.sharedInstance().registerComponent(this);
+
+        this.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Boolean value = ECheckBox.this.getValue();
+                for (ValueChangeListener<Boolean> valueChangeListener : ECheckBox.this.valueChangeListeners) {
+                    valueChangeListener.valueChanged(value);
+                }
+            }
+        });
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.HasValue#removeValueChangeListener(org.swingeasy.ValueChangeListener)
+     */
+    @Override
+    public void removeValueChangeListener(ValueChangeListener<Boolean> listener) {
+        this.valueChangeListeners.remove(listener);
     }
 }
