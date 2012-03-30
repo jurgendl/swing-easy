@@ -17,18 +17,27 @@ public class RegexValidator implements Validator<String> {
     }
 
     /**
+     * 
+     * @see org.swingeasy.validation.Validator#getArguments(java.lang.Object)
+     */
+    @Override
+    public Object[] getArguments(String value) {
+        return new Object[] { value, this.pattern.pattern() };
+    }
+
+    /**
      * @see org.swingeasy.ValidationDemo.Validator#getMessageKey()
      */
     @Override
     public String getMessageKey() {
-        return "invalid.regex";
+        return "RegexValidator.invalid";
     }
 
     /**
-     * @see org.swingeasy.ValidationDemo.Validator#validate(java.lang.Object, java.lang.Object)
+     * @see org.swingeasy.ValidationDemo.Validator#isValid(java.lang.Object, java.lang.Object)
      */
     @Override
-    public boolean validate(Object context, String value) {
-        return (value != null) || this.pattern.matcher(value).matches();
+    public boolean isValid(Object context, String value) {
+        return (value == null) || this.pattern.matcher(value).matches();
     }
 }

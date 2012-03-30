@@ -6,30 +6,52 @@ import java.util.List;
 import javax.swing.JComponent;
 
 import org.swingeasy.HasValue;
+import org.swingeasy.Messages;
 import org.swingeasy.ValueChangeListener;
 
 /**
  * @author Jurgen
  */
 public class ValidationFactory {
+    protected static Translator defaultTranslator = null;
+
+    public static Translator getDefaultTranslator() {
+        if (ValidationFactory.defaultTranslator == null) {
+            ValidationFactory.defaultTranslator = new Translator() {
+
+                @Override
+                public String getString(String key, Object... arguments) {
+                    return Messages.getInstance().getString(key, arguments);
+                }
+            };
+        }
+        return ValidationFactory.defaultTranslator;
+    }
+
     public static <I, T extends JComponent & HasValue<I>> EValidationMessageI install(final EValidationPane parentPane, final T textfield,
             final Translator translator, final List<Validator<I>> validators) {
+        final Translator _translator = translator == null ? ValidationFactory.getDefaultTranslator() : translator;
         final EValidationMessageI message = new EValidationMessage(parentPane, textfield).stsi();
 
         ValueChangeListener<I> listener = new ValueChangeListener<I>() {
             @Override
             public void valueChanged(I value) {
-                StringBuilder sb = new StringBuilder("<html><ul>");
+                StringBuilder sb = new StringBuilder();
                 boolean valid = true;
                 for (Validator<I> validator : validators) {
-                    if (validator.validate(null, value)) {
+                    if (!validator.isValid(null, value)) {
+                        if (!valid) {
+                            sb.insert(0, "\u2022 ");
+                            sb.append("<br/>\u2022 ");
+                        }
                         valid = false;
-                        sb.append("<li>").append(translator.getString(validator.getMessageKey(), value)).append("</li>");
+                        sb.append(_translator.getString(validator.getMessageKey(), validator.getArguments(value)));
                     }
                 }
-                sb.append("</ul></html>");
                 if (!valid) {
-                    message.setIsInvalid(sb.toString());
+                    message.setIsInvalid("<html>" + sb.toString() + "</html>");
+                } else {
+                    message.setIsValid();
                 }
             }
         };

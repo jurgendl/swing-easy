@@ -16,9 +16,9 @@ import org.apache.commons.lang.StringUtils;
 import org.swingeasy.validation.EValidationMessage;
 import org.swingeasy.validation.EValidationMessageI;
 import org.swingeasy.validation.EValidationPane;
+import org.swingeasy.validation.EmailValidator;
 import org.swingeasy.validation.NotNullValidator;
 import org.swingeasy.validation.RegexValidator;
-import org.swingeasy.validation.Translator;
 import org.swingeasy.validation.ValidationFactory;
 
 /**
@@ -84,10 +84,8 @@ public class ValidationDemo {
         frame.setTitle("Layer & Validation Demo");
         frame.setVisible(true);
 
-        // validation code ==>
-
-        final Pattern pattern = Pattern
-                .compile("(^([a-zA-Z0-9]+([\\.+_-][a-zA-Z0-9]+)*)@(([a-zA-Z0-9]+((\\.|[-]{1,2})[a-zA-Z0-9]+)*)\\.[a-zA-Z]{2,6}))?$");
+        String regex = "(^([a-zA-Z0-9]+([\\.+_-][a-zA-Z0-9]+)*)@(([a-zA-Z0-9]+((\\.|[-]{1,2})[a-zA-Z0-9]+)*)\\.[a-zA-Z]{2,6}))?$";
+        final Pattern pattern = Pattern.compile(regex);
 
         final EValidationMessageI vm3 = new EValidationMessage(parent, comp3).stsi();
 
@@ -122,15 +120,7 @@ public class ValidationDemo {
         vm2.setShowWhenValid(true);
         vm2.setIsValid();
 
-        final Translator translator = new Translator() {
-            @Override
-            public String getString(String key, Object... arguments) {
-                return String.format(key, arguments);
-            }
-        };
-
-        ValidationFactory.install(parent, comp5, translator, new NotNullValidator<String>(), new RegexValidator(pattern));
-
-        // <== validation code
+        ValidationFactory.install(parent, comp5, null, new NotNullValidator<String>(), new EmailValidator(), new RegexValidator(regex))
+                .setShowWhenValid(true);
     }
 }

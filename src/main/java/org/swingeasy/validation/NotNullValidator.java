@@ -7,18 +7,27 @@ import org.apache.commons.lang.StringUtils;
  */
 public class NotNullValidator<T> implements Validator<T> {
     /**
+     * 
+     * @see org.swingeasy.validation.Validator#getArguments(java.lang.Object)
+     */
+    @Override
+    public Object[] getArguments(T value) {
+        return new Object[] { value };
+    }
+
+    /**
      * @see org.swingeasy.ValidationDemo.Validator#getMessageKey()
      */
     @Override
     public String getMessageKey() {
-        return "invalid.notnull";
+        return "NotNullValidator.invalid";
     }
 
     /**
-     * @see org.swingeasy.ValidationDemo.Validator#validate(java.lang.Object, java.lang.Object)
+     * @see org.swingeasy.ValidationDemo.Validator#isValid(java.lang.Object, java.lang.Object)
      */
     @Override
-    public boolean validate(Object context, T value) {
+    public boolean isValid(Object context, T value) {
         return (value != null) && (!(value instanceof String) || StringUtils.isNotBlank(String.class.cast(value)));
     }
 }

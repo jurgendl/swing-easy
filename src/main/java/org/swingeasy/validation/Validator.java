@@ -4,7 +4,9 @@ package org.swingeasy.validation;
  * @author Jurgen
  */
 public interface Validator<T> {
-    public String getMessageKey();
+    public abstract Object[] getArguments(T value);
 
-    public boolean validate(Object context, T value);
+    public abstract String getMessageKey();
+
+    public abstract boolean isValid(Object context, T value);
 }
