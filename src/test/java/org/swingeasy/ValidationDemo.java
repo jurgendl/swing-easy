@@ -89,6 +89,7 @@ public class ValidationDemo {
         });
 
         final EValidationMessageI vm4 = new EValidationMessage(parent, comp4).stsi();
+        vm4.setShowWhenValid(true);
 
         comp4.addDocumentKeyListener(new DocumentKeyListener() {
             @Override
