@@ -3,17 +3,25 @@ package org.swingeasy;
 import java.awt.Dimension;
 
 import javax.swing.AbstractButton;
+import javax.swing.Icon;
 
 /**
  * @author Jurgen
  */
 public class EIconButtonCustomizer extends EToolBarButtonCustomizer {
+    protected Icon icon = null;
+
     public EIconButtonCustomizer() {
         super();
     }
 
     public EIconButtonCustomizer(Dimension defaultDimension) {
         super(defaultDimension);
+    }
+
+    public EIconButtonCustomizer(Icon icon) {
+        super(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
+        this.icon = icon;
     }
 
     /**
@@ -26,5 +34,8 @@ public class EIconButtonCustomizer extends EToolBarButtonCustomizer {
         button.setBorderPainted(false);
         button.setOpaque(false);
         button.setContentAreaFilled(false);
+        if (this.icon != null) {
+            button.setIcon(this.icon);
+        }
     }
 }
