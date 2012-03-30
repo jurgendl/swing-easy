@@ -26,6 +26,7 @@ public class FormBuilder {
 
     protected final Container container;
 
+    /** wanneer columnWidths is gezet wordt cols = columnWidths.length */
     protected final Integer cols;
 
     protected boolean initialized = false;
@@ -61,21 +62,23 @@ public class FormBuilder {
         this(new JPanel(), columnWidths);
     }
 
-    public void addComponent(String label, JComponent component) {
-        this.addComponent(label, component, 1);
+    public FormBuilder addComponent(String label, JComponent component) {
+        return this.addComponent(label, component, 1);
     }
 
-    public void addComponent(String label, JComponent component, int colspan) {
-        this.addComponent(label, component, colspan, 1);
+    public FormBuilder addComponent(String label, JComponent component, int colspan) {
+        return this.addComponent(label, component, colspan, 1);
     }
 
-    public void addComponent(String label, JComponent component, int colspan, int rowspan) {
-        this.addComponent(label, component, colspan, rowspan, null, null);
+    public FormBuilder addComponent(String label, JComponent component, int colspan, int rowspan) {
+        return this.addComponent(label, component, colspan, rowspan, null, null);
     }
 
-    public void addComponent(String label, JComponent component, int colspan, int rowspan, HAlign halign, VAlign valign) {
+    public FormBuilder addComponent(String label, JComponent component, int colspan, int rowspan, HAlign halign, VAlign valign) {
         this.debug(label);
-        this.addToContainer(new ELabel(label), "");
+        ELabel labelComponent = new ELabel(label);
+        labelComponent.setLabelFor(component);
+        this.addToContainer(labelComponent, "spany " + rowspan);
         StringBuilder sb = new StringBuilder("growx, growy").append(", spanx ").append((colspan * 2) - 1).append(", spany ").append(rowspan);
         if (halign != null) {
             sb.append(", alignx ").append(halign.name());
@@ -84,24 +87,27 @@ public class FormBuilder {
             sb.append(", aligny ").append(valign.name());
         }
         this.addToContainer(component, this.debug(sb.toString()));
+        return this;
+
     }
 
-    public void addTitle(String title) {
-        this.addTitle(title, 1);
+    public FormBuilder addTitle(String title) {
+        return this.addTitle(title, 1);
     }
 
-    public void addTitle(String title, int colspan) {
+    public FormBuilder addTitle(String title, int colspan) {
         this.debug(title);
-        this.addToContainer(new TitledLine(title), this.debug("spanx " + (colspan * 2)));
+        return this.addToContainer(new TitledLine(title), this.debug("growx, spanx " + (colspan * 2)));
     }
 
-    protected void addToContainer(Component component, String constraint) {
+    protected FormBuilder addToContainer(Component component, String constraint) {
         if (!this.initialized) {
             this.container.setLayout(new MigLayout(this.debug(this.getMigLayoutContraints()), this.debug(this.getMigLayoutColumnContraints()), this
                     .debug(this.getMigLayoutRowContraints())));
             this.initialized = true;
         }
         this.container.add(component, constraint);
+        return this;
     }
 
     protected <T> T debug(T object) {
@@ -112,11 +118,15 @@ public class FormBuilder {
         return object;
     }
 
-    protected String[] getColumnWidths() {
+    public Integer getCols() {
+        return this.cols;
+    }
+
+    public String[] getColumnWidths() {
         return this.columnWidths;
     }
 
-    protected Container getContainer() {
+    public Container getContainer() {
         return this.container;
     }
 
@@ -202,6 +212,10 @@ public class FormBuilder {
     protected String getMigLayoutRowContraints() {
         // geen
         return "";
+    }
+
+    public boolean isDebug() {
+        return this.debug;
     }
 
     public void setDebug(boolean debug) {
