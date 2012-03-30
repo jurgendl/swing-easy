@@ -13,21 +13,23 @@ import org.swingeasy.form.FormBuilder;
  */
 public class FormDemo {
     private static void addComponents(Container container) {
-        FormBuilder builder = new FormBuilder(container, 2);
+        FormBuilder builder = new FormBuilder(2);
         builder.setDebug(false);
 
         builder.addTitle("Somewhat longer than label - title 1", 2);
-        builder.addComponent("Label1", new ETextField(new ETextFieldConfig()));
-        builder.addComponent("Label2", new ETextField(new ETextFieldConfig()));
+        builder.addComponent("Label1", new ETextField(new ETextFieldConfig()), null);
+        builder.addComponent("Label2", new ETextField(new ETextFieldConfig()), null);
 
         builder.addTitle("Somewhat longer than label - title 2");
         builder.addTitle("Somewhat longer than label - title 3");
-        builder.addComponent("Label3", new ETextField(new ETextFieldConfig()), 2);
+        builder.addComponent("Label3", new ETextField(new ETextFieldConfig()), 2, null);
 
-        builder.addComponent("Label4", new JScrollPane(new ETextArea(new ETextAreaConfig())), 1, 3);
+        builder.addComponent("Label4", new JScrollPane(new ETextArea(new ETextAreaConfig())), 1, 3, null);
         builder.addTitle("Somewhat longer than label - title 4");
-        builder.addComponent("Label5", new ETextField(new ETextFieldConfig()));
-        builder.addComponent("Label6", new ETextField(new ETextFieldConfig()));
+        builder.addComponent("Label5", new ETextField(new ETextFieldConfig()), null);
+        builder.addComponent("Label6", new ETextField(new ETextFieldConfig()), null);
+
+        container.add(builder.getContainer());
     }
 
     public static void main(String[] args) {
