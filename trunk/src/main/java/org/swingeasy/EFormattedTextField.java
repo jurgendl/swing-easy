@@ -43,6 +43,11 @@ public class EFormattedTextField extends JFormattedTextField implements ECompone
         super(currentValue);
     }
 
+    public void addDocumentKeyListener(DocumentKeyListener listener) {
+        this.getDocument().addDocumentListener(listener);
+        this.addKeyListener(listener);
+    }
+
     /**
      * 
      * @see javax.swing.JComponent#getToolTipText()
@@ -65,6 +70,11 @@ public class EFormattedTextField extends JFormattedTextField implements ECompone
         EComponentPopupMenu.installTextComponentPopupMenu(this);
         UIUtils.registerLocaleChangeListener((EComponentI) this);
         this.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
+    }
+
+    public void removeDocumentKeyListener(DocumentKeyListener listener) {
+        this.getDocument().removeDocumentListener(listener);
+        this.removeKeyListener(listener);
     }
 
     protected void setFormat(Format format) {

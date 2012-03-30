@@ -21,6 +21,11 @@ public class ETextField extends JTextField implements EComponentI {
         this.init();
     }
 
+    public void addDocumentKeyListener(DocumentKeyListener listener) {
+        this.getDocument().addDocumentListener(listener);
+        this.addKeyListener(listener);
+    }
+
     /**
      * 
      * @see javax.swing.JComponent#getToolTipText()
@@ -42,5 +47,10 @@ public class ETextField extends JTextField implements EComponentI {
         ToolTipManager.sharedInstance().registerComponent(this);
         EComponentPopupMenu.installTextComponentPopupMenu(this);
         UIUtils.registerLocaleChangeListener((EComponentI) this);
+    }
+
+    public void removeDocumentKeyListener(DocumentKeyListener listener) {
+        this.getDocument().removeDocumentListener(listener);
+        this.removeKeyListener(listener);
     }
 }
