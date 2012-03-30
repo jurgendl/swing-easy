@@ -9,6 +9,7 @@ import java.awt.Window;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
+import javax.swing.Icon;
 import javax.swing.JComponent;
 
 import org.swingeasy.EButton;
@@ -24,9 +25,17 @@ public class EValidationMessage extends EButton implements EValidationMessageI {
 
     protected final JComponent component;
 
+    protected final Container parent;
+
     protected boolean installed = false;
 
-    protected final Container parent;
+    protected boolean valid = true;
+
+    protected boolean showWhenValid = false;
+
+    protected Icon invalidIcon;
+
+    protected Icon validIcon;
 
     protected EValidationMessage() {
         this.component = null;
@@ -34,7 +43,10 @@ public class EValidationMessage extends EButton implements EValidationMessageI {
     }
 
     public EValidationMessage(final EValidationPane parent, final JComponent component) {
-        super(new EIconButtonCustomizer(new Dimension(20, 20)), Resources.getImageResource("bullet_red_small.png"));
+        super(new EIconButtonCustomizer(Resources.getImageResource("bullet_red_small.png")));
+
+        this.invalidIcon = this.getIcon();
+        this.validIcon = Resources.getImageResource("bullet_green_small.png");
 
         this.component = component;
         this.parent = parent.frontPanel;
@@ -44,66 +56,29 @@ public class EValidationMessage extends EButton implements EValidationMessageI {
         component.addComponentListener(new ComponentListener() {
             @Override
             public void componentHidden(ComponentEvent e) {
-                EValidationMessage.this.hidden();
+                EValidationMessage.this.setVisible(false);
             }
 
             @Override
             public void componentMoved(ComponentEvent e) {
-                EValidationMessage.this.place("moved");
+                EValidationMessage.this.setLocationRelativeToComponent("moved");
             }
 
             @Override
             public void componentResized(ComponentEvent e) {
-                EValidationMessage.this.place("resized");
+                EValidationMessage.this.setLocationRelativeToComponent("resized");
             }
 
             @Override
             public void componentShown(ComponentEvent e) {
-                EValidationMessage.this.shown();
+                EValidationMessage.this.setVisible(true);
             }
         });
 
         this.setVisible(false);
     }
 
-    public JComponent getComponent() {
-        return this.component;
-    }
-
-    /**
-     * JDOC
-     * 
-     * @return
-     */
-    public EValidationMessage getSimpleThreadSafeInterface() {
-        try {
-            return EventThreadSafeWrapper.getSimpleThreadSafeInterface(EValidationMessage.class, this, EValidationMessageI.class);
-        } catch (Exception ex) {
-            System.err.println(ex);
-            return this; // no javassist
-        }
-    }
-
-    /**
-     * hidden
-     */
-    protected void hidden() {
-        this.setVisible(false);
-    }
-
-    /**
-     * install
-     */
-    protected void install() {
-        if (this.installed || (this.parent == null)) {
-            return;
-        }
-
-        this.parent.add(this);
-        this.installed = true;
-    }
-
-    private Point loc(Component c) {
+    protected Point calcRelativeLocation(Component c) {
         int x = 0;
         int y = 0;
         Component current = c;
@@ -115,12 +90,81 @@ public class EValidationMessage extends EButton implements EValidationMessageI {
         return new Point(x, y);
     }
 
-    protected void place(@SuppressWarnings("unused") String id) {
-        if (!this.installed) {
+    public JComponent getComponent() {
+        return this.component;
+    }
+
+    /**
+     * JDOC
+     * 
+     * @return
+     */
+    public EValidationMessageI getSimpleThreadSafeInterface() {
+        try {
+            return EventThreadSafeWrapper.getSimpleThreadSafeInterface(EValidationMessage.class, this, EValidationMessageI.class);
+        } catch (Exception ex) {
+            System.err.println(ex);
+            return this; // no javassist
+        }
+    }
+
+    public boolean isInstalled() {
+        return this.installed;
+    }
+
+    public boolean isShowWhenValid() {
+        return this.showWhenValid;
+    }
+
+    /**
+     * install
+     */
+    protected void lazyInstall() {
+        if (this.installed || (this.parent == null)) {
             return;
         }
-        Point p_comp = this.loc(this.component);
-        Point p_this = this.loc(this.getParent());
+
+        this.parent.add(this);
+        this.installed = true;
+    }
+
+    public void setInvalidIcon(Icon invalidIcon) {
+        this.invalidIcon = invalidIcon;
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.validation.EValidationMessageI#setIsInvalid(java.lang.String)
+     */
+    @Override
+    public void setIsInvalid(String message) {
+        this.setLocationRelativeToComponent("invalid");
+        this.setToolTipText(message);
+        this.setVisible(true);
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.validation.EValidationMessageI#setIsValid()
+     */
+    @Override
+    public void setIsValid() {
+        this.setLocationRelativeToComponent("valid");
+        this.setText(null);
+        if (this.showWhenValid) {
+            this.setIcon(this.validIcon);
+            this.setVisible(true);
+        } else {
+            this.setVisible(false);
+        }
+    }
+
+    protected void setLocationRelativeToComponent(@SuppressWarnings("unused") String id) {
+        if (!this.installed) {
+            this.lazyInstall();
+        }
+        Point p_comp = this.calcRelativeLocation(this.component);
+        Point p_this = this.calcRelativeLocation(this.getParent());
         Dimension d_comp = this.component.getSize();
         int x = (p_comp.x + d_comp.width) - p_this.x;
         int y = (p_comp.y + d_comp.height) - p_this.y;
@@ -135,48 +179,28 @@ public class EValidationMessage extends EButton implements EValidationMessageI {
 
     /**
      * 
-     * @see javax.swing.JLabel#setText(java.lang.String)
+     * @see org.swingeasy.validation.EValidationMessageI#setShowWhenValid(boolean)
      */
     @Override
-    public void setText(String text) {
-        this.setToolTipText(text);
+    public void setShowWhenValid(boolean b) {
+        this.showWhenValid = b;
     }
 
-    /**
-     * 
-     * @see javax.swing.JComponent#setToolTipText(java.lang.String)
-     */
-    @Override
-    public void setToolTipText(String text) {
-        this.install();
-        super.setToolTipText(text);
-
-        boolean aFlag = text != null;
-        this.setVisible(aFlag);
-
-        if (aFlag) {
-            this.place("onset");
-        }
-    }
-
-    /**
-     * shown
-     */
-    protected void shown() {
-        this.setVisible(true);
+    public void setValidIcon(Icon validIcon) {
+        this.validIcon = validIcon;
     }
 
     /**
      * @see #getSimpleThreadSafeInterface()
      */
-    public EValidationMessage stsi() {
+    public EValidationMessageI stsi() {
         return this.getSimpleThreadSafeInterface();
     }
 
     /**
      * @see #getSimpleThreadSafeInterface()
      */
-    public EValidationMessage STSI() {
+    public EValidationMessageI STSI() {
         return this.getSimpleThreadSafeInterface();
     }
 }

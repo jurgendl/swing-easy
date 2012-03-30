@@ -6,9 +6,9 @@ import org.swingeasy.EComponentI;
  * @author Jurgen
  */
 public interface EValidationMessageI extends EComponentI {
-    public void setText(String text);
+    public abstract void setIsInvalid(String message);
 
-    public void setToolTipText(String text);
+    public abstract void setIsValid();
 
-    public void setVisible(boolean aFlag);
+    public abstract void setShowWhenValid(boolean b);
 }
