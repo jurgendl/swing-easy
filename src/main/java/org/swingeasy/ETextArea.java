@@ -1,19 +1,24 @@
 package org.swingeasy;
 
 import java.awt.Color;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JTextArea;
+import javax.swing.event.DocumentEvent;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Highlighter;
 import javax.swing.text.Highlighter.Highlight;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * @author Jurgen
  */
-public class ETextArea extends JTextArea implements EComponentI {
+public class ETextArea extends JTextArea implements EComponentI, HasValue<String> {
     public abstract static class ETextAreaHighlightPainter extends DefaultHighlighter.DefaultHighlightPainter {
         public static ETextAreaHighlightPainter create(Color color) {
             return new ETextAreaHighlightPainter(color) {/**/
@@ -32,6 +37,8 @@ public class ETextArea extends JTextArea implements EComponentI {
     }
 
     private static final long serialVersionUID = -854993140855661563L;
+
+    protected final List<ValueChangeListener<String>> valueChangeListeners = new ArrayList<ValueChangeListener<String>>();
 
     protected ETextAreaHighlightPainter highlightPainter;
 
@@ -58,6 +65,24 @@ public class ETextArea extends JTextArea implements EComponentI {
 
     public void addHighlight(int from, int to, ETextAreaHighlightPainter painter) throws BadLocationException {
         this.getHighlighter().addHighlight(from, to, painter);
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.HasValue#addValueChangeListener(org.swingeasy.ValueChangeListener)
+     */
+    @Override
+    public void addValueChangeListener(ValueChangeListener<String> listener) {
+        this.valueChangeListeners.add(listener);
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.HasValue#clearValueChangeListeners()
+     */
+    @Override
+    public void clearValueChangeListeners() {
+        this.valueChangeListeners.clear();
     }
 
     public void find(String find) {
@@ -109,6 +134,16 @@ public class ETextArea extends JTextArea implements EComponentI {
         return this.highlightPainter;
     }
 
+    /**
+     * 
+     * @see org.swingeasy.ValidationDemo.HasValue#getValue()
+     */
+    @Override
+    public String getValue() {
+        String text = this.getText();
+        return StringUtils.isBlank(text) ? null : text;
+    }
+
     /** Creates highlights around all occurrences of pattern in textComp */
     public void highlightAll(String patternText) {
         // First remove all old highlights
@@ -133,6 +168,15 @@ public class ETextArea extends JTextArea implements EComponentI {
     protected void init() {
         EComponentPopupMenu.installTextComponentPopupMenu(this);
         UIUtils.registerLocaleChangeListener((EComponentI) this);
+        this.addDocumentKeyListener(new DocumentKeyListener() {
+            @Override
+            public void update(Type type, DocumentEvent e) {
+                String value = ETextArea.this.getValue();
+                for (ValueChangeListener<String> valueChangeListener : ETextArea.this.valueChangeListeners) {
+                    valueChangeListener.valueChanged(value);
+                }
+            }
+        });
     }
 
     public void removeDocumentKeyListener(DocumentKeyListener listener) {
@@ -154,6 +198,15 @@ public class ETextArea extends JTextArea implements EComponentI {
         }
     }
 
+    /**
+     * 
+     * @see org.swingeasy.HasValue#removeValueChangeListener(org.swingeasy.ValueChangeListener)
+     */
+    @Override
+    public void removeValueChangeListener(ValueChangeListener<String> listener) {
+        this.valueChangeListeners.remove(listener);
+    }
+
     public void replace(String find, String replace) {
         this.setText(this.getText().replace(find, replace));
     }
@@ -164,5 +217,5 @@ public class ETextArea extends JTextArea implements EComponentI {
 
     public void setHighlightPainter(ETextAreaHighlightPainter highlightPainter) {
         this.highlightPainter = highlightPainter;
-    }
+    };
 }
