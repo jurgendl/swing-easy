@@ -21,6 +21,8 @@ import javax.swing.JList;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 import javax.swing.ToolTipManager;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
 import org.swingeasy.list.renderer.ColorListCellRenderer;
@@ -38,7 +40,7 @@ import ca.odell.glazedlists.swing.EventSelectionModel;
 /**
  * @author Jurgen
  */
-public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T>>, ReadableComponent {
+public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T>>, ReadableComponent, HasValue<T> {
     private class DelegatingListCellRenderer implements ListCellRenderer {
         @SuppressWarnings("rawtypes")
         protected transient Hashtable<Class, ListCellRenderer> defaultRenderersByClass = new Hashtable<Class, ListCellRenderer>();
@@ -164,6 +166,8 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
 
     protected EListFilterComponent<T> filtercomponent = null;
 
+    protected final List<ValueChangeListener<T>> valueChangeListeners = new ArrayList<ValueChangeListener<T>>();
+
     /**
      * do not use, do not change access
      */
@@ -171,41 +175,10 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         this.filtercomponent = null;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     public EList(EListConfig cfg) {
         super(EList.createModel(cfg.lock()));
-
-        this.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON3) {
-                    EList.this.selectCell(new Point(e.getX(), e.getY()));
-                }
-            }
-        });
-
         this.cfg = cfg;
-        EListModel elistModel = EListModel.class.cast(this.getModel());
-        this.records = elistModel.source;
-        this.filtercomponent = elistModel.filtercomponent;
-        if (this.filtercomponent != null) {
-            this.filtercomponent.setList(this);
-        }
-        elistModel.filtercomponent = null;
-        this.delegatingListCellRenderer = new DelegatingListCellRenderer(this.getCellRenderer());
-        this.setCellRenderer(this.delegatingListCellRenderer);
-
-        // drag and drop test jvm internally, intra jvm, tostring
-        this.setDragEnabled(true);
-        this.setTransferHandler(new EListTransferHandler<T>());
-
-        UIUtils.registerLocaleChangeListener((EComponentI) this);
-
-        if (cfg.isDefaultPopupMenu()) {
-            EComponentPopupMenu.installPopupMenu(this);
-        }
-
-        ToolTipManager.sharedInstance().registerComponent(this);
+        this.init();
     }
 
     /**
@@ -232,6 +205,24 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
             }
         }
         this.records.addAll(r);
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.HasValue#addValueChangeListener(org.swingeasy.ValueChangeListener)
+     */
+    @Override
+    public void addValueChangeListener(ValueChangeListener<T> listener) {
+        this.valueChangeListeners.add(listener);
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.HasValue#clearValueChangeListeners()
+     */
+    @Override
+    public void clearValueChangeListeners() {
+        this.valueChangeListeners.clear();
     }
 
     /**
@@ -359,6 +350,62 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
+     * 
+     * @see org.swingeasy.HasValue#getValue()
+     */
+    @Override
+    public T getValue() {
+        EListRecord<T> selectedRecord = this.getSelectedRecord();
+        return selectedRecord == null ? null : selectedRecord.get();
+    }
+
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    protected void init() {
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON3) {
+                    EList.this.selectCell(new Point(e.getX(), e.getY()));
+                }
+            }
+        });
+
+        EListModel elistModel = EListModel.class.cast(this.getModel());
+        this.records = elistModel.source;
+        this.filtercomponent = elistModel.filtercomponent;
+        if (this.filtercomponent != null) {
+            this.filtercomponent.setList(this);
+        }
+        elistModel.filtercomponent = null;
+        this.delegatingListCellRenderer = new DelegatingListCellRenderer(this.getCellRenderer());
+        this.setCellRenderer(this.delegatingListCellRenderer);
+
+        // drag and drop test jvm internally, intra jvm, tostring
+        this.setDragEnabled(true);
+        this.setTransferHandler(new EListTransferHandler<T>());
+
+        UIUtils.registerLocaleChangeListener((EComponentI) this);
+
+        if (this.cfg.isDefaultPopupMenu()) {
+            EComponentPopupMenu.installPopupMenu(this);
+        }
+
+        ToolTipManager.sharedInstance().registerComponent(this);
+
+        this.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (!e.getValueIsAdjusting()) {
+                    T value = EList.this.getValue();
+                    for (ValueChangeListener<T> valueChangeListener : EList.this.valueChangeListeners) {
+                        valueChangeListener.valueChanged(value);
+                    }
+                }
+            }
+        });
+    }
+
+    /**
      * threadsafe unmodifiable iterator
      * 
      * @see java.lang.Iterable#iterator()
@@ -451,6 +498,15 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     public void removeSelectedRecords() {
         Collection<EListRecord<T>> selectedRecords = this.getSelectedRecords();
         this.records.removeAll(selectedRecords);
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.HasValue#removeValueChangeListener(org.swingeasy.ValueChangeListener)
+     */
+    @Override
+    public void removeValueChangeListener(ValueChangeListener<T> listener) {
+        this.valueChangeListeners.remove(listener);
     }
 
     /**

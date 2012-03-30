@@ -1,5 +1,7 @@
 package org.swingeasy;
 
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ import ca.odell.glazedlists.swing.EventComboBoxModel;
 /**
  * @author Jurgen
  */
-public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<EComboBoxRecord<T>>, ReadableComponent {
+public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<EComboBoxRecord<T>>, ReadableComponent, HasValue<T> {
     protected class MouseValueScroller implements MouseWheelListener {
         @Override
         public synchronized void mouseWheelMoved(MouseWheelEvent e) {
@@ -107,6 +109,8 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
 
     protected MouseValueScroller mouseValueScroller = null;
 
+    protected final List<ValueChangeListener<T>> valueChangeListeners = new ArrayList<ValueChangeListener<T>>();
+
     protected EComboBox() {
         super();
     }
@@ -114,29 +118,7 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
     public EComboBox(EComboBoxConfig cfg) {
         this.cfg = cfg;
         this.cfg.lock();
-        this.records = new BasicEventList<EComboBoxRecord<T>>();
-        if (this.cfg.isSortable()) {
-            this.records = new SortedList<EComboBoxRecord<T>>(this.records);
-        }
-        if (this.cfg.isThreadSafe()) {
-            this.records = GlazedLists.threadSafeList(this.records);
-        }
-        EventComboBoxModel<EComboBoxRecord<T>> model = new EventComboBoxModel<EComboBoxRecord<T>>(this.records);
-        this.setModel(model);
-        if (this.cfg.isAutoComplete()) {
-            this.getSimpleThreadSafeInterface().activateAutoCompletion();
-        }
-        if (this.cfg.isScrolling()) {
-            this.activateScrolling();
-        }
-
-        UIUtils.registerLocaleChangeListener((EComponentI) this);
-
-        if (cfg.isDefaultPopupMenu()) {
-            EComponentPopupMenu.installPopupMenu(this);
-        }
-
-        ToolTipManager.sharedInstance().registerComponent(this);
+        this.init();
     }
 
     /**
@@ -185,6 +167,24 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
     @Override
     public void addRecords(Collection<EComboBoxRecord<T>> eComboBoxRecords) {
         this.records.addAll(eComboBoxRecords);
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.HasValue#addValueChangeListener(org.swingeasy.ValueChangeListener)
+     */
+    @Override
+    public void addValueChangeListener(ValueChangeListener<T> listener) {
+        this.valueChangeListeners.add(listener);
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.HasValue#clearValueChangeListeners()
+     */
+    @Override
+    public void clearValueChangeListeners() {
+        this.valueChangeListeners.clear();
     }
 
     /**
@@ -273,6 +273,59 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
     }
 
     /**
+     * 
+     * @see org.swingeasy.HasValue#getValue()
+     */
+    @Override
+    public T getValue() {
+        EComboBoxRecord<T> selectedRecord = this.getSelectedRecord();
+        return selectedRecord == null ? null : selectedRecord.get();
+    }
+
+    protected void init() {
+        this.records = new BasicEventList<EComboBoxRecord<T>>();
+
+        if (this.cfg.isSortable()) {
+            this.records = new SortedList<EComboBoxRecord<T>>(this.records);
+        }
+
+        if (this.cfg.isThreadSafe()) {
+            this.records = GlazedLists.threadSafeList(this.records);
+        }
+
+        EventComboBoxModel<EComboBoxRecord<T>> model = new EventComboBoxModel<EComboBoxRecord<T>>(this.records);
+
+        this.setModel(model);
+
+        if (this.cfg.isAutoComplete()) {
+            this.getSimpleThreadSafeInterface().activateAutoCompletion();
+        }
+        if (this.cfg.isScrolling()) {
+            this.activateScrolling();
+        }
+
+        UIUtils.registerLocaleChangeListener((EComponentI) this);
+
+        if (this.cfg.isDefaultPopupMenu()) {
+            EComponentPopupMenu.installPopupMenu(this);
+        }
+
+        ToolTipManager.sharedInstance().registerComponent(this);
+
+        this.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    T value = EComboBox.this.getValue();
+                    for (ValueChangeListener<T> valueChangeListener : EComboBox.this.valueChangeListeners) {
+                        valueChangeListener.valueChanged(value);
+                    }
+                }
+            }
+        });
+    }
+
+    /**
      * threadsafe unmodifiable iterator
      * 
      * @see java.lang.Iterable#iterator()
@@ -298,6 +351,15 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
     @Override
     public void removeRecord(EComboBoxRecord<T> record) {
         this.records.remove(record);
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.HasValue#removeValueChangeListener(org.swingeasy.ValueChangeListener)
+     */
+    @Override
+    public void removeValueChangeListener(ValueChangeListener<T> listener) {
+        this.valueChangeListeners.remove(listener);
     }
 
     /**
