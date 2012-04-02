@@ -537,11 +537,11 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
         /**
          * 
-         * @see org.swingeasy.EComponentPopupMenu.WritableComponent#isEnabled()
+         * @see org.swingeasy.EComponentPopupMenu.WritableComponent#isEditable()
          */
         @Override
-        public boolean isEnabled() {
-            return this.parentComponent.isEnabled();
+        public boolean isEditable() {
+            return this.parentComponent.isEditable();
         }
 
         /**
@@ -656,7 +656,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
         public boolean hasText();
 
-        public boolean isEnabled();
+        public boolean isEditable();
 
         public void paste();
 
@@ -770,7 +770,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
      * JDOC
      */
     public static JPopupMenu installPopupMenu(final WritableComponent component) {
-        if (!component.isEnabled()) {
+        if (!component.isEditable()) {
             return EComponentPopupMenu.installReadOnlyTextComponentPopupMenu((JTextComponent) component.getParentComponent());
         }
 

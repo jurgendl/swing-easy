@@ -23,6 +23,11 @@ public class ETextAreaDefaultHighlightPainter extends javax.swing.text.DefaultHi
         return this.localColor;
     }
 
+    /**
+     * 
+     * @see org.swingeasy.ETextAreaHighlightPainter#setColor(java.awt.Color)
+     */
+    @Override
     public void setColor(Color color) {
         this.localColor = color;
     }

@@ -34,14 +34,14 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
 
     public ETextArea(ETextAreaConfig cfg) {
         super(cfg.getRows(), cfg.getColumns());
-        this.setEnabled(cfg.isEnabled());
+        this.setEditable(cfg.isEnabled());
         this.init();
         cfg.lock();
     }
 
     public ETextArea(ETextAreaConfig cfg, String text) {
         super(text, cfg.getRows(), cfg.getColumns());
-        this.setEnabled(cfg.isEnabled());
+        this.setEditable(cfg.isEnabled());
         this.init();
         cfg.lock();
     }
