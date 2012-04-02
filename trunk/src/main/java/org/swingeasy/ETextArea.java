@@ -9,7 +9,6 @@ import java.util.regex.Pattern;
 import javax.swing.JTextArea;
 import javax.swing.event.DocumentEvent;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Highlighter;
 import javax.swing.text.Highlighter.Highlight;
 
@@ -19,18 +18,7 @@ import org.apache.commons.lang.StringUtils;
  * @author Jurgen
  */
 public class ETextArea extends JTextArea implements EComponentI, HasValue<String> {
-    public abstract static class ETextAreaHighlightPainter extends DefaultHighlighter.DefaultHighlightPainter {
-        public static ETextAreaHighlightPainter create(Color color) {
-            return new ETextAreaHighlightPainter(color) {/**/
-            };
-        }
-
-        public ETextAreaHighlightPainter(Color hLColor) {
-            super(hLColor);
-        }
-    }
-
-    protected class SearchHighlightPainter extends ETextAreaHighlightPainter {
+    protected class SearchHighlightPainter extends ETextAreaDefaultHighlightPainter {
         public SearchHighlightPainter() {
             super(new Color(245, 225, 145));
         }
