@@ -38,6 +38,7 @@ public class ETextAreaFocusHighlightPainter extends javax.swing.text.DefaultHigh
     @Override
     public Shape paintLayer(Graphics g, int offs0, int offs1, Shape bounds, JTextComponent c, View view) {
         Color color = this.getColor();
+        int offset = 1;
 
         if (color == null) {
             g.setColor(c.getSelectionColor());
@@ -52,7 +53,7 @@ public class ETextAreaFocusHighlightPainter extends javax.swing.text.DefaultHigh
             } else {
                 alloc = bounds.getBounds();
             }
-            g.drawRect(alloc.x, alloc.y, alloc.width - 1, alloc.height);
+            g.drawRect(alloc.x + offset, alloc.y + offset, alloc.width - 1 - (offset * 2), alloc.height - (offset * 2));
             return alloc;
         }
         // Should only render part of View.
@@ -60,7 +61,7 @@ public class ETextAreaFocusHighlightPainter extends javax.swing.text.DefaultHigh
             // --- determine locations ---
             Shape shape = view.modelToView(offs0, Position.Bias.Forward, offs1, Position.Bias.Backward, bounds);
             Rectangle r = (shape instanceof Rectangle) ? (Rectangle) shape : shape.getBounds();
-            g.drawRect(r.x, r.y, r.width - 1, r.height);
+            g.drawRect(r.x + offset, r.y + offset, r.width - 1 - (offset * 2), r.height - (offset * 2));
             return r;
         } catch (BadLocationException e) {
             // can't render
@@ -69,6 +70,11 @@ public class ETextAreaFocusHighlightPainter extends javax.swing.text.DefaultHigh
         return null;
     }
 
+    /**
+     * 
+     * @see org.swingeasy.ETextAreaHighlightPainter#setColor(java.awt.Color)
+     */
+    @Override
     public void setColor(Color color) {
         this.localColor = color;
     }
