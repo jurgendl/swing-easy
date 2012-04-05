@@ -18,7 +18,7 @@ import org.apache.commons.lang.StringUtils;
  * @author Jurgen
  */
 public class ETextArea extends JTextArea implements EComponentI, HasValue<String> {
-    protected class SearchHighlightPainter extends ETextAreaDefaultHighlightPainter {
+    protected class SearchHighlightPainter extends ETextAreaFillHighlightPainter {
         public SearchHighlightPainter() {
             super(new Color(245, 225, 145));
         }
