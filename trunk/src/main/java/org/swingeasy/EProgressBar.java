@@ -4,6 +4,22 @@ import javax.swing.BoundedRangeModel;
 import javax.swing.JProgressBar;
 import javax.swing.ToolTipManager;
 
+// ProgressBar.background Color
+// ProgressBar.border Border
+// ProgressBar.cellLength Integer
+// ProgressBar.cellSpacing Integer
+// ProgressBar.cycleTime Integer
+// ProgressBar.font Font
+// ProgressBar.foreground Color
+// ProgressBar.highlight Color
+// ProgressBar.horizontalSize Dimension
+// ProgressBar.repaintInterval Integer
+// ProgressBar.selectionBackground Color
+// ProgressBar.selectionForeground Color
+// ProgressBar.shadow Color
+// ProgressBar.verticalSize Dimension
+// ProgressBarUI String
+
 /**
  * @author Jurgen
  */
