@@ -19,13 +19,13 @@ public class ETextField extends JTextField implements EComponentI, HasValue<Stri
 
     public ETextField(ETextFieldConfig cfg) {
         super(cfg.getColumns());
-        this.setEnabled(cfg.isEnabled());
+        this.setEditable(cfg.isEnabled());
         this.init();
     }
 
     public ETextField(ETextFieldConfig cfg, String text) {
         super(text, cfg.getColumns());
-        this.setEnabled(cfg.isEnabled());
+        this.setEditable(cfg.isEnabled());
         this.init();
     }
 
