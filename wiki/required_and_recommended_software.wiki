@@ -1,0 +1,10 @@
+#summary One-sentence summary of this page.
+#labels Featured
+
+= Required and recommended software =
+
+Add your content here.  Format your content with:
+  * required or recommended software:
+  * Eclipse or another IDE
+  * Subversion for version control or Mercurial with hgsubversion extension
+  * Maven for building
