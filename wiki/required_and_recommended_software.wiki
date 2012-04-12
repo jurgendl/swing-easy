@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary Required and recommended software
 #labels Featured
 
 = Required and recommended software =
