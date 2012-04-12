@@ -1,4 +1,6 @@
+#summary using this library in other Maven projects
 #labels Featured
+
 <code>
 
 <repositories>
