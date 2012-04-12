@@ -5,8 +5,8 @@
 
  * Use it!
 
- * If you have issues or find bugs: go to the Issues tab and add a new one, if you want to see new functionality you can add it as an issue.
+ * If you have issues or find bugs: go to the 'Issues' tab and add a new one, if you want to see new functionality you can add it as an issue.
 
- * Recommend this on Google by pressing the red 'G+1' button.
+ * Recommend this on Google by pressing the red 'G+1' button on the 'Project Home' tab.
 
  * If you want to contribute, fix and add code: send me an email by clicking on my account name in 'member', click the 3 dots and input the catchpa, and ask me to include you in the member list.
