@@ -1,4 +1,5 @@
 #summary List of all components
+#labels Featured
 
 = List of all components based on existing ones =
 
