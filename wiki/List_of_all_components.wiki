@@ -1,5 +1,36 @@
-#List of all components
+#summary List of all components
 
-= List of all components =
+= List of all components based on existing ones =
 
-  * 
+  * EButton
+  * ECheckBox
+  * EComboBox
+  * EFormattedTextField
+  * ELabel
+  * EList
+  * EProgressBar
+  * ERadioButton
+  * ESpinner
+  * ETable
+  * ETextArea
+  * ETextField
+  * EToggleButton
+  * EToggleToolBarButton
+  * ETree
+  * ETreeTable
+  * more in development
+
+= List of all new components =
+
+  * ECheckboxTree
+  * EDateChooser
+  * EDateEditor
+  * EDateTimeChooser
+  * EDateTimeEditor
+  * ELabeledTextFieldButtonComponent
+  * TristateCheckBox
+  * more in development
+
+= Rich components =
+
+my purpose was to create components with context sensitive menus, tooltips, mouse driven (like changing the value of a combobox by scrolling the mouse), at runtime locale changes (English and Dutch is supported) (all swing chooser components and dialog buttons also change locale at runtime), easier event-thread-safe programming, configuring components at instantiation by configuration object, drag and drop, searching and filtering, type based rendering and editing, and many more; a framework to build forms (validation, automatic binding of components) is also in development; many utility classes are created to make everything posible
