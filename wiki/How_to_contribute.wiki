@@ -1,4 +1,10 @@
 #summary One-sentence summary of this page.
 #labels Featured
 
-= How to contribute ? =
+= How to contribute and make this project grow ? =
+
+ * Use it!
+
+ * Recommend this on Google by pressing the red 'G+1' button
+
+ * If you want to contribute, fix and add code: send me an email by clicking on my account name in 'member', click the 3 dots and input the catchpa, and ask me to include you in the member list.
