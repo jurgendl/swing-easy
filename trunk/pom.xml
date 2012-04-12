@@ -8,7 +8,7 @@
 	<url>http://swing-easy.googlecode.com</url>
 	<properties>
 		<targetJdk>1.6</targetJdk>
-		<project.build.sourceEncoding>Cp1252</project.build.sourceEncoding>
+		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 	</properties>
 	<licenses>
 		<license>
@@ -48,9 +48,9 @@
 	</developers>
 	<contributors />
 	<scm>
-		<connection>scm:svn:http://swing-easy.googlecode.com/svn/tags/swing-easy-2.3.0</connection>
-		<developerConnection>scm:svn:https://swing-easy.googlecode.com/svn/tags/swing-easy-2.3.0</developerConnection>
-		<url>http://swing-easy.googlecode.com/svn/tags/swing-easy-2.3.0</url>
+		<connection>scm:svn:http://swing-easy.googlecode.com/svn/tags/swing-easy-2.5.4</connection>
+		<developerConnection>scm:svn:https://swing-easy.googlecode.com/svn/tags/swing-easy-2.5.4</developerConnection>
+		<url>http://swing-easy.googlecode.com/svn/tags/swing-easy-2.5.4</url>
 	</scm>
 	<repositories>
 		<repository>
