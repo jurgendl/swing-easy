@@ -131,7 +131,7 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * initial release ERadioButton
   * initial release EFormattedTextField & Format builders
   * stub for L10n and i18n
- * 2.4.1 (featured)
+ * 2.5.4.1 (featured)
   * bugfix: ETextField is set to non editable instead of disabled
   * ETextArea: highlight painter renamed and fixes
  * 2.5.5 (not released)
