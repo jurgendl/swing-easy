@@ -118,7 +118,7 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * initial release ELabel
   * EList & EComboBox: convert methods
   * initial release ESpinner & ESpinnerCyclingModel
- * 2.5.4 (featured)
+ * 2.5.4
   * fixed: ETextArea: copy action works (depends on editable instead of enabled)
   * ETextArea: highlight painter redone
   * first version of validation framework
@@ -130,5 +130,8 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * initial release ERadioButton
   * initial release EFormattedTextField & Format builders
   * stub for L10n and i18n
+ * 2.4.1 (featured)
+  * bugfix: ETextField is set to non editable instead of disabled
+  * ETextArea: highlight painter renamed and fixes  
  * 2.5.5 (not released)
  * 2.6.0 (not planned, not released)
