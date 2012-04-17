@@ -20,21 +20,30 @@
 		<system>Google</system>
 		<url>http://code.google.com/p/swing-easy/issues/list</url>
 	</issueManagement>
-	<!-- http://code.google.com/p/raisercostin/wiki/Maven2DistributionManagementOnGooglecode -->
+	<!-- Subversion: http://code.google.com/p/raisercostin/wiki/Maven2DistributionManagementOnGooglecode -->
+	<!-- Mercurial: http://stackoverflow.com/questions/3826128/maven-mercurial-site-deploy-issues -->
 	<distributionManagement>
-		<!-- use the following if you're not using a snapshot version. -->
+		<site>
+			<id>swing-easy.googlecode.site</id>
+			<name>swing-easy.googlecode.site</name>
+			<url>dav:https://swing-easy.googlecode.com/svn/site</url>
+		</site>
 		<repository>
 			<id>swing-easy.googlecode.releases</id>
 			<name>swing-easy.googlecode.releases</name>
 			<url>dav:https://swing-easy.googlecode.com/svn/maven2</url>
 		</repository>
-		<!-- use the following if you ARE using a snapshot version. -->
 		<snapshotRepository>
 			<id>swing-easy.googlecode.snapshots</id>
 			<name>swing-easy.googlecode.snapshots</name>
 			<url>dav:https://swing-easy.googlecode.com/svn/maven2-snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
+	<!-- 
+		Mercurial
+		scm:hg:https://swing-easy.googlecode.com/hg/maven2
+		scm:hg:https://swing-easy.googlecode.com/hg/maven2-snapshots
+	 -->
 	<inceptionYear>2011</inceptionYear>
 	<developers>
 		<developer>
@@ -48,10 +57,16 @@
 	</developers>
 	<contributors />
 	<scm>
-		<connection>scm:svn:http://swing-easy.googlecode.com/svn/tags/swing-easy-2.5.4</connection>
-		<developerConnection>scm:svn:https://swing-easy.googlecode.com/svn/tags/swing-easy-2.5.4</developerConnection>
-		<url>http://swing-easy.googlecode.com/svn/tags/swing-easy-2.5.4</url>
+		<connection>scm:svn:http://swing-easy.googlecode.com/svn/trunk</connection>
+		<developerConnection>scm:svn:https://swing-easy.googlecode.com/svn/trunk</developerConnection>
+		<url>http://swing-easy.googlecode.com/svn/trunk</url>
 	</scm>
+	<!-- 
+		Mercurial
+		scm:hg:http://swing-easy.googlecode.com/hg
+		scm:hg:https://swing-easy.googlecode.com/hg
+		http://swing-easy.googlecode.com/hg
+	 -->
 	<repositories>
 		<repository>
 			<id>swing-easy.googlecode</id>
@@ -117,6 +132,20 @@
 		</dependency>
 	</dependencies>
 	<build>
+<!--	Mercurial 
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.scm</groupId>
+				<artifactId>maven-scm-provider-hg</artifactId>
+				<version>1.6</version>
+			</extension>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-scm</artifactId>
+				<version>2.2</version>
+			</extension>
+		</extensions>
+ -->
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
