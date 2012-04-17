@@ -20,6 +20,7 @@
 		<system>Google</system>
 		<url>http://code.google.com/p/swing-easy/issues/list</url>
 	</issueManagement>
+	<!-- http://maven.apache.org/scm/ -->
 	<!-- Subversion: http://code.google.com/p/raisercostin/wiki/Maven2DistributionManagementOnGooglecode -->
 	<!-- Mercurial: http://stackoverflow.com/questions/3826128/maven-mercurial-site-deploy-issues -->
 	<distributionManagement>
