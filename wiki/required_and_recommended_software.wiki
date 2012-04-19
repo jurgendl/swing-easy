@@ -5,11 +5,13 @@
 
 I use all software and these versions, other software or version are your own responsability
 
-  * Eclipse Indigo or another IDE
+  * Java 5.x or higher is required, the latest version of Java 6.x (6.31) is recommended, Java 7.x is not tested
+
+  * Eclipse Indigo (3.6) or another IDE
 http://www.eclipse.org/downloads/
 
   * Subversion for version control or Mercurial with hgsubversion extension: 
 http://subversion.tigris.org/ and http://tortoisesvn.tigris.org/ or http://tortoisehg.bitbucket.org/ and http://mercurial.selenic.com/wiki/WorkingWithSubversion
 
-  * Maven 2.2.1 for building
+  * Maven 2.2.1 for building, not tested with Maven 3.x
 http://maven.apache.org/
