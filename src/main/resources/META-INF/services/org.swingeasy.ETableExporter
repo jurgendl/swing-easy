@@ -1,3 +1,3 @@
-org.swingeasy.ETableHtmlExporter
-org.swingeasy.ETableCsvExporter
-org.swingeasy.ETablePdfExporter
+org.swingeasy.table.exporter.ETableHtmlExporter
+org.swingeasy.table.exporter.ETableCsvExporter
+org.swingeasy.table.exporter.ETablePdfExporter

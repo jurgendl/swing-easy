@@ -1,4 +1,4 @@
-package org.swingeasy;
+package org.swingeasy.table.exporter;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -9,6 +9,9 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.swingeasy.ETable;
+import org.swingeasy.ETableExporter;
+import org.swingeasy.Resources;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 import org.xml.sax.SAXException;
 
@@ -20,7 +23,7 @@ import com.lowagie.text.DocumentException;
 public class ETablePdfExporter<T> extends ETableHtmlExporter<T> {
     /**
      * 
-     * @see org.swingeasy.ETableHtmlExporter#exportStream(org.swingeasy.ETable)
+     * @see org.swingeasy.table.exporter.ETableHtmlExporter#exportStream(org.swingeasy.ETable)
      */
     @Override
     public InputStream exportStream(ETable<T> table) throws IOException {
