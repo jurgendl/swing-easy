@@ -1,0 +1,3 @@
+table exporters:
+[commons-io] org.apache.commons.io.output.TeeOutputStream.TeeOutputStream(OutputStream, OutputStream)
+[com.Ostermiller:utils 1.07.00] com.Ostermiller.util.CircularByteBuffer.CircularByteBuffer(int)
