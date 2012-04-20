@@ -1,5 +1,5 @@
 #summary List of all components
-#labels Featured
+#labels Featured,Phase-Implementation
 
 
 = Rich components =
