@@ -1,5 +1,5 @@
 #summary How to contribute and make this project grow
-#labels Featured
+#labels Featured,Phase-Implementation
 
 = How to contribute and make this project grow ? =
 
