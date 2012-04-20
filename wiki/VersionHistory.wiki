@@ -135,4 +135,5 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * bugfix: ETextField is set to non editable instead of disabled
   * ETextArea: highlight painter renamed and fixes
  * 2.5.5 (not released)
+  * export table to xlsx
  * 2.6.0 (not planned, not released)
