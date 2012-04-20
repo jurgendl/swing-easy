@@ -4,7 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 import org.swingeasy.ETable;
-import org.swingeasy.ETableExporter;
 import org.swingeasy.ETableExporterImpl;
 import org.swingeasy.ETableRecord;
 import org.swingeasy.system.SystemSettings;
