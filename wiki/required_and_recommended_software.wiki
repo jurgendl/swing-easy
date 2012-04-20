@@ -1,5 +1,5 @@
 #summary Required and recommended software
-#labels Featured
+#labels Featured,Phase-Implementation,Phase-Requirements
 
 = Required and recommended software =
 
