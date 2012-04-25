@@ -41,6 +41,7 @@ public class ETablePdfExporter<T> extends ETableHtmlExporter<T> {
 
             itextRenderer.layout();
             itextRenderer.createPDF(os);
+            itextRenderer.finishPDF();
             os.close();
 
             return new ByteArrayInputStream(os.toByteArray());
