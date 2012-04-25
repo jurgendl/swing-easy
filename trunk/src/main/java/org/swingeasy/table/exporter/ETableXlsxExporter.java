@@ -1,9 +1,7 @@
 package org.swingeasy.table.exporter;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -22,10 +20,10 @@ import org.swingeasy.ETableRecord;
 public class ETableXlsxExporter<T> extends ETableExporterImpl<T> {
     /**
      * 
-     * @see org.swingeasy.ETableExporterImpl#exportStream(org.swingeasy.ETable)
+     * @see org.swingeasy.ETableExporterImpl#exportStream(org.swingeasy.ETable, java.io.OutputStream)
      */
     @Override
-    public InputStream exportStream(ETable<T> table) throws IOException {
+    public void exportStream(ETable<T> table, OutputStream out) throws IOException {
         Workbook wb = new SXSSFWorkbook(table.getRecords().size());
         Sheet sh = wb.createSheet();
         int rownum = 0;
@@ -61,10 +59,8 @@ public class ETableXlsxExporter<T> extends ETableExporterImpl<T> {
             }
             rownum++;
         }
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
         wb.write(out);
         out.close();
-        return new ByteArrayInputStream(out.toByteArray());
     }
 
     /**

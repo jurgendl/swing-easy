@@ -135,6 +135,11 @@
 			<version>3.8</version>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>org.ostermiller</groupId>
+			<artifactId>utils</artifactId>
+			<version>1.07.00</version>
+		</dependency>
 		<!-- testing only -->
 		<dependency>
 			<groupId>junit</groupId>
