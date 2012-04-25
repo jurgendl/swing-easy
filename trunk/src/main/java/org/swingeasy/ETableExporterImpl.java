@@ -1,5 +1,6 @@
 package org.swingeasy;
 
+import java.awt.Component;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -7,6 +8,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import javax.swing.Icon;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  * @author Jurgen
@@ -16,6 +20,21 @@ public abstract class ETableExporterImpl<T> implements ETableExporter<T> {
 
     public ETableExporterImpl() {
         this.customizer = new ETableExporterFileChooserCustomizer(this);
+    }
+
+    protected boolean canOverwrite(ETable<T> table) {
+        if (ResultType.OK != CustomizableOptionPane.showCustomDialog(table,
+                new JLabel(Messages.getString(null, "ETableExporter.overwrite.warning.message")),
+                Messages.getString(null, "ETableExporter.overwrite.warning.title"), MessageType.WARNING, OptionType.OK_CANCEL, null,
+                new OptionPaneCustomizer() {
+                    @Override
+                    public void customize(Component parentComponent, MessageType messageType, OptionType optionType, JOptionPane pane, JDialog dialog) {
+                        dialog.setLocationRelativeTo(null);
+                    }
+                })) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -31,6 +50,11 @@ public abstract class ETableExporterImpl<T> implements ETableExporter<T> {
                 if (!exportTo.getName().endsWith(ext)) {
                     exportTo = new File(exportTo.getParentFile(), exportTo.getName() + "." + ext);
                 }
+                if (exportTo.exists()) {
+                    if (!this.canOverwrite(table)) {
+                        return;
+                    }
+                }
                 Stream stream = StreamFactory.create();
                 this.exportStream(table, stream.getOutputStream());
                 InputStream data = stream.getInputStream();
@@ -43,6 +67,7 @@ public abstract class ETableExporterImpl<T> implements ETableExporter<T> {
                 data.close();
                 fout.close();
                 ETableExporterFileChooserCustomizer.lastFile = exportTo;
+                this.whenDone();
             }
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -58,5 +83,16 @@ public abstract class ETableExporterImpl<T> implements ETableExporter<T> {
     @Override
     public Icon getIcon() {
         return UIUtils.getIconForFileType(this.getFileExtension());
+    }
+
+    protected void whenDone() {
+        CustomizableOptionPane.showCustomDialog(null, new JLabel(Messages.getString(null, "ETableExporter.completion.message")),
+                Messages.getString(null, "ETableExporter.completion.title"), MessageType.INFORMATION, OptionType.OK, null,
+                new OptionPaneCustomizer() {
+                    @Override
+                    public void customize(Component parentComponent, MessageType messageType, OptionType optionType, JOptionPane pane, JDialog dialog) {
+                        dialog.setLocationRelativeTo(null);
+                    }
+                });
     }
 }

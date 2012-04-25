@@ -16,6 +16,6 @@ public class StreamFactory {
                 StreamFactory.tryOnce = false;
             }
         }
-        return new DefaultStream();
+        return new InMemoryStream();
     }
 }
