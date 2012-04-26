@@ -1,5 +1,6 @@
 package org.swingeasy;
 
+import java.awt.BorderLayout;
 import java.awt.Container;
 
 import javax.swing.JFrame;
@@ -12,6 +13,7 @@ public class TextPaneDemo {
     private static void addComponents(Container container) {
         ETextPane pane = new ETextPane();
         container.add(pane);
+        container.add(pane.getToolbar(), BorderLayout.NORTH);
     }
 
     public static void main(String[] args) {
