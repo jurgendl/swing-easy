@@ -532,7 +532,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public boolean hasText() {
-            return this.parentComponent.getText().length() > 0;
+            return (this.parentComponent.getText() != null) && (this.parentComponent.getText().length() > 0);
         }
 
         /**
