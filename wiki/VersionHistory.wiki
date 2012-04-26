@@ -3,7 +3,7 @@
 
 = Version History =
 
-latest change: 2012-04-20
+latest change: 2012-04-26
 
 featured: downloads are available on the frontpage
 
@@ -133,8 +133,9 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * stub for L10n and i18n
  * 2.5.4.1 (featured)
   * bugfix: ETextField is set to non editable instead of disabled
-  * ETextArea: highlight painter renamed and fixes
+  * ETextArea: highlight painter renamed and fixes  
  * 2.5.5 (not released)
-  * export table to xlsx
-  * TODO: table exporters stream data instead of cache
+  * ETable exporters: new: export to xlsx
+  * ETable exporters: streaming
+  * initial release ETextPane and additional actions in contextmenu
  * 2.6.0 (not planned, not released)
