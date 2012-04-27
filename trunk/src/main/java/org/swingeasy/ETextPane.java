@@ -2,6 +2,7 @@ package org.swingeasy;
 
 import java.awt.Component;
 import java.awt.Event;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.BufferedOutputStream;
@@ -80,7 +81,14 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO fontchooser
+            Font font = EFontChooser.showDialog();
+            if (font == null) {
+                return;
+            }
+            MutableAttributeSet attr = new SimpleAttributeSet();
+            StyleConstants.setFontFamily(attr, font.getFamily());
+            StyleConstants.setFontSize(attr, font.getSize());
+            this.delegate.setCharacterAttributes(attr, false);
         }
     }
 
