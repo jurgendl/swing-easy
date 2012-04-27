@@ -2,7 +2,7 @@
 
 = Version History =
 
-latest change: 2012-04-26
+latest change: 2012-04-27
 
 featured: downloads are available on the frontpage
 
@@ -137,4 +137,5 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * ETable exporters: new: export to xlsx
   * ETable exporters: streaming
   * initial release ETextPane and additional actions in contextmenu
+  * initial release font chooser
  * 2.6.0 (not planned, not released)
