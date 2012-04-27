@@ -41,6 +41,9 @@ public class ESpinner<T> extends JSpinner {
     public T gotoNextValue() {
         @SuppressWarnings("unchecked")
         T nextValue = (T) ESpinner.this.getNextValue();
+        if (nextValue == null) {
+            return null;
+        }
         ESpinner.this.getModel().setValue(nextValue);
         return nextValue;
     }
@@ -48,6 +51,9 @@ public class ESpinner<T> extends JSpinner {
     public T gotoPreviousValue() {
         @SuppressWarnings("unchecked")
         T nextValue = (T) ESpinner.this.getPreviousValue();
+        if (nextValue == null) {
+            return null;
+        }
         ESpinner.this.getModel().setValue(nextValue);
         return nextValue;
     }
