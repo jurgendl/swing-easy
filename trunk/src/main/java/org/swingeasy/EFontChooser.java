@@ -1,6 +1,7 @@
 package org.swingeasy;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.JDialog;
@@ -47,6 +48,10 @@ public class EFontChooser extends JPanel implements EComponentI {
     private EFontChooser() {
         super(new MigLayout());
         this.add(this.fc);
+        Dimension cbsize = new Dimension(200, 20);
+        this.fc.setSize(cbsize);
+        this.fc.setPreferredSize(cbsize);
+        this.fc.setMaximumSize(cbsize);
         this.add(this.size);
         UIUtils.registerLocaleChangeListener((EComponentI) this);
     }
