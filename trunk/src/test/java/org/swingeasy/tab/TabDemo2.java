@@ -26,7 +26,7 @@ public class TabDemo2 {
         demo.addComponents(frame.getContentPane());
         frame.setSize(800, 600);
         frame.setLocationRelativeTo(null);
-        frame.setTitle("Demo");
+        frame.setTitle("TabDemo");
         frame.setVisible(true);
         demo.TL.setDividerLocation(.4);
         demo.TR.setDividerLocation(.6);

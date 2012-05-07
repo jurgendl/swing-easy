@@ -23,7 +23,7 @@ public class TextPaneDemo {
         TextPaneDemo.addComponents(frame.getContentPane());
         frame.setSize(800, 600);
         frame.setLocationRelativeTo(null);
-        frame.setTitle("Demo");
+        frame.setTitle("TextPaneDemo");
         frame.setVisible(true);
     }
 }

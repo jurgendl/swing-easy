@@ -23,7 +23,7 @@ public class DateDemo {
         DateDemo.addComponents(frame.getContentPane());
         frame.pack();
         frame.setLocationRelativeTo(null);
-        frame.setTitle("Demo");
+        frame.setTitle("DateDemo");
         frame.setVisible(true);
     }
 }

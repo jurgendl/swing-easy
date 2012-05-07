@@ -17,7 +17,7 @@ public class ColorChooserDemo {
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.setSize(800, 600);
         frame.setLocationRelativeTo(null);
-        frame.setTitle("Demo");
+        frame.setTitle("ColorChooserDemo");
         frame.setVisible(true);
 
         System.out.println(JColorChooser.showDialog(null, "", Color.WHITE));
