@@ -77,7 +77,7 @@ public class EListFilterComponent<T> extends ELabeledTextFieldButtonComponent im
      */
     @Override
     protected Icon getIcon() {
-        return Resources.getImageResource("hourglass.png");
+        return Resources.getImageResource("magnifier.png");
     }
 
     /**
