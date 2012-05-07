@@ -2,7 +2,7 @@
 
 = Version History =
 
-latest change: 2012-04-27
+latest change: 2012-05-07
 
 featured: downloads are available on the frontpage
 
@@ -139,3 +139,5 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * initial release ETextPane and additional actions in contextmenu
   * initial release font chooser
  * 2.6.0 (not planned, not released)
+ * not planned
+  * bug: dialogs created by CustomizableOptionPane are not centered on parent component unless using a OptionPaneCustomizer to center the dialog yourself
