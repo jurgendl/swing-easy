@@ -30,7 +30,7 @@ public class SpinnerDemo {
         SpinnerDemo.addComponents(frame.getContentPane());
         frame.pack();
         frame.setLocationRelativeTo(null);
-        frame.setTitle("Demo");
+        frame.setTitle("SpinnerDemo");
         frame.setVisible(true);
     }
 }

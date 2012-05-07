@@ -77,7 +77,7 @@ public class FormattedFieldDemo {
         }
         frame.pack();
         frame.setLocationRelativeTo(null);
-        frame.setTitle("Demo");
+        frame.setTitle("FormattedFieldDemo");
         frame.setVisible(true);
     }
 }

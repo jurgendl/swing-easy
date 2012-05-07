@@ -33,7 +33,7 @@ public class PopupMenuDemo {
         }
         frame.setSize(400, 300);
         frame.setLocationRelativeTo(null);
-        frame.setTitle("Demo");
+        frame.setTitle("PopupMenuDemo");
         frame.setVisible(true);
     }
 }
