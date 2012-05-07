@@ -298,14 +298,6 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
     }
 
     public JToolBar getToolbar() {
-        JToolBar tools = new JToolBar();
-        for (Action action : this.actions) {
-            if (action == null) {
-                tools.addSeparator();
-            } else {
-                tools.add(action);
-            }
-        }
-        return tools;
+        return new EToolBar(this.getComponentPopupMenu());
     }
 }
