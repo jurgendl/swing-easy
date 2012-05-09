@@ -107,7 +107,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     }
 
     /**
-     * JDOC
+     * adapter for {@link ClipboardOwner}
      */
     public static class ClipboardOwnerAdapter implements ClipboardOwner {
         @Override
@@ -445,7 +445,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     }
 
     /**
-     * JDOC
+     * adapter for {@link PopupMenuListener}
      */
     public static class PopupMenuAdapter implements PopupMenuListener {
         /**
@@ -516,7 +516,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public void checkEnabled(CheckEnabled cfg) {
-            this.setEnabled(cfg.canRedo);
+            this.setEnabled(this.undoManager.canRedo());
         }
     }
 
@@ -688,7 +688,11 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public boolean hasSelection() {
-            return this.parentComponent.getSelectedText() != null;
+            try {
+                return this.parentComponent.getSelectedText() != null;
+            } catch (IllegalArgumentException ex) {
+                return false;
+            }
         }
 
         /**
@@ -783,7 +787,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public void checkEnabled(CheckEnabled cfg) {
-            this.setEnabled(cfg.canUndo);
+            this.setEnabled(this.undoManager.canUndo());
         }
     }
 
@@ -914,7 +918,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
      */
     public static JPopupMenu installPopupMenu(final ReadableComponent component) {
         final EComponentPopupMenuAction<ReadableComponent> copyAction = new CopyAction(component);
-        EComponentPopupMenu popup = new EComponentPopupMenu();
+        final EComponentPopupMenu popup = new EComponentPopupMenu();
         popup.add(copyAction);
         component.getParentComponent().addAncestorListener(new AncestorAdapter() {
             @Override
@@ -939,7 +943,6 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
             @Override
             public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-                copyAction.setEnabled(true);
                 if (component instanceof PopupMenuListener) {
                     PopupMenuListener.class.cast(component).popupMenuWillBecomeVisible(e);
                 }
@@ -1018,8 +1021,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
             @Override
             public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-                undoAction.setEnabled(true);
-                redoAction.setEnabled(true);
+                popup.checkEnabled(new CheckEnabled(component.hasSelection(), component.hasText(), manager.canUndo(), manager.canRedo()));
                 if (component instanceof PopupMenuListener) {
                     PopupMenuListener.class.cast(component).popupMenuWillBecomeInvisible(e);
                 }
@@ -1027,16 +1029,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
             @Override
             public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-                CheckEnabled cfg = new CheckEnabled(component.hasSelection(), component.hasText(), manager.canUndo(), manager.canRedo());
-                for (int i = 0; i < popup.getComponentCount(); i++) {
-                    Component menuItem = popup.getComponent(i);
-                    if (menuItem instanceof JMenuItem) {
-                        Action action = JMenuItem.class.cast(menuItem).getAction();
-                        if (action instanceof EComponentPopupMenuAction) {
-                            EComponentPopupMenuAction.class.cast(action).checkEnabled(cfg);
-                        }
-                    }
-                }
+                popup.checkEnabled(new CheckEnabled(component.hasSelection(), component.hasText(), manager.canUndo(), manager.canRedo()));
                 if (component instanceof PopupMenuListener) {
                     PopupMenuListener.class.cast(component).popupMenuWillBecomeVisible(e);
                 }
@@ -1049,14 +1042,14 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     }
 
     /**
-     * JDOC
+     * use this method to add the popup menu to a textcomponent which is never editable
      */
     public static JPopupMenu installReadOnlyTextComponentPopupMenu(final JTextComponent component) {
         return EComponentPopupMenu.installPopupMenu((ReadableComponent) new TextComponentWritableComponent(component));
     }
 
     /**
-     * JDOC
+     * use this method to add the popup menu to a textcomponent which can be or is always editable
      */
     public static JPopupMenu installTextComponentPopupMenu(final JTextComponent component) {
         return EComponentPopupMenu.installPopupMenu(new TextComponentWritableComponent(component));
@@ -1096,8 +1089,6 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
     /**
      * get text data on clipboard or null
-     * 
-     * @return
      */
     @SuppressWarnings("null")
     public static String pasteFromClipboard() {
@@ -1178,6 +1169,18 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         JMenuItem mi = super.add(action);
         this.accelerate(action);
         return mi;
+    }
+
+    public void checkEnabled(CheckEnabled cfg) {
+        for (int i = 0; i < this.getComponentCount(); i++) {
+            Component menuItem = this.getComponent(i);
+            if (menuItem instanceof JMenuItem) {
+                Action action = JMenuItem.class.cast(menuItem).getAction();
+                if (action instanceof EComponentPopupMenuAction) {
+                    EComponentPopupMenuAction.class.cast(action).checkEnabled(cfg);
+                }
+            }
+        }
     }
 
     protected void setLocale(Action action) {

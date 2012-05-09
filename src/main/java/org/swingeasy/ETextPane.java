@@ -33,6 +33,7 @@ import javax.swing.text.rtf.RTFEditorKit;
 import org.swingeasy.EComponentPopupMenu.CheckEnabled;
 import org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction;
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
+import org.swingeasy.EComponentPopupMenu.TextComponentWritableComponent;
 
 /**
  * @author Jurgen
@@ -412,6 +413,6 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
     }
 
     public JToolBar getToolbar() {
-        return new EToolBar(this.getComponentPopupMenu());
+        return new EToolBar((EComponentPopupMenu) this.getComponentPopupMenu(), new TextComponentWritableComponent(this));
     }
 }
