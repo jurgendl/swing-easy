@@ -1,6 +1,8 @@
 package org.swingeasy;
 
 /**
+ * only autoResizePopup kan be changed after creation of the {@link EComboBox}
+ * 
  * @author Jurgen
  */
 public class EComboBoxConfig extends EComponentConfig<EComboBoxConfig> {
@@ -12,12 +14,18 @@ public class EComboBoxConfig extends EComponentConfig<EComboBoxConfig> {
 
     protected boolean sortable = true;
 
+    protected boolean autoResizePopup = true;
+
     public EComboBoxConfig() {
         super();
     }
 
     public boolean isAutoComplete() {
         return this.autoComplete;
+    }
+
+    public boolean isAutoResizePopup() {
+        return this.autoResizePopup;
     }
 
     public boolean isScrolling() {
@@ -35,6 +43,11 @@ public class EComboBoxConfig extends EComponentConfig<EComboBoxConfig> {
     public EComboBoxConfig setAutoComplete(boolean autoComplete) {
         this.lockCheck();
         this.autoComplete = autoComplete;
+        return this;
+    }
+
+    public EComboBoxConfig setAutoResizePopup(boolean autoResizePopup) {
+        this.autoResizePopup = autoResizePopup;
         return this;
     }
 

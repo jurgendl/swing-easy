@@ -36,7 +36,8 @@ public class ComboBoxDemo {
         final Random r = new Random(256955466579946l);
         EComboBoxRecord<String> record = null;
         for (int i = 0; i < 1000; i++) {
-            record = new EComboBoxRecord<String>(String.valueOf(r.nextInt(1000)));
+            record = new EComboBoxRecord<String>(String.valueOf(r.nextInt(1000000000)) + String.valueOf(r.nextInt(1000000000))
+                    + String.valueOf(r.nextInt(1000000000)));
             cc.addRecord(record);
         }
         cc.setSelectedRecord(record);
