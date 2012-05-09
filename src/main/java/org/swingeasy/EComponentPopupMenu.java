@@ -73,6 +73,39 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
     }
 
+    public static class CheckEnabled {
+        protected final boolean hasSelection;
+
+        protected final boolean hasText;
+
+        protected final boolean canUndo;
+
+        protected final boolean canRedo;
+
+        protected CheckEnabled(boolean hasSelection, boolean hasText, boolean canUndo, boolean canRedo) {
+            this.hasSelection = hasSelection;
+            this.hasText = hasText;
+            this.canUndo = canUndo;
+            this.canRedo = canRedo;
+        }
+
+        public boolean isCanRedo() {
+            return this.canRedo;
+        }
+
+        public boolean isCanUndo() {
+            return this.canUndo;
+        }
+
+        public boolean isHasSelection() {
+            return this.hasSelection;
+        }
+
+        public boolean isHasText() {
+            return this.hasText;
+        }
+    }
+
     /**
      * JDOC
      */
@@ -102,6 +135,15 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         public void actionPerformed(ActionEvent e) {
             this.delegate.copy();
         }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public void checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(cfg.hasSelection);
+        }
     }
 
     /**
@@ -123,6 +165,15 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         public void actionPerformed(ActionEvent e) {
             this.delegate.cut();
         }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public void checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(cfg.hasSelection);
+        }
     }
 
     /**
@@ -143,6 +194,15 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         @Override
         public void actionPerformed(ActionEvent e) {
             this.delegate.delete();
+        }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public void checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(cfg.hasSelection);
         }
     }
 
@@ -166,6 +226,15 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
             this.delegate.selectAll();
             this.delegate.delete();
         }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public void checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(cfg.hasText);
+        }
     }
 
     /**
@@ -185,6 +254,8 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
             this.delegate = delegate;
             super.putValue(Action.ACTION_COMMAND_KEY, this.key);
         }
+
+        public abstract void checkEnabled(CheckEnabled cfg);
 
         /**
          * 
@@ -241,6 +312,15 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         public void actionPerformed(ActionEvent e) {
             this.delegate.find();
         }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public void checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(cfg.hasText);
+        }
     }
 
     /**
@@ -261,6 +341,15 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         @Override
         public void actionPerformed(ActionEvent e) {
             this.delegate.findNext();
+        }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public void checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(cfg.hasText);
         }
     }
 
@@ -283,6 +372,15 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         public void actionPerformed(ActionEvent e) {
             this.delegate.gotoBegin();
         }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public void checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(cfg.hasText);
+        }
     }
 
     /**
@@ -304,6 +402,16 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         public void actionPerformed(ActionEvent e) {
             this.delegate.gotoEnd();
         }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public void checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(cfg.hasText);
+        }
+
     }
 
     /**
@@ -324,6 +432,15 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         @Override
         public void actionPerformed(ActionEvent e) {
             this.delegate.paste();
+        }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public void checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(true);
         }
     }
 
@@ -392,6 +509,15 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
                 //
             }
         }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public void checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(cfg.canRedo);
+        }
     }
 
     /**
@@ -413,6 +539,15 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         public void actionPerformed(ActionEvent e) {
             this.delegate.replace();
         }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public void checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(cfg.hasText);
+        }
     }
 
     /**
@@ -426,9 +561,22 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
             this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_A, Event.CTRL_MASK));
         }
 
+        /**
+         * 
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             this.delegate.selectAll();
+        }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public void checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(cfg.hasText);
         }
     }
 
@@ -628,6 +776,15 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
                 //
             }
         }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public void checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(cfg.canUndo);
+        }
     }
 
     /**
@@ -648,6 +805,15 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         @Override
         public void actionPerformed(ActionEvent e) {
             this.delegate.unselect();
+        }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public void checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(cfg.hasSelection);
         }
     }
 
@@ -803,7 +969,6 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         final EComponentPopupMenuAction<WritableComponent> deleteAllAction = new DeleteAllAction(component);
         final EComponentPopupMenuAction<WritableComponent> gotoBeginAction = new GotoBeginAction(component);
         final EComponentPopupMenuAction<WritableComponent> gotoEndAction = new GotoEndAction(component);
-
         final EComponentPopupMenuAction<WritableComponent> findAction = new FindAction(component);
         final EComponentPopupMenuAction<WritableComponent> findNextAction = new FindNextAction(component);
         final EComponentPopupMenuAction<WritableComponent> replaceAction = new ReplaceAction(component);
@@ -820,7 +985,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
         component.addUndoableEditListener(manager);
 
-        EComponentPopupMenu popup = new EComponentPopupMenu();
+        final EComponentPopupMenu popup = new EComponentPopupMenu();
 
         popup.add(undoAction);
         popup.add(redoAction);
@@ -862,25 +1027,16 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
             @Override
             public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-                boolean flg = component.hasSelection();
-                boolean ht = component.hasText();
-
-                undoAction.setEnabled(manager.canUndo());
-                redoAction.setEnabled(manager.canRedo());
-
-                cutAction.setEnabled(flg);
-                copyAction.setEnabled(flg);
-                deleteAction.setEnabled(flg);
-                unselectAction.setEnabled(flg);
-
-                deleteAllAction.setEnabled(ht);
-                selectAllAction.setEnabled(ht);
-                gotoBeginAction.setEnabled(ht);
-                gotoEndAction.setEnabled(ht);
-                findAction.setEnabled(ht);
-                findNextAction.setEnabled(ht);
-                replaceAction.setEnabled(ht);
-
+                CheckEnabled cfg = new CheckEnabled(component.hasSelection(), component.hasText(), manager.canUndo(), manager.canRedo());
+                for (int i = 0; i < popup.getComponentCount(); i++) {
+                    Component menuItem = popup.getComponent(i);
+                    if (menuItem instanceof JMenuItem) {
+                        Action action = JMenuItem.class.cast(menuItem).getAction();
+                        if (action instanceof EComponentPopupMenuAction) {
+                            EComponentPopupMenuAction.class.cast(action).checkEnabled(cfg);
+                        }
+                    }
+                }
                 if (component instanceof PopupMenuListener) {
                     PopupMenuListener.class.cast(component).popupMenuWillBecomeVisible(e);
                 }
