@@ -30,6 +30,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledEditorKit;
 import javax.swing.text.rtf.RTFEditorKit;
 
+import org.swingeasy.EComponentPopupMenu.CheckEnabled;
 import org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction;
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
 
@@ -45,6 +46,10 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
             this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_B, Event.CTRL_MASK));
         }
 
+        /**
+         * 
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             StyledEditorKit kit = this.delegate.getStyledEditorKit();
@@ -53,6 +58,15 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
             SimpleAttributeSet sas = new SimpleAttributeSet();
             StyleConstants.setBold(sas, bold);
             this.delegate.setCharacterAttributes(sas, false);
+        }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public void checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(cfg.hasSelection);
         }
     }
 
@@ -70,6 +84,15 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
             StyleConstants.setAlignment(attr, StyleConstants.ALIGN_CENTER);
             this.delegate.setParagraphAttributes(attr, false);
         }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public void checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(cfg.hasSelection);
+        }
     }
 
     protected static class FontAction extends EComponentPopupMenuAction<ETextPane> {
@@ -79,6 +102,10 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
             super(component, "font-chooser", Resources.getImageResource("font.png"));
         }
 
+        /**
+         * 
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             Font font = EFontChooser.showDialog();
@@ -90,6 +117,15 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
             StyleConstants.setFontSize(attr, font.getSize());
             this.delegate.setCharacterAttributes(attr, false);
         }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public void checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(cfg.hasSelection);
+        }
     }
 
     protected static class ItalicAction extends EComponentPopupMenuAction<ETextPane> {
@@ -100,6 +136,10 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
             this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_I, Event.CTRL_MASK));
         }
 
+        /**
+         * 
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             StyledEditorKit kit = this.delegate.getStyledEditorKit();
@@ -108,6 +148,15 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
             SimpleAttributeSet sas = new SimpleAttributeSet();
             StyleConstants.setItalic(sas, italic);
             this.delegate.setCharacterAttributes(sas, false);
+        }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public void checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(cfg.hasSelection);
         }
     }
 
@@ -119,12 +168,25 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
             this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_L, Event.CTRL_MASK));
         }
 
+        /**
+         * 
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             MutableAttributeSet attr = new SimpleAttributeSet();
             StyleConstants.setAlignment(attr, StyleConstants.ALIGN_LEFT);
             this.delegate.setParagraphAttributes(attr, false);
 
+        }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public void checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(cfg.hasSelection);
         }
     }
 
@@ -136,6 +198,10 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
             this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK));
         }
 
+        /**
+         * 
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             File file = CustomizableOptionPane.showFileChooserDialog(null, FileChooserType.OPEN, new FileChooserCustomizer() {
@@ -166,6 +232,15 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
                 throw new RuntimeException(ex);
             }
         }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public void checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(true);
+        }
     }
 
     protected static class RightJustifyAction extends EComponentPopupMenuAction<ETextPane> {
@@ -176,11 +251,24 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
             this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_R, Event.CTRL_MASK));
         }
 
+        /**
+         * 
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             MutableAttributeSet attr = new SimpleAttributeSet();
             StyleConstants.setAlignment(attr, StyleConstants.ALIGN_RIGHT);
             this.delegate.setParagraphAttributes(attr, false);
+        }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public void checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(cfg.hasSelection);
         }
     }
 
@@ -192,6 +280,10 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
             this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));
         }
 
+        /**
+         * 
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             File file = CustomizableOptionPane.showFileChooserDialog(null, FileChooserType.SAVE, new FileChooserCustomizer() {
@@ -236,6 +328,15 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
                 throw new RuntimeException(ex);
             }
         }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public void checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(true);
+        }
     }
 
     protected static class UnderlineAction extends EComponentPopupMenuAction<ETextPane> {
@@ -246,6 +347,10 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
             this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_U, Event.CTRL_MASK));
         }
 
+        /**
+         * 
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             StyledEditorKit kit = this.delegate.getStyledEditorKit();
@@ -254,6 +359,15 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
             SimpleAttributeSet sas = new SimpleAttributeSet();
             StyleConstants.setUnderline(sas, underline);
             this.delegate.setCharacterAttributes(sas, false);
+        }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public void checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(cfg.hasSelection);
         }
     }
 
