@@ -1,5 +1,6 @@
 package org.swingeasy;
 
+import java.awt.Dimension;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.MouseWheelEvent;
@@ -111,6 +112,8 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
 
     protected final List<ValueChangeListener<T>> valueChangeListeners = new ArrayList<ValueChangeListener<T>>();
 
+    protected boolean layingOut = false;
+
     protected EComboBox() {
         super();
     }
@@ -214,6 +217,20 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
 
     /**
      * 
+     * @see java.awt.Container#doLayout()
+     */
+    @Override
+    public void doLayout() {
+        try {
+            this.layingOut = true;
+            super.doLayout();
+        } finally {
+            this.layingOut = false;
+        }
+    }
+
+    /**
+     * 
      * @see org.swingeasy.HasParentComponent#getParentComponent()
      */
     @Override
@@ -253,6 +270,19 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
             System.err.println(ex);
             return this; // no javassist
         }
+    }
+
+    /**
+     * 
+     * @see java.awt.Component#getSize()
+     */
+    @Override
+    public Dimension getSize() {
+        Dimension dim = super.getSize();
+        if (this.cfg.isAutoResizePopup() && !this.layingOut) {
+            dim.width = Math.max(dim.width, this.getPreferredSize().width);
+        }
+        return dim;
     }
 
     /**
