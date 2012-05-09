@@ -201,7 +201,24 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public void setLocale(Locale l) {
-            super.putValue(Action.NAME, Messages.getString(l, "EComponentPopupMenuAction." + this.key));
+            String name = Messages.getString(l, "EComponentPopupMenuAction." + this.key);
+            super.putValue(Action.NAME, name);
+            {
+                String shortDescriptionKey = "EComponentPopupMenuAction." + this.key + "." + Action.SHORT_DESCRIPTION;
+                String shortDescription = Messages.getString(l, shortDescriptionKey);
+                if (shortDescriptionKey.equals(shortDescription)) {
+                    shortDescription = name;
+                }
+                super.putValue(Action.SHORT_DESCRIPTION, shortDescription);
+            }
+            {
+                String longDescriptionKey = "EComponentPopupMenuAction." + this.key + "." + Action.LONG_DESCRIPTION;
+                String longDescription = Messages.getString(l, longDescriptionKey);
+                if (longDescriptionKey.equals(longDescription)) {
+                    longDescription = name;
+                }
+                super.putValue(Action.LONG_DESCRIPTION, longDescription);
+            }
         }
     }
 
