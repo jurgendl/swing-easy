@@ -7,6 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.swing.JTextArea;
+import javax.swing.JToolBar;
 import javax.swing.event.DocumentEvent;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Highlighter;
@@ -122,6 +123,10 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
         return this.highlightPainter;
     }
 
+    public JToolBar getToolbar() {
+        return new EToolBar(this.getComponentPopupMenu());
+    }
+
     /**
      * 
      * @see org.swingeasy.ValidationDemo.HasValue#getValue()
@@ -201,9 +206,9 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
 
     public void replaceAll(String find, String replace) {
         this.setText(this.getText().replaceAll(find, replace));
-    }
+    };
 
     public void setHighlightPainter(ETextAreaHighlightPainter highlightPainter) {
         this.highlightPainter = highlightPainter;
-    };
+    }
 }

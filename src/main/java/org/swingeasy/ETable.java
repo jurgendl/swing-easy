@@ -9,6 +9,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.RenderingHints;
+import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
@@ -119,7 +120,6 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
                 }
             }
 
-            
             private static final long serialVersionUID = 5033445579635687866L;
 
             protected JTextField popupTextfield = new JTextField();
@@ -593,10 +593,10 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
 
     /**
      * 
-     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy()
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy(java.awt.event.ActionEvent)
      */
     @Override
-    public void copy() {
+    public void copy(ActionEvent e) {
         StringBuilder sb = new StringBuilder();
         for (Object cell : this.getSelectedCells()) {
             sb.append(String.valueOf(cell)).append(SystemSettings.getNewline());

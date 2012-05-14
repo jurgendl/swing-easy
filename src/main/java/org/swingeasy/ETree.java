@@ -1,5 +1,6 @@
 package org.swingeasy;
 
+import java.awt.event.ActionEvent;
 import java.util.Locale;
 
 import javax.swing.JComponent;
@@ -58,10 +59,10 @@ public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
 
     /**
      * 
-     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy()
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy(java.awt.event.ActionEvent)
      */
     @Override
-    public void copy() {
+    public void copy(ActionEvent e) {
         throw new UnsupportedOperationException("not implemented"); // TODO implement
     }
 

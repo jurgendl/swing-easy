@@ -26,7 +26,7 @@ import javax.swing.event.AncestorListener;
  * @author Jurgen
  */
 public class EDateEditor extends AbstractELabeledTextFieldButtonComponent<ELabel, ESpinner<Date>, EButton> {
-    
+
     private static final long serialVersionUID = 3275532427920825736L;
 
     protected JComponent parentComponent = null;
@@ -49,10 +49,10 @@ public class EDateEditor extends AbstractELabeledTextFieldButtonComponent<ELabel
 
     /**
      * 
-     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy()
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy(java.awt.event.ActionEvent)
      */
     @Override
-    public void copy() {
+    public void copy(ActionEvent e) {
         // FIXME
         // EComponentPopupMenu.copyToClipboard(this.getInput().getText());
     }

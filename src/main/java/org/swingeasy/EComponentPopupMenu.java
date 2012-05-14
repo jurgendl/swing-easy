@@ -26,6 +26,10 @@ import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.text.Document;
@@ -34,6 +38,7 @@ import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.swingeasy.system.SystemSettings;
 
 /**
@@ -42,7 +47,7 @@ import org.swingeasy.system.SystemSettings;
  */
 public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     /**
-     * JDOC
+     * adapter for {@link AncestorListener}
      */
     public static class AncestorAdapter implements AncestorListener {
         /**
@@ -82,6 +87,8 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
         protected final boolean canRedo;
 
+        private transient String toString;
+
         protected CheckEnabled(boolean hasSelection, boolean hasText, boolean canUndo, boolean canRedo) {
             this.hasSelection = hasSelection;
             this.hasText = hasText;
@@ -104,6 +111,19 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         public boolean isHasText() {
             return this.hasText;
         }
+
+        /**
+         * 
+         * @see java.lang.Object#toString()
+         */
+        @Override
+        public String toString() {
+            if (this.toString == null) {
+                this.toString = new ToStringBuilder(this).append("hasSelection", this.hasSelection).append("hasText", this.hasText)
+                        .append("canUndo", this.canUndo).append("canRedo", this.canRedo).toString();
+            }
+            return this.toString;
+        }
     }
 
     /**
@@ -117,7 +137,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     }
 
     /**
-     * JDOC
+     * CopyAction
      */
     private static class CopyAction extends EComponentPopupMenuAction<ReadableComponent> {
         private static final long serialVersionUID = 3044725124645042202L;
@@ -133,7 +153,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-            this.delegate.copy();
+            this.delegate.copy(e);
         }
 
         /**
@@ -141,13 +161,14 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
-        public void checkEnabled(CheckEnabled cfg) {
+        public boolean checkEnabled(CheckEnabled cfg) {
             this.setEnabled(cfg.hasSelection);
+            return cfg.hasSelection;
         }
     }
 
     /**
-     * JDOC
+     * CutAction
      */
     private static class CutAction extends EComponentPopupMenuAction<WritableComponent> {
         private static final long serialVersionUID = 4328082010034890480L;
@@ -163,7 +184,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-            this.delegate.cut();
+            this.delegate.cut(e);
         }
 
         /**
@@ -171,13 +192,14 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
-        public void checkEnabled(CheckEnabled cfg) {
+        public boolean checkEnabled(CheckEnabled cfg) {
             this.setEnabled(cfg.hasSelection);
+            return cfg.hasSelection;
         }
     }
 
     /**
-     * JDOC
+     * DeleteAction
      */
     private static class DeleteAction extends EComponentPopupMenuAction<WritableComponent> {
         private static final long serialVersionUID = -7609111337852520512L;
@@ -193,7 +215,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-            this.delegate.delete();
+            this.delegate.delete(e);
         }
 
         /**
@@ -201,13 +223,14 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
-        public void checkEnabled(CheckEnabled cfg) {
+        public boolean checkEnabled(CheckEnabled cfg) {
             this.setEnabled(cfg.hasSelection);
+            return cfg.hasSelection;
         }
     }
 
     /**
-     * JDOC
+     * DeleteAllAction
      */
     private static class DeleteAllAction extends EComponentPopupMenuAction<WritableComponent> {
         private static final long serialVersionUID = -6873629703224034266L;
@@ -223,8 +246,8 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-            this.delegate.selectAll();
-            this.delegate.delete();
+            this.delegate.selectAll(e);
+            this.delegate.delete(e);
         }
 
         /**
@@ -232,8 +255,9 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
-        public void checkEnabled(CheckEnabled cfg) {
+        public boolean checkEnabled(CheckEnabled cfg) {
             this.setEnabled(cfg.hasText);
+            return cfg.hasText;
         }
     }
 
@@ -255,7 +279,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
             super.putValue(Action.ACTION_COMMAND_KEY, this.key);
         }
 
-        public abstract void checkEnabled(CheckEnabled cfg);
+        public abstract boolean checkEnabled(CheckEnabled cfg);
 
         /**
          * 
@@ -294,7 +318,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     }
 
     /**
-     * JDOC
+     * FindAction
      */
     private static class FindAction extends EComponentPopupMenuAction<WritableComponent> {
         private static final long serialVersionUID = 4328082010034890480L;
@@ -310,7 +334,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-            this.delegate.find();
+            this.delegate.find(e);
         }
 
         /**
@@ -318,13 +342,14 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
-        public void checkEnabled(CheckEnabled cfg) {
+        public boolean checkEnabled(CheckEnabled cfg) {
             this.setEnabled(cfg.hasText);
+            return cfg.hasText;
         }
     }
 
     /**
-     * JDOC
+     * FindNextAction
      */
     private static class FindNextAction extends EComponentPopupMenuAction<WritableComponent> {
         private static final long serialVersionUID = 4328082010034890480L;
@@ -340,7 +365,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-            this.delegate.findNext();
+            this.delegate.findNext(e);
         }
 
         /**
@@ -348,13 +373,14 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
-        public void checkEnabled(CheckEnabled cfg) {
+        public boolean checkEnabled(CheckEnabled cfg) {
             this.setEnabled(cfg.hasText);
+            return cfg.hasText;
         }
     }
 
     /**
-     * JDOC
+     * GotoBeginAction
      */
     private static class GotoBeginAction extends EComponentPopupMenuAction<WritableComponent> {
         private static final long serialVersionUID = 3085509525399492253L;
@@ -370,7 +396,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-            this.delegate.gotoBegin();
+            this.delegate.gotoBegin(e);
         }
 
         /**
@@ -378,13 +404,14 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
-        public void checkEnabled(CheckEnabled cfg) {
+        public boolean checkEnabled(CheckEnabled cfg) {
             this.setEnabled(cfg.hasText);
+            return cfg.hasText;
         }
     }
 
     /**
-     * JDOC
+     * GotoEndAction
      */
     private static class GotoEndAction extends EComponentPopupMenuAction<WritableComponent> {
         private static final long serialVersionUID = 6262977802889470104L;
@@ -400,7 +427,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-            this.delegate.gotoEnd();
+            this.delegate.gotoEnd(e);
         }
 
         /**
@@ -408,14 +435,15 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
-        public void checkEnabled(CheckEnabled cfg) {
+        public boolean checkEnabled(CheckEnabled cfg) {
             this.setEnabled(cfg.hasText);
+            return cfg.hasText;
         }
 
     }
 
     /**
-     * JDOC
+     * PasteAction
      */
     private static class PasteAction extends EComponentPopupMenuAction<WritableComponent> {
         private static final long serialVersionUID = -7609111337852520512L;
@@ -431,7 +459,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-            this.delegate.paste();
+            this.delegate.paste(e);
         }
 
         /**
@@ -439,8 +467,9 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
-        public void checkEnabled(CheckEnabled cfg) {
+        public boolean checkEnabled(CheckEnabled cfg) {
             this.setEnabled(true);
+            return true;
         }
     }
 
@@ -480,11 +509,11 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
      * JDOC
      */
     public static interface ReadableComponent extends HasParentComponent {
-        public void copy();
+        public void copy(ActionEvent e);
     }
 
     /**
-     * JDOC
+     * RedoAction
      */
     private static class RedoAction extends EComponentPopupMenuAction<WritableComponent> {
         private static final long serialVersionUID = 700221902961828425L;
@@ -515,13 +544,15 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
-        public void checkEnabled(CheckEnabled cfg) {
-            this.setEnabled(this.undoManager.canRedo());
+        public boolean checkEnabled(CheckEnabled cfg) {
+            boolean canRedo = this.undoManager.canRedo();
+            this.setEnabled(canRedo);
+            return canRedo;
         }
     }
 
     /**
-     * JDOC
+     * ReplaceAction
      */
     private static class ReplaceAction extends EComponentPopupMenuAction<WritableComponent> {
         private static final long serialVersionUID = 4328082010034890480L;
@@ -537,7 +568,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-            this.delegate.replace();
+            this.delegate.replace(e);
         }
 
         /**
@@ -545,13 +576,14 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
-        public void checkEnabled(CheckEnabled cfg) {
+        public boolean checkEnabled(CheckEnabled cfg) {
             this.setEnabled(cfg.hasText);
+            return cfg.hasText;
         }
     }
 
     /**
-     * JDOC
+     * SelectAllAction
      */
     private static class SelectAllAction extends EComponentPopupMenuAction<WritableComponent> {
         private static final long serialVersionUID = -6873629703224034266L;
@@ -567,7 +599,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-            this.delegate.selectAll();
+            this.delegate.selectAll(e);
         }
 
         /**
@@ -575,8 +607,9 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
-        public void checkEnabled(CheckEnabled cfg) {
+        public boolean checkEnabled(CheckEnabled cfg) {
             this.setEnabled(cfg.hasText);
+            return cfg.hasText;
         }
     }
 
@@ -601,17 +634,17 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
         /**
          * 
-         * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy()
+         * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy(java.awt.event.ActionEvent)
          */
         @Override
-        public void copy() {
+        public void copy(ActionEvent e) {
             if (this.hasSelection()) {
-                this.parentComponent.copy();
+                this.copy(e);
             } else {
-                this.selectAll();
-                this.parentComponent.copy();
-                this.unselect();
-                this.gotoBegin();
+                this.selectAll(e);
+                this.copy(e);
+                this.unselect(e);
+                this.gotoBegin(e);
             }
         }
 
@@ -620,25 +653,25 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          * @see org.swingeasy.EComponentPopupMenu.WritableComponent#cut()
          */
         @Override
-        public void cut() {
+        public void cut(ActionEvent e) {
             this.parentComponent.cut();
         }
 
         /**
          * 
-         * @see org.swingeasy.EComponentPopupMenu.WritableComponent#delete()
+         * @see org.swingeasy.EComponentPopupMenu.WritableComponent#delete(java.awt.event.ActionEvent)
          */
         @Override
-        public void delete() {
+        public void delete(ActionEvent e) {
             this.parentComponent.replaceSelection(null);
         }
 
         /**
          * 
-         * @see org.swingeasy.EComponentPopupMenu.WritableComponent#find()
+         * @see org.swingeasy.EComponentPopupMenu.WritableComponent#find(java.awt.event.ActionEvent)
          */
         @Override
-        public void find() {
+        public void find(ActionEvent e) {
             if (this.parentComponent instanceof ETextArea) {
                 new SearchDialog(false, ETextArea.class.cast(this.parentComponent)).setVisible(true);
             }
@@ -646,10 +679,10 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
         /**
          * 
-         * @see org.swingeasy.EComponentPopupMenu.WritableComponent#findNext()
+         * @see org.swingeasy.EComponentPopupMenu.WritableComponent#findNext(java.awt.event.ActionEvent)
          */
         @Override
-        public void findNext() {
+        public void findNext(ActionEvent e) {
             if (this.parentComponent instanceof ETextArea) {
                 ETextArea.class.cast(this.parentComponent).findNext();
             }
@@ -666,19 +699,19 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
         /**
          * 
-         * @see org.swingeasy.EComponentPopupMenu.WritableComponent#gotoBegin()
+         * @see org.swingeasy.EComponentPopupMenu.WritableComponent#gotoBegin(java.awt.event.ActionEvent)
          */
         @Override
-        public void gotoBegin() {
+        public void gotoBegin(ActionEvent e) {
             this.parentComponent.setCaretPosition(0);
         }
 
         /**
          * 
-         * @see org.swingeasy.EComponentPopupMenu.WritableComponent#gotoEnd()
+         * @see org.swingeasy.EComponentPopupMenu.WritableComponent#gotoEnd(java.awt.event.ActionEvent)
          */
         @Override
-        public void gotoEnd() {
+        public void gotoEnd(ActionEvent e) {
             this.parentComponent.setCaretPosition(this.parentComponent.getText().length());
         }
 
@@ -715,19 +748,19 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
         /**
          * 
-         * @see org.swingeasy.EComponentPopupMenu.WritableComponent#paste()
+         * @see org.swingeasy.EComponentPopupMenu.WritableComponent#paste(java.awt.event.ActionEvent)
          */
         @Override
-        public void paste() {
+        public void paste(ActionEvent e) {
             this.parentComponent.paste();
         }
 
         /**
          * 
-         * @see org.swingeasy.EComponentPopupMenu.WritableComponent#replace()
+         * @see org.swingeasy.EComponentPopupMenu.WritableComponent#replace(java.awt.event.ActionEvent)
          */
         @Override
-        public void replace() {
+        public void replace(ActionEvent e) {
             if (this.parentComponent instanceof ETextArea) {
                 new SearchDialog(true, ETextArea.class.cast(this.parentComponent)).setVisible(true);
             }
@@ -735,10 +768,10 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
         /**
          * 
-         * @see org.swingeasy.EComponentPopupMenu.WritableComponent#selectAll()
+         * @see org.swingeasy.EComponentPopupMenu.WritableComponent#selectAll(java.awt.event.ActionEvent)
          */
         @Override
-        public void selectAll() {
+        public void selectAll(ActionEvent e) {
             Document doc = this.parentComponent.getDocument();
             this.parentComponent.setCaretPosition(0);
             this.parentComponent.moveCaretPosition(doc.getLength());
@@ -746,16 +779,16 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
         /**
          * 
-         * @see org.swingeasy.EComponentPopupMenu.WritableComponent#unselect()
+         * @see org.swingeasy.EComponentPopupMenu.WritableComponent#unselect(java.awt.event.ActionEvent)
          */
         @Override
-        public void unselect() {
+        public void unselect(ActionEvent e) {
             this.parentComponent.setCaretPosition(this.parentComponent.getCaretPosition());
         }
     }
 
     /**
-     * JDOC
+     * UndoAction
      */
     private static class UndoAction extends EComponentPopupMenuAction<WritableComponent> {
         private static final long serialVersionUID = -2639363038955484287L;
@@ -786,13 +819,15 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
-        public void checkEnabled(CheckEnabled cfg) {
-            this.setEnabled(this.undoManager.canUndo());
+        public boolean checkEnabled(CheckEnabled cfg) {
+            boolean canUndo = this.undoManager.canUndo();
+            this.setEnabled(canUndo);
+            return canUndo;
         }
     }
 
     /**
-     * JDOC
+     * UnselectAction
      */
     private static class UnselectAction extends EComponentPopupMenuAction<WritableComponent> {
         private static final long serialVersionUID = -736429406339064829L;
@@ -808,7 +843,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-            this.delegate.unselect();
+            this.delegate.unselect(e);
         }
 
         /**
@@ -816,8 +851,9 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
-        public void checkEnabled(CheckEnabled cfg) {
+        public boolean checkEnabled(CheckEnabled cfg) {
             this.setEnabled(cfg.hasSelection);
+            return cfg.hasSelection;
         }
     }
 
@@ -827,17 +863,17 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     public static interface WritableComponent extends ReadableComponent {
         public void addUndoableEditListener(UndoManager manager);
 
-        public void cut();
+        public void cut(ActionEvent e);
 
-        public void delete();
+        public void delete(ActionEvent e);
 
-        public void find();
+        public void find(ActionEvent e);
 
-        public void findNext();
+        public void findNext(ActionEvent e);
 
-        public void gotoBegin();
+        public void gotoBegin(ActionEvent e);
 
-        public void gotoEnd();
+        public void gotoEnd(ActionEvent e);
 
         public boolean hasSelection();
 
@@ -845,13 +881,13 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
         public boolean isEditable();
 
-        public void paste();
+        public void paste(ActionEvent e);
 
-        public void replace();
+        public void replace(ActionEvent e);
 
-        public void selectAll();
+        public void selectAll(ActionEvent e);
 
-        public void unselect();
+        public void unselect(ActionEvent e);
     }
 
     private static final long serialVersionUID = 8362926178135321789L;
@@ -862,11 +898,11 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
     public static final String UNDO = "undo";
 
-    public static final String CUT = "cut";
+    public static final String CUT = "cut-tx";
 
-    public static final String COPY = "copy";
+    public static final String COPY = "copy-tx";
 
-    public static final String PASTE = "paste";
+    public static final String PASTE = "paste-tx";
 
     public static final String SELECT_ALL = "select-all";
 
@@ -916,9 +952,9 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     /**
      * JDOC
      */
-    public static JPopupMenu installPopupMenu(final ReadableComponent component) {
+    public static EComponentPopupMenu installPopupMenu(final ReadableComponent component) {
         final EComponentPopupMenuAction<ReadableComponent> copyAction = new CopyAction(component);
-        final EComponentPopupMenu popup = new EComponentPopupMenu();
+        final EComponentPopupMenu popup = new EComponentPopupMenu(component, null);
         popup.add(copyAction);
         component.getParentComponent().addAncestorListener(new AncestorAdapter() {
             @Override
@@ -955,15 +991,16 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     /**
      * JDOC
      */
-    public static JPopupMenu installPopupMenu(final WritableComponent component) {
+    public static EComponentPopupMenu installPopupMenu(final WritableComponent component) {
         if (!component.isEditable()) {
             return EComponentPopupMenu.installReadOnlyTextComponentPopupMenu((JTextComponent) component.getParentComponent());
         }
 
-        final UndoManager manager = new UndoManager();
+        final UndoManager undoRedoManager = new UndoManager();
+
         final EComponentPopupMenuAction<ReadableComponent> copyAction = new CopyAction(component);
-        final EComponentPopupMenuAction<WritableComponent> undoAction = new UndoAction(component, manager);
-        final EComponentPopupMenuAction<WritableComponent> redoAction = new RedoAction(component, manager);
+        final EComponentPopupMenuAction<WritableComponent> undoAction = new UndoAction(component, undoRedoManager);
+        final EComponentPopupMenuAction<WritableComponent> redoAction = new RedoAction(component, undoRedoManager);
         final EComponentPopupMenuAction<WritableComponent> cutAction = new CutAction(component);
         final EComponentPopupMenuAction<WritableComponent> pasteAction = new PasteAction(component);
         final EComponentPopupMenuAction<WritableComponent> deleteAction = new DeleteAction(component);
@@ -981,14 +1018,14 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         parentComponent.addAncestorListener(new AncestorAdapter() {
             @Override
             public void ancestorAdded(AncestorEvent e) {
-                manager.discardAllEdits();
+                undoRedoManager.discardAllEdits();
                 parentComponent.requestFocusInWindow();
             }
         });
 
-        component.addUndoableEditListener(manager);
+        component.addUndoableEditListener(undoRedoManager);
 
-        final EComponentPopupMenu popup = new EComponentPopupMenu();
+        final EComponentPopupMenu popup = new EComponentPopupMenu(component, undoRedoManager);
 
         popup.add(undoAction);
         popup.add(redoAction);
@@ -1011,32 +1048,35 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
             popup.add(replaceAction);
         }
 
-        popup.addPopupMenuListener(new PopupMenuListener() {
-            @Override
-            public void popupMenuCanceled(PopupMenuEvent e) {
-                if (component instanceof PopupMenuListener) {
-                    PopupMenuListener.class.cast(component).popupMenuCanceled(e);
+        if (parentComponent instanceof JTextComponent) {
+            JTextComponent textcomponent = JTextComponent.class.cast(parentComponent);
+            textcomponent.getDocument().addDocumentListener(new DocumentListener() {
+                @Override
+                public void changedUpdate(DocumentEvent e) {
+                    popup.checkEnabled();
                 }
-            }
 
-            @Override
-            public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-                popup.checkEnabled(new CheckEnabled(component.hasSelection(), component.hasText(), manager.canUndo(), manager.canRedo()));
-                if (component instanceof PopupMenuListener) {
-                    PopupMenuListener.class.cast(component).popupMenuWillBecomeInvisible(e);
+                @Override
+                public void insertUpdate(DocumentEvent e) {
+                    popup.checkEnabled();
                 }
-            }
 
-            @Override
-            public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-                popup.checkEnabled(new CheckEnabled(component.hasSelection(), component.hasText(), manager.canUndo(), manager.canRedo()));
-                if (component instanceof PopupMenuListener) {
-                    PopupMenuListener.class.cast(component).popupMenuWillBecomeVisible(e);
+                @Override
+                public void removeUpdate(DocumentEvent e) {
+                    popup.checkEnabled();
                 }
-            }
-        });
+            });
+            textcomponent.addCaretListener(new CaretListener() {
+                @Override
+                public void caretUpdate(CaretEvent e) {
+                    popup.checkEnabled();
+                }
+            });
+        }
 
         parentComponent.setComponentPopupMenu(popup);
+
+        popup.checkEnabled();
 
         return popup;
     }
@@ -1044,14 +1084,14 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     /**
      * use this method to add the popup menu to a textcomponent which is never editable
      */
-    public static JPopupMenu installReadOnlyTextComponentPopupMenu(final JTextComponent component) {
+    public static EComponentPopupMenu installReadOnlyTextComponentPopupMenu(final JTextComponent component) {
         return EComponentPopupMenu.installPopupMenu((ReadableComponent) new TextComponentWritableComponent(component));
     }
 
     /**
      * use this method to add the popup menu to a textcomponent which can be or is always editable
      */
-    public static JPopupMenu installTextComponentPopupMenu(final JTextComponent component) {
+    public static EComponentPopupMenu installTextComponentPopupMenu(final JTextComponent component) {
         return EComponentPopupMenu.installPopupMenu(new TextComponentWritableComponent(component));
     }
 
@@ -1127,10 +1167,16 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
     protected int cpy = 0;
 
+    protected ReadableComponent component;
+
+    protected UndoManager undoRedoManager;
+
     /**
      * hidden contructor
      */
-    protected EComponentPopupMenu() {
+    protected EComponentPopupMenu(ReadableComponent component, UndoManager undoRedoManager) {
+        this.component = component;
+        this.undoRedoManager = undoRedoManager;
         UIUtils.registerLocaleChangeListener((EComponentI) this);
     }
 
@@ -1138,22 +1184,19 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         if (action instanceof HasParentComponent) {
             KeyStroke acceleratorKey = KeyStroke.class.cast(action.getValue(Action.ACCELERATOR_KEY));
             if (acceleratorKey != null) {
-                JComponent component = HasParentComponent.class.cast(action).getParentComponent();
-                if (component != null) {
+                JComponent component1 = HasParentComponent.class.cast(action).getParentComponent();
+                if (component1 != null) {
                     String actionCommandKey = String.valueOf(action.getValue(Action.ACTION_COMMAND_KEY));
-                    this.accelerate(component, action, acceleratorKey, actionCommandKey);
+                    this.accelerate(component1, action, acceleratorKey, actionCommandKey);
                 }
             }
         }
     }
 
-    protected void accelerate(JComponent component, Action action, KeyStroke acceleratorKey, String actionCommandKey) {
-        if (component.getActionMap().get(actionCommandKey) != null) {
-            return;
-        }
-        // System.out.println(component.getClass().getName() + " :: " + acceleratorKey + " :: " + actionCommandKey);
-        component.getActionMap().put(actionCommandKey, action);
-        component.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(acceleratorKey, actionCommandKey);
+    protected void accelerate(JComponent component1, Action action, KeyStroke acceleratorKey, String actionCommandKey) {
+        System.out.println(this.component.getClass().getName() + " :: " + acceleratorKey + " :: " + actionCommandKey);
+        component1.getActionMap().put(actionCommandKey, action);
+        component1.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(acceleratorKey, actionCommandKey);
     }
 
     /**
@@ -1171,13 +1214,19 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         return mi;
     }
 
-    public void checkEnabled(CheckEnabled cfg) {
-        for (int i = 0; i < this.getComponentCount(); i++) {
-            Component menuItem = this.getComponent(i);
-            if (menuItem instanceof JMenuItem) {
-                Action action = JMenuItem.class.cast(menuItem).getAction();
-                if (action instanceof EComponentPopupMenuAction) {
-                    EComponentPopupMenuAction.class.cast(action).checkEnabled(cfg);
+    public void checkEnabled() {
+        if (this.component instanceof WritableComponent) {
+            WritableComponent writableComponent = WritableComponent.class.cast(this.component);
+            CheckEnabled cfg = new CheckEnabled(writableComponent.hasSelection(), writableComponent.hasText(), this.undoRedoManager.canUndo(),
+                    this.undoRedoManager.canRedo());
+            System.out.println(cfg);
+            for (int i = 0; i < this.getComponentCount(); i++) {
+                Component menuItem = this.getComponent(i);
+                if (menuItem instanceof JMenuItem) {
+                    Action action = JMenuItem.class.cast(menuItem).getAction();
+                    if (action instanceof EComponentPopupMenuAction) {
+                        System.out.println(action.getValue(Action.NAME) + ":" + EComponentPopupMenuAction.class.cast(action).checkEnabled(cfg));
+                    }
                 }
             }
         }
@@ -1196,9 +1245,9 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     public void setLocale(Locale l) {
         super.setLocale(l);
         for (int i = 0; i < this.getComponentCount(); i++) {
-            Component component = this.getComponent(i);
-            if (component instanceof JMenuItem) {
-                Action action = JMenuItem.class.cast(component).getAction();
+            Component component1 = this.getComponent(i);
+            if (component1 instanceof JMenuItem) {
+                Action action = JMenuItem.class.cast(component1).getAction();
                 if (action instanceof EComponentI) {
                     EComponentI.class.cast(action).setLocale(l);
                 }

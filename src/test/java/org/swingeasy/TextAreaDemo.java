@@ -1,7 +1,7 @@
 package org.swingeasy;
 
+import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.GridLayout;
 import java.io.IOException;
 
 import javax.swing.JFrame;
@@ -11,12 +11,12 @@ import javax.swing.WindowConstants;
 /**
  * @author Jurgen
  */
-public class PopupMenuDemo {
+public class TextAreaDemo {
     private static ETextArea addComponents(Container container) throws IOException {
-        container.setLayout(new GridLayout(-1, 1));
         String text = new String(Resources.getResource("src/site/resources/version-history.txt"));
         ETextArea jtf = new ETextArea(new ETextAreaConfig(), text);
         container.add(new JScrollPane(jtf));
+        container.add(jtf.getToolbar(), BorderLayout.NORTH);
         return jtf;
     }
 
@@ -27,13 +27,13 @@ public class PopupMenuDemo {
         @SuppressWarnings("unused")
         ETextArea tc = null;
         try {
-            tc = PopupMenuDemo.addComponents(frame.getContentPane());
+            tc = TextAreaDemo.addComponents(frame.getContentPane());
         } catch (Exception ex) {
             ex.printStackTrace();
         }
         frame.setSize(400, 300);
         frame.setLocationRelativeTo(null);
-        frame.setTitle("PopupMenuDemo");
+        frame.setTitle("TextAreaDemo");
         frame.setVisible(true);
     }
 }

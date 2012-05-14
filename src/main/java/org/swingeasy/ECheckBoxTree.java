@@ -1,5 +1,6 @@
 package org.swingeasy;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Locale;
@@ -62,10 +63,10 @@ public class ECheckBoxTree<T> extends JTree implements ECheckBoxTreeI<T>, Readab
 
     /**
      * 
-     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy()
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy(java.awt.event.ActionEvent)
      */
     @Override
-    public void copy() {
+    public void copy(ActionEvent e) {
         throw new UnsupportedOperationException("not implemented"); // TODO implement
     }
 
