@@ -1,5 +1,6 @@
 package org.swingeasy;
 
+import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.Locale;
 
@@ -16,7 +17,7 @@ import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
  * @author Jurgen
  */
 public class EListFilterComponent<T> extends ELabeledTextFieldButtonComponent implements TextFilterator<EListRecord<T>> {
-    
+
     private static final long serialVersionUID = -8699648472825404199L;
 
     protected EList<T> eList;
@@ -35,10 +36,10 @@ public class EListFilterComponent<T> extends ELabeledTextFieldButtonComponent im
 
     /**
      * 
-     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy()
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy(java.awt.event.ActionEvent)
      */
     @Override
-    public void copy() {
+    public void copy(ActionEvent e) {
         throw new UnsupportedOperationException("not implemented"); // TODO implement
     }
 

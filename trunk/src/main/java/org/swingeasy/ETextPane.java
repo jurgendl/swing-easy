@@ -17,7 +17,6 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
 import javax.swing.JTextPane;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
@@ -33,7 +32,6 @@ import javax.swing.text.rtf.RTFEditorKit;
 import org.swingeasy.EComponentPopupMenu.CheckEnabled;
 import org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction;
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
-import org.swingeasy.EComponentPopupMenu.TextComponentWritableComponent;
 
 /**
  * @author Jurgen
@@ -66,8 +64,9 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
-        public void checkEnabled(CheckEnabled cfg) {
+        public boolean checkEnabled(CheckEnabled cfg) {
             this.setEnabled(cfg.hasSelection);
+            return cfg.hasSelection;
         }
     }
 
@@ -91,8 +90,9 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
-        public void checkEnabled(CheckEnabled cfg) {
+        public boolean checkEnabled(CheckEnabled cfg) {
             this.setEnabled(cfg.hasSelection);
+            return cfg.hasSelection;
         }
     }
 
@@ -124,8 +124,9 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
-        public void checkEnabled(CheckEnabled cfg) {
+        public boolean checkEnabled(CheckEnabled cfg) {
             this.setEnabled(cfg.hasSelection);
+            return cfg.hasSelection;
         }
     }
 
@@ -156,8 +157,9 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
-        public void checkEnabled(CheckEnabled cfg) {
+        public boolean checkEnabled(CheckEnabled cfg) {
             this.setEnabled(cfg.hasSelection);
+            return cfg.hasSelection;
         }
     }
 
@@ -186,8 +188,9 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
-        public void checkEnabled(CheckEnabled cfg) {
+        public boolean checkEnabled(CheckEnabled cfg) {
             this.setEnabled(cfg.hasSelection);
+            return cfg.hasSelection;
         }
     }
 
@@ -214,8 +217,8 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
                 @Override
                 public void customize(JFileChooser jfc) {
                     jfc.resetChoosableFileFilters();
-                    jfc.addChoosableFileFilter(new ExtensionFileFilter(UIUtils.getDescriptionForFileType(ETextPane.FILE_EXT) + " ("
-                            + ETextPane.FILE_EXT + ")", ETextPane.FILE_EXT));
+                    jfc.addChoosableFileFilter(new ExtensionFileFilter(UIUtils.getDescriptionForFileType(OpenAction.this.delegate.getFileExt())
+                            + " (" + OpenAction.this.delegate.getFileExt() + ")", OpenAction.this.delegate.getFileExt()));
                 }
             });
             if (file == null) {
@@ -239,8 +242,9 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
-        public void checkEnabled(CheckEnabled cfg) {
+        public boolean checkEnabled(CheckEnabled cfg) {
             this.setEnabled(true);
+            return true;
         }
     }
 
@@ -268,8 +272,9 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
-        public void checkEnabled(CheckEnabled cfg) {
+        public boolean checkEnabled(CheckEnabled cfg) {
             this.setEnabled(cfg.hasSelection);
+            return cfg.hasSelection;
         }
     }
 
@@ -287,6 +292,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
          */
         @Override
         public void actionPerformed(ActionEvent e) {
+            final String fileExt = SaveAction.this.delegate.getFileExt();
             File file = CustomizableOptionPane.showFileChooserDialog(null, FileChooserType.SAVE, new FileChooserCustomizer() {
                 @Override
                 public void customize(Component parentComponent, JDialog dialog) {
@@ -296,12 +302,14 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
                 @Override
                 public void customize(JFileChooser jfc) {
                     jfc.resetChoosableFileFilters();
-                    jfc.addChoosableFileFilter(new ExtensionFileFilter(UIUtils.getDescriptionForFileType(ETextPane.FILE_EXT) + " ("
-                            + ETextPane.FILE_EXT + ")", ETextPane.FILE_EXT));
+                    jfc.addChoosableFileFilter(new ExtensionFileFilter(UIUtils.getDescriptionForFileType(fileExt) + " (" + fileExt + ")", fileExt));
                 }
             });
             if (file == null) {
                 return;
+            }
+            if (!file.getName().endsWith(fileExt)) {
+                file = new File(file.getParentFile(), file.getName() + "." + fileExt);
             }
             if (file.exists()) {
                 if (ResultType.OK != CustomizableOptionPane.showCustomDialog(null,
@@ -335,8 +343,9 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
-        public void checkEnabled(CheckEnabled cfg) {
-            this.setEnabled(true);
+        public boolean checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(cfg.hasText);
+            return cfg.hasText;
         }
     }
 
@@ -367,22 +376,24 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
-        public void checkEnabled(CheckEnabled cfg) {
+        public boolean checkEnabled(CheckEnabled cfg) {
             this.setEnabled(cfg.hasSelection);
+            return cfg.hasSelection;
         }
     }
-
-    public static final String FILE_EXT = "rtf";
 
     private static final long serialVersionUID = -2601772157437823356L;
 
     protected Action[] actions;
 
     public ETextPane() {
-        StyledEditorKit kit = new RTFEditorKit();
+        this(new RTFEditorKit());
+    }
+
+    public ETextPane(StyledEditorKit kit) {
         this.setEditorKit(kit);
         UIUtils.registerLocaleChangeListener((EComponentI) this);
-        JPopupMenu popupMenu = EComponentPopupMenu.installTextComponentPopupMenu(this);
+        EComponentPopupMenu popupMenu = EComponentPopupMenu.installTextComponentPopupMenu(this);
         popupMenu.addSeparator();
         this.actions = new Action[] {
                 new OpenAction(this),
@@ -402,6 +413,21 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
                 popupMenu.add(action);
             }
         }
+        popupMenu.checkEnabled();
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy(java.awt.event.ActionEvent)
+     */
+    @Override
+    public void copy(ActionEvent e) {
+        this.copy();
+    }
+
+    public String getFileExt() {
+        String contentType = this.getEditorKit().getContentType();
+        return contentType.substring(contentType.indexOf('/') + 1);
     }
 
     /**
@@ -413,6 +439,6 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
     }
 
     public JToolBar getToolbar() {
-        return new EToolBar((EComponentPopupMenu) this.getComponentPopupMenu(), new TextComponentWritableComponent(this));
+        return new EToolBar(this.getComponentPopupMenu());
     }
 }

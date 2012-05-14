@@ -1,5 +1,6 @@
 package org.swingeasy;
 
+import java.awt.event.ActionEvent;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
@@ -15,7 +16,7 @@ import ca.odell.glazedlists.matchers.Matcher;
  * @author Jurgen
  */
 public class ETreeSearchComponent<T> extends ELabeledTextFieldButtonComponent implements Matcher<T> {
-    
+
     private static final long serialVersionUID = 5196244125968828897L;
 
     protected final ETree<T> eTree;
@@ -31,10 +32,10 @@ public class ETreeSearchComponent<T> extends ELabeledTextFieldButtonComponent im
 
     /**
      * 
-     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy()
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy(java.awt.event.ActionEvent)
      */
     @Override
-    public void copy() {
+    public void copy(ActionEvent e) {
         throw new UnsupportedOperationException("not implemented"); // TODO implement
     }
 

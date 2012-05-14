@@ -32,7 +32,8 @@ public class ETableExporterAction<T> extends EComponentPopupMenuAction<ETable<T>
      * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
      */
     @Override
-    public void checkEnabled(CheckEnabled cfg) {
+    public boolean checkEnabled(CheckEnabled cfg) {
         this.setEnabled(cfg.hasText);
+        return cfg.hasText;
     }
 }
