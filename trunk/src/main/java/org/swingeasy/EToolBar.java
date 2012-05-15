@@ -3,6 +3,7 @@ package org.swingeasy;
 import java.awt.Component;
 
 import javax.swing.Action;
+import javax.swing.JButton;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JToolBar;
@@ -19,7 +20,8 @@ public class EToolBar extends JToolBar {
             Component component = popup.getComponent(i);
             if (component instanceof JMenuItem) {
                 Action action = JMenuItem.class.cast(component).getAction();
-                this.add(action);
+                JButton button = this.add(action);
+                button.setRequestFocusEnabled(false);
             } else {
                 this.addSeparator();
             }
