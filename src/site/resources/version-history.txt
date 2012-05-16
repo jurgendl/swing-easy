@@ -138,7 +138,7 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * ETable exporters: streaming
   * initial release ETextPane and additional actions in contextmenu
   * initial release font chooser
-  * initial release of EToolbar (accepts any EComponent popup menu) 
+  * initial release of EToolbar
   * EComboBox: auto-resizable popup
  * 2.6.0 (not planned, not released)
  * not planned
