@@ -24,11 +24,13 @@
 	<!-- Subversion: http://code.google.com/p/raisercostin/wiki/Maven2DistributionManagementOnGooglecode -->
 	<!-- Mercurial: http://stackoverflow.com/questions/3826128/maven-mercurial-site-deploy-issues -->
 	<distributionManagement>
+		<!--
 		<site>
 			<id>swing-easy.googlecode.site</id>
 			<name>swing-easy.googlecode.site</name>
 			<url>dav:https://swing-easy.googlecode.com/svn/site</url>
 		</site>
+		-->
 		<repository>
 			<id>swing-easy.googlecode.releases</id>
 			<name>swing-easy.googlecode.releases</name>
