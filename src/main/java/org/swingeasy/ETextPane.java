@@ -312,9 +312,9 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
                 file = new File(file.getParentFile(), file.getName() + "." + fileExt);
             }
             if (file.exists()) {
-                if (ResultType.OK != CustomizableOptionPane.showCustomDialog(null,
+                if (ResultType.YES != CustomizableOptionPane.showCustomDialog(null,
                         new JLabel(Messages.getString(null, "SaveAction.overwrite.warning.message")),
-                        Messages.getString(null, "SaveAction.overwrite.warning.title"), MessageType.WARNING, OptionType.OK_CANCEL, null,
+                        Messages.getString(null, "SaveAction.overwrite.warning.title"), MessageType.WARNING, OptionType.YES_NO, null,
                         new OptionPaneCustomizer() {
                             @Override
                             public void customize(Component parentComponent, MessageType messageType, OptionType optionType, JOptionPane pane,
