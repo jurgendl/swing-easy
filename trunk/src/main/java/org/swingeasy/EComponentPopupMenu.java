@@ -1194,7 +1194,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     }
 
     protected void accelerate(JComponent component1, Action action, KeyStroke acceleratorKey, String actionCommandKey) {
-        System.out.println(this.component.getClass().getName() + " :: " + acceleratorKey + " :: " + actionCommandKey);
+        // System.out.println(this.component.getClass().getName() + " :: " + acceleratorKey + " :: " + actionCommandKey);
         component1.getActionMap().put(actionCommandKey, action);
         component1.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(acceleratorKey, actionCommandKey);
     }
@@ -1219,13 +1219,14 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
             WritableComponent writableComponent = WritableComponent.class.cast(this.component);
             CheckEnabled cfg = new CheckEnabled(writableComponent.hasSelection(), writableComponent.hasText(), this.undoRedoManager.canUndo(),
                     this.undoRedoManager.canRedo());
-            System.out.println(cfg);
+            // System.out.println(cfg);
             for (int i = 0; i < this.getComponentCount(); i++) {
                 Component menuItem = this.getComponent(i);
                 if (menuItem instanceof JMenuItem) {
                     Action action = JMenuItem.class.cast(menuItem).getAction();
                     if (action instanceof EComponentPopupMenuAction) {
-                        System.out.println(action.getValue(Action.NAME) + ":" + EComponentPopupMenuAction.class.cast(action).checkEnabled(cfg));
+                        EComponentPopupMenuAction.class.cast(action).checkEnabled(cfg);
+                        // System.out.println(action.getValue(Action.NAME) + ":" + EComponentPopupMenuAction.class.cast(action).checkEnabled(cfg));
                     }
                 }
             }
