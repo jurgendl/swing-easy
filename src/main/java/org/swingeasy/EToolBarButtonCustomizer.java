@@ -38,9 +38,9 @@ public class EToolBarButtonCustomizer extends EButtonCustomizer {
         if (button.getAction() != null) {
             KeyStroke key = KeyStroke.class.cast(button.getAction().getValue(Action.ACCELERATOR_KEY));
             String kst = EComponentPopupMenu.keyStroke2String(key).trim();
-            Object description = button.getAction().getValue(Action.LONG_DESCRIPTION);
+            Object description = button.getAction().getValue(Action.SHORT_DESCRIPTION);
             if (description == null) {
-                description = button.getAction().getValue(Action.SHORT_DESCRIPTION);
+                description = button.getAction().getValue(Action.LONG_DESCRIPTION);
             }
             if (kst.length() > 0) {
                 button.setToolTipText(String.valueOf(description) + " (" + kst + ")");
