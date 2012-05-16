@@ -32,6 +32,7 @@ public class EToolBarButtonCustomizer extends EButtonCustomizer {
             button.setPreferredSize(this.defaultDimension);
             button.setSize(this.defaultDimension);
         }
+        button.setFocusable(false);
         button.setHideActionText(true);
         UIUtils.registerLocaleChangeListener(button);
         if (button.getAction() != null) {
