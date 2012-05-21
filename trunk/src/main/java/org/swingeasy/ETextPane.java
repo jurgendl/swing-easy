@@ -53,10 +53,9 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         public void actionPerformed(ActionEvent e) {
             StyledEditorKit kit = this.delegate.getStyledEditorKit();
             MutableAttributeSet attr = kit.getInputAttributes();
-            boolean bold = (StyleConstants.isBold(attr)) ? false : true;
-            SimpleAttributeSet sas = new SimpleAttributeSet();
-            StyleConstants.setBold(sas, bold);
-            this.delegate.setCharacterAttributes(sas, false);
+            boolean bold = !StyleConstants.isBold(attr);
+            StyleConstants.setBold(attr, bold);
+            this.delegate.setCharacterAttributes(attr, false);
         }
 
         /**
@@ -146,10 +145,9 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         public void actionPerformed(ActionEvent e) {
             StyledEditorKit kit = this.delegate.getStyledEditorKit();
             MutableAttributeSet attr = kit.getInputAttributes();
-            boolean italic = (StyleConstants.isItalic(attr)) ? false : true;
-            SimpleAttributeSet sas = new SimpleAttributeSet();
-            StyleConstants.setItalic(sas, italic);
-            this.delegate.setCharacterAttributes(sas, false);
+            boolean bold = !StyleConstants.isItalic(attr);
+            StyleConstants.setItalic(attr, bold);
+            this.delegate.setCharacterAttributes(attr, false);
         }
 
         /**
@@ -365,10 +363,10 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         public void actionPerformed(ActionEvent e) {
             StyledEditorKit kit = this.delegate.getStyledEditorKit();
             MutableAttributeSet attr = kit.getInputAttributes();
-            boolean underline = (StyleConstants.isUnderline(attr)) ? false : true;
-            SimpleAttributeSet sas = new SimpleAttributeSet();
-            StyleConstants.setUnderline(sas, underline);
-            this.delegate.setCharacterAttributes(sas, false);
+            boolean bold = !StyleConstants.isUnderline(attr);
+            StyleConstants.setUnderline(attr, bold);
+            this.delegate.setCharacterAttributes(attr, false);
+
         }
 
         /**
@@ -411,6 +409,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
                 popupMenu.addSeparator();
             } else {
                 popupMenu.add(action);
+                EComponentPopupMenu.accelerate(this, action);
             }
         }
         popupMenu.checkEnabled();

@@ -920,6 +920,36 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
     public static final String FIND_NEXT = "find-next";
 
+    protected static boolean accelerate(Action action) {
+        if (action instanceof HasParentComponent) {
+            KeyStroke acceleratorKey = KeyStroke.class.cast(action.getValue(Action.ACCELERATOR_KEY));
+            if (acceleratorKey != null) {
+                JComponent component1 = HasParentComponent.class.cast(action).getParentComponent();
+                if (component1 != null) {
+                    String actionCommandKey = String.valueOf(action.getValue(Action.ACTION_COMMAND_KEY));
+                    return EComponentPopupMenu.accelerate(component1, action, acceleratorKey, actionCommandKey);
+                }
+            }
+        }
+        return false;
+    }
+
+    protected static boolean accelerate(JComponent parentComponent, Action action) {
+        KeyStroke acceleratorKey = KeyStroke.class.cast(action.getValue(Action.ACCELERATOR_KEY));
+        if (acceleratorKey != null) {
+            String actionCommandKey = String.valueOf(action.getValue(Action.ACTION_COMMAND_KEY));
+            return EComponentPopupMenu.accelerate(parentComponent, action, acceleratorKey, actionCommandKey);
+        }
+        return false;
+    }
+
+    protected static boolean accelerate(JComponent parentComponent, Action action, KeyStroke acceleratorKey, String actionCommandKey) {
+        // System.out.println(this.component.getClass().getName() + " :: " + acceleratorKey + " :: " + actionCommandKey);
+        parentComponent.getActionMap().put(actionCommandKey, action);
+        parentComponent.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(acceleratorKey, actionCommandKey);
+        return true;
+    }
+
     /**
      * copy to clipboard
      * 
@@ -1180,25 +1210,6 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         UIUtils.registerLocaleChangeListener((EComponentI) this);
     }
 
-    protected void accelerate(Action action) {
-        if (action instanceof HasParentComponent) {
-            KeyStroke acceleratorKey = KeyStroke.class.cast(action.getValue(Action.ACCELERATOR_KEY));
-            if (acceleratorKey != null) {
-                JComponent component1 = HasParentComponent.class.cast(action).getParentComponent();
-                if (component1 != null) {
-                    String actionCommandKey = String.valueOf(action.getValue(Action.ACTION_COMMAND_KEY));
-                    this.accelerate(component1, action, acceleratorKey, actionCommandKey);
-                }
-            }
-        }
-    }
-
-    protected void accelerate(JComponent component1, Action action, KeyStroke acceleratorKey, String actionCommandKey) {
-        // System.out.println(this.component.getClass().getName() + " :: " + acceleratorKey + " :: " + actionCommandKey);
-        component1.getActionMap().put(actionCommandKey, action);
-        component1.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(acceleratorKey, actionCommandKey);
-    }
-
     /**
      * 
      * let action implement {@link EComponentI} to listen to {@link Locale} changes and {@link HasParentComponent} to accelerate {@link Action}s for
@@ -1210,7 +1221,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     public JMenuItem add(Action action) {
         this.setLocale(action);
         JMenuItem mi = super.add(action);
-        this.accelerate(action);
+        EComponentPopupMenu.accelerate(action);
         return mi;
     }
 
