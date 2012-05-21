@@ -5,14 +5,13 @@ import java.awt.Container;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
-import javax.swing.text.html.HTMLEditorKit;
 
 /**
  * @author Jurgen
  */
 public class TextPaneDemo {
     private static void addComponents(Container container) {
-        ETextPane pane = new ETextPane(new HTMLEditorKit());
+        ETextPane pane = new ETextPane(/* new HTMLEditorKit() */);
         container.add(pane);
         container.add(pane.getToolbar(), BorderLayout.NORTH);
     }
