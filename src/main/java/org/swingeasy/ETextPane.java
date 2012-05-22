@@ -77,6 +77,10 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
             this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_E, Event.CTRL_MASK));
         }
 
+        /**
+         * 
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             MutableAttributeSet attr = new SimpleAttributeSet();
