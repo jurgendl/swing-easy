@@ -872,7 +872,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
                 ETableExporter<T> exporter = iterator.next();
                 ETableExporterAction<T> action = new ETableExporterAction<T>(exporter, this);
                 menu.add(action);
-            } catch (Exception ex) {
+            } catch (Throwable ex) {
                 ex.printStackTrace();
             }
         }
