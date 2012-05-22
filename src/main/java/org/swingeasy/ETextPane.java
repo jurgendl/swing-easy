@@ -210,10 +210,10 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-            File file = CustomizableOptionPane.showFileChooserDialog(null, FileChooserType.OPEN, new FileChooserCustomizer() {
+            File file = CustomizableOptionPane.showFileChooserDialog(this.getParentComponent(), FileChooserType.OPEN, new FileChooserCustomizer() {
                 @Override
                 public void customize(Component parentComponent, JDialog dialog) {
-                    dialog.setLocationRelativeTo(null);
+                    // dialog.setLocationRelativeTo(null);
                 }
 
                 @Override
@@ -295,10 +295,10 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         @Override
         public void actionPerformed(ActionEvent e) {
             final String fileExt = SaveAction.this.delegate.getFileExt();
-            File file = CustomizableOptionPane.showFileChooserDialog(null, FileChooserType.SAVE, new FileChooserCustomizer() {
+            File file = CustomizableOptionPane.showFileChooserDialog(this.getParentComponent(), FileChooserType.SAVE, new FileChooserCustomizer() {
                 @Override
                 public void customize(Component parentComponent, JDialog dialog) {
-                    dialog.setLocationRelativeTo(null);
+                    // dialog.setLocationRelativeTo(null);
                 }
 
                 @Override
@@ -314,14 +314,14 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
                 file = new File(file.getParentFile(), file.getName() + "." + fileExt);
             }
             if (file.exists()) {
-                if (ResultType.YES != CustomizableOptionPane.showCustomDialog(null,
+                if (ResultType.YES != CustomizableOptionPane.showCustomDialog(this.getParentComponent(),
                         new JLabel(Messages.getString(null, "SaveAction.overwrite.warning.message")),
                         Messages.getString(null, "SaveAction.overwrite.warning.title"), MessageType.WARNING, OptionType.YES_NO, null,
                         new OptionPaneCustomizer() {
                             @Override
                             public void customize(Component parentComponent, MessageType messageType, OptionType optionType, JOptionPane pane,
                                     JDialog dialog) {
-                                dialog.setLocationRelativeTo(null);
+                                // dialog.setLocationRelativeTo(null);
                             }
                         })) {
                     return;
