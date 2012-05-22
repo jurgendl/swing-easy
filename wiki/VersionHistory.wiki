@@ -3,7 +3,7 @@
 
 = Version History =
 
-latest change: 2012-05-21
+latest change: 2012-05-22
 
 featured: downloads are available on the frontpage
 
@@ -132,18 +132,22 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * initial release EFormattedTextField & Format builders
   * stub for L10n and i18n
  * 2.5.4.1 (featured)
-  * bugfix: ETextField is set to non editable instead of disabled
-  * ETextArea: highlight painter renamed and fixes  
- * 2.5.5 (featured)
+  * bugfix: ETextField: is set to non editable instead of disabled
+  * bugfix: ETextArea: highlight painter renamed and fixes  
+ * 2.5.5
   * ETable exporters: new: export to xlsx
   * ETable exporters: streaming
   * initial release ETextPane and additional actions in contextmenu
   * initial release font chooser
   * initial release of EToolbar
   * EComboBox: auto-resizable popup
- * 2.5.6 (not released)
-  * fix: ETextPane: bold/italic/underline toggles
+ * 2.5.5.1 (featured)
+  * fixed: ETextPane: bold/italic/underline toggles
   * static method to accelerate action with keystroke (used in ETextPane)
+  * fixed: ETextPane: some actions were not enabled
+  * fixed: ETextPane: dialog center on pane and not screen
+  * fixed: ETable exporter: poi is now optional
+ * 2.5.6 (not released)
  * 2.6.0 (not planned, not released)
  * not planned
   * bug: dialogs created by CustomizableOptionPane are not centered on parent component unless using a OptionPaneCustomizer to center the dialog yourself
