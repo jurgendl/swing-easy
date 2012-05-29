@@ -15,3 +15,33 @@ http://subversion.tigris.org/ and http://tortoisesvn.tigris.org/ or http://torto
 
   * Maven 2.2.1 for building, not tested with Maven 3.x
 http://maven.apache.org/
+
+= Libraries =
+
+see the dependency tree of the generated site for details and dependencies of these libraties
+
+== Required ==
+
+Glazedlists: http://java.net/projects/glazedlists/
+
+commons-lang: http://commons.apache.org/lang/
+
+MigLayout: http://www.miglayout.com/
+
+commons-beanutils: http://commons.apache.org/beanutils/
+
+Ostermiller Java Utilities: http://ostermiller.org/utils/
+
+== Recommended ==
+
+CGLib: http://cglib.sourceforge.net/
+
+Javassist: http://www.javassist.org/
+
+== Optional ==
+
+Flying Saucer: http://xhtmlrenderer.java.net/
+
+iText: http://itextpdf.com/
+
+Apache POI: http://poi.apache.org/
