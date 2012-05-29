@@ -41,7 +41,7 @@ if you are using the EDT safe interface, use one of both (1)
 * commons-beanutils: http://commons.apache.org/beanutils/
 only when using ETableRecordBean
 
-* Flying Saucer: http://xhtmlrenderer.java.net/
+* Flying Saucer: http://code.google.com/p/flying-saucer/
 ETable exporter to pdf
 
 * iText: http://itextpdf.com/
