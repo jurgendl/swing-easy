@@ -28,20 +28,24 @@ commons-lang: http://commons.apache.org/lang/
 
 MigLayout: http://www.miglayout.com/
 
-commons-beanutils: http://commons.apache.org/beanutils/
-
 Ostermiller Java Utilities: http://ostermiller.org/utils/
 
-== Recommended ==
+== Recommended or optional ==
 
 CGLib: http://cglib.sourceforge.net/
+(1) if you are using the EDT safe interface, use one of both
 
 Javassist: http://www.javassist.org/
+(1) if you are using the EDT safe interface, use one of both
 
-== Optional ==
+commons-beanutils: http://commons.apache.org/beanutils/
+only when using ETableRecordBean
 
 Flying Saucer: http://xhtmlrenderer.java.net/
+ETable exporter to pdf
 
 iText: http://itextpdf.com/
+ETable exporter to pdf
 
 Apache POI: http://poi.apache.org/
+ETable exporter to xls(x)
