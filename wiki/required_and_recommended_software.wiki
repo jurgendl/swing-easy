@@ -22,30 +22,22 @@ see the dependency tree of the generated site for details and dependencies of th
 
 == Required ==
 
-Glazedlists: http://java.net/projects/glazedlists/
-
-commons-lang: http://commons.apache.org/lang/
-
-MigLayout: http://www.miglayout.com/
-
-Ostermiller Java Utilities: http://ostermiller.org/utils/
+* Glazedlists: http://java.net/projects/glazedlists/
+* commons-lang: http://commons.apache.org/lang/
+* MigLayout: http://www.miglayout.com/
+* Ostermiller Java Utilities: http://ostermiller.org/utils/
 
 == Recommended or optional ==
 
-CGLib: http://cglib.sourceforge.net/
-(1) if you are using the EDT safe interface, use one of both
-
-Javassist: http://www.javassist.org/
-(1) if you are using the EDT safe interface, use one of both
-
-commons-beanutils: http://commons.apache.org/beanutils/
+* CGLib: http://cglib.sourceforge.net/
+if you are using the EDT safe interface, use one of both (1)
+* Javassist: http://www.javassist.org/
+if you are using the EDT safe interface, use one of both (1)
+* commons-beanutils: http://commons.apache.org/beanutils/
 only when using ETableRecordBean
-
-Flying Saucer: http://xhtmlrenderer.java.net/
+* Flying Saucer: http://xhtmlrenderer.java.net/
 ETable exporter to pdf
-
-iText: http://itextpdf.com/
+* iText: http://itextpdf.com/
 ETable exporter to pdf
-
-Apache POI: http://poi.apache.org/
+* Apache POI: http://poi.apache.org/
 ETable exporter to xls(x)
