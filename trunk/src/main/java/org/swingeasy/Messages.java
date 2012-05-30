@@ -56,6 +56,12 @@ public class Messages implements Translator {
      */
     @Override
     public String getString(String key, Object... arguments) {
-        return String.format(Messages.getString(null, key), arguments);
+        String translated = Messages.getString(null, key);
+        if (translated.startsWith("{") && translated.endsWith("}")) {
+            key = translated.substring(1, translated.length() - 1);
+            translated = Messages.getString(null, key);
+        }
+        String argumentsReplaced = String.format(translated, arguments);
+        return argumentsReplaced;
     }
 }
