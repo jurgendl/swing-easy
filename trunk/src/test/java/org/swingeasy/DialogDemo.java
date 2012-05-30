@@ -1,12 +1,9 @@
 package org.swingeasy;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 /**
@@ -24,12 +21,6 @@ public class DialogDemo {
         frame.getContentPane().add(l);
         JLabel n = new JLabel("n");
         frame.getContentPane().add(n, BorderLayout.NORTH);
-        CustomizableOptionPane.showCustomDialog(n, new JLabel("text"), "title", MessageType.QUESTION, OptionType.OK, null,
-                new OptionPaneCustomizer() {
-                    @Override
-                    public void customize(Component parentComponent, MessageType messageType, OptionType optionType, JOptionPane pane, JDialog dialog) {
-                        //
-                    }
-                });
+        CustomizableOptionPane.showCustomDialog(n, new JLabel("text"), "title", MessageType.QUESTION, OptionType.OK, null, null);
     }
 }
