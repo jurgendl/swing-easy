@@ -1,11 +1,9 @@
 package org.swingeasy;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.SpinnerNumberModel;
 
@@ -19,22 +17,13 @@ import com.xenoage.util.gui.FontChooserComboBox;
 public class EFontChooser extends JPanel implements EComponentI {
     private static final long serialVersionUID = 3686474630456833708L;
 
-    public static Font showDialog() {
-        return EFontChooser.showDialog(null);
-    }
-
-    public static Font showDialog(String defaultFont) {
+    public static Font showDialog(JComponent parent, String defaultFont) {
         EFontChooser fc = new EFontChooser();
         if (defaultFont != null) {
             fc.fc.setSelectedItem(defaultFont);
         }
-        if (ResultType.OK == CustomizableOptionPane.showCustomDialog(null, fc, Messages.getString(fc.getLocale(), "font-chooser-title"),
-                MessageType.QUESTION, OptionType.OK_CANCEL, null, new OptionPaneCustomizer() {
-                    @Override
-                    public void customize(Component parentComponent, MessageType messageType, OptionType optionType, JOptionPane pane, JDialog dialog) {
-                        dialog.setLocationRelativeTo(null);
-                    }
-                })) {
+        if (ResultType.OK == CustomizableOptionPane.showCustomDialog(parent, fc, Messages.getString(fc.getLocale(), "font-chooser-title"),
+                MessageType.QUESTION, OptionType.OK_CANCEL, null, null)) {
             Font font = new Font(fc.fc.getSelectedFontName(), Font.PLAIN, fc.size.get());
             return font;
         }

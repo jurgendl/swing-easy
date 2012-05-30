@@ -112,7 +112,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-            Font font = EFontChooser.showDialog();
+            Font font = EFontChooser.showDialog(this.getParentComponent(), null);
             if (font == null) {
                 return;
             }
