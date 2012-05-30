@@ -91,6 +91,7 @@ public class TableDemo {
                 public void propertyChange(PropertyChangeEvent evt) {
                     Locale l = new Locale(String.valueOf(evt.getNewValue()));
                     SystemSettings.setCurrentLocale(l);
+                    table.repaint();
                 }
             });
             frame.getContentPane().add(localepanel, BorderLayout.NORTH);
