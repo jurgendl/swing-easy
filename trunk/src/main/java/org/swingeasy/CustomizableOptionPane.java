@@ -65,7 +65,7 @@ public class CustomizableOptionPane {
     }
 
     private static class CustomizableOptionPaneImpl extends JOptionPane {
-        
+
         private static final long serialVersionUID = 6539025260851538675L;
 
         private static Method styleFromMessageTypeMethod;
@@ -104,9 +104,11 @@ public class CustomizableOptionPane {
             }
         }
 
-        private static ResultType showDialog(Component parentComponent, JComponent component, String title, MessageType messageType,
-                OptionType optionType, Icon icon, OptionPaneCustomizer customizer) throws HeadlessException {
-            CustomizableOptionPaneImpl pane = new CustomizableOptionPaneImpl(component, messageType.code, optionType.code, icon, null, null);
+        @SuppressWarnings("unchecked")
+        private static <T> T showDialog(Component parentComponent, JComponent component, String title, MessageType messageType,
+                OptionType optionType, Icon icon, OptionPaneCustomizer customizer, T[] options, T initialValue) throws HeadlessException {
+            CustomizableOptionPaneImpl pane = new CustomizableOptionPaneImpl(component, messageType.code, optionType.code, icon, options,
+                    initialValue);
             pane.setInitialValue(null);
             pane.setComponentOrientation(((parentComponent == null) ? JOptionPane.getRootFrame() : parentComponent).getComponentOrientation());
 
@@ -123,20 +125,26 @@ public class CustomizableOptionPane {
 
             Object selectedValue = pane.getValue();
 
+            // options
+            if (options != null) {
+                return (T) selectedValue;
+            }
+
+            // no options
             if (selectedValue == null) {
-                return ResultType.CLOSED;
+                return (T) ResultType.CLOSED;
             }
 
             if (selectedValue instanceof Integer) {
                 int counter = Integer.class.cast(selectedValue).intValue();
                 try {
-                    return optionType.getResultType(counter);
+                    return (T) optionType.getResultType(counter);
                 } catch (IllegalArgumentException ex) {
-                    return ResultType.CLOSED;
+                    return (T) ResultType.CLOSED;
                 }
             }
 
-            return ResultType.CLOSED;
+            return (T) ResultType.CLOSED;
         }
 
         private CustomizableOptionPaneImpl(Object message, int messageType, int optionType, Icon icon, Object[] options, Object initialValue) {
@@ -181,7 +189,13 @@ public class CustomizableOptionPane {
      */
     public static ResultType showCustomDialog(Component parentComponent, JComponent component, String title, MessageType messageType,
             OptionType optionType, Icon icon, OptionPaneCustomizer customizer) throws HeadlessException {
-        return CustomizableOptionPaneImpl.showDialog(parentComponent, component, title, messageType, optionType, icon, customizer);
+        return CustomizableOptionPaneImpl.showDialog(parentComponent, component, title, messageType, optionType, icon, customizer, null, null);
+    }
+
+    public static <T> T showCustomDialog(Component parentComponent, JComponent component, String title, MessageType messageType,
+            OptionType optionType, Icon icon, OptionPaneCustomizer customizer, T[] options, T initialValue) throws HeadlessException {
+        return CustomizableOptionPaneImpl.showDialog(parentComponent, component, title, messageType, optionType, icon, customizer, options,
+                initialValue);
     }
 
     public static File showFileChooserDialog(Component parent, FileChooserType type, FileChooserCustomizer customizer) {
