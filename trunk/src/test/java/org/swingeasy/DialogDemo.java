@@ -19,8 +19,8 @@ public class DialogDemo {
         frame.setVisible(true);
         JLabel l = new JLabel("center");
         frame.getContentPane().add(l);
-        JLabel n = new JLabel("n");
+        JLabel n = new JLabel("north");
         frame.getContentPane().add(n, BorderLayout.NORTH);
-        CustomizableOptionPane.showCustomDialog(n, new JLabel("text"), "title", MessageType.QUESTION, OptionType.OK, null, null);
+        CustomizableOptionPane.showCustomDialog(n, new JLabel("on top of north"), "", MessageType.QUESTION, OptionType.OK, null, null);
     }
 }
