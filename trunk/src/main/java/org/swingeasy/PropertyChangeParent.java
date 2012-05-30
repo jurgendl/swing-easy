@@ -8,7 +8,7 @@ import java.beans.PropertyChangeSupport;
  * @author Jurgen
  */
 public class PropertyChangeParent {
-    private PropertyChangeSupport propertyChangeSupport;
+    protected PropertyChangeSupport propertyChangeSupport;
 
     protected PropertyChangeParent() {
         this.propertyChangeSupport = new PropertyChangeSupport(this);

@@ -12,6 +12,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.geom.RoundRectangle2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeListenerProxy;
 import java.io.File;
 import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;
@@ -120,6 +121,71 @@ public class UIUtils {
         }
     }
 
+    protected static class PropertyChangeListenerDelegate implements PropertyChangeListener {
+        protected Component weakReferencedComponent;
+
+        protected EComponentI weakReferencedEComponentI;
+
+        public PropertyChangeListenerDelegate(Component component) {
+            this.weakReferencedComponent = component;
+        }
+
+        public PropertyChangeListenerDelegate(EComponentI component) {
+            this.weakReferencedEComponentI = component;
+        }
+
+        public Object getDelageting() {
+            if (this.weakReferencedComponent != null) {
+                return this.weakReferencedComponent;
+            } else if (this.weakReferencedEComponentI != null) {
+                return this.weakReferencedEComponentI;
+            } else {
+                return null;
+            }
+        }
+
+        /**
+         * 
+         * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+         */
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            if (this.weakReferencedComponent != null) {
+                Component component = this.weakReferencedComponent;
+                if (component != null) {
+                    component.setLocale(Locale.class.cast(evt.getNewValue()));
+                }
+            }
+            if (this.weakReferencedEComponentI != null) {
+                EComponentI component = this.weakReferencedEComponentI;
+                if (component != null) {
+                    component.setLocale(Locale.class.cast(evt.getNewValue()));
+                }
+            }
+        }
+
+        /**
+         * 
+         * @see java.lang.Object#toString()
+         */
+        @Override
+        public String toString() {
+            return "PropertyChangeListener[" + SystemSettings.LOCALE + "]@" + Integer.toHexString(this.hashCode());
+        }
+
+    }
+
+    private static class StaticPropertyChangeListener implements PropertyChangeListener {
+        /**
+         * 
+         * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+         */
+        @Override
+        public void propertyChange(PropertyChangeEvent evt) {
+            UIUtils.setUILanguage(Locale.class.cast(evt.getNewValue()));
+        }
+    }
+
     /**
      * UncaughtExceptionHandler delegating to given instance
      */
@@ -149,12 +215,7 @@ public class UIUtils {
     }
 
     {
-        SystemSettings.getSingleton().addPropertyChangeListener(SystemSettings.LOCALE, new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                UIUtils.setUILanguage(Locale.class.cast(evt.getNewValue()));
-            }
-        });
+        SystemSettings.getSingleton().addPropertyChangeListener(SystemSettings.LOCALE, new StaticPropertyChangeListener());
     }
 
     static {
@@ -172,6 +233,21 @@ public class UIUtils {
     protected static Map<String, Icon> cachedIcons = new HashMap<String, Icon>();
 
     protected static Map<String, String> cachedDescriptions = new HashMap<String, String>();
+
+    public static void debugLocaleChangeListeners() {
+        for (Object o : SystemSettings.getSingleton().propertyChangeSupport.getPropertyChangeListeners()) {
+            try {
+                PropertyChangeListenerProxy pclp = (PropertyChangeListenerProxy) o;
+                if (!org.swingeasy.WeakReferencedListener.isWrapped(pclp.getListener())) {
+                    continue;
+                }
+                Object component = WeakReferencedListener.<PropertyChangeListenerDelegate> unwrap(pclp.getListener()).getReference().getDelageting();
+                System.out.println((component == null ? null : component.hashCode()) + " : " + component);
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        }
+    }
 
     /**
      * gets first displayable {@link JFrame}
@@ -274,38 +350,33 @@ public class UIUtils {
         });
     }
 
-    public static void registerLocaleChangeListener(final Component component) {
+    public static boolean registerLocaleChangeListener(final Component component) {
         component.setLocale(SystemSettings.getCurrentLocale());
-
         SystemSettings.getSingleton().addPropertyChangeListener(SystemSettings.LOCALE,
-                WeakReferencedListener.wrap(PropertyChangeListener.class, new PropertyChangeListener() {
-                    @Override
-                    public void propertyChange(PropertyChangeEvent evt) {
-                        component.setLocale(Locale.class.cast(evt.getNewValue()));
-                    }
-
-                    @Override
-                    public String toString() {
-                        return "PropertyChangeListener[" + SystemSettings.LOCALE + "]@" + Integer.toHexString(this.hashCode());
-                    }
-                }));
+                WeakReferencedListener.wrap(PropertyChangeListener.class, new PropertyChangeListenerDelegate(component)));
+        return true;
     }
 
-    public static void registerLocaleChangeListener(final EComponentI component) {
+    public static boolean registerLocaleChangeListener(final EComponentI component) {
+        for (Object o : SystemSettings.getSingleton().propertyChangeSupport.getPropertyChangeListeners()) {
+            try {
+                PropertyChangeListenerProxy pclp = (PropertyChangeListenerProxy) o;
+                if (!org.swingeasy.WeakReferencedListener.isWrapped(pclp.getListener())) {
+                    continue;
+                }
+                Object component0 = WeakReferencedListener.<PropertyChangeListenerDelegate> unwrap(pclp.getListener()).getReference().getDelageting();
+                if (component == component0) {
+                    return false;
+                }
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        }
+
         component.setLocale(SystemSettings.getCurrentLocale());
-
         SystemSettings.getSingleton().addPropertyChangeListener(SystemSettings.LOCALE,
-                WeakReferencedListener.wrap(PropertyChangeListener.class, new PropertyChangeListener() {
-                    @Override
-                    public void propertyChange(PropertyChangeEvent evt) {
-                        component.setLocale(Locale.class.cast(evt.getNewValue()));
-                    }
-
-                    @Override
-                    public String toString() {
-                        return "PropertyChangeListener[" + SystemSettings.LOCALE + "]@" + Integer.toHexString(this.hashCode());
-                    }
-                }));
+                WeakReferencedListener.wrap(PropertyChangeListener.class, new PropertyChangeListenerDelegate(component)));
+        return true;
     }
 
     /**
