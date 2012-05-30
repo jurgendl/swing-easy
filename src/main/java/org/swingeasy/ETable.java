@@ -26,6 +26,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ServiceConfigurationError;
 import java.util.ServiceLoader;
 import java.util.regex.Pattern;
 
@@ -872,7 +873,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
                 ETableExporter<T> exporter = iterator.next();
                 ETableExporterAction<T> action = new ETableExporterAction<T>(exporter, this);
                 menu.add(action);
-            } catch (Throwable ex) {
+            } catch (ServiceConfigurationError ex) {
                 ex.printStackTrace(System.err);
             }
         }
