@@ -492,8 +492,16 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
 
     protected static final String TABLE_EDITORS_DIR = "org.swingeasy.table.editor";
 
-    public ETable() {
-        this(new ETableConfig(false));
+    /**
+     * use other constructors instead
+     */
+    protected ETable() {
+        this.filtering = null;
+        this.sorting = null;
+        this.cfg = null;
+        this.records = null;
+        this.tableModel = null;
+        this.tableSelectionModel = null;
     }
 
     public ETable(ETableConfig configuration) {
@@ -700,8 +708,8 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
         TableCellEditor de = super.getDefaultEditor(columnClass);
         if (de instanceof EComponentI) {
             UIUtils.registerLocaleChangeListener(EComponentI.class.cast(de));
-        } else if (de instanceof Component) {
-            UIUtils.registerLocaleChangeListener(Component.class.cast(de));
+            // } else if (de instanceof Component) {
+            // UIUtils.registerLocaleChangeListener(Component.class.cast(de));
         }
         return de;
     }
@@ -716,8 +724,8 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
 
         if (dr instanceof EComponentI) {
             UIUtils.registerLocaleChangeListener(EComponentI.class.cast(dr));
-        } else if (dr instanceof Component) {
-            UIUtils.registerLocaleChangeListener(Component.class.cast(dr));
+            // } else if (dr instanceof Component) {
+            // UIUtils.registerLocaleChangeListener(Component.class.cast(dr));
         }
         return dr;
     }
