@@ -1,15 +1,10 @@
 package org.swingeasy;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
@@ -56,21 +51,7 @@ public class ListInDialogDemo {
             }
 
             ResultType returnValue = CustomizableOptionPane.showCustomDialog(parent, container, "Demo", MessageType.QUESTION, OptionType.OK_CANCEL,
-                    parent.getIconImage() == null ? null : new ImageIcon(parent.getIconImage()), new OptionPaneCustomizer() {
-                        @Override
-                        public void customize(Component parentComponent, MessageType messageType, OptionType optionType, final JOptionPane pane,
-                                final JDialog dialog) {
-                            list.addMouseListener(new MouseAdapter() {
-                                @Override
-                                public void mouseClicked(MouseEvent e) {
-                                    if ((e.getClickCount() == 2) && (e.getButton() == MouseEvent.BUTTON1)) {
-                                        pane.setValue(new Integer(0));
-                                        dialog.dispose();
-                                    }
-                                }
-                            });
-                        }
-                    });
+                    parent.getIconImage() == null ? null : new ImageIcon(parent.getIconImage()), new ListOptionPaneCustomizer<DemoValue>(list));
             System.out.println(returnValue + ": " + list.getSelectedRecord());
         } catch (Exception ex) {
             ex.printStackTrace();
