@@ -3,8 +3,6 @@ package org.swingeasy;
 import java.beans.PropertyChangeListener;
 import java.util.Locale;
 
-import javax.swing.JComponent;
-
 import org.swingeasy.system.SystemSettings;
 
 /**
@@ -12,12 +10,14 @@ import org.swingeasy.system.SystemSettings;
  */
 public class EComponentLocaleListenerDemo {
     public static void main(String[] args) {
-        JComponent tester = new JComponent() {
-            private static final long serialVersionUID = 438899386009488658L;
+        EComponentI tester = new EComponentI() {
+            @Override
+            public void setEnabled(boolean b) {
+                //
+            }
 
             @Override
             public void setLocale(Locale l) {
-                super.setLocale(l);
                 System.out.println("> " + l);
             }
         };
