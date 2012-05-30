@@ -107,8 +107,8 @@ public class CustomizableOptionPane {
         @SuppressWarnings("unchecked")
         private static <T> T showDialog(Component parentComponent, JComponent component, String title, MessageType messageType,
                 OptionType optionType, Icon icon, OptionPaneCustomizer customizer, T[] options, T initialValue) throws HeadlessException {
-            CustomizableOptionPaneImpl pane = new CustomizableOptionPaneImpl(component, messageType.code, optionType.code, icon, options,
-                    initialValue);
+            CustomizableOptionPaneImpl pane = new CustomizableOptionPaneImpl(component, messageType.code,
+                    optionType == null ? OptionType.OK_CANCEL.code : optionType.code, icon, options, initialValue);
             pane.setInitialValue(null);
             pane.setComponentOrientation(((parentComponent == null) ? JOptionPane.getRootFrame() : parentComponent).getComponentOrientation());
 
@@ -126,7 +126,7 @@ public class CustomizableOptionPane {
             Object selectedValue = pane.getValue();
 
             // options
-            if (options != null) {
+            if (optionType == null) {
                 return (T) selectedValue;
             }
 
@@ -192,10 +192,9 @@ public class CustomizableOptionPane {
         return CustomizableOptionPaneImpl.showDialog(parentComponent, component, title, messageType, optionType, icon, customizer, null, null);
     }
 
-    public static <T> T showCustomDialog(Component parentComponent, JComponent component, String title, MessageType messageType,
-            OptionType optionType, Icon icon, OptionPaneCustomizer customizer, T[] options, T initialValue) throws HeadlessException {
-        return CustomizableOptionPaneImpl.showDialog(parentComponent, component, title, messageType, optionType, icon, customizer, options,
-                initialValue);
+    public static <T> T showCustomDialog(Component parentComponent, JComponent component, String title, MessageType messageType, T[] options,
+            T initialValue, Icon icon, OptionPaneCustomizer customizer) throws HeadlessException {
+        return CustomizableOptionPaneImpl.showDialog(parentComponent, component, title, messageType, null, icon, customizer, options, initialValue);
     }
 
     public static File showFileChooserDialog(Component parent, FileChooserType type, FileChooserCustomizer customizer) {
