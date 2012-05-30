@@ -1,6 +1,5 @@
 package org.swingeasy;
 
-import java.awt.Component;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -8,9 +7,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import javax.swing.Icon;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 /**
  * @author Jurgen
@@ -26,12 +23,7 @@ public abstract class ETableExporterImpl<T> implements ETableExporter<T> {
         if (ResultType.OK != CustomizableOptionPane.showCustomDialog(table,
                 new JLabel(Messages.getString(null, "ETableExporter.overwrite.warning.message")),
                 Messages.getString(null, "ETableExporter.overwrite.warning.title"), MessageType.WARNING, OptionType.OK_CANCEL, null,
-                new OptionPaneCustomizer() {
-                    @Override
-                    public void customize(Component parentComponent, MessageType messageType, OptionType optionType, JOptionPane pane, JDialog dialog) {
-                        dialog.setLocationRelativeTo(null);
-                    }
-                })) {
+                new CenteredOptionPaneCustomizer())) {
             return false;
         }
         return true;
@@ -67,7 +59,7 @@ public abstract class ETableExporterImpl<T> implements ETableExporter<T> {
                 data.close();
                 fout.close();
                 ETableExporterFileChooserCustomizer.lastFile = exportTo;
-                this.whenDone();
+                this.whenDone(table);
             }
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -85,14 +77,9 @@ public abstract class ETableExporterImpl<T> implements ETableExporter<T> {
         return UIUtils.getIconForFileType(this.getFileExtension());
     }
 
-    protected void whenDone() {
-        CustomizableOptionPane.showCustomDialog(null, new JLabel(Messages.getString(null, "ETableExporter.completion.message")),
+    protected void whenDone(ETable<T> table) {
+        CustomizableOptionPane.showCustomDialog(table, new JLabel(Messages.getString(null, "ETableExporter.completion.message")),
                 Messages.getString(null, "ETableExporter.completion.title"), MessageType.INFORMATION, OptionType.OK, null,
-                new OptionPaneCustomizer() {
-                    @Override
-                    public void customize(Component parentComponent, MessageType messageType, OptionType optionType, JOptionPane pane, JDialog dialog) {
-                        dialog.setLocationRelativeTo(null);
-                    }
-                });
+                new CenteredOptionPaneCustomizer());
     }
 }
