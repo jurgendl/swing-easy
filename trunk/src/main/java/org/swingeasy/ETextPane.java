@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Locale;
 
 import javax.swing.Action;
 import javax.swing.JComponent;
@@ -314,8 +315,8 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
             }
             if (file.exists()) {
                 if (ResultType.YES != CustomizableOptionPane.showCustomDialog(this.getParentComponent(),
-                        new JLabel(Messages.getString(null, "SaveAction.overwrite.warning.message")),
-                        Messages.getString(null, "SaveAction.overwrite.warning.title"), MessageType.WARNING, OptionType.YES_NO, null, null)) {
+                        new JLabel(Messages.getString((Locale) null, "SaveAction.overwrite.warning.message")),
+                        Messages.getString((Locale) null, "SaveAction.overwrite.warning.title"), MessageType.WARNING, OptionType.YES_NO, null, null)) {
                     return;
                 }
             }

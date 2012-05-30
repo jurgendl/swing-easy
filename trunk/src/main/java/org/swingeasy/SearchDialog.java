@@ -41,7 +41,7 @@ public class SearchDialog extends JDialog implements EComponentI {
     protected EButton btnReplace;
 
     public SearchDialog(boolean replacing, ETextArea textComponent) {
-        super(UIUtils.getRootWindow(textComponent), Messages.getString(null, "SearchDialog.title"), ModalityType.MODELESS);
+        super(UIUtils.getRootWindow(textComponent), Messages.getString((Locale) null, "SearchDialog.title"), ModalityType.MODELESS);
         this.textComponent = textComponent;
         this.init();
         this.setLocationRelativeTo(null);

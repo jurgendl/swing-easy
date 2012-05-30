@@ -14,6 +14,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 import java.util.Arrays;
+import java.util.Locale;
 
 import javax.swing.AbstractButton;
 import javax.swing.JDialog;
@@ -238,7 +239,7 @@ public class UIExceptionHandler {
                 jdialog.getValue().setLocationRelativeTo(null);
             }
         });
-        CustomizableOptionPane.showCustomDialog(null, panel, Messages.getString(null, "Error"), MessageType.ERROR, OptionType.OK, null,
+        CustomizableOptionPane.showCustomDialog(null, panel, Messages.getString((Locale) null, "Error"), MessageType.ERROR, OptionType.OK, null,
                 new OptionPaneCustomizer() {
                     @Override
                     public void customize(Component parentComponent, MessageType messageType, OptionType optionType, JOptionPane pane, JDialog dialog) {

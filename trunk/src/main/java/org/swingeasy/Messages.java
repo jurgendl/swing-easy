@@ -13,9 +13,9 @@ import org.swingeasy.validation.Translator;
  * @author Jurgen
  */
 public class Messages implements Translator {
-    private static final String BUNDLE_NAME = "org.swingeasy.resources.swing-easy"; //$NON-NLS-1$
+    protected static final String BUNDLE_NAME = "org.swingeasy.resources.swing-easy"; //$NON-NLS-1$
 
-    private static final Map<Locale, ResourceBundle> RESOURCE_BUNDLES = new HashMap<Locale, ResourceBundle>();
+    protected static final Map<Locale, ResourceBundle> RESOURCE_BUNDLES = new HashMap<Locale, ResourceBundle>();
 
     protected static final Messages instance = new Messages();
 
@@ -23,7 +23,7 @@ public class Messages implements Translator {
         return Messages.instance;
     }
 
-    private static ResourceBundle getResourceBundle(Locale locale) {
+    protected static ResourceBundle getResourceBundle(Locale locale) {
         if (locale == null) {
             locale = SystemSettings.getCurrentLocale();
         }
@@ -34,19 +34,30 @@ public class Messages implements Translator {
         return resourceBundle;
     }
 
-    public static String getString(Locale locale, String key) {
+    public static String getString(Locale locale, String key, Object... arguments) {
         if (locale == null) {
             locale = SystemSettings.getCurrentLocale();
         }
         try {
-            return Messages.getResourceBundle(locale).getString(key);
+            String translated = Messages.getResourceBundle(locale).getString(key);
+
+            if (translated.startsWith("{") && translated.endsWith("}")) {
+                key = translated.substring(1, translated.length() - 1);
+                translated = Messages.getString(locale, key, arguments);
+            }
+
+            if ((arguments != null) && (arguments.length > 0)) {
+                translated = String.format(translated, arguments);
+            }
+
+            return translated;
         } catch (MissingResourceException e) {
             System.out.println(key);
             return key;
         }
     }
 
-    private Messages() {
+    protected Messages() {
         super();
     }
 
@@ -56,12 +67,6 @@ public class Messages implements Translator {
      */
     @Override
     public String getString(String key, Object... arguments) {
-        String translated = Messages.getString(null, key);
-        if (translated.startsWith("{") && translated.endsWith("}")) {
-            key = translated.substring(1, translated.length() - 1);
-            translated = Messages.getString(null, key);
-        }
-        String argumentsReplaced = String.format(translated, arguments);
-        return argumentsReplaced;
+        return Messages.getString(null, key, arguments);
     }
 }

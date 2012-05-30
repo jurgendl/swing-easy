@@ -20,7 +20,7 @@ import org.swingeasy.Messages;
  * @author Jurgen
  */
 public class ColorTableCellEditor extends AbstractCellEditor implements TableCellEditor, ActionListener, EComponentI {
-    
+
     private static final long serialVersionUID = 819809458892249679L;
 
     protected Locale locale;
@@ -85,7 +85,7 @@ public class ColorTableCellEditor extends AbstractCellEditor implements TableCel
 
     public JDialog getDialog() {
         if (this.d == null) {
-            this.d = JColorChooser.createDialog(this.button, Messages.getString(null, "ColorTableCellEditor.pickAColor"), true, // modal //$NON-NLS-1$
+            this.d = JColorChooser.createDialog(this.button, Messages.getString((Locale) null, "ColorTableCellEditor.pickAColor"), true, // modal //$NON-NLS-1$
                     this.getColorChooser(), this, // OK button handler
                     null); // no CANCEL button handler
         }
