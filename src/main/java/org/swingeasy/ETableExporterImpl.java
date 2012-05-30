@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Locale;
 
 import javax.swing.Icon;
 import javax.swing.JLabel;
@@ -21,8 +22,8 @@ public abstract class ETableExporterImpl<T> implements ETableExporter<T> {
 
     protected boolean canOverwrite(ETable<T> table) {
         if (ResultType.OK != CustomizableOptionPane.showCustomDialog(table,
-                new JLabel(Messages.getString(null, "ETableExporter.overwrite.warning.message")),
-                Messages.getString(null, "ETableExporter.overwrite.warning.title"), MessageType.WARNING, OptionType.OK_CANCEL, null,
+                new JLabel(Messages.getString((Locale) null, "ETableExporter.overwrite.warning.message")),
+                Messages.getString((Locale) null, "ETableExporter.overwrite.warning.title"), MessageType.WARNING, OptionType.OK_CANCEL, null,
                 new CenteredOptionPaneCustomizer())) {
             return false;
         }
@@ -78,8 +79,8 @@ public abstract class ETableExporterImpl<T> implements ETableExporter<T> {
     }
 
     protected void whenDone(ETable<T> table) {
-        CustomizableOptionPane.showCustomDialog(table, new JLabel(Messages.getString(null, "ETableExporter.completion.message")),
-                Messages.getString(null, "ETableExporter.completion.title"), MessageType.INFORMATION, OptionType.OK, null,
+        CustomizableOptionPane.showCustomDialog(table, new JLabel(Messages.getString((Locale) null, "ETableExporter.completion.message")),
+                Messages.getString((Locale) null, "ETableExporter.completion.title"), MessageType.INFORMATION, OptionType.OK, null,
                 new CenteredOptionPaneCustomizer());
     }
 }
