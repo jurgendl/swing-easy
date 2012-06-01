@@ -47,6 +47,7 @@ public class EComboBoxConfig extends EComponentConfig<EComboBoxConfig> {
     }
 
     public EComboBoxConfig setAutoResizePopup(boolean autoResizePopup) {
+        this.lockCheck();
         this.autoResizePopup = autoResizePopup;
         return this;
     }

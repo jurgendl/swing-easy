@@ -354,6 +354,10 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
                 }
             }
         });
+
+        if (this.cfg.isAutoResizePopup()) {
+            this.addPopupMenuListener(new EComboBoxAutoResizingPopupListener());
+        }
     }
 
     /**
