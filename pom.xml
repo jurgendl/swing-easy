@@ -6,10 +6,45 @@
 	<name>swing-easy</name>
 	<description>swing-easy</description>
 	<url>http://swing-easy.googlecode.com</url>
+
 	<properties>
 		<targetJdk>1.6</targetJdk>
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 	</properties>
+
+	<!-- http://maven.apache.org/guides/introduction/introduction-to-profiles.html -->
+	<profiles>
+		<profile>
+			<!-- 
+				"mvn clean package -P nodebuginfo"
+				wil create an optimized (without debugging info) jar: swing-easy-nodebug-{version}.jar
+				
+				"mvn clean package"
+				wil create a jar without debugging info: swing-easy-{version}.jar
+			 -->
+			<id>nodebuginfo</id>
+			<build>
+				<finalName>${artifactId}-nodebuginfo-${version}</finalName>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<configuration>
+							<fork>true</fork>
+							<source>${targetJdk}</source>
+							<target>${targetJdk}</target>
+							<optimize>true</optimize>
+							<verbose>false</verbose>
+							<encoding>${project.build.sourceEncoding}</encoding>
+							<debug>false</debug> 
+							<debuglevel>none</debuglevel><!-- lines, vars, and source or none -->
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
 	<licenses>
 		<license>
 			<name>GNU Lesser General Public License v2.1</name>
@@ -294,30 +329,4 @@
 			</plugin>
 		</plugins>
 	</reporting>
-	<!-- http://maven.apache.org/guides/introduction/introduction-to-profiles.html -->
-	<profiles>
-		<profile>
-			<!-- use "-P nodebuginfo" to activate -->
-			<id>nodebuginfo</id>
-			<build>
-				<finalName>${artifactId}-nodebug-${version}</finalName>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-compiler-plugin</artifactId>
-						<configuration>
-							<fork>true</fork>
-							<source>${targetJdk}</source>
-							<target>${targetJdk}</target>
-							<optimize>true</optimize>
-							<verbose>false</verbose>
-							<encoding>${project.build.sourceEncoding}</encoding>
-							<debug>false</debug> 
-							<debuglevel>none</debuglevel><!-- lines, vars, and source or none -->
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
 </project>
