@@ -6,7 +6,7 @@ import java.io.OutputStream;
 
 import com.Ostermiller.util.CircularByteBuffer;
 
-public class CbufTest {
+public class CbufTst {
     public static void main(String[] args) {
         try {
             String text = "Implements the Circular Buffer producer/consumer model for bytes.\nMore information about this class is available from <a target=\"_top\" href=\"http://ostermiller.org/utils/CircularByteBuffer.html\">ostermiller.org</a>";
