@@ -364,7 +364,12 @@ public class UIUtils {
                 if (!org.swingeasy.WeakReferencedListener.isWrapped(pclp.getListener())) {
                     continue;
                 }
-                Object component0 = WeakReferencedListener.<PropertyChangeListenerDelegate> unwrap(pclp.getListener()).getReference().getDelageting();
+                PropertyChangeListenerDelegate reference = WeakReferencedListener.<PropertyChangeListenerDelegate> unwrap(pclp.getListener())
+                        .getReference();
+                if (reference == null) {
+                    continue;
+                }
+                Object component0 = reference.getDelageting();
                 if (component == component0) {
                     return false;
                 }
