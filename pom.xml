@@ -174,11 +174,14 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
+					<fork>true</fork>
 					<source>${targetJdk}</source>
 					<target>${targetJdk}</target>
 					<optimize>true</optimize>
 					<verbose>false</verbose>
 					<encoding>${project.build.sourceEncoding}</encoding>
+					<debug>true</debug> 
+					<debuglevel>lines,vars,source</debuglevel>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -291,4 +294,30 @@
 			</plugin>
 		</plugins>
 	</reporting>
+	<!-- http://maven.apache.org/guides/introduction/introduction-to-profiles.html -->
+	<profiles>
+		<profile>
+			<!-- use "-P nodebuginfo" to activate -->
+			<id>nodebuginfo</id>
+			<build>
+				<finalName>${artifactId}-nodebug-${version}</finalName>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<configuration>
+							<fork>true</fork>
+							<source>${targetJdk}</source>
+							<target>${targetJdk}</target>
+							<optimize>true</optimize>
+							<verbose>false</verbose>
+							<encoding>${project.build.sourceEncoding}</encoding>
+							<debug>false</debug> 
+							<debuglevel>none</debuglevel><!-- lines, vars, and source or none -->
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
