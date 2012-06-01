@@ -29,9 +29,9 @@ public class ColorTableCellEditor extends AbstractCellEditor implements TableCel
 
     protected JButton button;
 
-    protected JColorChooser cc;
+    protected JColorChooser colorChooser;
 
-    protected JDialog d;
+    protected JDialog dialog;
 
     protected static final String EDIT = "edit"; //$NON-NLS-1$
 
@@ -43,7 +43,12 @@ public class ColorTableCellEditor extends AbstractCellEditor implements TableCel
         this.button = new JButton();
         this.button.setActionCommand(ColorTableCellEditor.EDIT);
         this.button.addActionListener(this);
+
+        this.button.setBorder(null);
         this.button.setBorderPainted(false);
+        this.button.setOpaque(false);
+        this.button.setContentAreaFilled(true);
+        this.button.setFocusable(false);
     }
 
     /**
@@ -54,7 +59,10 @@ public class ColorTableCellEditor extends AbstractCellEditor implements TableCel
         if (ColorTableCellEditor.EDIT.equals(e.getActionCommand())) {
             // The user has clicked the cell, so
             // bring up the dialog.
+
             this.button.setBackground(this.currentColor);
+            this.button.setForeground(this.currentColor);
+
             this.getColorChooser().setColor(this.currentColor);
             this.getDialog().setVisible(true);
 
@@ -75,22 +83,24 @@ public class ColorTableCellEditor extends AbstractCellEditor implements TableCel
     }
 
     public JColorChooser getColorChooser() {
-        if (this.cc == null) {
-            this.cc = new JColorChooser();
+        if (this.colorChooser == null) {
+            this.colorChooser = new JColorChooser();
 
         }
-        this.cc.setLocale(this.locale);
-        return this.cc;
+        this.colorChooser.setLocale(this.locale);
+        return this.colorChooser;
     }
 
     public JDialog getDialog() {
-        if (this.d == null) {
-            this.d = JColorChooser.createDialog(this.button, Messages.getString((Locale) null, "ColorTableCellEditor.pickAColor"), true, // modal //$NON-NLS-1$
+        if (this.dialog == null) {
+            this.dialog = JColorChooser.createDialog(this.button,// parent
+                    Messages.getString((Locale) null, "ColorTableCellEditor.pickAColor"),// title
+                    true, // modal
                     this.getColorChooser(), this, // OK button handler
                     null); // no CANCEL button handler
         }
-        this.d.setLocale(this.locale);
-        return this.d;
+        this.dialog.setLocale(this.locale);
+        return this.dialog;
     }
 
     /**
@@ -119,7 +129,7 @@ public class ColorTableCellEditor extends AbstractCellEditor implements TableCel
     @Override
     public void setLocale(Locale l) {
         this.locale = l;
-        this.d = null;
-        this.cc = null;
+        this.dialog = null;
+        this.colorChooser = null;
     }
 }
