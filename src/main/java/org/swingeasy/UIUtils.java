@@ -425,9 +425,18 @@ public class UIUtils {
      * @see http://java.sun.com/developer/technicalArticles/GUI/translucent_shaped_windows/
      */
     public static void rounded(Window w) {
+        UIUtils.rounded(w, 20);
+    }
+
+    /**
+     * sets rounded borders with given arc
+     * 
+     * @see http://java.sun.com/developer/technicalArticles/GUI/translucent_shaped_windows/
+     */
+    public static void rounded(Window w, float arc) {
         if (AWTUtilitiesWrapper.isTranslucencySupported(AWTUtilitiesWrapper.PERPIXEL_TRANSPARENT)) {
             try {
-                Shape shape = new RoundRectangle2D.Float(0, 0, w.getWidth(), w.getHeight(), 20, 20);
+                Shape shape = new RoundRectangle2D.Float(0, 0, w.getWidth(), w.getHeight(), arc, arc);
                 AWTUtilitiesWrapper.setWindowShape(w, shape);
             } catch (Exception ex) {
                 UIUtils.log(ex);
@@ -565,7 +574,7 @@ public class UIUtils {
     public static boolean translucent(Window w, Float f) {
         try {
             if (AWTUtilitiesWrapper.isTranslucencySupported(Enum.valueOf(
-                    (Class<? extends Enum>) Class.forName("com.sun.awt.AWTUtilities.Translucency"), "TRANSLUCENT"))) {
+                    (Class<? extends Enum>) Class.forName("com.sun.awt.AWTUtilities$Translucency"), "TRANSLUCENT"))) {
                 try {
                     AWTUtilitiesWrapper.setWindowOpacity(w, f);
                     return true;
