@@ -234,6 +234,9 @@ public class UIUtils {
 
     protected static Map<String, String> cachedDescriptions = new HashMap<String, String>();
 
+    /**
+     * lists all current locale change listeners
+     */
     public static void debugLocaleChangeListeners() {
         for (Object o : SystemSettings.getSingleton().propertyChangeSupport.getPropertyChangeListeners()) {
             try {
@@ -262,7 +265,7 @@ public class UIUtils {
     }
 
     /**
-     * JDOC
+     * gets file system description for file type
      */
     public static String getDescriptionForFileType(String ext) {
         try {
@@ -281,7 +284,7 @@ public class UIUtils {
     }
 
     /**
-     * JDOC
+     * get filesystem icon for file
      */
     public static Icon getIconForFileType(String ext) {
         try {
@@ -299,6 +302,9 @@ public class UIUtils {
         }
     }
 
+    /**
+     * get rootwindow for a component
+     */
     public static Window getRootWindow(Component component) {
         Component root = SwingUtilities.getRoot(component);
         if (root instanceof Window) {
@@ -350,6 +356,9 @@ public class UIUtils {
         });
     }
 
+    /**
+     * register component as a locale change listener
+     */
     public static boolean registerLocaleChangeListener(final Component component) {
         component.setLocale(SystemSettings.getCurrentLocale());
         SystemSettings.getSingleton().addPropertyChangeListener(SystemSettings.LOCALE,
@@ -357,6 +366,9 @@ public class UIUtils {
         return true;
     }
 
+    /**
+     * register component as a locale change listener
+     */
     public static boolean registerLocaleChangeListener(final EComponentI component) {
         for (Object o : SystemSettings.getSingleton().propertyChangeSupport.getPropertyChangeListeners()) {
             try {
