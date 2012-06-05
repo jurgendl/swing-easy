@@ -546,6 +546,21 @@ public class UIUtils {
     }
 
     /**
+     * give window a shape
+     * 
+     * @see http://java.sun.com/developer/technicalArticles/GUI/translucent_shaped_windows/
+     */
+    public static void shaped(Window w, Shape shape) {
+        if (AWTUtilitiesWrapper.isTranslucencySupported(AWTUtilitiesWrapper.PERPIXEL_TRANSPARENT)) {
+            try {
+                AWTUtilitiesWrapper.setWindowShape(w, shape);
+            } catch (Exception ex) {
+                UIUtils.log(ex);
+            }
+        }
+    }
+
+    /**
      * activate system look and feel
      */
     public static void systemLookAndFeel() {
