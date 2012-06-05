@@ -2,10 +2,9 @@ package org.swingeasy;
 
 import java.awt.BorderLayout;
 import java.awt.Window;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  * @author Jurgen
@@ -18,14 +17,11 @@ public class RoundedBorderDemo {
         f.setVisible(true);
         final Window w = new Window(f);
         w.setLayout(new BorderLayout());
+        JPanel main = new JPanel();
+        w.add(main);
         w.setSize(400, 200);
         w.setLocationByPlatform(true);
-        w.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                w.dispose();
-            }
-        });
+        UIUtils.makeDraggable(main);
         UIUtils.rounded(w);
         UIUtils.translucent(w);
         w.setVisible(true);
