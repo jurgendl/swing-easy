@@ -321,6 +321,13 @@ public class UIUtils {
     }
 
     /**
+     * makes a window draggable by adding a listener as a {@link MouseListener} and {@link MouseMotionListener} to a {@link JComponent} in that window
+     */
+    public static MoveMouseListener makeDraggable(JComponent target) {
+        return new MoveMouseListener(target);
+    }
+
+    /**
      * activate Nimbus look and feel or system look and feel if not java 1.7 (7) or higher
      */
     public static void niceLookAndFeel() {
