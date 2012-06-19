@@ -639,10 +639,10 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         @Override
         public void copy(ActionEvent e) {
             if (this.hasSelection()) {
-                this.copy(e);
+                this.parentComponent.copy();
             } else {
                 this.selectAll(e);
-                this.copy(e);
+                this.parentComponent.copy();
                 this.unselect(e);
                 this.gotoBegin(e);
             }
