@@ -688,6 +688,12 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
             }
         }
 
+        protected void fireCaretUpdate() {
+            if (this.parentComponent instanceof ETextComponentI) {
+                ETextComponentI.class.cast(this.parentComponent).fireCaretUpdate();
+            }
+        }
+
         /**
          * 
          * @see org.swingeasy.HasParentComponent#getParentComponent()
@@ -704,6 +710,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         @Override
         public void gotoBegin(ActionEvent e) {
             this.parentComponent.setCaretPosition(0);
+            this.fireCaretUpdate();
         }
 
         /**
@@ -713,6 +720,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         @Override
         public void gotoEnd(ActionEvent e) {
             this.parentComponent.setCaretPosition(this.parentComponent.getText().length());
+            this.fireCaretUpdate();
         }
 
         /**
@@ -775,6 +783,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
             Document doc = this.parentComponent.getDocument();
             this.parentComponent.setCaretPosition(0);
             this.parentComponent.moveCaretPosition(doc.getLength());
+            this.fireCaretUpdate();
         }
 
         /**
@@ -784,6 +793,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         @Override
         public void unselect(ActionEvent e) {
             this.parentComponent.setCaretPosition(this.parentComponent.getCaretPosition());
+            this.fireCaretUpdate();
         }
     }
 
