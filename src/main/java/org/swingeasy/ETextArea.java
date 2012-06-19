@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import javax.swing.JTextArea;
 import javax.swing.JToolBar;
+import javax.swing.event.CaretEvent;
 import javax.swing.event.DocumentEvent;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Highlighter;
@@ -18,7 +19,7 @@ import org.apache.commons.lang.StringUtils;
 /**
  * @author Jurgen
  */
-public class ETextArea extends JTextArea implements EComponentI, HasValue<String> {
+public class ETextArea extends JTextArea implements EComponentI, HasValue<String>, ETextComponentI {
     protected class SearchHighlightPainter extends ETextAreaFillHighlightPainter {
         public SearchHighlightPainter() {
             super(new Color(245, 225, 145));
@@ -116,6 +117,15 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
         }
     }
 
+    /**
+     * 
+     * @see org.swingeasy.ETextComponentI#fireCaretUpdate()
+     */
+    @Override
+    public void fireCaretUpdate() {
+        this.fireCaretUpdate(new ObjectWrapper(this).get("caretEvent", CaretEvent.class));
+    }
+
     public ETextAreaHighlightPainter getHighlightPainter() {
         if (this.highlightPainter == null) {
             this.highlightPainter = new SearchHighlightPainter();
@@ -202,11 +212,11 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
 
     public void replace(String find, String replace) {
         this.setText(this.getText().replace(find, replace));
-    }
+    };
 
     public void replaceAll(String find, String replace) {
         this.setText(this.getText().replaceAll(find, replace));
-    };
+    }
 
     public void setHighlightPainter(ETextAreaHighlightPainter highlightPainter) {
         this.highlightPainter = highlightPainter;

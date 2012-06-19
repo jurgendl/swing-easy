@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextPane;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
+import javax.swing.event.CaretEvent;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.EditorKit;
@@ -36,7 +37,7 @@ import org.swingeasy.EComponentPopupMenu.ReadableComponent;
 /**
  * @author Jurgen
  */
-public class ETextPane extends JTextPane implements EComponentI, ReadableComponent {
+public class ETextPane extends JTextPane implements EComponentI, ReadableComponent, ETextComponentI {
     protected static class BoldAction extends EComponentPopupMenuAction<ETextPane> {
         private static final long serialVersionUID = -8361277540935938118L;
 
@@ -421,6 +422,15 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         this.copy();
     }
 
+    /**
+     * 
+     * @see org.swingeasy.ETextComponentI#fireCaretUpdate()
+     */
+    @Override
+    public void fireCaretUpdate() {
+        this.fireCaretUpdate(new ObjectWrapper(this).get("caretEvent", CaretEvent.class));
+    }
+
     public String getFileExt() {
         String contentType = this.getEditorKit().getContentType();
         return contentType.substring(contentType.indexOf('/') + 1);
@@ -437,4 +447,5 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
     public JToolBar getToolbar() {
         return new EToolBar(this.getComponentPopupMenu());
     }
+
 }
