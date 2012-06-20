@@ -32,7 +32,6 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
-import javax.swing.text.Document;
 import javax.swing.text.JTextComponent;
 import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
@@ -688,12 +687,6 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
             }
         }
 
-        protected void fireCaretUpdate() {
-            if (this.parentComponent instanceof ETextComponentI) {
-                ETextComponentI.class.cast(this.parentComponent).fireCaretUpdate();
-            }
-        }
-
         /**
          * 
          * @see org.swingeasy.HasParentComponent#getParentComponent()
@@ -709,8 +702,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public void gotoBegin(ActionEvent e) {
-            this.parentComponent.setCaretPosition(0);
-            this.fireCaretUpdate();
+            this.setCaret(0, null);
         }
 
         /**
@@ -719,8 +711,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public void gotoEnd(ActionEvent e) {
-            this.parentComponent.setCaretPosition(this.parentComponent.getText().length());
-            this.fireCaretUpdate();
+            this.setCaret(this.parentComponent.getDocument().getLength(), null);
         }
 
         /**
@@ -780,10 +771,22 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public void selectAll(ActionEvent e) {
-            Document doc = this.parentComponent.getDocument();
-            this.parentComponent.setCaretPosition(0);
-            this.parentComponent.moveCaretPosition(doc.getLength());
-            this.fireCaretUpdate();
+            this.setCaret(0, this.parentComponent.getDocument().getLength());
+        }
+
+        protected void setCaret(int pos, Integer to) {
+            if (this.parentComponent instanceof ETextComponentI) {
+                if (to == null) {
+                    ETextComponentI.class.cast(this.parentComponent).setCaret(pos);
+                } else {
+                    ETextComponentI.class.cast(this.parentComponent).setCaret(pos, to);
+                }
+            } else {
+                this.parentComponent.setCaretPosition(pos);
+                if (to != null) {
+                    this.parentComponent.moveCaretPosition(to);
+                }
+            }
         }
 
         /**
@@ -792,8 +795,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public void unselect(ActionEvent e) {
-            this.parentComponent.setCaretPosition(this.parentComponent.getCaretPosition());
-            this.fireCaretUpdate();
+            this.setCaret(this.parentComponent.getCaretPosition(), null);
         }
     }
 

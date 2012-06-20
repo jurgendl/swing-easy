@@ -117,11 +117,6 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
         }
     }
 
-    /**
-     * 
-     * @see org.swingeasy.ETextComponentI#fireCaretUpdate()
-     */
-    @Override
     public void fireCaretUpdate() {
         this.fireCaretUpdate(new ObjectWrapper(this).get("caretEvent", CaretEvent.class));
     }
@@ -212,10 +207,31 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
 
     public void replace(String find, String replace) {
         this.setText(this.getText().replace(find, replace));
-    };
+    }
 
     public void replaceAll(String find, String replace) {
         this.setText(this.getText().replaceAll(find, replace));
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.ETextComponentI#setCaret(int)
+     */
+    @Override
+    public void setCaret(int pos) {
+        this.setCaretPosition(pos);
+        this.fireCaretUpdate();
+    };
+
+    /**
+     * 
+     * @see org.swingeasy.ETextComponentI#setCaret(int, int)
+     */
+    @Override
+    public void setCaret(int from, int to) {
+        this.setCaretPosition(from);
+        this.moveCaretPosition(to);
+        this.fireCaretUpdate();
     }
 
     public void setHighlightPainter(ETextAreaHighlightPainter highlightPainter) {
