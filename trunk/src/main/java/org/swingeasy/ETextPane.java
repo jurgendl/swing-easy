@@ -422,11 +422,6 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         this.copy();
     }
 
-    /**
-     * 
-     * @see org.swingeasy.ETextComponentI#fireCaretUpdate()
-     */
-    @Override
     public void fireCaretUpdate() {
         this.fireCaretUpdate(new ObjectWrapper(this).get("caretEvent", CaretEvent.class));
     }
@@ -448,4 +443,24 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         return new EToolBar(this.getComponentPopupMenu());
     }
 
+    /**
+     * 
+     * @see org.swingeasy.ETextComponentI#setCaret(int)
+     */
+    @Override
+    public void setCaret(int pos) {
+        this.setCaretPosition(pos);
+        this.fireCaretUpdate();
+    };
+
+    /**
+     * 
+     * @see org.swingeasy.ETextComponentI#setCaret(int, int)
+     */
+    @Override
+    public void setCaret(int from, int to) {
+        this.setCaretPosition(from);
+        this.moveCaretPosition(to);
+        this.fireCaretUpdate();
+    }
 }
