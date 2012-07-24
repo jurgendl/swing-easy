@@ -14,11 +14,9 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.swing.Icon;
-import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.SpinnerDateModel;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
@@ -26,7 +24,6 @@ import javax.swing.event.AncestorListener;
  * @author Jurgen
  */
 public class EDateEditor extends AbstractELabeledTextFieldButtonComponent<ELabel, ESpinner<Date>, EButton> {
-
     private static final long serialVersionUID = 3275532427920825736L;
 
     protected JComponent parentComponent = null;
@@ -71,6 +68,9 @@ public class EDateEditor extends AbstractELabeledTextFieldButtonComponent<ELabel
         _popup.setLocation(new Point((this.getLocationOnScreen().x + this.getWidth()) - (int) _popup.getPreferredSize().getWidth(), this
                 .getLocationOnScreen().y + this.getHeight()));
         Date date = this.getInput().get();
+        if (date == null) {
+            date = new Date();
+        }
         this.getDateChooser().setDate(date);
         _popup.setVisible(true);
     }
@@ -118,23 +118,38 @@ public class EDateEditor extends AbstractELabeledTextFieldButtonComponent<ELabel
         if (this.datePanel == null) {
             this.datePanel = new JPanel(new BorderLayout());
             JPanel actions = new JPanel(new FlowLayout());
-            JButton okbtn = new JButton(Messages.getString(this.getLocale(), "EDateEditor.OK"));//$NON-NLS-1$
-            okbtn.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    EDateEditor.this.setDate(EDateEditor.this.getDateChooser().getDate());
-                    EDateEditor.this.getPopup().setVisible(false);
-                }
-            });
-            actions.add(okbtn);
-            JButton cancelbtn = new JButton(Messages.getString(this.getLocale(), "EDateEditor.Cancel"));//$NON-NLS-1$
-            cancelbtn.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    EDateEditor.this.getPopup().setVisible(false);
-                }
-            });
-            actions.add(cancelbtn);
+            {
+                EButton okbtn = new EButton(Messages.getString(this.getLocale(), "EDateEditor.OK"));//$NON-NLS-1$
+                okbtn.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        EDateEditor.this.setDate(EDateEditor.this.getDateChooser().getDate());
+                        EDateEditor.this.getPopup().setVisible(false);
+                    }
+                });
+                actions.add(okbtn);
+            }
+            {
+                EButton nullbtn = new EButton(Messages.getString(this.getLocale(), "EDateEditor.Null"));//$NON-NLS-1$
+                nullbtn.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        EDateEditor.this.setDate(null);
+                        EDateEditor.this.getPopup().setVisible(false);
+                    }
+                });
+                actions.add(nullbtn);
+            }
+            {
+                EButton cancelbtn = new EButton(Messages.getString(this.getLocale(), "EDateEditor.Cancel"));//$NON-NLS-1$
+                cancelbtn.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        EDateEditor.this.getPopup().setVisible(false);
+                    }
+                });
+                actions.add(cancelbtn);
+            }
             this.datePanel.add(this.getDateChooser(), BorderLayout.CENTER);
             this.datePanel.add(actions, BorderLayout.SOUTH);
         }
@@ -157,7 +172,7 @@ public class EDateEditor extends AbstractELabeledTextFieldButtonComponent<ELabel
     @Override
     public ESpinner<Date> getInput() {
         if (this.input == null) {
-            SpinnerDateModel model = new SpinnerDateModel();
+            ESpinnerDateModel model = new ESpinnerDateModel();
             model.setValue(new Date());
             this.input = new ESpinner<Date>(model);
             this.input.setEditor(new ESpinner.DateEditor(this.input, SimpleDateFormat.class.cast(

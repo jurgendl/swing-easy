@@ -26,7 +26,6 @@ import net.miginfocom.swing.MigLayout;
  * @author Jurgen
  */
 public class EDateChooser extends JPanel {
-    
     private static final long serialVersionUID = 4865835185479753960L;
 
     public static String[] getDayStrings(Locale l) {

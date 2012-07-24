@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.swing.JSpinner;
-import javax.swing.SpinnerDateModel;
 
 /**
  * @author Jurgen
@@ -39,7 +38,7 @@ public class EDateTimeEditor extends EDateEditor {
     @Override
     public ESpinner<Date> getInput() {
         if (this.input == null) {
-            SpinnerDateModel model = new SpinnerDateModel();
+            ESpinnerDateModel model = new ESpinnerDateModel();
             model.setValue(new Date());
             this.input = new ESpinner<Date>(model);
             this.input.setEditor(new JSpinner.DateEditor(this.input, SimpleDateFormat.class.cast(
