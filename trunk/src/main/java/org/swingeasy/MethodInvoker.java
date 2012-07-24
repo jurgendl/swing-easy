@@ -13,13 +13,8 @@ import org.apache.commons.lang.builder.ToStringStyle;
  * @author Jurgen
  */
 public final class MethodInvoker {
-    /**
-     * InvocationException
-     * 
-     * @author jdlandsh
-     */
     public static final class InvocationException extends Exception {
-        
+
         private static final long serialVersionUID = -4908577741649536787L;
 
         private InvocationException(String message) {
@@ -106,83 +101,38 @@ public final class MethodInvoker {
         return method;
     }
 
-    /**
-     * invoke method on object
-     * 
-     * @param invoker
-     * @param methodName
-     * 
-     * @return
-     * 
-     * @throws InvocationException
-     */
     public static final Object invoke(Object invoker, String methodName) throws InvocationException {
-        return MethodInvoker.invoke(invoker, methodName, (Class[]) null, (Object[]) null);
+        return MethodInvoker.invoke(invoker, methodName, (Class[]) null, (Object[]) null, Object.class);
     }
 
-    /**
-     * invoke method on object
-     * 
-     * @param invoker
-     * @param methodName
-     * @param type
-     * @param parameter
-     * 
-     * @return
-     * 
-     * @throws InvocationException
-     */
     public static final Object invoke(Object invoker, String methodName, Class<?> type, Object parameter) throws InvocationException {
-        return MethodInvoker.invoke(invoker, methodName, new Class[] { type }, new Object[] { parameter });
+        return MethodInvoker.invoke(invoker, methodName, new Class[] { type }, new Object[] { parameter }, Object.class);
     }
 
-    /**
-     * invoke method with parameters
-     * 
-     * @param invoker
-     * @param methodName
-     * @param types
-     * @param parameters
-     * 
-     * @return
-     * 
-     * @throws InvocationException
-     */
+    public static final <T> T invoke(Object invoker, String methodName, Class<?> type, Object parameter, Class<T> returns) throws InvocationException {
+        return MethodInvoker.invoke(invoker, methodName, new Class[] { type }, new Object[] { parameter }, returns);
+    }
+
     public static final Object invoke(Object invoker, String methodName, Class<?>[] types, Object[] parameters) throws InvocationException {
-        Method method = MethodInvoker.getMethod(invoker, methodName, types);
-
-        return MethodInvoker.invoke0(method, invoker, parameters);
+        return MethodInvoker.invoke(invoker, methodName, types, parameters, Object.class);
     }
 
-    /**
-     * invoke method on object
-     * 
-     * @param invoker
-     * @param methodName
-     * @param parameter
-     * 
-     * @return
-     * 
-     * @throws InvocationException
-     */
+    public static final <T> T invoke(Object invoker, String methodName, Class<?>[] types, Object[] parameters, Class<T> returns)
+            throws InvocationException {
+        Method method = MethodInvoker.getMethod(invoker, methodName, types);
+        Object invoked = MethodInvoker.invoke0(method, invoker, parameters);
+        return returns.cast(invoked);
+    }
+
+    public static final <T> T invoke(Object invoker, String methodName, Class<T> returns) throws InvocationException {
+        return MethodInvoker.invoke(invoker, methodName, (Class[]) null, (Object[]) null, returns);
+    }
+
     public static final Object invoke(Object invoker, String methodName, Object parameter) throws InvocationException {
         MethodInvoker.nn(parameter, "parameter cannot be <null>");
-
         return MethodInvoker.invoke(invoker, methodName, parameter.getClass(), parameter);
     }
 
-    /**
-     * invoke method on object
-     * 
-     * @param method
-     * @param invoker
-     * @param parameters
-     * 
-     * @return
-     * 
-     * @throws InvocationException
-     * @throws RuntimeException
-     */
     private static final Object invoke0(Method method, Object invoker, Object[] parameters) throws InvocationException {
         try {
             boolean accessible = method.isAccessible();

@@ -6,6 +6,7 @@ import java.util.Locale;
 import javax.swing.JFormattedTextField;
 import javax.swing.ToolTipManager;
 import javax.swing.text.DefaultFormatter;
+import javax.swing.text.DefaultFormatterFactory;
 
 import org.swingeasy.MethodInvoker.InvocationException;
 import org.swingeasy.formatters.EFormatBuilder;
@@ -20,22 +21,24 @@ public class EFormattedTextField extends JFormattedTextField implements ECompone
     protected EFormatBuilder factory;
 
     public EFormattedTextField(DefaultFormatter factory) {
-        super(factory);
+        this(new DefaultFormatterFactory(factory, factory, factory, factory));
     }
 
     public EFormattedTextField(DefaultFormatter factory, Object currentValue) {
-        super(factory);
+        this(new DefaultFormatterFactory(factory, factory, factory, factory));
         this.setValue(currentValue);
     }
 
     public EFormattedTextField(EFormatBuilder factory) {
-        super(factory.build(SystemSettings.getCurrentLocale()));
+        super();
+        this.setFormat(factory.build(SystemSettings.getCurrentLocale()));
         this.factory = factory;
         this.init();
     }
 
     public EFormattedTextField(EFormatBuilder factory, Object currentValue) {
-        this(factory);
+        super();
+        this.setFormat(factory.build(SystemSettings.getCurrentLocale()));
         this.setValue(currentValue);
     }
 
@@ -81,7 +84,14 @@ public class EFormattedTextField extends JFormattedTextField implements ECompone
         AbstractFormatterFactory ff;
         try {
             // thank you for making this private
-            ff = (AbstractFormatterFactory) MethodInvoker.invoke(this, "getDefaultFormatterFactory", Object.class, format);
+            ff = MethodInvoker.invoke(this, "getDefaultFormatterFactory", Object.class, format, AbstractFormatterFactory.class);
+
+            if (ff instanceof DefaultFormatterFactory) {
+                DefaultFormatterFactory defaultFormatterFactory = DefaultFormatterFactory.class.cast(ff);
+                defaultFormatterFactory.setDisplayFormatter(defaultFormatterFactory.getDefaultFormatter());
+                defaultFormatterFactory.setEditFormatter(defaultFormatterFactory.getDefaultFormatter());
+                defaultFormatterFactory.setNullFormatter(defaultFormatterFactory.getDefaultFormatter());
+            }
         } catch (InvocationException ex) {
             throw new RuntimeException(ex);
         }
