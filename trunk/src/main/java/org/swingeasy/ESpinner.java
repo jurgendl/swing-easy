@@ -63,9 +63,9 @@ public class ESpinner<T> extends JSpinner {
             @Override
             public void mouseWheelMoved(MouseWheelEvent e) {
                 if (e.getWheelRotation() < 0) {
-                    ESpinner.this.gotoNextValue();
-                } else {
                     ESpinner.this.gotoPreviousValue();
+                } else {
+                    ESpinner.this.gotoNextValue();
                 }
             }
         });

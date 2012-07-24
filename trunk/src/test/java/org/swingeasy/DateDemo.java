@@ -2,7 +2,11 @@ package org.swingeasy;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
@@ -11,8 +15,32 @@ import javax.swing.WindowConstants;
  */
 public class DateDemo {
     private static void addComponents(Container container) {
-        container.add(new EDateEditor(), BorderLayout.NORTH);
-        container.add(new EDateTimeEditor(), BorderLayout.SOUTH);
+        container.setLayout(new GridLayout(-1, 1));
+        final EDateEditor ede0 = new EDateEditor();
+        final EDateTimeEditor edte0 = new EDateTimeEditor();
+        {
+            container.add(ede0, BorderLayout.NORTH);
+            container.add(edte0, BorderLayout.SOUTH);
+        }
+        final EDateEditor ede = new EDateEditor();
+        final EDateTimeEditor edte = new EDateTimeEditor();
+        {
+            ede.setDate(null);
+            container.add(ede, BorderLayout.NORTH);
+            edte.setDate(null);
+            container.add(edte, BorderLayout.SOUTH);
+        }
+        JButton log = new JButton("log");
+        log.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println(ede0.getDate());
+                System.out.println(edte0.getDate());
+                System.out.println(ede.getDate());
+                System.out.println(edte.getDate());
+            }
+        });
+        container.add(log);
     }
 
     public static void main(String[] args) {
