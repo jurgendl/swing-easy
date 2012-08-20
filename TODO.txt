@@ -1,0 +1,2 @@
+            DefaultCaret caret = (DefaultCaret) textArea.getCaret();
+            caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
