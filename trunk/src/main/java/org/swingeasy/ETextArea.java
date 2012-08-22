@@ -11,6 +11,8 @@ import javax.swing.JToolBar;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.DocumentEvent;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.Caret;
+import javax.swing.text.DefaultCaret;
 import javax.swing.text.Highlighter;
 import javax.swing.text.Highlighter.Highlight;
 
@@ -44,6 +46,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
     public ETextArea(ETextAreaConfig cfg, String text) {
         super(text, cfg.getRows(), cfg.getColumns());
         this.setEditable(cfg.isEnabled());
+        this.setAutoScroll(cfg.isAutoScroll());
         this.init();
         cfg.lock();
     }
@@ -214,6 +217,18 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
     }
 
     /**
+     * enable/disable automatic scrolling to bottom when a line is added
+     */
+    public boolean setAutoScroll(boolean enable) {
+        Caret caret = this.getCaret();
+        if (!(caret instanceof DefaultCaret)) {
+            return false;
+        }
+        ((DefaultCaret) caret).setUpdatePolicy(enable ? DefaultCaret.ALWAYS_UPDATE : DefaultCaret.NEVER_UPDATE);
+        return true;
+    };
+
+    /**
      * 
      * @see org.swingeasy.ETextComponentI#setCaret(int)
      */
@@ -221,7 +236,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
     public void setCaret(int pos) {
         this.setCaretPosition(pos);
         this.fireCaretUpdate();
-    };
+    }
 
     /**
      * 
