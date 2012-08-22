@@ -10,6 +10,8 @@ public class ETextAreaConfig extends EComponentConfig<ETextAreaConfig> {
 
     private boolean enabled = true;
 
+    private boolean autoScroll = true;
+
     public ETextAreaConfig() {
         super();
     }
@@ -34,8 +36,16 @@ public class ETextAreaConfig extends EComponentConfig<ETextAreaConfig> {
         return this.rows;
     }
 
+    public boolean isAutoScroll() {
+        return this.autoScroll;
+    }
+
     public boolean isEnabled() {
         return this.enabled;
+    }
+
+    public void setAutoScroll(boolean autoScroll) {
+        this.autoScroll = autoScroll;
     }
 
     public ETextAreaConfig setColumns(int columns) {
