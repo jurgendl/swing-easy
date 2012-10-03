@@ -5,7 +5,7 @@
 
 I use all software and these versions, other software or version are your own responsability
 
-  * Java 5.x or higher is required, the latest version of Java 6.x (6.31) is recommended, Java 7.x is not tested
+  * Java 5.x or higher is required, the latest version of Java 6.x (6.31) is recommended, Java 7.x is not tested but should not be a problem
 
   * Eclipse Indigo (3.6) or another IDE
 http://www.eclipse.org/downloads/
