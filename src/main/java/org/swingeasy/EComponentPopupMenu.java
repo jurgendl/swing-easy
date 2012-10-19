@@ -1161,10 +1161,10 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
             }
             if (map.get(key) instanceof String) {
                 String actionName = (String) map.get(key);
-                System.out.println(actionName);
+                System.out.println("\t" + actionName);
             } else {
                 Action action = (Action) map.get(key);
-                System.out.println(action);
+                System.out.println("\t" + action);
             }
         }
     }
@@ -1202,6 +1202,17 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         for (int condition : conditions) {
             component.setInputMap(condition, condition != JComponent.WHEN_IN_FOCUSED_WINDOW ? new InputMap() : new ComponentInputMap(component));
             component.setActionMap(new ActionMap());
+        }
+    }
+
+    public static void removeRegisteredKeystroke(JComponent component, KeyStroke remove) {
+        int[] conditions = { JComponent.WHEN_FOCUSED, JComponent.WHEN_IN_FOCUSED_WINDOW, JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT };
+
+        for (int condition : conditions) {
+            InputMap im = component.getInputMap(condition);
+            if (im.get(remove) != null) {
+                im.put(remove, "none");
+            }
         }
     }
 
