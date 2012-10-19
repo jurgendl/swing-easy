@@ -958,7 +958,17 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     protected static boolean accelerate(JComponent parentComponent, Action action, KeyStroke acceleratorKey, String actionCommandKey) {
         // System.out.println(this.component.getClass().getName() + " :: " + acceleratorKey + " :: " + actionCommandKey);
         parentComponent.getActionMap().put(actionCommandKey, action);
-        parentComponent.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(acceleratorKey, actionCommandKey);
+
+        int[] conditions = { JComponent.WHEN_FOCUSED, JComponent.WHEN_IN_FOCUSED_WINDOW, JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT };
+
+        for (int condition : conditions) {
+            InputMap inputMap = parentComponent.getInputMap(condition);
+            if (inputMap.get(acceleratorKey) != null) {
+                EComponentPopupMenu.removeRegisteredKeystroke(parentComponent, acceleratorKey);
+            }
+            inputMap.put(acceleratorKey, actionCommandKey);
+        }
+
         return true;
     }
 
