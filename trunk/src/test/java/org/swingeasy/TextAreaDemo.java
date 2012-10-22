@@ -17,6 +17,7 @@ public class TextAreaDemo {
         ETextArea jtf = new ETextArea(new ETextAreaConfig(), text);
         container.add(new JScrollPane(jtf));
         container.add(jtf.getToolbar(), BorderLayout.NORTH);
+        EComponentPopupMenu.debug(jtf);
         return jtf;
     }
 
