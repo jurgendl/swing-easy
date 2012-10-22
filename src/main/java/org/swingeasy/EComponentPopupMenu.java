@@ -386,7 +386,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
         public GotoBeginAction(WritableComponent component) {
             super(component, EComponentPopupMenu.GOTO_BEGIN, Resources.getImageResource("arrow_up.png"));
-            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_HOME, 0));
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_HOME, Event.CTRL_MASK));
         }
 
         /**
@@ -417,7 +417,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
         public GotoEndAction(WritableComponent component) {
             super(component, EComponentPopupMenu.GOTO_END, Resources.getImageResource("arrow_down.png"));
-            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_END, 0));
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_END, Event.CTRL_MASK));
         }
 
         /**
