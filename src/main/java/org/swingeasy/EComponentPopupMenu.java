@@ -904,7 +904,12 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
     private static final long serialVersionUID = 8362926178135321789L;
 
-    public static final String DELETE = "delete";
+    public static final int[] conditions = {
+            JComponent.WHEN_FOCUSED,
+            JComponent.WHEN_IN_FOCUSED_WINDOW,
+            JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT };
+
+    public static final String DELETE = "delete-next";
 
     public static final String REDO = "redo";
 
@@ -959,9 +964,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         // System.out.println(this.component.getClass().getName() + " :: " + acceleratorKey + " :: " + actionCommandKey);
         parentComponent.getActionMap().put(actionCommandKey, action);
 
-        int[] conditions = { JComponent.WHEN_FOCUSED, JComponent.WHEN_IN_FOCUSED_WINDOW, JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT };
-
-        for (int condition : conditions) {
+        for (int condition : EComponentPopupMenu.conditions) {
             InputMap inputMap = parentComponent.getInputMap(condition);
             if (inputMap.get(acceleratorKey) != null) {
                 EComponentPopupMenu.removeRegisteredKeystroke(parentComponent, acceleratorKey);
@@ -974,13 +977,14 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
     /**
      * copy to clipboard
-     * 
-     * @param content
      */
     public static void copyToClipboard(String content) {
         SystemSettings.getClipboard().setContents(new StringSelection(content), new ClipboardOwnerAdapter());
     }
 
+    /**
+     * debug actions
+     */
     public static void debug(JComponent component) {
         // List keystrokes in the WHEN_FOCUSED input map of the component
         InputMap map = component.getInputMap(JComponent.WHEN_FOCUSED);
@@ -1085,7 +1089,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         popup.add(cutAction);
         popup.add(copyAction);
         popup.add(pasteAction);
-        popup.add(deleteAction);
+        // popup.add(deleteAction);
         popup.addSeparator();
         popup.add(selectAllAction);
         popup.add(unselectAction);
@@ -1207,18 +1211,14 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         // removes all key actions
         // like F6 toggleFocus
         // like F8 startResize
-        int[] conditions = { JComponent.WHEN_FOCUSED, JComponent.WHEN_IN_FOCUSED_WINDOW, JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT };
-
-        for (int condition : conditions) {
+        for (int condition : EComponentPopupMenu.conditions) {
             component.setInputMap(condition, condition != JComponent.WHEN_IN_FOCUSED_WINDOW ? new InputMap() : new ComponentInputMap(component));
             component.setActionMap(new ActionMap());
         }
     }
 
     public static void removeRegisteredKeystroke(JComponent component, KeyStroke remove) {
-        int[] conditions = { JComponent.WHEN_FOCUSED, JComponent.WHEN_IN_FOCUSED_WINDOW, JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT };
-
-        for (int condition : conditions) {
+        for (int condition : EComponentPopupMenu.conditions) {
             InputMap im = component.getInputMap(condition);
             if (im.get(remove) != null) {
                 im.put(remove, "none");
@@ -1244,11 +1244,8 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     }
 
     /**
-     * 
      * let action implement {@link EComponentI} to listen to {@link Locale} changes and {@link HasParentComponent} to accelerate {@link Action}s for
      * the {@link JComponent}
-     * 
-     * @see javax.swing.JPopupMenu#add(javax.swing.Action)
      */
     @Override
     public JMenuItem add(Action action) {
