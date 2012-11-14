@@ -169,5 +169,3 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * fixed: delete action temporary removed
   * ...
  * 2.6.0 (not planned, not released)
- * not planned
-  * bug: dialogs created by CustomizableOptionPane are not centered on parent component unless using a OptionPaneCustomizer to center the dialog yourself
