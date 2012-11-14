@@ -159,7 +159,7 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * fixed: EText'components': caret updates fire events
   * fixed: ETextArea: copy action: endless loop
  * 2.5.6.0 (featured)
-  * EText-classes: set caret methods
+  * EText'components': set caret methods
   * fixed: datechooser/spinner support for null value
   * ETextArea: autoscroll caret
  * 2.5.6.1 (not released)
