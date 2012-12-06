@@ -167,5 +167,6 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * fixed: replacing keystrokes with another action
   * fixed: goto begin/end needs control modifier
   * fixed: delete action temporary removed
+  * ETable: byte array renderer
   * ...
  * 2.6.0 (not planned, not released)
