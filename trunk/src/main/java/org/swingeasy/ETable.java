@@ -55,6 +55,7 @@ import org.swingeasy.table.editor.ColorTableCellEditor;
 import org.swingeasy.table.editor.DateTableCellEditor;
 import org.swingeasy.table.editor.NumberTableCellEditor;
 import org.swingeasy.table.renderer.BooleanTableCellRenderer;
+import org.swingeasy.table.renderer.ByteArrayTableCellRenderer;
 import org.swingeasy.table.renderer.ColorTableCellRenderer;
 import org.swingeasy.table.renderer.DateTableCellRenderer;
 import org.swingeasy.table.renderer.NumberTableCellRenderer;
@@ -641,6 +642,8 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
         this.defaultRenderersByColumnClass.put(Number.class, new javax.swing.UIDefaults.ProxyLazyValue(NumberTableCellRenderer.class.getName()));
         this.defaultRenderersByColumnClass.put(Float.class, new javax.swing.UIDefaults.ProxyLazyValue(NumberTableCellRenderer.class.getName()));
         this.defaultRenderersByColumnClass.put(Double.class, new javax.swing.UIDefaults.ProxyLazyValue(NumberTableCellRenderer.class.getName()));
+        this.defaultRenderersByColumnClass.put(byte[].class, new javax.swing.UIDefaults.ProxyLazyValue(ByteArrayTableCellRenderer.class.getName()));
+        this.defaultRenderersByColumnClass.put(Byte[].class, new javax.swing.UIDefaults.ProxyLazyValue(ByteArrayTableCellRenderer.class.getName()));
     }
 
     /**
@@ -680,7 +683,14 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * 
+     * @see javax.swing.JTable#getCellRenderer(int, int)
+     */
+    @Override
+    public TableCellRenderer getCellRenderer(int row, int column) {
+        return super.getCellRenderer(row, column);
+    }
+
+    /**
      * @see javax.swing.JTable#getColumnClass(int)
      */
     @Override
