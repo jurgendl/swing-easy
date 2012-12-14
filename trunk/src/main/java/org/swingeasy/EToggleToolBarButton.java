@@ -18,6 +18,7 @@ public class EToggleToolBarButton extends JToggleButton implements EComponentI {
     public EToggleToolBarButton(EButtonCustomizer ebc, Action a) {
         super(a);
         ebc.customize(this);
+        this.setName(String.valueOf(a.getValue(Action.NAME)));
     }
 
     public EToggleToolBarButton(EButtonCustomizer ebc, Icon icon) {

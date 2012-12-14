@@ -16,6 +16,7 @@ public class EButton extends JButton implements EComponentI {
 
     public EButton(Action a) {
         super(a);
+        this.setName(String.valueOf(a.getValue(Action.NAME)));
     }
 
     public EButton(EButtonCustomizer ebc) {
@@ -26,6 +27,7 @@ public class EButton extends JButton implements EComponentI {
     public EButton(EButtonCustomizer ebc, Action a) {
         super(a);
         ebc.customize(this);
+        this.setName(String.valueOf(a.getValue(Action.NAME)));
     }
 
     public EButton(EButtonCustomizer ebc, Icon icon) {
