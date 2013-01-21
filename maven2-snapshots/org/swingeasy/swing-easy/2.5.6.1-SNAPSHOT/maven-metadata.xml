@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>org.swingeasy</groupId>
+  <artifactId>swing-easy</artifactId>
+  <version>2.5.6.1-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <timestamp>20130121.092413</timestamp>
+      <buildNumber>1</buildNumber>
+    </snapshot>
+    <lastUpdated>20130121092415</lastUpdated>
+  </versioning>
+</metadata>
