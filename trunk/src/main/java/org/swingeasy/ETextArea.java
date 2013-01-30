@@ -36,19 +36,16 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
 
     protected String lastSearch = null;
 
+    protected ETextAreaConfig cfg;
+
     public ETextArea(ETextAreaConfig cfg) {
         super(cfg.getRows(), cfg.getColumns());
-        this.setEditable(cfg.isEnabled());
-        this.init();
-        cfg.lock();
+        this.init(cfg.lock());
     }
 
     public ETextArea(ETextAreaConfig cfg, String text) {
         super(text, cfg.getRows(), cfg.getColumns());
-        this.setEditable(cfg.isEnabled());
-        this.setAutoScroll(cfg.isAutoScroll());
-        this.init();
-        cfg.lock();
+        this.init(cfg.lock());
     }
 
     public void addDocumentKeyListener(DocumentKeyListener listener) {
@@ -166,7 +163,10 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
         }
     }
 
-    protected void init() {
+    protected void init(ETextAreaConfig c) {
+        this.cfg = c;
+        this.setEditable(this.cfg.isEnabled());
+        this.setAutoScroll(this.cfg.isAutoScroll());
         EComponentPopupMenu.installTextComponentPopupMenu(this);
         UIUtils.registerLocaleChangeListener((EComponentI) this);
         this.addDocumentKeyListener(new DocumentKeyListener() {

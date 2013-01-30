@@ -8,6 +8,8 @@ public class ETextFieldConfig extends EComponentConfig<ETextFieldConfig> {
 
     private boolean enabled = true;
 
+    private boolean selectAllOnFocus = false;
+
     public ETextFieldConfig() {
         super();
     }
@@ -18,7 +20,12 @@ public class ETextFieldConfig extends EComponentConfig<ETextFieldConfig> {
     }
 
     public ETextFieldConfig(boolean enabled, int columns) {
+        this(enabled, columns, false);
+    }
+
+    public ETextFieldConfig(boolean enabled, int columns, boolean selectAllOnFocus) {
         super();
+        this.selectAllOnFocus = selectAllOnFocus;
         this.enabled = enabled;
         this.columns = columns;
     }
@@ -31,6 +38,10 @@ public class ETextFieldConfig extends EComponentConfig<ETextFieldConfig> {
         return this.enabled;
     }
 
+    public boolean isSelectAllOnFocus() {
+        return this.selectAllOnFocus;
+    }
+
     public ETextFieldConfig setColumns(int columns) {
         this.lockCheck();
         this.columns = columns;
@@ -40,6 +51,12 @@ public class ETextFieldConfig extends EComponentConfig<ETextFieldConfig> {
     public ETextFieldConfig setEnabled(boolean enabled) {
         this.lockCheck();
         this.enabled = enabled;
+        return this;
+    }
+
+    public ETextFieldConfig setSelectAllOnFocus(boolean selectAllOnFocus) {
+        this.lockCheck();
+        this.selectAllOnFocus = selectAllOnFocus;
         return this;
     }
 }
