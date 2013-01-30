@@ -37,6 +37,8 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI, Re
 
     protected CheckMode checkMode = CheckMode.NONE;
 
+    protected ETreeTableConfig cfg;
+
     protected ETreeTable() {
         this(new ETreeTableRecordNode(), new ETreeTableHeaders());
     }
@@ -45,6 +47,7 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI, Re
         super(model);
 
         cfg.lock();
+        this.cfg = cfg;
 
         this.model = model;
         this.model.parent = this;

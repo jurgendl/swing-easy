@@ -120,9 +120,8 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
     }
 
     public EComboBox(EComboBoxConfig cfg) {
-        this.cfg = cfg;
-        this.cfg.lock();
-        this.init();
+        super();
+        this.init(cfg.lock());
     }
 
     /**
@@ -313,7 +312,9 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
         return selectedRecord == null ? null : selectedRecord.get();
     }
 
-    protected void init() {
+    protected void init(EComboBoxConfig c) {
+        this.cfg = c;
+
         this.records = new BasicEventList<EComboBoxRecord<T>>();
 
         if (this.cfg.isSortable()) {

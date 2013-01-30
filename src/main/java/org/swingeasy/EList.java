@@ -178,8 +178,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
 
     public EList(EListConfig cfg) {
         super(EList.createModel(cfg.lock()));
-        this.cfg = cfg;
-        this.init();
+        this.init(cfg);
     }
 
     /**
@@ -361,7 +360,8 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    protected void init() {
+    protected void init(EListConfig c) {
+        this.cfg = c;
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {

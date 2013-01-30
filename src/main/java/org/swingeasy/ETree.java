@@ -20,6 +20,8 @@ public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
 
     protected ETreeSearchComponent<T> searchComponent = null;
 
+    protected ETreeConfig cfg;
+
     protected ETree() {
         this(new ETreeNode<T>(null));
     }
@@ -27,6 +29,7 @@ public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
     public ETree(ETreeConfig cfg, ETreeNode<T> rootNode) {
         super(new javax.swing.tree.DefaultTreeModel(rootNode, true));
 
+        this.cfg = cfg;
         cfg.lock();
 
         this.setShowsRootHandles(true);
