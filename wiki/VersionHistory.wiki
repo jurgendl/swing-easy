@@ -178,3 +178,4 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * tip of the day
   * drag and drop, hide and close tabs in multitab component
   * wizard (using forms)
+  * ...
