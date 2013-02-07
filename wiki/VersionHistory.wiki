@@ -172,3 +172,8 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * ETextField: select all on focus
   * ...
  * 2.6.0 (not planned, not released)
+ * some version in the future or maybe never
+  * form builder and components
+  * tip of the day
+  * drag and drop, hide and close tabs in multitab component
+  * wizard (using forms)
