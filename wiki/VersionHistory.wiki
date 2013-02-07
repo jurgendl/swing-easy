@@ -168,5 +168,7 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * fixed: goto begin/end needs control modifier
   * fixed: delete action temporary removed
   * ETable: byte array renderer
+  * EComponent: config is saved in object and init method accepts config
+  * ETextField: select all on focus
   * ...
  * 2.6.0 (not planned, not released)
