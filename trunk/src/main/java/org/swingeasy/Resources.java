@@ -37,7 +37,12 @@ public class Resources {
 
     public static ImageIcon getImageResource(ClassLoader cl, String key) {
         String path = Resources.class.getPackage().getName().replace('.', '/') + "/resources/images/" + key;//$NON-NLS-1$
-        return new ImageIcon(cl.getResource(path));
+        URL resource = cl.getResource(path);
+        if (resource == null) {
+            System.err.println("resource " + path + " not found");
+            return null;
+        }
+        return new ImageIcon(resource);
     }
 
     public static ImageIcon getImageResource(String key) {
