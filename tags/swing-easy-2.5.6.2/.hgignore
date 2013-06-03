@@ -1,0 +1,9 @@
+issues.xml
+issuezilla.jar
+pom.xml.releaseBackup
+release.properties
+target
+target-eclipse
+syntax: glob
+src/test/java/org/swingeasy/Java2sAutoTextField.java
+src/test/java/org/swingeasy/Java2sAutoComboBox.java
