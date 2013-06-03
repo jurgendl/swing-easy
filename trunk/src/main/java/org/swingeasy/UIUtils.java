@@ -252,7 +252,7 @@ public class UIUtils {
      * center window on screen
      */
     public static void center(Window w) {
-        w.setLocation(null);
+        w.setLocationRelativeTo(null);
     }
 
     /**
