@@ -1,17 +1,28 @@
 package org.swingeasy;
 
+import java.awt.AWTException;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
+import java.awt.Image;
+import java.awt.MenuItem;
 import java.awt.Point;
+import java.awt.PopupMenu;
 import java.awt.Rectangle;
 import java.awt.Shape;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.geom.RoundRectangle2D;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeListenerProxy;
@@ -29,6 +40,8 @@ import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JColorChooser;
 import javax.swing.JComponent;
@@ -188,6 +201,69 @@ public class UIUtils {
         }
     }
 
+    public static class SystemTrayCfg {
+        // null use icon from parent
+        private Image trayIcon = null;
+
+        private String trayTitle;
+
+        private String exitTitle = "Exit";
+
+        private String toggleTitle = "Toggle visibility";
+
+        private String trayTooltip = "Doubleclick to toggle visibility";
+
+        private AbstractAction exitAction;
+
+        public AbstractAction getExitAction() {
+            return this.exitAction;
+        }
+
+        public String getExitTitle() {
+            return this.exitTitle;
+        }
+
+        public String getToggleTitle() {
+            return this.toggleTitle;
+        }
+
+        public Image getTrayIcon() {
+            return this.trayIcon;
+        }
+
+        public String getTrayTitle() {
+            return this.trayTitle;
+        }
+
+        public String getTrayTooltip() {
+            return this.trayTooltip;
+        }
+
+        public void setExitAction(AbstractAction exitAction) {
+            this.exitAction = exitAction;
+        }
+
+        public void setExitTitle(String exitTitle) {
+            this.exitTitle = exitTitle;
+        }
+
+        public void setToggleTitle(String toggleTitle) {
+            this.toggleTitle = toggleTitle;
+        }
+
+        public void setTrayIcon(Image trayIcon) {
+            this.trayIcon = trayIcon;
+        }
+
+        public void setTrayTitle(String trayTitle) {
+            this.trayTitle = trayTitle;
+        }
+
+        public void setTrayTooltip(String trayTooltip) {
+            this.trayTooltip = trayTooltip;
+        }
+    }
+
     /**
      * UncaughtExceptionHandler delegating to given instance
      */
@@ -253,6 +329,74 @@ public class UIUtils {
      */
     public static void center(Window w) {
         w.setLocationRelativeTo(null);
+    }
+
+    /**
+     * create simple tray menu (exit and toggle visibility), returns popupmenu to add more menu items (or remove)
+     */
+    public static PopupMenu createSystemTray(final JFrame frame, SystemTrayCfg cfg) {
+        if (SystemTray.isSupported()) {
+            if (cfg.getExitAction() == null) {
+                cfg.setExitAction(new AbstractAction(cfg.getExitTitle()) {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        System.exit(0);
+                    }
+                });
+            }
+            AbstractAction toggle = new AbstractAction(cfg.getToggleTitle()) {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    UIUtils.toggleVisibility(frame);
+                }
+            };
+            if (cfg.getTrayIcon() == null) {
+                cfg.setTrayIcon(frame.getIconImage() == null ? new BufferedImage(16, 16, BufferedImage.TYPE_INT_RGB) : frame.getIconImage());
+            }
+            if (cfg.getTrayTitle() == null) {
+                cfg.setTrayTitle(frame.getTitle());
+            }
+            TrayIcon trayItem = new TrayIcon(cfg.getTrayIcon(), cfg.getTrayTitle());
+            trayItem.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if ((e.getClickCount() == 2) && (e.getButton() == MouseEvent.BUTTON1)) {
+                        UIUtils.toggleVisibility(frame);
+                    }
+                }
+            });
+            PopupMenu popupmenu = new PopupMenu(cfg.getTrayTitle());
+            {
+                MenuItem emi = new MenuItem((String) toggle.getValue(Action.NAME));
+                emi.addActionListener(toggle);
+                popupmenu.add(emi);
+            }
+            {
+                MenuItem emi = new MenuItem((String) cfg.getExitAction().getValue(Action.NAME));
+                emi.addActionListener(cfg.getExitAction());
+                popupmenu.add(emi);
+            }
+            trayItem.setPopupMenu(popupmenu);
+            trayItem.setToolTip(cfg.getTrayTooltip());
+            try {
+                SystemTray.getSystemTray().add(trayItem);
+            } catch (AWTException ex) {
+                ex.printStackTrace();
+                return null;
+            }
+            frame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowIconified(WindowEvent e) {
+                    UIUtils.toggleVisibility(frame);
+                }
+            });
+            return popupmenu;
+        }
+        return null;
     }
 
     /**
@@ -617,6 +761,20 @@ public class UIUtils {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception ex) {
             UIUtils.log(ex);
+        }
+    }
+
+    /**
+     * toggle visibility of window
+     */
+    public static void toggleVisibility(final Window frame) {
+        frame.setVisible(!frame.isVisible());
+        if (frame.isVisible()) {
+            if (frame instanceof JFrame) {
+                JFrame.class.cast(frame).setState(Frame.NORMAL);
+            }
+            frame.toFront();
+            frame.repaint();
         }
     }
 
