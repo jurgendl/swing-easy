@@ -3,7 +3,9 @@ package org.swingeasy;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Frame;
+import java.awt.GraphicsEnvironment;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.Window;
 import java.awt.event.MouseEvent;
@@ -235,6 +237,25 @@ public class UIUtils {
     protected static Map<String, String> cachedDescriptions = new HashMap<String, String>();
 
     /**
+     * put window on bottomright, the size of the window must be set<br>
+     * TODO check on multi-monitor setup
+     */
+    public static void bottomRight(Window w) {
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        final Rectangle bounds = ge.getMaximumWindowBounds(); // native window bounds
+        int x = (int) bounds.getMaxX() - w.getWidth();
+        int y = (int) bounds.getMaxY() - w.getHeight();
+        w.setLocation(x, y);
+    }
+
+    /**
+     * center window on screen
+     */
+    public static void center(Window w) {
+        w.setLocation(null);
+    }
+
+    /**
      * lists all current locale change listeners
      */
     public static void debugLocaleChangeListeners() {
@@ -328,18 +349,20 @@ public class UIUtils {
     }
 
     /**
-     * activate Nimbus look and feel or system look and feel if not java 1.7 (7) or higher
+     * activate Nimbus look and feel (returns true) or system look and feel (returns false) if not java 1.7 (7) or higher
      */
-    public static void niceLookAndFeel() {
+    public static boolean niceLookAndFeel() {
         try {
             try {
                 UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel"); //$NON-NLS-1$
+                return true;
             } catch (Exception ex) {
                 UIUtils.systemLookAndFeel();
             }
         } catch (Exception ex) {
             UIUtils.log(ex);
         }
+        return false;
     }
 
     /**
@@ -436,6 +459,13 @@ public class UIUtils {
     public static void registerUncaughtExceptionHandler(UncaughtExceptionHandler handler) {
         UncaughtExceptionHandlerDelegate.delegate = handler;
         System.setProperty("sun.awt.exception.handler", UncaughtExceptionHandlerDelegate.class.getName()); //$NON-NLS-1$
+    }
+
+    /**
+     * center window on top of component
+     */
+    public static void relative(Window w, Component c) {
+        w.setLocationRelativeTo(c);
     }
 
     /**
