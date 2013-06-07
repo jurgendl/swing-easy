@@ -202,29 +202,16 @@ public class UIUtils {
     }
 
     public static class SystemTrayCfg {
-        // null use icon from parent
+        /** null: use icon from parent */
         private Image trayIcon = null;
 
-        private String trayTitle;
-
-        private String exitTitle = "Exit";
-
-        private String toggleTitle = "Toggle visibility";
-
-        private String trayTooltip = "Doubleclick to toggle visibility";
+        /** null: use title from parent frame */
+        private String trayTitle = null;
 
         private AbstractAction exitAction;
 
         public AbstractAction getExitAction() {
             return this.exitAction;
-        }
-
-        public String getExitTitle() {
-            return this.exitTitle;
-        }
-
-        public String getToggleTitle() {
-            return this.toggleTitle;
         }
 
         public Image getTrayIcon() {
@@ -235,20 +222,8 @@ public class UIUtils {
             return this.trayTitle;
         }
 
-        public String getTrayTooltip() {
-            return this.trayTooltip;
-        }
-
         public void setExitAction(AbstractAction exitAction) {
             this.exitAction = exitAction;
-        }
-
-        public void setExitTitle(String exitTitle) {
-            this.exitTitle = exitTitle;
-        }
-
-        public void setToggleTitle(String toggleTitle) {
-            this.toggleTitle = toggleTitle;
         }
 
         public void setTrayIcon(Image trayIcon) {
@@ -257,10 +232,6 @@ public class UIUtils {
 
         public void setTrayTitle(String trayTitle) {
             this.trayTitle = trayTitle;
-        }
-
-        public void setTrayTooltip(String trayTooltip) {
-            this.trayTooltip = trayTooltip;
         }
     }
 
@@ -334,19 +305,23 @@ public class UIUtils {
     /**
      * create simple tray menu (exit and toggle visibility), returns popupmenu to add more menu items (or remove)
      */
-    public static PopupMenu createSystemTray(final JFrame frame, SystemTrayCfg cfg) {
+    public static PopupMenu createSystemTray(final JFrame frame, final SystemTrayCfg cfg) {
         if (SystemTray.isSupported()) {
             if (cfg.getExitAction() == null) {
-                cfg.setExitAction(new AbstractAction(cfg.getExitTitle()) {
-                    private static final long serialVersionUID = 1L;
+                cfg.setExitAction(new AbstractAction(Messages.getString((Locale) null, "tray.exit.title")) {
+                    private static final long serialVersionUID = 8188465232565268116L;
 
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        System.exit(0);
+                        if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(frame,
+                                Messages.getString((Locale) null, "tray.exit.confirmation"), Messages.getString((Locale) null, "tray.exit.title"),
+                                JOptionPane.YES_NO_OPTION)) {
+                            System.exit(0);
+                        }
                     }
                 });
             }
-            AbstractAction toggle = new AbstractAction(cfg.getToggleTitle()) {
+            AbstractAction toggle = new AbstractAction(Messages.getString((Locale) null, "tray.toggle.title")) {
                 private static final long serialVersionUID = 1L;
 
                 @Override
@@ -381,7 +356,7 @@ public class UIUtils {
                 popupmenu.add(emi);
             }
             trayItem.setPopupMenu(popupmenu);
-            trayItem.setToolTip(cfg.getTrayTooltip());
+            trayItem.setToolTip(Messages.getString((Locale) null, "tray.toggle.tooltip"));
             try {
                 SystemTray.getSystemTray().add(trayItem);
             } catch (AWTException ex) {
