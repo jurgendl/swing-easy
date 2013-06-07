@@ -162,7 +162,7 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * EText'components': set caret methods
   * fixed: datechooser/spinner support for null value
   * ETextArea: autoscroll caret
- * 2.5.6.1 (featured)
+ * 2.5.6.1
   * EComponentPopupMenu: removeRegisteredKeystroke
   * fixed: replacing keystrokes with another action
   * fixed: goto begin/end needs control modifier
@@ -170,7 +170,7 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * ETable: byte array renderer
   * EComponent: config is saved in object and init method accepts config
   * ETextField: select all on focus
- * 2.5.7.0
+ * 2.5.7.0 (featured)
   * UIUtils: easy system tray menu
   * UIUtils: toggleVisibility and set Window relative, center, bottomRight methods
   * fixed: Resources: nullpointer
