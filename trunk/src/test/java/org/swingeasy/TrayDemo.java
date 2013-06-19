@@ -6,8 +6,6 @@ import javax.swing.WindowConstants;
 import org.swingeasy.UIUtils.SystemTrayCfg;
 
 /**
- * Tray demo
- * 
  * @author Jurgen
  */
 public class TrayDemo {

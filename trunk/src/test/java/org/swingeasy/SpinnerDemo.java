@@ -10,6 +10,9 @@ import javax.swing.JFrame;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.WindowConstants;
 
+/**
+ * @author Jurgen
+ */
 public class SpinnerDemo {
     private static void addComponents(Container container) {
         final ESpinner<Integer> comp = new ESpinner<Integer>(new SpinnerNumberModel(1, -100, 100, 1));
