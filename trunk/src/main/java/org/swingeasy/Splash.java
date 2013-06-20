@@ -15,9 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JWindow;
 import javax.swing.WindowConstants;
 
-/**
- * @author Jurgen
- */
 public class Splash extends JComponent {
     private static final long serialVersionUID = -2472231955593958968L;
 
@@ -41,7 +38,7 @@ public class Splash extends JComponent {
 
     private int H = 10; // height
 
-    private boolean frame = true;
+    private boolean frame = false;
 
     public Splash(BufferedImage logo) {
         this.logo = logo;
