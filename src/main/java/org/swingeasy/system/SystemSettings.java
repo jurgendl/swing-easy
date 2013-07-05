@@ -458,8 +458,9 @@ public class SystemSettings extends PropertyChangeParent {
     }
 
     public static boolean open(File file, String... cmdparameters) throws IOException {
+        String absolutePath = file.getAbsolutePath();
         if (!file.exists() || (file.length() == 0)) {
-            throw new FileNotFoundException(file.getAbsolutePath());
+            throw new FileNotFoundException(absolutePath);
         }
 
         if (SystemSettings.osgroup != OS_GROUP.Windows) {
@@ -483,6 +484,7 @@ public class SystemSettings extends PropertyChangeParent {
         }
 
         List<String> opencommand = new ArrayList<String>();
+        boolean fileAdded = false;
         for (String sysexecpart : SystemSettings.split(sysexec)) {
             // %0 or %1 are replaced with the file name that you want to open.
             // %* is replaced with all of the parameters.
@@ -494,12 +496,21 @@ public class SystemSettings extends PropertyChangeParent {
                 }
                 continue;
             }
-            sysexecpart = sysexecpart.replace("%0", file.getAbsolutePath());
-            sysexecpart = sysexecpart.replace("%1", file.getAbsolutePath());
+            fileAdded |= sysexecpart.contains("%0") || sysexecpart.contains("%1");
+            sysexecpart = sysexecpart.replace("%0", absolutePath);
+            sysexecpart = sysexecpart.replace("%1", absolutePath);
             for (int i = 0; i < cmdparameters.length; i++) {
                 sysexecpart = sysexecpart.replace("%" + (i + 2), cmdparameters[i]);
             }
             opencommand.add(sysexecpart);
+        }
+
+        if (!fileAdded) {
+            if (absolutePath.contains(" ")) {
+                opencommand.add("\"" + absolutePath + "\"");
+            } else {
+                opencommand.add(absolutePath);
+            }
         }
 
         // for (String line :
@@ -553,7 +564,16 @@ public class SystemSettings extends PropertyChangeParent {
             parts.add(m.group());
             pos = m.end();
         }
-        if (!found) {
+        if (found) {
+            if (pos != (sysexec.length() - 1)) {
+                String trimmed = sysexec.substring(pos).trim();
+                if (trimmed.length() > 0) {
+                    for (String p : trimmed.split(" ")) {
+                        parts.add(p);
+                    }
+                }
+            }
+        } else {
             for (String p : sysexec.split(" ")) {
                 parts.add(p);
             }
