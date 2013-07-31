@@ -5,20 +5,20 @@ Maven version 2.2.1 recommended
 
 add this in your project pom.xml
 
-<code>
-<repositories>
-<repository>
-<id>swing-easy.googlecode</id>
-<url>http://swing-easy.googlecode.com/svn/maven2</url>
-</repository>
-</repositories>
-</code>
+{{{
+  <repositories>
+    <repository>
+      <id>swing-easy.googlecode</id>
+      <url>http://swing-easy.googlecode.com/svn/maven2</url>
+    </repository>
+  </repositories>
+}}}
 
 
-<code>
-<dependency>
-<groupId>org.swingeasy</groupId>
-<artifactId>swing-easy</artifactId>
-<version>VERSION</version>
-</dependency>
-</code>
+{{{
+  <dependency>
+    <groupId>org.swingeasy</groupId>
+    <artifactId>swing-easy</artifactId>
+    <version>VERSION</version>
+  </dependency>
+}}}
