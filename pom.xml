@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.swingeasy</groupId>
 	<artifactId>swing-easy</artifactId>
-	<version>2.6.0.0</version>
+	<version>2.5.6.3-SNAPSHOT</version>
 	<name>swing-easy</name>
 	<description>swing-easy</description>
 	<url>http://swing-easy.googlecode.com</url>
@@ -95,9 +95,9 @@
 	</developers>
 	<contributors />
 	<scm>
-		<connection>scm:svn:http://swing-easy.googlecode.com/svn/tags/swing-easy-2.6.0.0</connection>
-		<developerConnection>scm:svn:https://swing-easy.googlecode.com/svn/tags/swing-easy-2.6.0.0</developerConnection>
-		<url>http://swing-easy.googlecode.com/svn/tags/swing-easy-2.6.0.0</url>
+		<connection>scm:svn:http://swing-easy.googlecode.com/svn/trunk</connection>
+		<developerConnection>scm:svn:https://swing-easy.googlecode.com/svn/trunk</developerConnection>
+		<url>http://swing-easy.googlecode.com/svn/trunk</url>
 	</scm>
 	<!-- 
 		Mercurial
