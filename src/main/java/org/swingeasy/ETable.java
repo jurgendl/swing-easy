@@ -70,9 +70,9 @@ import ca.odell.glazedlists.gui.AbstractTableComparatorChooser;
 import ca.odell.glazedlists.gui.TableFormat;
 import ca.odell.glazedlists.matchers.AbstractMatcherEditor;
 import ca.odell.glazedlists.matchers.Matcher;
-import ca.odell.glazedlists.swing.EventSelectionModel;
+import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
+import ca.odell.glazedlists.swing.DefaultEventTableModel;
 import ca.odell.glazedlists.swing.EventTableColumnModel;
-import ca.odell.glazedlists.swing.EventTableModel;
 import ca.odell.glazedlists.swing.SortableRenderer;
 import ca.odell.glazedlists.swing.TableComparatorChooser;
 
@@ -331,7 +331,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
         }
     }
 
-    public class ETableModel extends EventTableModel<ETableRecord<T>> {
+    public class ETableModel extends DefaultEventTableModel<ETableRecord<T>> {
         private static final long serialVersionUID = -8936359559294414836L;
 
         protected ETableModel(EventList<ETableRecord<T>> source, TableFormat<? super ETableRecord<T>> tableFormat) {
@@ -477,9 +477,9 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
 
     protected final EventList<ETableRecord<T>> records;
 
-    protected final EventTableModel<ETableRecord<T>> tableModel;
+    protected final DefaultEventTableModel<ETableRecord<T>> tableModel;
 
-    protected final EventSelectionModel<ETableRecord<T>> tableSelectionModel;
+    protected final DefaultEventSelectionModel<ETableRecord<T>> tableSelectionModel;
 
     protected final EFiltering filtering;
 
@@ -537,7 +537,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
         this.filtering = new EFiltering(this.sorting.getRecords(), matcher);
         this.tableModel = new ETableModel(this.filtering.getRecords(), this.tableFormat);
         this.setModel(this.tableModel);
-        this.tableSelectionModel = new EventSelectionModel<ETableRecord<T>>(this.records);
+        this.tableSelectionModel = new DefaultEventSelectionModel<ETableRecord<T>>(this.records);
         this.tableSelectionModel.setSelectionMode(ListSelection.MULTIPLE_INTERVAL_SELECTION_DEFENSIVE);
         this.setColumnSelectionAllowed(true);
         this.setRowSelectionAllowed(true);

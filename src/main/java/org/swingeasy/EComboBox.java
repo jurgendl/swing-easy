@@ -28,7 +28,7 @@ import ca.odell.glazedlists.SortedList;
 import ca.odell.glazedlists.TextFilterator;
 import ca.odell.glazedlists.matchers.TextMatcherEditor;
 import ca.odell.glazedlists.swing.AutoCompleteSupport;
-import ca.odell.glazedlists.swing.EventComboBoxModel;
+import ca.odell.glazedlists.swing.DefaultEventComboBoxModel;
 
 /**
  * @author Jurgen
@@ -325,7 +325,7 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
             this.records = GlazedLists.threadSafeList(this.records);
         }
 
-        EventComboBoxModel<EComboBoxRecord<T>> model = new EventComboBoxModel<EComboBoxRecord<T>>(this.records);
+        DefaultEventComboBoxModel<EComboBoxRecord<T>> model = new DefaultEventComboBoxModel<EComboBoxRecord<T>>(this.records);
 
         this.setModel(model);
 
