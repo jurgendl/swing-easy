@@ -467,6 +467,10 @@ public class UIUtils {
         return new MoveMouseListener(target);
     }
 
+    public static void maximize(Frame f) {
+        f.setExtendedState(f.getExtendedState() | Frame.MAXIMIZED_BOTH);
+    }
+
     /**
      * activate Nimbus look and feel (returns true) or system look and feel (returns false) if not java 1.7 (7) or higher
      */

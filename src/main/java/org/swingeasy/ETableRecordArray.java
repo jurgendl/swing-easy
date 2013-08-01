@@ -63,7 +63,8 @@ public class ETableRecordArray<E> implements ETableRecord<E[]> {
     @Override
     public boolean hasChanged(int column) {
         Object ov = this.originalValues.get(column);
-        return (ov != null) && !new EqualsBuilder().append(ov, this.get(column)).isEquals();
+        Object nv = this.get(column);
+        return !new EqualsBuilder().append(ov, nv).isEquals();
     }
 
     /**

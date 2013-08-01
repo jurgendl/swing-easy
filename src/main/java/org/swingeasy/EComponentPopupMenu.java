@@ -1059,6 +1059,8 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         final EComponentPopupMenuAction<WritableComponent> redoAction = new RedoAction(component, undoRedoManager);
         final EComponentPopupMenuAction<WritableComponent> cutAction = new CutAction(component);
         final EComponentPopupMenuAction<WritableComponent> pasteAction = new PasteAction(component);
+        // FIXME delete action
+        @SuppressWarnings("unused")
         final EComponentPopupMenuAction<WritableComponent> deleteAction = new DeleteAction(component);
         final EComponentPopupMenuAction<WritableComponent> selectAllAction = new SelectAllAction(component);
         final EComponentPopupMenuAction<WritableComponent> unselectAction = new UnselectAction(component);

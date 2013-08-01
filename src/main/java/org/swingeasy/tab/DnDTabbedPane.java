@@ -119,7 +119,6 @@ public class DnDTabbedPane extends JTabbedPane {
         }
     }
 
-    
     private static final long serialVersionUID = -2562830669661632426L;
 
     private static final int LINEWIDTH = 3;
@@ -203,6 +202,7 @@ public class DnDTabbedPane extends JTabbedPane {
         this.setTabComponentAt(tgtindex, tab);
     }
 
+    // warning can be ignored
     public DropLocation dropLocationForPoint(Point p) {
         @SuppressWarnings("unused")
         boolean isTB = (this.getTabPlacement() == SwingConstants.TOP) || (this.getTabPlacement() == SwingConstants.BOTTOM);
@@ -316,6 +316,7 @@ public class DnDTabbedPane extends JTabbedPane {
         return tabbedRect;
     }
 
+    // warning can be ignored
     @SuppressWarnings("unused")
     public Object setDropLocation(TransferHandler.DropLocation location, Object state, boolean forDrop) {
         DropLocation old = this.dropLocation;
