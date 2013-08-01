@@ -35,8 +35,8 @@ import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
 import ca.odell.glazedlists.SortedList;
-import ca.odell.glazedlists.swing.EventListModel;
-import ca.odell.glazedlists.swing.EventSelectionModel;
+import ca.odell.glazedlists.swing.DefaultEventListModel;
+import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 
 /**
  * @author Jurgen
@@ -90,14 +90,14 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         }
     }
 
-    private static class EListModel<T> extends EventListModel<EListRecord<T>> {
-        protected EventList<EListRecord<T>> source;
+    private static class EListModel<T> extends DefaultEventListModel<EListRecord<T>> {
+        protected EventList<EListRecord<T>> sourceList;
 
         protected EListFilterComponent<T> filtercomponent;
 
         public EListModel(EventList<EListRecord<T>> source) {
             super(source);
-            this.source = source;
+            this.sourceList = source;
         }
     }
 
@@ -247,7 +247,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     protected ListSelectionModel createSelectionModel() {
         try {
             EListModel<T> model = EListModel.class.cast(this.getModel());
-            return new EventSelectionModel<EListRecord<T>>(model.source);
+            return new DefaultEventSelectionModel<EListRecord<T>>(model.sourceList);
         } catch (ClassCastException ex) {
             return super.createSelectionModel();
         }
@@ -372,7 +372,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         });
 
         EListModel elistModel = EListModel.class.cast(this.getModel());
-        this.records = elistModel.source;
+        this.records = elistModel.sourceList;
         this.filtercomponent = elistModel.filtercomponent;
         if (this.filtercomponent != null) {
             this.filtercomponent.setList(this);
