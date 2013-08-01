@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.swingeasy</groupId>
 	<artifactId>swing-easy</artifactId>
@@ -15,13 +16,9 @@
 	<!-- http://maven.apache.org/guides/introduction/introduction-to-profiles.html -->
 	<profiles>
 		<profile>
-			<!-- 
-				"mvn clean package -P nodebuginfo"
-				wil create an optimized (without debugging info) jar: swing-easy-nodebug-{version}.jar
-				
-				"mvn clean package"
-				wil create a jar without debugging info: swing-easy-{version}.jar
-			 -->
+			<!-- "mvn clean package -P nodebuginfo" wil create an optimized (without 
+				debugging info) jar: swing-easy-nodebug-{version}.jar "mvn clean package" 
+				wil create a jar without debugging info: swing-easy-{version}.jar -->
 			<id>nodebuginfo</id>
 			<build>
 				<finalName>${artifactId}-nodebuginfo-${version}</finalName>
@@ -36,7 +33,7 @@
 							<optimize>true</optimize>
 							<verbose>false</verbose>
 							<encoding>${project.build.sourceEncoding}</encoding>
-							<debug>false</debug> 
+							<debug>false</debug>
 							<debuglevel>none</debuglevel><!-- lines, vars, and source or none -->
 						</configuration>
 					</plugin>
@@ -59,13 +56,8 @@
 	<!-- Subversion: http://code.google.com/p/raisercostin/wiki/Maven2DistributionManagementOnGooglecode -->
 	<!-- Mercurial: http://stackoverflow.com/questions/3826128/maven-mercurial-site-deploy-issues -->
 	<distributionManagement>
-		<!--
-		<site>
-			<id>swing-easy.googlecode.site</id>
-			<name>swing-easy.googlecode.site</name>
-			<url>dav:https://swing-easy.googlecode.com/svn/site</url>
-		</site>
-		-->
+		<!-- <site> <id>swing-easy.googlecode.site</id> <name>swing-easy.googlecode.site</name> 
+			<url>dav:https://swing-easy.googlecode.com/svn/site</url> </site> -->
 		<repository>
 			<id>swing-easy.googlecode.releases</id>
 			<name>swing-easy.googlecode.releases</name>
@@ -77,11 +69,7 @@
 			<url>dav:https://swing-easy.googlecode.com/svn/maven2-snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
-	<!-- 
-		Mercurial
-		scm:hg:https://swing-easy.googlecode.com/hg/maven2
-		scm:hg:https://swing-easy.googlecode.com/hg/maven2-snapshots
-	 -->
+	<!-- Mercurial scm:hg:https://swing-easy.googlecode.com/hg/maven2 scm:hg:https://swing-easy.googlecode.com/hg/maven2-snapshots -->
 	<inceptionYear>2011</inceptionYear>
 	<developers>
 		<developer>
@@ -99,12 +87,8 @@
 		<developerConnection>scm:svn:https://swing-easy.googlecode.com/svn/tags/swing-easy-2.6.0.0</developerConnection>
 		<url>http://swing-easy.googlecode.com/svn/tags/swing-easy-2.6.0.0</url>
 	</scm>
-	<!-- 
-		Mercurial
-		scm:hg:http://swing-easy.googlecode.com/hg
-		scm:hg:https://swing-easy.googlecode.com/hg
-		http://swing-easy.googlecode.com/hg
-	 -->
+	<!-- Mercurial scm:hg:http://swing-easy.googlecode.com/hg scm:hg:https://swing-easy.googlecode.com/hg 
+		http://swing-easy.googlecode.com/hg -->
 	<repositories>
 		<repository>
 			<id>swing-easy.googlecode</id>
@@ -169,28 +153,27 @@
 		</dependency>
 	</dependencies>
 	<build>
-<!--	Mercurial 
 		<extensions>
 			<extension>
-				<groupId>org.apache.maven.scm</groupId>
-				<artifactId>maven-scm-provider-hg</artifactId>
-				<version>1.6</version>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-webdav-jackrabbit</artifactId>
+				<version>2.4</version>
 			</extension>
 			<extension>
 				<groupId>org.apache.maven.wagon</groupId>
-				<artifactId>wagon-scm</artifactId>
-				<version>2.2</version>
+				<artifactId>wagon-webdav</artifactId>
+				<version>1.0-beta-2</version>
 			</extension>
 		</extensions>
- -->
-    <extensions>
-<extension>
-	<groupId>org.apache.maven.wagon</groupId>
-	<artifactId>wagon-webdav-jackrabbit</artifactId>
-	<version>2.4</version>
-</extension>
-    </extensions> 
 		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-scm-plugin</artifactId>
+				<version>1.8.1</version>
+				<configuration>
+					<connectionType>developerConnection</connectionType>
+				</configuration>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -205,7 +188,7 @@
 					<optimize>true</optimize>
 					<verbose>false</verbose>
 					<encoding>${project.build.sourceEncoding}</encoding>
-					<debug>true</debug> 
+					<debug>true</debug>
 					<debuglevel>lines,vars,source</debuglevel>
 				</configuration>
 			</plugin>
