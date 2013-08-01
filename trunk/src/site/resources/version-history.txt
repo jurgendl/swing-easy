@@ -2,7 +2,7 @@
 
 = Version History =
 
-latest change: 2013-06-07
+latest change: 2013-08-01
 
 featured: downloads are available on the front page
 
@@ -169,16 +169,20 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * ETable: byte array renderer
   * EComponent: config is saved in object and init method accepts config
   * ETextField: select all on focus
- * 2.5.7.0 (featured)
+ * 2.5.7.0
   * UIUtils: easy system tray menu
   * UIUtils: toggleVisibility and set Window relative, center, bottomRight methods
   * fixed: Resources: nullpointer
- * 2.5.7.1 (not released)
-  * ...
- * 2.5.8.0 (not planned, not released)
-  * ...
- * 2.6.0.0 (not planned, not released)
-  * ...
+ * 2.6.0.0 (featured)
+  * libraries upgraded
+  * library Javassist is required
+  * library GlazedLists updated
+  * fixed: ETable: selection model when sorting
+  * fixed: ETable: html/pdf export: fixed css
+  * UIUtils: maximize frame
+  * SystemSettings: open file, load library, new system specific info
+  * new: SplashScreen
+  * new: UIUtils: simple system tray
  * some version in the future or maybe never
   * form builder and components
   * tip of the day
