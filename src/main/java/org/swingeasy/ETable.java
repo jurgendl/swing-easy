@@ -537,7 +537,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
         this.filtering = new EFiltering(this.sorting.getRecords(), matcher);
         this.tableModel = new ETableModel(this.filtering.getRecords(), this.tableFormat);
         this.setModel(this.tableModel);
-        this.tableSelectionModel = new DefaultEventSelectionModel<ETableRecord<T>>(this.records);
+        this.tableSelectionModel = new DefaultEventSelectionModel<ETableRecord<T>>(this.filtering.getRecords());
         this.tableSelectionModel.setSelectionMode(ListSelection.MULTIPLE_INTERVAL_SELECTION_DEFENSIVE);
         this.setColumnSelectionAllowed(true);
         this.setRowSelectionAllowed(true);
