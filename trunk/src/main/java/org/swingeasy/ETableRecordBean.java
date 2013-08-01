@@ -1,6 +1,7 @@
 package org.swingeasy;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -24,6 +25,11 @@ public class ETableRecordBean<T> implements ETableRecord<T> {
     public ETableRecordBean(List<String> orderedFields, T o) {
         this.object = o;
         this.orderedFields = orderedFields;
+    }
+
+    public ETableRecordBean(T o, String... orderedFields) {
+        this.object = o;
+        this.orderedFields = Arrays.asList(orderedFields);
     }
 
     /**
@@ -84,7 +90,8 @@ public class ETableRecordBean<T> implements ETableRecord<T> {
         try {
             String property = this.orderedFields.get(column);
             Object ov = this.originalValues.get(property);
-            return (ov != null) && !new EqualsBuilder().append(ov, PropertyUtils.getProperty(this.object, property)).isEquals();
+            Object nv = PropertyUtils.getProperty(this.object, property);
+            return !new EqualsBuilder().append(ov, nv).isEquals();
         } catch (IllegalAccessException ex) {
             throw new RuntimeException(ex);
         } catch (InvocationTargetException ex) {

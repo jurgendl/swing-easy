@@ -1,5 +1,7 @@
 package org.swingeasy.table.exporter;
 
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -13,8 +15,7 @@ import org.swingeasy.Stream;
 import org.swingeasy.StreamFactory;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 import org.xml.sax.SAXException;
-
-import com.lowagie.text.DocumentException;
+import org.xml.sax.SAXParseException;
 
 /**
  * @author Jurgen
@@ -41,9 +42,14 @@ public class ETablePdfExporter<T> extends ETableHtmlExporter<T> {
             out.close();
         } catch (ParserConfigurationException ex) {
             throw new RuntimeException(ex);
+        } catch (SAXParseException ex) {
+            ByteArrayOutputStream bout = new ByteArrayOutputStream();
+            super.exportStream(table, bout);
+            throw new RuntimeException("line " + ex.getLineNumber() + ", column " + ex.getColumnNumber() + "\n\n" + new String(bout.toByteArray()),
+                    ex);
         } catch (SAXException ex) {
             throw new RuntimeException(ex);
-        } catch (DocumentException ex) {
+        } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
@@ -78,7 +84,7 @@ public class ETablePdfExporter<T> extends ETableHtmlExporter<T> {
      * @see org.swingeasy.table.exporter.ETableHtmlExporter#postHeaderCreate(org.swingeasy.ETable, java.io.OutputStream)
      */
     @Override
-    protected void postHeaderCreate(ETable<T> table, OutputStream out) throws IOException {
-        out.write(this.getStyle());
+    protected void postHeaderCreate(ETable<T> table, BufferedWriter writer) throws IOException {
+        writer.write(new String(this.getStyle()));
     }
 }

@@ -21,7 +21,7 @@ public class ETableHtmlExporter<T> extends ETableExporterImpl<T> {
     public void exportStream(ETable<T> table, OutputStream out) throws IOException {
         BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(out));
         writer.write("<html xmlns=\"http://www.w3.org/1999/xhtml\"><head><title></title>");
-        this.postHeaderCreate(table, out);
+        this.postHeaderCreate(table, writer);
         writer.write("</head><body><table border=\"1\"><tr>");
         for (String name : table.getHeadernames()) {
             writer.write("<th>");
@@ -64,7 +64,8 @@ public class ETableHtmlExporter<T> extends ETableExporterImpl<T> {
         return "html";
     }
 
-    protected void postHeaderCreate(@SuppressWarnings("unused") ETable<T> table, @SuppressWarnings("unused") OutputStream out) throws IOException {
+    protected void postHeaderCreate(@SuppressWarnings("unused") ETable<T> table, @SuppressWarnings("unused") BufferedWriter writer)
+            throws IOException {
         //
     }
 }

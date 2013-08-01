@@ -851,7 +851,6 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     public ETableRecord<T> getSelectedRecord() {
         EventList<ETableRecord<T>> selected = this.tableSelectionModel.getSelected();
         return selected.size() == 0 ? null : selected.iterator().next();
-
     }
 
     /**

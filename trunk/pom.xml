@@ -116,7 +116,7 @@
 		<dependency>
 			<groupId>net.java.dev.glazedlists</groupId>
 			<artifactId>glazedlists_java15</artifactId>
-			<version>1.8.0</version>
+			<version>1.9.0</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-lang</groupId>
@@ -132,13 +132,13 @@
 		<dependency>
 			<groupId>org.javassist</groupId>
 			<artifactId>javassist</artifactId>
-			<version>3.16.1-GA</version>
+			<version>3.18.0-GA</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>cglib</groupId>
 			<artifactId>cglib</artifactId>
-			<version>2.2.2</version>
+			<version>3.0</version>
 			<optional>true</optional>
 		</dependency>
 		<!-- optional -->
@@ -156,20 +156,20 @@
 		</dependency>
 		<dependency>
 			<groupId>org.xhtmlrenderer</groupId>
-			<artifactId>core-renderer</artifactId>
-			<version>R8pre2</version>
+			<artifactId>flying-saucer-pdf-itext5</artifactId>
+			<version>9.0.2</version>
 			<optional>true</optional>
 		</dependency>
-		<dependency>
-			<groupId>com.lowagie</groupId>
-			<artifactId>itext</artifactId>
-			<version>2.0.8</version>
+<!-- 		<dependency>
+			<groupId>com.itextpdf</groupId>
+			<artifactId>itextpdf</artifactId>
+			<version>5.4.3</version>
 			<optional>true</optional>
-		</dependency>
+		</dependency> -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
-			<version>3.8</version>
+			<version>3.9</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
@@ -181,7 +181,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.10</version>
+			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
