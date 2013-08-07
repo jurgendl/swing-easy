@@ -13,7 +13,7 @@ import javax.swing.JPanel;
  */
 public class GradientPanel extends JPanel {
     public static enum GradientOrientation {
-        HORIZONTAL, VERTICAL, DIAGONAL;
+        HORIZONTAL, VERTICAL, DIAGONAL, OFF;
     }
 
     private static final long serialVersionUID = -3019198419458872568L;
@@ -39,25 +39,31 @@ public class GradientPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-        int w = this.getWidth();
-        int h = this.getHeight();
-        GradientPaint gp;
-        switch (this.orientation) {
-            case HORIZONTAL:
-                gp = new GradientPaint(0, 0, this.gradientColorStart, w, 0, this.gradientColorEnd);
-                break;
-            case VERTICAL:
-                gp = new GradientPaint(0, 0, this.gradientColorStart, 0, h, this.gradientColorEnd);
-                break;
-            default:
-            case DIAGONAL:
-                gp = new GradientPaint(0, 0, this.gradientColorStart, w, h, this.gradientColorEnd);
-                break;
+
+        if (this.orientation != GradientOrientation.OFF) {
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+            int w = this.getWidth();
+            int h = this.getHeight();
+            GradientPaint gp;
+            switch (this.orientation) {
+                case HORIZONTAL:
+                    gp = new GradientPaint(0, 0, this.gradientColorStart, w, 0, this.gradientColorEnd);
+                    break;
+                case VERTICAL:
+                    gp = new GradientPaint(0, 0, this.gradientColorStart, 0, h, this.gradientColorEnd);
+                    break;
+                default:
+                case DIAGONAL:
+                    gp = new GradientPaint(0, 0, this.gradientColorStart, w, h, this.gradientColorEnd);
+                    break;
+                case OFF:
+                    gp = null;
+                    break;
+            }
+            g2d.setPaint(gp);
+            g2d.fillRect(0, 0, w, h);
         }
-        g2d.setPaint(gp);
-        g2d.fillRect(0, 0, w, h);
     }
 
     public void setGradientColorEnd(Color gradientColorEnd) {

@@ -1,14 +1,11 @@
 package org.swingeasy.wizard;
 
-import java.awt.FlowLayout;
-
 import javax.swing.JComponent;
-import javax.swing.JPanel;
 
 /**
  * @author Jurgen
  */
-public class WizardPage {
+public abstract class WizardPage {
     private String title;
 
     private String description;
@@ -22,10 +19,7 @@ public class WizardPage {
         this.description = description;
     }
 
-    public JComponent createComponent() {
-        JPanel jp = new JPanel(new FlowLayout());
-        return jp;
-    }
+    public abstract JComponent createComponent();
 
     public String getDescription() {
         return this.description;
