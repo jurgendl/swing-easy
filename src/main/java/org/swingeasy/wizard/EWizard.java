@@ -10,8 +10,10 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.font.TextAttribute;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.Action;
 import javax.swing.DefaultListModel;
@@ -161,7 +163,13 @@ public class EWizard extends JPanel {
         gbc_leftPanel.gridy = 0;
         centerPanel.add(leftPanel, gbc_leftPanel);
 
-        JLabel lblPages = new JLabel("Pages:");
+        JLabel lblPages = new JLabel("Steps:");
+        Font original = lblPages.getFont();
+        @SuppressWarnings("unchecked")
+        Map<TextAttribute, Object> attributes = (Map<TextAttribute, Object>) original.getAttributes();
+        attributes.put(java.awt.font.TextAttribute.UNDERLINE, java.awt.font.TextAttribute.UNDERLINE_ON);
+        attributes.put(java.awt.font.TextAttribute.WEIGHT, java.awt.font.TextAttribute.WEIGHT_BOLD);
+        lblPages.setFont(original.deriveFont(attributes));
         lblPages.setRequestFocusEnabled(false);
 
         this.pageList = new JList();
