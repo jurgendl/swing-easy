@@ -446,8 +446,15 @@ public class EWizard extends JPanel implements EComponentI {
                 "<html><p>" + page.getDescription().replaceAll("\r\n", "<br>").replaceAll("\n", "<br>").replaceAll("\r", "<br>") + "</p></html>");
 
         this.getBtnBack().setEnabled(0 < this.wizardPage);
-        this.getBtnNext().setEnabled(this.wizardPage < (this.wizardPages.size() - 1));
-        this.getBtnFinish().setEnabled(this.wizardPage < (this.wizardPages.size() - 2));
+        this.getBtnNext().setEnabled((this.wizardPage < (this.wizardPages.size() - 1)) && this.wizardPages.get(this.wizardPage + 1).validate());
+        boolean valid = true;
+        for (int pi = this.wizardPage + 1; pi < this.wizardPages.size(); pi++) {
+            if (!this.wizardPages.get(pi).validate()) {
+                valid = false;
+                break;
+            }
+        }
+        this.getBtnFinish().setEnabled(valid && (this.wizardPage < (this.wizardPages.size() - 2)));
 
         this.getPageList().setSelectedIndex(this.wizardPage);
         this.getPageList().repaint();

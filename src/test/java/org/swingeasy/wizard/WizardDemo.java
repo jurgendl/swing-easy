@@ -26,6 +26,11 @@ public class WizardDemo {
             jp.add(new JLabel(this.getTitle()));
             return jp;
         }
+
+        @Override
+        public boolean validate() {
+            return true;
+        }
     }
 
     public static void main(String[] args) {
