@@ -20,7 +20,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.DefaultListSelectionModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.ImageIcon;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -92,6 +92,8 @@ public class EWizard extends JPanel {
 
     private JLabel lblDescription;
 
+    private GradientPanel leftPanel;
+
     /**
      * Created by Eclipse WindowBuilder.
      */
@@ -112,8 +114,8 @@ public class EWizard extends JPanel {
         topPanel.setLayout(new BorderLayout(10, 10));
 
         this.lblIcon = new JLabel("");
+        this.lblIcon.setHorizontalAlignment(SwingConstants.CENTER);
         this.lblIcon.setRequestFocusEnabled(false);
-        this.lblIcon.setIcon(new ImageIcon("C:\\java\\wiz.png"));
         this.lblIcon.setPreferredSize(new Dimension(80, 80));
         this.lblIcon.setMinimumSize(new Dimension(80, 80));
         this.lblIcon.setMaximumSize(new Dimension(80, 80));
@@ -154,14 +156,14 @@ public class EWizard extends JPanel {
         gbl_centerPanel.rowWeights = new double[] { 1.0 };
         centerPanel.setLayout(gbl_centerPanel);
 
-        GradientPanel leftPanel = new GradientPanel();
-        leftPanel.setPreferredSize(new Dimension(240, 0));
-        leftPanel.setMinimumSize(new Dimension(240, 0));
+        this.leftPanel = new GradientPanel();
+        this.leftPanel.setPreferredSize(new Dimension(240, 0));
+        this.leftPanel.setMinimumSize(new Dimension(240, 0));
         GridBagConstraints gbc_leftPanel = new GridBagConstraints();
         gbc_leftPanel.fill = GridBagConstraints.VERTICAL;
         gbc_leftPanel.gridx = 0;
         gbc_leftPanel.gridy = 0;
-        centerPanel.add(leftPanel, gbc_leftPanel);
+        centerPanel.add(this.leftPanel, gbc_leftPanel);
 
         JLabel lblPages = new JLabel("Steps:");
         Font original = lblPages.getFont();
@@ -176,7 +178,7 @@ public class EWizard extends JPanel {
         this.pageList.setRequestFocusEnabled(false);
         this.pageList.setBorder(new EmptyBorder(8, 14, 10, 10));
         this.pageList.setOpaque(false);
-        GroupLayout gl_leftPanel = new GroupLayout(leftPanel);
+        GroupLayout gl_leftPanel = new GroupLayout(this.leftPanel);
         gl_leftPanel.setHorizontalGroup(gl_leftPanel.createParallelGroup(Alignment.LEADING)
                 .addGroup(
                         gl_leftPanel
@@ -197,7 +199,7 @@ public class EWizard extends JPanel {
         gl_leftPanel.setVerticalGroup(gl_leftPanel.createParallelGroup(Alignment.LEADING).addGroup(
                 gl_leftPanel.createSequentialGroup().addGap(8).addComponent(lblPages).addPreferredGap(ComponentPlacement.RELATED)
                         .addComponent(this.pageList, GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE).addContainerGap()));
-        leftPanel.setLayout(gl_leftPanel);
+        this.leftPanel.setLayout(gl_leftPanel);
 
         JSeparator separator = new JSeparator();
         separator.setOrientation(SwingConstants.VERTICAL);
@@ -319,6 +321,10 @@ public class EWizard extends JPanel {
         return this.lblTitle;
     }
 
+    protected GradientPanel getLeftPanel() {
+        return this.leftPanel;
+    }
+
     protected JPanel getMainPanel() {
         return this.mainPanel;
     }
@@ -377,6 +383,20 @@ public class EWizard extends JPanel {
         this.getBtnHelp().setHideActionText(true);
         this.getBtnHelp().setAction(helpAction);
         this.getBtnHelp().setText(text);
+    }
+
+    public void setIcon(Icon icon) {
+        this.getLblIcon().setIcon(icon);
+    }
+
+    public void setLeftPanelVisible(boolean b) {
+        if (b) {
+            this.getLeftPanel().setPreferredSize(new Dimension(240, 0));
+            this.getLeftPanel().setMinimumSize(new Dimension(240, 0));
+        } else {
+            this.getLeftPanel().setPreferredSize(new Dimension(0, 0));
+            this.getLeftPanel().setMinimumSize(new Dimension(0, 0));
+        }
     }
 
     protected void updatePage() {

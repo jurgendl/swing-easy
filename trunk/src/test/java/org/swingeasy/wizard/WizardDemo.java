@@ -3,6 +3,7 @@ package org.swingeasy.wizard;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
@@ -19,6 +20,8 @@ public class WizardDemo {
 
         final JFrame f = new JFrame();
         EWizard comp = new EWizard();
+        comp.setLeftPanelVisible(false);
+        comp.setIcon(new ImageIcon(WizardDemo.class.getClassLoader().getResource("wiz.png")));
         comp.addWizardPage(new WizardPage(
                 "page 1",
                 "A display area for a short text string or an image, or both. A label does not react to input events. As a result, it cannot get the keyboard focus. A label can, however, display a keyboard alternative as a convenience for a nearby component that has a keyboard alternative but can't display it. A display area for a short text string or an image, or both. A label does not react to input events. As a result, it cannot get the keyboard focus. A label can, however, display a keyboard alternative as a convenience for a nearby component that has a keyboard alternative but can't display it."));
