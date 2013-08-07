@@ -19,6 +19,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.swingeasy.EComponentI;
 import org.swingeasy.PropertyChangeParent;
 
 /**
@@ -79,15 +80,25 @@ public class SystemSettings extends PropertyChangeParent {
 
     public static final String CLIPBOARD = "clipboard";
 
+    /** singleton */
     private static final SystemSettings singleton = new SystemSettings();
 
-    private static String newline = System.getProperty("line.separator");
+    private static String newline;
 
-    private static Clipboard clipboard = java.awt.Toolkit.getDefaultToolkit().getSystemClipboard();
+    private static Clipboard clipboard;
 
-    private static File tmpdir = new File(System.getProperty("java.io.tmpdir"));
+    private static File tmpdir;
 
+    /**
+     * initialise settings
+     */
     static {
+        SystemSettings.newline = System.getProperty("line.separator");
+
+        SystemSettings.clipboard = java.awt.Toolkit.getDefaultToolkit().getSystemClipboard();
+
+        SystemSettings.tmpdir = new File(System.getProperty("java.io.tmpdir"));
+
         Locale defaultLocale;
         try {
             // (1) Java 1.7 compilable in Java 1.6 but gives Exception at runtimee so we can fall back to (2)
@@ -203,7 +214,7 @@ public class SystemSettings extends PropertyChangeParent {
                 WINDIR_SYSTEM320 = WINDIR_WINDIR0 + "/system32";
                 WINDIR_USER_PROFILE0 = SystemSettings.capture1("cmd", "/c", "echo", "%UserProfile%");
             } catch (Exception ex) {
-                ex.printStackTrace(System.out); // gebeurt normaal niet en als het gebeurt is het niet erg
+                ex.printStackTrace(System.out);
             }
 
             try {
@@ -276,10 +287,16 @@ public class SystemSettings extends PropertyChangeParent {
         NIX_LIB = _nix_lib;
     }
 
+    /**
+     * internal use
+     */
     private static List<String> capture(String... command) throws IOException {
         return SystemSettings.execute(command);
     }
 
+    /**
+     * internal use
+     */
     private static String capture1(String... command) throws IOException {
         return SystemSettings.capture(command).get(0);
     }
@@ -323,6 +340,9 @@ public class SystemSettings extends PropertyChangeParent {
         return tempFile;
     }
 
+    /**
+     * internal use
+     */
     private static void dynamic(String libname, String ext, String tempSuffix) throws IOException, FileNotFoundException {
         File dllfile;
 
@@ -379,6 +399,9 @@ public class SystemSettings extends PropertyChangeParent {
         }
     }
 
+    /**
+     * internal use
+     */
     private static void dynamicLoadWinLibrary(String libname, String ext, boolean onlywrite) throws IOException, FileNotFoundException {
         File dllfile = new File(SystemSettings.WINDIR_SYSTEM32, libname + "." + ext);
 
@@ -420,6 +443,9 @@ public class SystemSettings extends PropertyChangeParent {
         return Locale.getDefault();
     }
 
+    /**
+     * get library extension
+     */
     public static String getDefaultLibraryExtention() {
         switch (SystemSettings.osgroup) {
             case Mac:
@@ -457,6 +483,9 @@ public class SystemSettings extends PropertyChangeParent {
         return SystemSettings.tmpdir;
     }
 
+    /**
+     * open File, can use command parameters (tested on Windows 7)
+     */
     public static boolean open(File file, String... cmdparameters) throws IOException {
         String absolutePath = file.getAbsolutePath();
         if (!file.exists() || (file.length() == 0)) {
@@ -513,11 +542,7 @@ public class SystemSettings extends PropertyChangeParent {
             }
         }
 
-        // for (String line :
         SystemSettings.execute(opencommand.toArray(new String[opencommand.size()]));
-        // ) {
-        // System.out.println(line);
-        // }
 
         return true;
     }
@@ -529,9 +554,8 @@ public class SystemSettings extends PropertyChangeParent {
     }
 
     /**
-     * can also be set via command line parameter: "-Duser.country=UK -Duser.language=en"
-     * 
-     * @param currentLocale
+     * can also be set via command line parameter: "-Duser.country=UK -Duser.language=en"; use this instead of {@link Locale#setDefault(Locale)} to
+     * change Locale of all {@link EComponentI}s dynamically
      */
     public static void setCurrentLocale(Locale currentLocale) {
         Locale old = Locale.getDefault();
@@ -551,6 +575,9 @@ public class SystemSettings extends PropertyChangeParent {
         SystemSettings.singleton.firePropertyChange(SystemSettings.TMPDIR, old, tmpdir);
     }
 
+    /**
+     * internal use
+     */
     private static List<String> split(String sysexec) {
         List<String> parts = new ArrayList<String>();
         Matcher m = Pattern.compile("\"[^\"]++\"").matcher(sysexec);
@@ -586,6 +613,9 @@ public class SystemSettings extends PropertyChangeParent {
         return parts;
     }
 
+    /**
+     * singleton
+     */
     private SystemSettings() {
         super();
     }
