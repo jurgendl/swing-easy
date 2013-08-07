@@ -52,7 +52,7 @@ public class Messages implements Translator {
 
             return translated;
         } catch (MissingResourceException e) {
-            System.out.println(key);
+            System.out.println("missing resource key:" + key);
             return key;
         }
     }

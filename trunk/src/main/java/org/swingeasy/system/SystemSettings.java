@@ -257,7 +257,7 @@ public class SystemSettings extends PropertyChangeParent {
                     }
                 }
             } catch (Exception ex) {
-                ex.printStackTrace(System.out); // gebeurt normaal niet en als het gebeurt is het niet erg
+                ex.printStackTrace(System.out);
             }
         }
 
@@ -528,6 +528,11 @@ public class SystemSettings extends PropertyChangeParent {
         SystemSettings.singleton.firePropertyChange(SystemSettings.CLIPBOARD, old, clipboard);
     }
 
+    /**
+     * can also be set via command line parameter: "-Duser.country=UK -Duser.language=en"
+     * 
+     * @param currentLocale
+     */
     public static void setCurrentLocale(Locale currentLocale) {
         Locale old = Locale.getDefault();
         Locale.setDefault(currentLocale);

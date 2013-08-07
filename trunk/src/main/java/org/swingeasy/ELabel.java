@@ -8,7 +8,7 @@ import javax.swing.ToolTipManager;
  * @author Jurgen
  */
 public class ELabel extends JLabel {
-    
+
     private static final long serialVersionUID = 8880462529209952297L;
 
     public ELabel() {
@@ -51,9 +51,9 @@ public class ELabel extends JLabel {
         if (toolTipText == null) {
             String text = this.getText();
             if (text.trim().length() == 0) {
-                text = null;
+                return null;
             }
-            return text;
+            return text.trim();
         }
         return toolTipText;
     }
