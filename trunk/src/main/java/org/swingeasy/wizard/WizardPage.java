@@ -44,4 +44,9 @@ public abstract class WizardPage {
     public String toString() {
         return this.title;
     }
+
+    /**
+     * return false to make going forward/finishing the wizard impossible
+     */
+    public abstract boolean validate();
 }
