@@ -199,8 +199,10 @@ public class CustomizableOptionPane {
 
     public static File showFileChooserDialog(Component parent, FileChooserType type, FileChooserCustomizer customizer) {
         CustomizableFileChooserImpl jfc = new CustomizableFileChooserImpl();
-        customizer.customize(jfc);
-        jfc.customizer = customizer;
+        if (customizer != null) {
+            customizer.customize(jfc);
+            jfc.customizer = customizer;
+        }
         int returnValue = type == FileChooserType.SAVE ? jfc.showSaveDialog(parent) : jfc.showOpenDialog(parent);
         if (JFileChooser.APPROVE_OPTION == returnValue) {
             File exportTo = jfc.getSelectedFile();
