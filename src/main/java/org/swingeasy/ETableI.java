@@ -4,6 +4,8 @@ import java.awt.Point;
 import java.util.Collection;
 import java.util.List;
 
+import javax.swing.table.TableColumn;
+
 /**
  * @author Jurgen
  */
@@ -14,6 +16,8 @@ public interface ETableI<T> extends EComponentI {
 
     public abstract void clear();
 
+    public abstract TableColumn getColumn(Object identifier);
+
     public abstract Object getColumnValueAtVisualColumn(int i);
 
     public abstract List<String> getHeadernames();
@@ -22,23 +26,19 @@ public interface ETableI<T> extends EComponentI {
 
     public abstract List<ETableRecord<T>> getRecords();
 
-    public T getSelectedCell();
+    public abstract T getSelectedCell();
 
-    public List<Object> getSelectedCells();
-
-    /**
-     * gets selected record (first one if multiple ones are selected
-     * 
-     * @return
-     */
-    public ETableRecord<T> getSelectedRecord();
+    public abstract List<Object> getSelectedCells();
 
     /**
      * gets selected record (first one if multiple ones are selected
-     * 
-     * @return
      */
-    public List<ETableRecord<T>> getSelectedRecords();
+    public abstract ETableRecord<T> getSelectedRecord();
+
+    /**
+     * gets selected record (first one if multiple ones are selected
+     */
+    public abstract List<ETableRecord<T>> getSelectedRecords();
 
     public abstract void packColumn(int vColIndex);
 
@@ -55,7 +55,6 @@ public interface ETableI<T> extends EComponentI {
     public abstract void selectCell(Point p);
 
     /**
-     * 
      * @param headers we do not want null here, use an empty header object instead
      */
     public abstract void setHeaders(final ETableHeaders<T> headers);
