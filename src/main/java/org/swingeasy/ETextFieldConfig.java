@@ -30,6 +30,10 @@ public class ETextFieldConfig extends EComponentConfig<ETextFieldConfig> {
         this.columns = columns;
     }
 
+    public ETextFieldConfig(int columns) {
+        this(true, columns, false);
+    }
+
     public int getColumns() {
         return this.columns;
     }
