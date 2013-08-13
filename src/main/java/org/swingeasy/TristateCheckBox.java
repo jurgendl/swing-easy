@@ -75,10 +75,10 @@ public final class TristateCheckBox extends JCheckBox {
                 return true;
             case DESELECTED:
                 return false;
+            default:
             case INDETERMINATE:
                 return null;
         }
-        return null;
     }
 
     // Convenience cast
