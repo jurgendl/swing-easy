@@ -8,7 +8,7 @@ import javax.swing.JOptionPane;
 /**
  * center dialog on screen
  * 
- * @author jdlandsh
+ * @author Jurgen
  */
 public class CenteredOptionPaneCustomizer implements OptionPaneCustomizer {
     /**

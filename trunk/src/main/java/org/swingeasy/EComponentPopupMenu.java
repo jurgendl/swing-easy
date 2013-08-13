@@ -42,7 +42,7 @@ import org.swingeasy.system.SystemSettings;
 
 /**
  * @see http://java-swing-tips.blogspot.com/2010/11/jtable-celleditor-popupmenu.html
- * @author jdlandsh
+ * @author Jurgen
  */
 public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     /**
