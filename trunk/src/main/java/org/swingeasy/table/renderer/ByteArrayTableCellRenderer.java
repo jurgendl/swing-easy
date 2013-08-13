@@ -19,7 +19,7 @@ public class ByteArrayTableCellRenderer extends DefaultTableCellRenderer.UIResou
         int v;
         for (int j = 0; j < bytes.length; j++) {
             v = bytes[j] & 0xFF;
-            toHex(hexChars, v, j);
+            ByteArrayTableCellRenderer.toHex(hexChars, v, j);
         }
         return new String(hexChars);
     }
@@ -29,7 +29,7 @@ public class ByteArrayTableCellRenderer extends DefaultTableCellRenderer.UIResou
         int v;
         for (int j = 0; j < bytes.length; j++) {
             v = bytes[j] & 0xFF;
-            toHex(hexChars, v, j);
+            ByteArrayTableCellRenderer.toHex(hexChars, v, j);
         }
         return new String(hexChars);
     }
@@ -61,7 +61,7 @@ public class ByteArrayTableCellRenderer extends DefaultTableCellRenderer.UIResou
         if (value instanceof byte[]) {
             byte[] ba = (byte[]) value;
             this.setText(ByteArrayTableCellRenderer.bytesToHex(ba));
-        } else if (value instanceof byte[]) {
+        } else if (value instanceof Byte[]) {
             Byte[] ba = (Byte[]) value;
             this.setText(ByteArrayTableCellRenderer.bytesToHex(ba));
         } else {
