@@ -320,7 +320,6 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
             }
             this.tableSorter.clearComparator();
             this.tableSorter.appendComparator(col, 0, false);
-
         }
 
         protected void unsort() {
