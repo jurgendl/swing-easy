@@ -1,17 +1,17 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.swingeasy</groupId>
 	<artifactId>swing-easy</artifactId>
 	<version>2.6.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>swing-easy</name>
 	<description>swing-easy</description>
 	<url>http://swing-easy.googlecode.com</url>
-
 	<properties>
 		<targetJdk>1.6</targetJdk>
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 	</properties>
-
 	<!-- http://maven.apache.org/guides/introduction/introduction-to-profiles.html -->
 	<profiles>
 		<profile>
@@ -40,7 +40,6 @@
 			</build>
 		</profile>
 	</profiles>
-
 	<licenses>
 		<license>
 			<name>GNU Lesser General Public License v2.1</name>
@@ -51,12 +50,14 @@
 		<system>Google</system>
 		<url>http://code.google.com/p/swing-easy/issues/list</url>
 	</issueManagement>
-	<!-- http://maven.apache.org/scm/ -->
-	<!-- Subversion: http://code.google.com/p/raisercostin/wiki/Maven2DistributionManagementOnGooglecode -->
-	<!-- Mercurial: http://stackoverflow.com/questions/3826128/maven-mercurial-site-deploy-issues -->
 	<distributionManagement>
-		<!-- <site> <id>swing-easy.googlecode.site</id> <name>swing-easy.googlecode.site</name> 
-			<url>dav:https://swing-easy.googlecode.com/svn/site</url> </site> -->
+		<!--
+		<site>
+			<id>swing-easy.googlecode.site</id>
+			<name>swing-easy.googlecode.site</name>
+			<url>scm:svn:https://swing-easy.googlecode.com/svn/site</url>
+		</site>
+		-->
 		<repository>
 			<id>swing-easy.googlecode.releases</id>
 			<name>swing-easy.googlecode.releases</name>
@@ -68,7 +69,6 @@
 			<url>dav:https://swing-easy.googlecode.com/svn/maven2-snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
-	<!-- Mercurial scm:hg:https://swing-easy.googlecode.com/hg/maven2 scm:hg:https://swing-easy.googlecode.com/hg/maven2-snapshots -->
 	<inceptionYear>2011</inceptionYear>
 	<developers>
 		<developer>
@@ -86,8 +86,6 @@
 		<developerConnection>scm:svn:https://swing-easy.googlecode.com/svn/trunk</developerConnection>
 		<url>http://swing-easy.googlecode.com/svn/trunk</url>
 	</scm>
-	<!-- Mercurial scm:hg:http://swing-easy.googlecode.com/hg scm:hg:https://swing-easy.googlecode.com/hg 
-		http://swing-easy.googlecode.com/hg -->
 	<repositories>
 		<repository>
 			<id>swing-easy.googlecode</id>
@@ -95,7 +93,6 @@
 		</repository>
 	</repositories>
 	<dependencies>
-		<!-- required -->
 		<dependency>
 			<groupId>net.java.dev.glazedlists</groupId>
 			<artifactId>glazedlists_java15</artifactId>
@@ -116,7 +113,6 @@
 			<artifactId>javassist</artifactId>
 			<version>3.18.0-GA</version>
 		</dependency>
-		<!-- optional but recommended -->
 		<dependency>
 			<groupId>commons-beanutils</groupId>
 			<artifactId>commons-beanutils-core</artifactId>
@@ -143,7 +139,6 @@
 			<artifactId>utils</artifactId>
 			<version>1.07.00</version>
 		</dependency>
-		<!-- testing only -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
