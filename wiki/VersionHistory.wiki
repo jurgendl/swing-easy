@@ -192,7 +192,6 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * new: EWizard (rudimentary, expect a lot of changes)
   * new: GradientPanel
   * new: EURILabel
-  * zip download does not include external libraries, but are download via bat/class
  * some version in the future or maybe never (unplanned)
   * form builder and components
   * tip of the day
