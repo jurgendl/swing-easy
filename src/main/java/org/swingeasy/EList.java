@@ -259,6 +259,10 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         return this.filtercomponent;
     }
 
+    public EList<T> getOriginal() {
+        return this;
+    }
+
     /**
      * 
      * @see org.swingeasy.HasParentComponent#getParentComponent()

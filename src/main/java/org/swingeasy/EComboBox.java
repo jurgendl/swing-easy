@@ -231,6 +231,10 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
         }
     }
 
+    public EComboBox<T> getOriginal() {
+        return this;
+    }
+
     /**
      * 
      * @see org.swingeasy.HasParentComponent#getParentComponent()

@@ -77,6 +77,15 @@ public class JavassistEventThreadSafeWrapper<C> implements MethodHandler {
      */
     @Override
     public Object invoke(final Object self, final Method method, final Method proceed, final Object[] args) throws Throwable {
+        if ("equals".equals(method.getName()) && Boolean.TYPE.equals(method.getReturnType()) && (args.length == 1)) {
+            return proceed.invoke(self, args);
+        }
+        if ("hashcode".equals(method.getName()) && Integer.TYPE.equals(method.getReturnType()) && (args.length == 0)) {
+            return proceed.invoke(self, args);
+        }
+        if ("getOriginal".equals(method.getName()) && (args.length == 0)) {
+            return method.invoke(this.component, args);
+        }
         String sig = method.getReturnType() + " " + method.getName() + "(" + Arrays.toString(method.getParameterTypes()) + ")"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         boolean interfacedMethod = this.interfacedMethods.contains(sig);
         if (!interfacedMethod) {

@@ -39,7 +39,7 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI, Re
 
     protected ETreeTableConfig cfg;
 
-    protected ETreeTableI stsi;
+    protected ETreeTable stsi;
 
     protected ETreeTable() {
         this(new ETreeTableRecordNode(), new ETreeTableHeaders());
@@ -129,6 +129,10 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI, Re
         return dr;
     }
 
+    public ETreeTable getOriginal() {
+        return this;
+    }
+
     /**
      * 
      * @see org.swingeasy.HasParentComponent#getParentComponent()
@@ -143,7 +147,7 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI, Re
      * 
      * @return
      */
-    public ETreeTableI getSimpleThreadSafeInterface() {
+    public ETreeTable getSimpleThreadSafeInterface() {
         try {
             if (this.stsi == null) {
                 this.stsi = EventThreadSafeWrapper.getSimpleThreadSafeInterface(ETreeTable.class, this, ETreeTableI.class);
@@ -323,14 +327,14 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI, Re
     /**
      * @see #getSimpleThreadSafeInterface()
      */
-    public ETreeTableI stsi() {
+    public ETreeTable stsi() {
         return this.getSimpleThreadSafeInterface();
     }
 
     /**
      * @see #getSimpleThreadSafeInterface()
      */
-    public ETreeTableI STSI() {
+    public ETreeTable STSI() {
         return this.getSimpleThreadSafeInterface();
     }
 
@@ -341,5 +345,4 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI, Re
     public Component super_prepareRenderer(TableCellRenderer renderer, int row, int column) {
         return super.prepareRenderer(renderer, row, column);
     }
-
 }
