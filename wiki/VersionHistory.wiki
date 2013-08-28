@@ -183,10 +183,16 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * UIUtils: maximize frame
   * SystemSettings: open file, load library, new system specific info
   * new: SplashScreen
-  * new: UIUtils: simple system tray
- * 2.6.0.1 (planned)
-  * EDT safe interface does not return actual object in case of an exception anymore but throws wrapped exception (javassist is not optional, glazedlists REQUIRES safe access)
-  * EDT safe interface is cached on actual object, calling it multiple times does not create new wrapper but returns existing
+  * UIUtils: simple system tray
+ * 2.6.1.0 (planned)
+  * fixed: EDT safe interface does not return actual object in case of an exception anymore but throws wrapped exception (javassist is not optional, glazedlists REQUIRES safe access)
+  * performance: EDT safe interface is cached on actual object, calling it multiple times does not create new wrapper but returns existing
+  * fixed: ETable: ByteArrayTableCellRenderer on Byte[]
+  * fixed: exception when opening filebrowser when customizer is null
+  * new: EWizard (rudimentary, expect a lot of changes)
+  * new: GradientPanel
+  * new: EURILabel
+  * zip download does not include external libraries, but are download via bat/class
  * some version in the future or maybe never (unplanned)
   * form builder and components
   * tip of the day

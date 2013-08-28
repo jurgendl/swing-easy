@@ -40,4 +40,7 @@ the names all Swing components start with J, replace it with E for their upgrade
   * ELabeledTextFieldButtonComponent
   * TristateCheckBox
   * EFontChooser
+  * GradientPanel
+  * EWizard
+  * EURILabel
   * more in development

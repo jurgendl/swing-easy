@@ -10,6 +10,8 @@ import java.net.URI;
 import javax.swing.JLabel;
 
 /**
+ * label for url
+ * 
  * @author Jurgen
  */
 public class EURILabel extends JLabel {
