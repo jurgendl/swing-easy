@@ -184,7 +184,10 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * SystemSettings: open file, load library, new system specific info
   * new: SplashScreen
   * new: UIUtils: simple system tray
- * some version in the future or maybe never
+ * 2.6.0.1 (planned)
+  * EDT safe interface does not return actual object in case of an exception anymore but throws wrapped exception (javassist is not optional, glazedlists REQUIRES safe access)
+  * EDT safe interface is cached on actual object, calling it multiple times does not create new wrapper but returns existing
+ * some version in the future or maybe never (unplanned)
   * form builder and components
   * tip of the day
   * drag and drop, hide and close tabs in multitab component
