@@ -19,6 +19,8 @@ import org.swingeasy.EComponentPopupMenu.ReadableComponent;
 public class ECheckBoxTree<T> extends JTree implements ECheckBoxTreeI<T>, ReadableComponent {
     private static final long serialVersionUID = 6378784816121886802L;
 
+    private ECheckBoxTreeI<T> stsi;
+
     @SuppressWarnings({ "rawtypes", "unchecked" })
     protected ECheckBoxTree() {
         super(new ECheckBoxTreeNode("root")); //$NON-NLS-1$
@@ -87,10 +89,12 @@ public class ECheckBoxTree<T> extends JTree implements ECheckBoxTreeI<T>, Readab
     @SuppressWarnings("unchecked")
     public ECheckBoxTreeI<T> getSimpleThreadSafeInterface() {
         try {
-            return EventThreadSafeWrapper.getSimpleThreadSafeInterface(ECheckBoxTree.class, this, ECheckBoxTreeI.class);
+            if (this.stsi == null) {
+                this.stsi = EventThreadSafeWrapper.getSimpleThreadSafeInterface(ECheckBoxTree.class, this, ECheckBoxTreeI.class);
+            }
+            return this.stsi;
         } catch (Exception ex) {
-            System.err.println(ex);
-            return this; // no javassist
+            throw new RuntimeException(ex);
         }
     }
 

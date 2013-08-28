@@ -22,6 +22,8 @@ public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
 
     protected ETreeConfig cfg;
 
+    protected ETreeI<T> stsi;
+
     protected ETree() {
         this(new ETreeNode<T>(null));
     }
@@ -145,11 +147,12 @@ public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
     @SuppressWarnings("unchecked")
     public ETreeI<T> getSimpleThreadSafeInterface() {
         try {
-            return EventThreadSafeWrapper.getSimpleThreadSafeInterface(ETree.class, this, ETreeI.class);
+            if (this.stsi == null) {
+                this.stsi = EventThreadSafeWrapper.getSimpleThreadSafeInterface(ETree.class, this, ETreeI.class);
+            }
+            return this.stsi;
         } catch (Exception ex) {
-            System.err.println("javassist error"); //$NON-NLS-1$
-            System.err.println(ex);
-            return this; // no javassist
+            throw new RuntimeException(ex);
         }
     }
 

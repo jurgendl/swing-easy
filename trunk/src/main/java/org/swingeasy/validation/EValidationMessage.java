@@ -37,6 +37,8 @@ public class EValidationMessage extends EButton implements EValidationMessageI {
 
     protected Icon validIcon;
 
+    protected EValidationMessageI stsi;
+
     protected EValidationMessage() {
         this.component = null;
         this.parent = null;
@@ -101,10 +103,12 @@ public class EValidationMessage extends EButton implements EValidationMessageI {
      */
     public EValidationMessageI getSimpleThreadSafeInterface() {
         try {
-            return EventThreadSafeWrapper.getSimpleThreadSafeInterface(EValidationMessage.class, this, EValidationMessageI.class);
+            if (this.stsi == null) {
+                this.stsi = EventThreadSafeWrapper.getSimpleThreadSafeInterface(EValidationMessage.class, this, EValidationMessageI.class);
+            }
+            return this.stsi;
         } catch (Exception ex) {
-            System.err.println(ex);
-            return this; // no javassist
+            throw new RuntimeException();
         }
     }
 

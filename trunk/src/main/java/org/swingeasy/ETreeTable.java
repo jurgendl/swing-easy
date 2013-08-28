@@ -39,6 +39,8 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI, Re
 
     protected ETreeTableConfig cfg;
 
+    protected ETreeTableI stsi;
+
     protected ETreeTable() {
         this(new ETreeTableRecordNode(), new ETreeTableHeaders());
     }
@@ -143,10 +145,12 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI, Re
      */
     public ETreeTableI getSimpleThreadSafeInterface() {
         try {
-            return EventThreadSafeWrapper.getSimpleThreadSafeInterface(ETreeTable.class, this, ETreeTableI.class);
+            if (this.stsi == null) {
+                this.stsi = EventThreadSafeWrapper.getSimpleThreadSafeInterface(ETreeTable.class, this, ETreeTableI.class);
+            }
+            return this.stsi;
         } catch (Exception ex) {
-            System.err.println(ex);
-            return this; // no javassist
+            throw new RuntimeException(ex);
         }
     }
 
