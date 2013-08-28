@@ -37,7 +37,7 @@ public class EValidationMessage extends EButton implements EValidationMessageI {
 
     protected Icon validIcon;
 
-    protected EValidationMessageI stsi;
+    protected EValidationMessage stsi;
 
     protected EValidationMessage() {
         this.component = null;
@@ -96,12 +96,16 @@ public class EValidationMessage extends EButton implements EValidationMessageI {
         return this.component;
     }
 
+    public EValidationMessageI getOriginal() {
+        return this;
+    }
+
     /**
      * JDOC
      * 
      * @return
      */
-    public EValidationMessageI getSimpleThreadSafeInterface() {
+    public EValidationMessage getSimpleThreadSafeInterface() {
         try {
             if (this.stsi == null) {
                 this.stsi = EventThreadSafeWrapper.getSimpleThreadSafeInterface(EValidationMessage.class, this, EValidationMessageI.class);
@@ -197,14 +201,14 @@ public class EValidationMessage extends EButton implements EValidationMessageI {
     /**
      * @see #getSimpleThreadSafeInterface()
      */
-    public EValidationMessageI stsi() {
+    public EValidationMessage stsi() {
         return this.getSimpleThreadSafeInterface();
     }
 
     /**
      * @see #getSimpleThreadSafeInterface()
      */
-    public EValidationMessageI STSI() {
+    public EValidationMessage STSI() {
         return this.getSimpleThreadSafeInterface();
     }
 }

@@ -22,7 +22,7 @@ public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
 
     protected ETreeConfig cfg;
 
-    protected ETreeI<T> stsi;
+    protected ETree<T> stsi;
 
     protected ETree() {
         this(new ETreeNode<T>(null));
@@ -106,6 +106,10 @@ public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
         return null;
     }
 
+    public ETreeI<T> getOriginal() {
+        return this;
+    }
+
     /**
      * 
      * @see org.swingeasy.HasParentComponent#getParentComponent()
@@ -145,7 +149,7 @@ public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
      * @return
      */
     @SuppressWarnings("unchecked")
-    public ETreeI<T> getSimpleThreadSafeInterface() {
+    public ETree<T> getSimpleThreadSafeInterface() {
         try {
             if (this.stsi == null) {
                 this.stsi = EventThreadSafeWrapper.getSimpleThreadSafeInterface(ETree.class, this, ETreeI.class);
@@ -187,15 +191,14 @@ public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
     /**
      * @see #getSimpleThreadSafeInterface()
      */
-    public ETreeI<T> stsi() {
+    public ETree<T> stsi() {
         return this.getSimpleThreadSafeInterface();
     }
 
     /**
      * @see #getSimpleThreadSafeInterface()
      */
-    public ETreeI<T> STSI() {
+    public ETree<T> STSI() {
         return this.getSimpleThreadSafeInterface();
     }
-
 }

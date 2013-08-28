@@ -19,7 +19,7 @@ import org.swingeasy.EComponentPopupMenu.ReadableComponent;
 public class ECheckBoxTree<T> extends JTree implements ECheckBoxTreeI<T>, ReadableComponent {
     private static final long serialVersionUID = 6378784816121886802L;
 
-    private ECheckBoxTreeI<T> stsi;
+    private ECheckBoxTree<T> stsi;
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
     protected ECheckBoxTree() {
@@ -72,6 +72,10 @@ public class ECheckBoxTree<T> extends JTree implements ECheckBoxTreeI<T>, Readab
         throw new UnsupportedOperationException("not implemented"); // TODO implement
     }
 
+    public ECheckBoxTreeI<T> getOriginal() {
+        return this;
+    }
+
     /**
      * 
      * @see org.swingeasy.HasParentComponent#getParentComponent()
@@ -87,7 +91,7 @@ public class ECheckBoxTree<T> extends JTree implements ECheckBoxTreeI<T>, Readab
      * @return
      */
     @SuppressWarnings("unchecked")
-    public ECheckBoxTreeI<T> getSimpleThreadSafeInterface() {
+    public ECheckBoxTree<T> getSimpleThreadSafeInterface() {
         try {
             if (this.stsi == null) {
                 this.stsi = EventThreadSafeWrapper.getSimpleThreadSafeInterface(ECheckBoxTree.class, this, ECheckBoxTreeI.class);
@@ -111,14 +115,14 @@ public class ECheckBoxTree<T> extends JTree implements ECheckBoxTreeI<T>, Readab
     /**
      * @see #getSimpleThreadSafeInterface()
      */
-    public ECheckBoxTreeI<T> stsi() {
+    public ECheckBoxTree<T> stsi() {
         return this.getSimpleThreadSafeInterface();
     }
 
     /**
      * @see #getSimpleThreadSafeInterface()
      */
-    public ECheckBoxTreeI<T> STSI() {
+    public ECheckBoxTree<T> STSI() {
         return this.getSimpleThreadSafeInterface();
     }
 }

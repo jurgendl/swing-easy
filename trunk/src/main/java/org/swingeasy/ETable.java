@@ -776,6 +776,10 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
         return this.tableFormat;
     }
 
+    public ETable<T> getOriginal() {
+        return this;
+    }
+
     /**
      * 
      * @see org.swingeasy.HasParentComponent#getParentComponent()
