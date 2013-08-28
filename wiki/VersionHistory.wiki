@@ -3,7 +3,7 @@
 
 = Version History =
 
-latest change: 2013-08-01
+latest change: 2013-08-28
 
 featured: downloads are available on the front page
 
