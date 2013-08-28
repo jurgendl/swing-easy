@@ -492,6 +492,8 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
 
     protected static final String TABLE_EDITORS_DIR = "org.swingeasy.table.editor";
 
+    protected ETable<T> stsi;
+
     /**
      * use other constructors instead
      */
@@ -869,10 +871,12 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     @SuppressWarnings("unchecked")
     public ETable<T> getSimpleThreadSafeInterface() {
         try {
-            return EventThreadSafeWrapper.getSimpleThreadSafeInterface(ETable.class, this, ETableI.class);
+            if (this.stsi == null) {
+                this.stsi = EventThreadSafeWrapper.getSimpleThreadSafeInterface(ETable.class, this, ETableI.class);
+            }
+            return this.stsi;
         } catch (Exception ex) {
-            System.err.println(ex);
-            return this; // no javassist
+            throw new RuntimeException(ex);
         }
     }
 

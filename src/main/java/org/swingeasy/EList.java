@@ -169,6 +169,8 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
 
     protected final List<ValueChangeListener<T>> valueChangeListeners = new ArrayList<ValueChangeListener<T>>();
 
+    protected EList<T> stsi;
+
     /**
      * do not use, do not change access
      */
@@ -318,10 +320,12 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     @SuppressWarnings("unchecked")
     public EList<T> getSimpleThreadSafeInterface() {
         try {
-            return EventThreadSafeWrapper.getSimpleThreadSafeInterface(EList.class, this, EListI.class);
+            if (this.stsi == null) {
+                this.stsi = EventThreadSafeWrapper.getSimpleThreadSafeInterface(EList.class, this, EListI.class);
+            }
+            return this.stsi;
         } catch (Exception ex) {
-            System.err.println(ex);
-            return this; // no javassist
+            throw new RuntimeException(ex);
         }
     }
 

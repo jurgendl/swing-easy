@@ -115,6 +115,8 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
 
     protected boolean layingOut = false;
 
+    protected EComboBox<T> stsi;
+
     protected EComboBox() {
         super();
     }
@@ -265,10 +267,12 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
     @SuppressWarnings("unchecked")
     public EComboBox<T> getSimpleThreadSafeInterface() {
         try {
-            return EventThreadSafeWrapper.getSimpleThreadSafeInterface(EComboBox.class, this, EComboBoxI.class);
+            if (this.stsi == null) {
+                this.stsi = EventThreadSafeWrapper.getSimpleThreadSafeInterface(EComboBox.class, this, EComboBoxI.class);
+            }
+            return this.stsi;
         } catch (Exception ex) {
-            System.err.println(ex);
-            return this; // no javassist
+            throw new RuntimeException(ex);
         }
     }
 
