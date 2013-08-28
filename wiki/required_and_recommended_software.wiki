@@ -30,13 +30,8 @@ see the dependency tree of the generated site for details and dependencies of th
 
 * Ostermiller Java Utilities: http://ostermiller.org/utils/
 
-== Recommended or optional ==
-
-* CGLib: http://cglib.sourceforge.net/
-if you are using the EDT safe interface, use one of both (1)
-
 * Javassist: http://www.javassist.org/
-if you are using the EDT safe interface, use one of both (1)
+if you are using the EDT safe interface, use one of both
 
 * commons-beanutils: http://commons.apache.org/beanutils/
 only when using ETableRecordBean
