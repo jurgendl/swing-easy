@@ -10,6 +10,6 @@ solution: use method getOriginal() when adding to a container "container.add(wra
 
 can happen with these components: ECheckBoxTree, EComboBox, EList, ETable, ETree and ETreeTable when using methods outside the event thread that should be used inside the event thread
 
-solution: call method on the wrapper instead "component.stsi().method()" and if you still get an error, post the error in Issues
+solution: call method on the wrapper instead "component.stsi().method()" and if you still get an error, post the error in Issues http://code.google.com/p/swing-easy/issues/list
 
  
