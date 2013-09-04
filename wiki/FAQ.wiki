@@ -1,5 +1,7 @@
 = FAQ =
 
+how to fix these exceptions?
+
 ==== java.lang.IllegalAccessException: Class org.swingeasy.JavassistEventThreadSafeWrapper can not access a member of class java.awt.Container with modifiers "protected" ====
 
 when adding a wrapped ECheckBoxTree, EComboBox, EList, ETable, ETree and ETreeTable to a container
