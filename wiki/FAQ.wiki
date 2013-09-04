@@ -1,0 +1,15 @@
+= FAQ =
+
+==== java.lang.IllegalAccessException: Class org.swingeasy.JavassistEventThreadSafeWrapper can not access a member of class java.awt.Container with modifiers "protected" ====
+
+when adding a wrapped ECheckBoxTree, EComboBox, EList, ETable, ETree and ETreeTable to a container
+
+solution: use method getOriginal() when adding to a container "container.add(wrapped.getOriginal())"
+
+==== java.lang.IllegalStateException: Events to DefaultEventComboBoxModel must arrive on the EDT - consider adding GlazedListsSwing.swingThreadProxyList(source) somewhere in your list pipeline ====
+
+can happen with these components: ECheckBoxTree, EComboBox, EList, ETable, ETree and ETreeTable when using methods outside the event thread that should be used inside the event thread
+
+solution: call method on the wrapper instead "component.stsi().method()" and if you still get an error, post the error in Issues
+
+ 
