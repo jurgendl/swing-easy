@@ -174,7 +174,7 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * UIUtils: easy system tray menu
   * UIUtils: toggleVisibility and set Window relative, center, bottomRight methods
   * fixed: Resources: nullpointer
- * 2.6.0.0 (featured)
+ * 2.6.0.0
   * libraries upgraded
   * library Javassist is required
   * library GlazedLists updated
@@ -184,7 +184,7 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * SystemSettings: open file, load library, new system specific info
   * new: SplashScreen
   * UIUtils: simple system tray
- * 2.6.1.0 (planned)
+ * 2.6.1.0 (featured)
   * fixed: EDT safe interface does not return actual object in case of an exception anymore but throws wrapped exception (javassist is not optional, glazedlists REQUIRES safe access)
   * fixed: the same EDT safe interface is always returned, even from that interface
   * new: #getOriginal() always returns original object which is needed when adding to a container
