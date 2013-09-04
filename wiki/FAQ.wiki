@@ -1,3 +1,6 @@
+#summary FAQ
+#labels Featured
+
 = FAQ =
 
 how to fix these exceptions?
