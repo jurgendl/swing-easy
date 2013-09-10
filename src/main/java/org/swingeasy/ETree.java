@@ -62,13 +62,25 @@ public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
         this(new ETreeConfig(), rootNode);
     }
 
+    public void collapseAll() {
+        for (int i = this.getRowCount() - 1; i >= 0; i--) {
+            this.collapseRow(i);
+        }
+    }
+
     /**
      * 
      * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy(java.awt.event.ActionEvent)
      */
     @Override
     public void copy(ActionEvent e) {
-        throw new UnsupportedOperationException("not implemented"); // TODO implement
+        // TODO implement
+    }
+
+    public void expandAll() {
+        for (int i = this.getRowCount() - 1; i >= 0; i--) {
+            this.expandRow(i);
+        }
     }
 
     /**
