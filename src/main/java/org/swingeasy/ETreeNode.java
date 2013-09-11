@@ -39,6 +39,11 @@ public class ETreeNode<T> extends DefaultMutableTreeNode {
         return this.getChildren().elements();
     }
 
+    @SuppressWarnings("unchecked")
+    public T get() {
+        return (T) this.getUserObject();
+    }
+
     /**
      * 
      * @see javax.swing.tree.DefaultMutableTreeNode#getChildAt(int)
