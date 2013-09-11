@@ -1,11 +1,14 @@
 package org.swingeasy;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.util.Locale;
 
 import javax.swing.JComponent;
 import javax.swing.JTree;
 import javax.swing.ToolTipManager;
+import javax.swing.tree.TreeCellRenderer;
 import javax.swing.tree.TreePath;
 
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
@@ -16,6 +19,33 @@ import ca.odell.glazedlists.matchers.Matcher;
  * @author Jurgen
  */
 public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
+    public class TreeFocusScanner extends MouseMotionAdapter {
+
+        protected TreePath lastSelectedPath;
+
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            JTree tree = (JTree) e.getSource();
+            TreeCellRenderer cr = tree.getCellRenderer();
+            if (!(cr instanceof ETreeNodeRenderer)) {
+                return;
+            }
+            ETreeNodeRenderer ecr = (ETreeNodeRenderer) cr;
+            int x = e.getX();
+            int y = e.getY();
+            int lastSelected = tree.getRowForLocation(x, y); // set current selected row or -1
+            ecr.setLastSelected(lastSelected);
+            if (this.lastSelectedPath != null) {
+                tree.repaint(tree.getPathBounds(this.lastSelectedPath)); // repaint previous hover over
+            }
+            if (lastSelected == -1) {
+                return; // no selection: nothing to do anymore
+            }
+            this.lastSelectedPath = tree.getPathForLocation(x, y);
+            tree.repaint(tree.getPathBounds(this.lastSelectedPath));// repaint current hover over
+        }
+    }
+
     private static final long serialVersionUID = -2866936668266217327L;
 
     protected ETreeSearchComponent<T> searchComponent = null;
@@ -50,6 +80,8 @@ public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
         if (cfg.isDefaultPopupMenu()) {
             EComponentPopupMenu.installPopupMenu(this);
         }
+
+        this.addMouseMotionListener(new TreeFocusScanner());
 
         // FIXME does not seem to work because of popupmenu
         // this.addMouseListener(new MouseAdapter() {
