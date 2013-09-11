@@ -12,14 +12,14 @@ import javax.swing.WindowConstants;
  * @author Jurgen
  */
 public class TreeDemo {
-    private static class DummyNode extends ETreeNode<String> {
+    private static class TreeDemoNode extends ETreeNode<String> {
         private static final long serialVersionUID = 4389106694997553842L;
 
-        public DummyNode() {
+        public TreeDemoNode() {
             this("0"); //$NON-NLS-1$
         }
 
-        public DummyNode(String userObject) {
+        public TreeDemoNode(String userObject) {
             super(userObject);
         }
 
@@ -29,7 +29,7 @@ public class TreeDemo {
             if (!this.getUserObject().toString().endsWith("5")) { //$NON-NLS-1$
                 for (int i = 0; i < 10; i++) {
                     String s = this.getUserObject() + "." + i; //$NON-NLS-1$
-                    list.add(new DummyNode(s));
+                    list.add(new TreeDemoNode(s));
                 }
             }
         }
@@ -40,13 +40,14 @@ public class TreeDemo {
             UIUtils.systemLookAndFeel();
             final JFrame frame = new JFrame();
             frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-            ETree<String> tree = new ETree<String>(new DummyNode());
+            ETree<String> tree = new ETree<String>(new ETreeConfig().setEditable(false), new TreeDemoNode());
             frame.getContentPane().add(new JScrollPane(tree), BorderLayout.CENTER);
             frame.getContentPane().add(tree.getSearchComponent(), BorderLayout.NORTH);
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
-                    frame.setSize(200, 200);
+                    frame.setSize(400, 400);
+                    frame.setLocationRelativeTo(null);
                     frame.setVisible(true);
                 }
             });
