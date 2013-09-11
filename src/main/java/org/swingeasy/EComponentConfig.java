@@ -8,7 +8,12 @@ public abstract class EComponentConfig<T> {
 
     protected boolean defaultPopupMenu = true;
 
-    public boolean isDefaultPopupMenu() {
+    @SuppressWarnings("unchecked")
+    final protected T castThis() {
+        return (T) this;
+    }
+
+    final public boolean isDefaultPopupMenu() {
         return this.defaultPopupMenu;
     }
 
@@ -16,10 +21,9 @@ public abstract class EComponentConfig<T> {
         return this.locked;
     }
 
-    @SuppressWarnings("unchecked")
     final public T lock() {
         this.setLocked(true);
-        return (T) this;
+        return this.castThis();
     }
 
     final protected void lockCheck() {
@@ -28,12 +32,14 @@ public abstract class EComponentConfig<T> {
         }
     }
 
-    public void setDefaultPopupMenu(boolean defaultPopupMenu) {
+    final public T setDefaultPopupMenu(boolean defaultPopupMenu) {
         this.lockCheck();
         this.defaultPopupMenu = defaultPopupMenu;
+        return this.castThis();
     }
 
-    final private void setLocked(boolean locked) {
+    final private T setLocked(boolean locked) {
         this.locked = locked;
+        return this.castThis();
     }
 }

@@ -40,8 +40,10 @@ public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
         this.setCellRenderer(new ETreeNodeRenderer());
         ToolTipManager.sharedInstance().registerComponent(this);
 
-        this.setEditable(true);
-        this.setCellEditor(new ETreeNodeEditor());
+        if (cfg.isEditable()) {
+            this.setEditable(true);
+            this.setCellEditor(new ETreeNodeEditor());
+        }
 
         UIUtils.registerLocaleChangeListener((EComponentI) this);
 
@@ -62,6 +64,9 @@ public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
         this(new ETreeConfig(), rootNode);
     }
 
+    /**
+     * collapse all nodes
+     */
     public void collapseAll() {
         for (int i = this.getRowCount() - 1; i >= 0; i--) {
             this.collapseRow(i);
@@ -77,6 +82,9 @@ public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
         // TODO implement
     }
 
+    /**
+     * expand all nodes
+     */
     public void expandAll() {
         for (int i = this.getRowCount() - 1; i >= 0; i--) {
             this.expandRow(i);
