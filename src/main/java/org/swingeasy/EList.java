@@ -180,7 +180,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
 
     public EList(EListConfig cfg) {
         super(EList.createModel(cfg.lock()));
-        this.init(cfg);
+        this.init(this.cfg = cfg);
     }
 
     /**
@@ -368,8 +368,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
-    protected void init(EListConfig c) {
-        this.cfg = c;
+    protected void init(EListConfig config) {
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -395,11 +394,13 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
 
         UIUtils.registerLocaleChangeListener((EComponentI) this);
 
-        if (this.cfg.isDefaultPopupMenu()) {
+        if (config.isDefaultPopupMenu()) {
             EComponentPopupMenu.installPopupMenu(this);
         }
 
-        ToolTipManager.sharedInstance().registerComponent(this);
+        if (config.isTooltips()) {
+            ToolTipManager.sharedInstance().registerComponent(this);
+        }
 
         this.addListSelectionListener(new ListSelectionListener() {
             @Override

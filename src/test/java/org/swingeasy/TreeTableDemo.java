@@ -14,15 +14,15 @@ import org.swingeasy.ETreeTable.CheckMode;
  * @author Jurgen
  */
 public class TreeTableDemo {
-    private static class DummyNode extends ETreeTableRecordNode {
-        public DummyNode(List<Object> values) {
+    private static class TreeTableDemoNode extends ETreeTableRecordNode {
+        public TreeTableDemoNode(List<Object> values) {
             super(values);
         }
 
         @Override
         protected void initChildren(java.util.List<ETreeTableRecordNode> list) {
             for (int i = 0; i < 10; i++) {
-                DummyNode _child = new DummyNode(Arrays.asList(new Object[] {
+                TreeTableDemoNode _child = new TreeTableDemoNode(Arrays.asList(new Object[] {
                         this.values.get(0) + "" + i, this.values.get(1) + "" + i, this.values.get(2) + "" + +i })); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 list.add(_child);
             }
@@ -56,7 +56,7 @@ public class TreeTableDemo {
             child4.add(child5);
 
             if (lazyNodeTest) {
-                DummyNode child6 = new DummyNode(Arrays.asList(new Object[] { "61", "62", "63" })); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+                TreeTableDemoNode child6 = new TreeTableDemoNode(Arrays.asList(new Object[] { "61", "62", "63" })); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
                 child4.add(child6);
             }
 

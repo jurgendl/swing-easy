@@ -47,7 +47,7 @@ public class ListInDialogDemo {
 
             final Random r = new Random(256955466579946l);
             for (int i = 0; i < 1000; i++) {
-                list.addRecord(new EListRecord<DemoValue>(new DemoValue(r.nextInt(1000))));
+                list.stsi().addRecord(new EListRecord<DemoValue>(new DemoValue(r.nextInt(1000))));
             }
 
             ResultType returnValue = CustomizableOptionPane.showCustomDialog(parent, container, "Demo", MessageType.QUESTION, OptionType.OK_CANCEL,

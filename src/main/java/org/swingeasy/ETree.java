@@ -60,32 +60,7 @@ public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
 
     public ETree(ETreeConfig cfg, ETreeNode<T> rootNode) {
         super(new javax.swing.tree.DefaultTreeModel(rootNode, true));
-
-        this.cfg = cfg.lock();
-
-        this.setShowsRootHandles(true);
-        this.setRootVisible(true);
-
-        ETreeNodeRenderer renderer = new ETreeNodeRenderer();
-        this.setCellRenderer(renderer);
-        ToolTipManager.sharedInstance().registerComponent(this);
-
-        if (cfg.isEditable()) {
-            this.setEditable(true);
-            this.setCellEditor(new ETreeNodeEditor());
-        }
-
-        UIUtils.registerLocaleChangeListener((EComponentI) this);
-
-        if (cfg.isDefaultPopupMenu()) {
-            EComponentPopupMenu.installPopupMenu(this);
-        }
-
-        if (cfg.getFocusColor() != null) {
-            renderer.setFocusColor(cfg.getFocusColor());
-            this.addMouseMotionListener(new TreeFocusScanner());
-        }
-
+        this.init(this.cfg = cfg.lock());
         // FIXME does not seem to work because of popupmenu
         // this.addMouseListener(new MouseAdapter() {
         // @Override
@@ -222,6 +197,34 @@ public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
     @Override
     public TreePath getTopNodePath() {
         return new TreePath(this.getModel().getRoot());
+    }
+
+    protected void init(ETreeConfig config) {
+        this.setShowsRootHandles(true);
+        this.setRootVisible(true);
+
+        ETreeNodeRenderer renderer = new ETreeNodeRenderer();
+        this.setCellRenderer(renderer);
+
+        if (config.isTooltips()) {
+            ToolTipManager.sharedInstance().registerComponent(this);
+        }
+
+        if (config.isEditable()) {
+            this.setEditable(true);
+            this.setCellEditor(new ETreeNodeEditor());
+        }
+
+        UIUtils.registerLocaleChangeListener((EComponentI) this);
+
+        if (config.isDefaultPopupMenu()) {
+            EComponentPopupMenu.installPopupMenu(this);
+        }
+
+        if (config.getFocusColor() != null) {
+            renderer.setFocusColor(config.getFocusColor());
+            this.addMouseMotionListener(new TreeFocusScanner());
+        }
     }
 
     /**

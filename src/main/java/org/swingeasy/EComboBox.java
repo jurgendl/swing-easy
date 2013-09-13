@@ -119,11 +119,11 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
 
     protected EComboBox() {
         super();
+        this.cfg = null;
     }
 
     public EComboBox(EComboBoxConfig cfg) {
-        super();
-        this.init(cfg.lock());
+        this.init(cfg = cfg.lock());
     }
 
     /**
@@ -287,7 +287,7 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
     @Override
     public Dimension getSize() {
         Dimension dim = super.getSize();
-        if (this.cfg.isAutoResizePopup() && !this.layingOut) {
+        if ((this.cfg != null) && this.cfg.isAutoResizePopup() && !this.layingOut) {
             dim.width = Math.max(dim.width, this.getPreferredSize().width);
         }
         return dim;
@@ -320,16 +320,14 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
         return selectedRecord == null ? null : selectedRecord.get();
     }
 
-    protected void init(EComboBoxConfig c) {
-        this.cfg = c;
-
+    protected void init(EComboBoxConfig config) {
         this.records = new BasicEventList<EComboBoxRecord<T>>();
 
-        if (this.cfg.isSortable()) {
+        if (config.isSortable()) {
             this.records = new SortedList<EComboBoxRecord<T>>(this.records);
         }
 
-        if (this.cfg.isThreadSafe()) {
+        if (config.isThreadSafe()) {
             this.records = GlazedLists.threadSafeList(this.records);
         }
 
@@ -337,20 +335,22 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
 
         this.setModel(model);
 
-        if (this.cfg.isAutoComplete()) {
-            this.getSimpleThreadSafeInterface().activateAutoCompletion();
+        if (config.isAutoComplete()) {
+            this.stsi().activateAutoCompletion();
         }
-        if (this.cfg.isScrolling()) {
+        if (config.isScrolling()) {
             this.activateScrolling();
         }
 
         UIUtils.registerLocaleChangeListener((EComponentI) this);
 
-        if (this.cfg.isDefaultPopupMenu()) {
+        if (config.isDefaultPopupMenu()) {
             EComponentPopupMenu.installPopupMenu(this);
         }
 
-        ToolTipManager.sharedInstance().registerComponent(this);
+        if (config.isTooltips()) {
+            ToolTipManager.sharedInstance().registerComponent(this);
+        }
 
         this.addItemListener(new ItemListener() {
             @Override
@@ -364,7 +364,7 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
             }
         });
 
-        if (this.cfg.isAutoResizePopup()) {
+        if (config.isAutoResizePopup()) {
             this.addPopupMenuListener(new EComboBoxAutoResizingPopupListener());
         }
     }

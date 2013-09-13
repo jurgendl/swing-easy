@@ -20,13 +20,13 @@ public class ETextField extends JTextField implements EComponentI, HasValue<Stri
     protected ETextFieldConfig cfg;
 
     public ETextField(ETextFieldConfig cfg) {
-        super(cfg.getColumns());
-        this.init(cfg.lock());
+        super(cfg.lock().getColumns());
+        this.init(this.cfg = cfg);
     }
 
     public ETextField(ETextFieldConfig cfg, String text) {
-        super(text, cfg.getColumns());
-        this.init(cfg.lock());
+        super(text, cfg.lock().getColumns());
+        this.init(this.cfg = cfg);
     }
 
     public void addDocumentKeyListener(DocumentKeyListener listener) {
@@ -79,13 +79,14 @@ public class ETextField extends JTextField implements EComponentI, HasValue<Stri
         return StringUtils.isBlank(text) ? null : text;
     }
 
-    protected void init(ETextFieldConfig c) {
-        this.cfg = c;
-        this.setEditable(this.cfg.isEnabled());
-        if (this.cfg.isSelectAllOnFocus()) {
+    protected void init(ETextFieldConfig config) {
+        this.setEditable(config.isEnabled());
+        if (config.isSelectAllOnFocus()) {
             this.addFocusListener(new ETextComponentSelectAllOnFocus());
         }
-        ToolTipManager.sharedInstance().registerComponent(this);
+        if (config.isTooltips()) {
+            ToolTipManager.sharedInstance().registerComponent(this);
+        }
         EComponentPopupMenu.installTextComponentPopupMenu(this);
         UIUtils.registerLocaleChangeListener((EComponentI) this);
         this.addDocumentKeyListener(new DocumentKeyListener() {

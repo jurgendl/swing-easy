@@ -30,35 +30,7 @@ public class ECheckBoxTree<T> extends JTree implements ECheckBoxTreeI<T>, Readab
 
     public ECheckBoxTree(ECheckBoxTreeConfig cfg, ECheckBoxTreeNode<T> root) {
         super(root);
-
-        this.cfg = cfg.lock();
-
-        this.setCellRenderer(new ECheckBoxTreeNodeRenderer());
-
-        this.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getButton() != MouseEvent.BUTTON1) {
-                    return;
-                }
-                TreePath path = ECheckBoxTree.this.getPathForLocation(e.getPoint().x, e.getPoint().y);
-                if (path != null) {
-                    @SuppressWarnings("unchecked")
-                    ECheckBoxTreeNode<T> node = ECheckBoxTreeNode.class.cast(path.getLastPathComponent());
-                    node.setSelected(!node.isSelected());
-                    DefaultTreeModel.class.cast(ECheckBoxTree.this.getModel()).nodeChanged(node);
-                }
-            }
-        });
-        this.setEditable(false);
-
-        ToolTipManager.sharedInstance().registerComponent(this);
-
-        UIUtils.registerLocaleChangeListener((EComponentI) this);
-
-        if (cfg.isDefaultPopupMenu()) {
-            EComponentPopupMenu.installPopupMenu(this);
-        }
+        this.init(this.cfg = cfg.lock());
     }
 
     public ECheckBoxTree(ECheckBoxTreeNode<T> root) {
@@ -101,6 +73,37 @@ public class ECheckBoxTree<T> extends JTree implements ECheckBoxTreeI<T>, Readab
             return this.stsi;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
+        }
+    }
+
+    protected void init(ECheckBoxTreeConfig config) {
+        this.setCellRenderer(new ECheckBoxTreeNodeRenderer());
+
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() != MouseEvent.BUTTON1) {
+                    return;
+                }
+                TreePath path = ECheckBoxTree.this.getPathForLocation(e.getPoint().x, e.getPoint().y);
+                if (path != null) {
+                    @SuppressWarnings("unchecked")
+                    ECheckBoxTreeNode<T> node = ECheckBoxTreeNode.class.cast(path.getLastPathComponent());
+                    node.setSelected(!node.isSelected());
+                    DefaultTreeModel.class.cast(ECheckBoxTree.this.getModel()).nodeChanged(node);
+                }
+            }
+        });
+        this.setEditable(false);
+
+        if (config.isTooltips()) {
+            ToolTipManager.sharedInstance().registerComponent(this);
+        }
+
+        UIUtils.registerLocaleChangeListener((EComponentI) this);
+
+        if (config.isDefaultPopupMenu()) {
+            EComponentPopupMenu.installPopupMenu(this);
         }
     }
 

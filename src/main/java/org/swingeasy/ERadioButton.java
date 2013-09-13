@@ -68,6 +68,8 @@ public class ERadioButton extends JRadioButton {
     }
 
     protected void init() {
+        // if (cfg.isTooltips()) {
         ToolTipManager.sharedInstance().registerComponent(this);
+        // }
     }
 }

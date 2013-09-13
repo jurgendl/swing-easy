@@ -13,7 +13,7 @@ import javax.swing.WindowConstants;
  */
 public class TextAreaDemo {
     private static ETextArea addComponents(Container container) throws IOException {
-        String text = new String(Resources.getResource("src/site/resources/version-history.txt"));
+        String text = new String(Resources.getResource("org/swingeasy/resources/swing-easy.properties"));
         ETextArea jtf = new ETextArea(new ETextAreaConfig(), text);
         container.add(new JScrollPane(jtf));
         container.add(jtf.getToolbar(), BorderLayout.NORTH);
