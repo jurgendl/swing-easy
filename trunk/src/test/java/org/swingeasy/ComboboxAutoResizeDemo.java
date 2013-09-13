@@ -24,7 +24,7 @@ public class ComboboxAutoResizeDemo {
             combo.setMaximumSize(dim);
             combo.setPreferredSize(dim);
             combo.setSize(dim);
-            combo.addRecord(new EComboBoxRecord<String>("azertyuiopqsdfghjklmwxcvbn0123456789"));
+            combo.stsi().addRecord(new EComboBoxRecord<String>("azertyuiopqsdfghjklmwxcvbn0123456789"));
             frame.getContentPane().add(combo);
             frame.setSize(new Dimension(100, 70));
             frame.setLocationRelativeTo(null);
@@ -40,7 +40,7 @@ public class ComboboxAutoResizeDemo {
             combo.setMaximumSize(dim);
             combo.setPreferredSize(dim);
             combo.setSize(dim);
-            combo.addRecord(new EComboBoxRecord<String>("azertyuiopqsdfghjklmwxcvbn0123456789"));
+            combo.stsi().addRecord(new EComboBoxRecord<String>("azertyuiopqsdfghjklmwxcvbn0123456789"));
             frame.getContentPane().setLayout(new MigLayout());
             frame.getContentPane().add(combo);
             frame.setSize(new Dimension(100, 70));

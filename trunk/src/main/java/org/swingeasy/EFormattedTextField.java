@@ -69,7 +69,9 @@ public class EFormattedTextField extends JFormattedTextField implements ECompone
     }
 
     protected void init() {
+        // if (cfg.isTooltips()) {
         ToolTipManager.sharedInstance().registerComponent(this);
+        // }
         EComponentPopupMenu.installTextComponentPopupMenu(this);
         UIUtils.registerLocaleChangeListener((EComponentI) this);
         this.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);

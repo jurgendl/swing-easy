@@ -29,7 +29,7 @@ public class PopupDemo {
         cfg.setFilterable(true);
         EList<String> options = new EList<String>(cfg);
         for (int i = 0; i < 26; i++) {
-            options.addRecord(new EListRecord<String>((char) ('a' + i) + " option " + i));
+            options.stsi().addRecord(new EListRecord<String>((char) ('a' + i) + " option " + i));
         }
         options.setDefaultRenderer(Object.class, new DefaultListCellRenderer() {
             private static final long serialVersionUID = -2332228089292536681L;

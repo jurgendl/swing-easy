@@ -31,8 +31,6 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI, Re
 
     private static final long serialVersionUID = -3695054922987210010L;
 
-    protected ETreeTableModel model;
-
     protected ETreeTableCellRenderer tree;
 
     protected CheckMode checkMode = CheckMode.NONE;
@@ -47,22 +45,7 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI, Re
 
     protected ETreeTable(ETreeTableConfig cfg, final ETreeTableModel model) {
         super(model);
-
-        this.cfg = cfg.lock();
-
-        this.model = model;
-        this.model.parent = this;
-        this.tree = new ETreeTableCellRenderer(this, model);
-        this.getColumn(this.getColumnName(0)).setCellRenderer(this.tree);
-        this.setIntercellSpacing(new Dimension(0, 0));
-        this.setRowHeight(18);
-        this.addMouseListener(this);
-
-        UIUtils.registerLocaleChangeListener((EComponentI) this);
-
-        if (cfg.isDefaultPopupMenu()) {
-            EComponentPopupMenu.installPopupMenu(this);
-        }
+        this.init(this.cfg = cfg.lock());
     }
 
     public ETreeTable(ETreeTableConfig cfg, ETreeTableRecordNode root, ETreeTableHeaders headers) {
@@ -157,6 +140,25 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI, Re
         }
     }
 
+    public ETreeTableModel getTreeTableModel() {
+        return (ETreeTableModel) this.getModel();
+    }
+
+    protected void init(ETreeTableConfig config) {
+        this.getTreeTableModel().parent = this;
+        this.tree = new ETreeTableCellRenderer(this, this.getTreeTableModel());
+        this.getColumn(this.getColumnName(0)).setCellRenderer(this.tree);
+        this.setIntercellSpacing(new Dimension(0, 0));
+        this.setRowHeight(18);
+        this.addMouseListener(this);
+
+        UIUtils.registerLocaleChangeListener((EComponentI) this);
+
+        if (config.isDefaultPopupMenu()) {
+            EComponentPopupMenu.installPopupMenu(this);
+        }
+    }
+
     /**
      * 
      * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
@@ -208,7 +210,7 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI, Re
     }
 
     private void nodeAndChildrenSelectionToggle(ETreeTableRecordNode recordnode, boolean newvalue) {
-        int row = this.model.getRowIndex(recordnode);
+        int row = this.getTreeTableModel().getRowIndex(recordnode);
         this.nodeSelectionToggle(row, recordnode, newvalue);
         for (ETreeTableRecordNode child : recordnode) {
             this.nodeAndChildrenSelectionToggle(child, newvalue);
@@ -221,13 +223,13 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI, Re
             return;
         }
         int row = ETreeTable.this.rowAtPoint(evt.getPoint());
-        ETreeTableRecordNode recordnode = this.model.getRow(row);
-        this.model.toggle(recordnode);
+        ETreeTableRecordNode recordnode = this.getTreeTableModel().getRow(row);
+        this.getTreeTableModel().toggle(recordnode);
     }
 
     private void nodeSelectionToggle(int row, ETreeTableRecordNode recordnode, boolean newvalue) {
         recordnode.setSelected(newvalue);
-        this.model.fireTableCellUpdated(row, 0);
+        this.getTreeTableModel().fireTableCellUpdated(row, 0);
     }
 
     private void nodeSelectionToggle(MouseEvent evt) {
@@ -241,7 +243,7 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI, Re
                     return;
                 }
                 int row = ETreeTable.this.rowAtPoint(evt.getPoint());
-                ETreeTableRecordNode recordnode = this.model.getRow(row);
+                ETreeTableRecordNode recordnode = this.getTreeTableModel().getRow(row);
                 boolean newvalue = !recordnode.isSelected();
 
                 switch (this.checkMode) {
@@ -256,7 +258,7 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI, Re
                     case NODE_AND_PARENTS:
                         // also parents
                         while (recordnode != null) {
-                            row = this.model.getRowIndex(recordnode);
+                            row = this.getTreeTableModel().getRowIndex(recordnode);
                             if (row == -1) {
                                 break;
                             }

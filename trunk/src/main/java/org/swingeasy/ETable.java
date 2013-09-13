@@ -474,15 +474,15 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
 
     private static final long serialVersionUID = 6515690492295488815L;
 
-    protected final EventList<ETableRecord<T>> records;
+    protected EventList<ETableRecord<T>> records;
 
-    protected final DefaultEventTableModel<ETableRecord<T>> tableModel;
+    protected DefaultEventTableModel<ETableRecord<T>> tableModel;
 
-    protected final DefaultEventSelectionModel<ETableRecord<T>> tableSelectionModel;
+    protected DefaultEventSelectionModel<ETableRecord<T>> tableSelectionModel;
 
-    protected final EFiltering filtering;
+    protected EFiltering filtering;
 
-    protected final ESorting sorting;
+    protected ESorting sorting;
 
     protected final ETableConfig cfg;
 
@@ -511,47 +511,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     public ETable(ETableConfig configuration, Filter<T> matcher) {
-        this.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                if (e.getButton() == MouseEvent.BUTTON3) {
-                    ETable.this.selectCell(new Point(e.getX(), e.getY()));
-                }
-            }
-        });
-
-        this.cfg = configuration.lock();
-        if (this.cfg.isVertical()) {
-            this.getTableHeader().setDefaultRenderer(new VerticalHeaderRenderer());
-        }
-        if (this.cfg.isDraggable()) {
-            this.setDragEnabled(true);
-            this.setDropMode(DropMode.INSERT_ROWS);
-            this.setTransferHandler(new TableRowTransferHandler(this));
-        }
-        this.setColumnModel(new EventTableColumnModel<TableColumn>(new BasicEventList<TableColumn>()));
-        this.records = (this.cfg.isThreadSafe() ? GlazedLists.threadSafeList(new BasicEventList<ETableRecord<T>>())
-                : new BasicEventList<ETableRecord<T>>());
-        this.sorting = new ESorting(this.records);
-        this.tableFormat = new ETableHeaders<T>();
-        this.filtering = new EFiltering(this.sorting.getRecords(), matcher);
-        this.tableModel = new ETableModel(this.filtering.getRecords(), this.tableFormat);
-        this.setModel(this.tableModel);
-        this.tableSelectionModel = new DefaultEventSelectionModel<ETableRecord<T>>(this.filtering.getRecords());
-        this.tableSelectionModel.setSelectionMode(ListSelection.MULTIPLE_INTERVAL_SELECTION_DEFENSIVE);
-        this.setColumnSelectionAllowed(true);
-        this.setRowSelectionAllowed(true);
-        this.setSelectionModel(this.tableSelectionModel);
-        this.sorting.install();
-        this.filtering.install();
-        this.getTableHeader().setReorderingAllowed(this.cfg.isReorderable());
-        this.getTableHeader().setResizingAllowed(this.cfg.isResizable());
-
-        UIUtils.registerLocaleChangeListener((EComponentI) this);
-
-        if (this.cfg.isDefaultPopupMenu()) {
-            this.installPopupMenuAction(EComponentPopupMenu.installPopupMenu(this));
-        }
+        this.init(this.cfg = configuration.lock(), matcher);
     }
 
     /**
@@ -880,6 +840,49 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
             return this.stsi;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
+        }
+    }
+
+    protected void init(ETableConfig configuration, Filter<T> matcher) {
+        this.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON3) {
+                    ETable.this.selectCell(new Point(e.getX(), e.getY()));
+                }
+            }
+        });
+
+        if (configuration.isVertical()) {
+            this.getTableHeader().setDefaultRenderer(new VerticalHeaderRenderer());
+        }
+        if (configuration.isDraggable()) {
+            this.setDragEnabled(true);
+            this.setDropMode(DropMode.INSERT_ROWS);
+            this.setTransferHandler(new TableRowTransferHandler(this));
+        }
+        this.setColumnModel(new EventTableColumnModel<TableColumn>(new BasicEventList<TableColumn>()));
+        this.records = (configuration.isThreadSafe() ? GlazedLists.threadSafeList(new BasicEventList<ETableRecord<T>>())
+                : new BasicEventList<ETableRecord<T>>());
+        this.sorting = new ESorting(this.records);
+        this.tableFormat = new ETableHeaders<T>();
+        this.filtering = new EFiltering(this.sorting.getRecords(), matcher);
+        this.tableModel = new ETableModel(this.filtering.getRecords(), this.tableFormat);
+        this.setModel(this.tableModel);
+        this.tableSelectionModel = new DefaultEventSelectionModel<ETableRecord<T>>(this.filtering.getRecords());
+        this.tableSelectionModel.setSelectionMode(ListSelection.MULTIPLE_INTERVAL_SELECTION_DEFENSIVE);
+        this.setColumnSelectionAllowed(true);
+        this.setRowSelectionAllowed(true);
+        this.setSelectionModel(this.tableSelectionModel);
+        this.sorting.install();
+        this.filtering.install();
+        this.getTableHeader().setReorderingAllowed(configuration.isReorderable());
+        this.getTableHeader().setResizingAllowed(configuration.isResizable());
+
+        UIUtils.registerLocaleChangeListener((EComponentI) this);
+
+        if (configuration.isDefaultPopupMenu()) {
+            this.installPopupMenuAction(EComponentPopupMenu.installPopupMenu(this));
         }
     }
 

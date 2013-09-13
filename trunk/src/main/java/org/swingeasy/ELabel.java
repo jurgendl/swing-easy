@@ -59,6 +59,8 @@ public class ELabel extends JLabel {
     }
 
     protected void init() {
+        // if (cfg.isTooltips()) {
         ToolTipManager.sharedInstance().registerComponent(this);
+        // }
     }
 }

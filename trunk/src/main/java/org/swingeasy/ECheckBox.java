@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.Action;
-import javax.swing.Icon;
 import javax.swing.JCheckBox;
 import javax.swing.ToolTipManager;
 
@@ -18,43 +17,20 @@ public class ECheckBox extends JCheckBox implements EComponentI, HasValue<Boolea
 
     protected final List<ValueChangeListener<Boolean>> valueChangeListeners = new ArrayList<ValueChangeListener<Boolean>>();
 
+    protected ECheckBoxConfig cfg;
+
     public ECheckBox() {
-        this.init();
+        this(new ECheckBoxConfig());
     }
 
     public ECheckBox(Action a) {
         super(a);
-        this.init();
+        this.init(this.cfg = this.cfg.lock());
     }
 
-    public ECheckBox(Icon icon) {
-        super(icon);
-        this.init();
-    }
-
-    public ECheckBox(Icon icon, boolean selected) {
-        super(icon, selected);
-        this.init();
-    }
-
-    public ECheckBox(String text) {
-        super(text);
-        this.init();
-    }
-
-    public ECheckBox(String text, boolean selected) {
-        super(text, selected);
-        this.init();
-    }
-
-    public ECheckBox(String text, Icon icon) {
-        super(text, icon);
-        this.init();
-    }
-
-    public ECheckBox(String text, Icon icon, boolean selected) {
-        super(text, icon, selected);
-        this.init();
+    public ECheckBox(ECheckBoxConfig cfg) {
+        super(cfg.getText(), cfg.getIcon(), cfg.isSelected());
+        this.init(this.cfg = cfg.lock());
     }
 
     /**
@@ -101,8 +77,10 @@ public class ECheckBox extends JCheckBox implements EComponentI, HasValue<Boolea
         return this.isSelected();
     }
 
-    protected void init() {
-        ToolTipManager.sharedInstance().registerComponent(this);
+    protected void init(ECheckBoxConfig config) {
+        if (config.isTooltips()) {
+            ToolTipManager.sharedInstance().registerComponent(this);
+        }
 
         this.addActionListener(new ActionListener() {
             @Override
