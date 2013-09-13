@@ -61,13 +61,13 @@ public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
     public ETree(ETreeConfig cfg, ETreeNode<T> rootNode) {
         super(new javax.swing.tree.DefaultTreeModel(rootNode, true));
 
-        this.cfg = cfg;
-        cfg.lock();
+        this.cfg = cfg.lock();
 
         this.setShowsRootHandles(true);
         this.setRootVisible(true);
 
-        this.setCellRenderer(new ETreeNodeRenderer());
+        ETreeNodeRenderer renderer = new ETreeNodeRenderer();
+        this.setCellRenderer(renderer);
         ToolTipManager.sharedInstance().registerComponent(this);
 
         if (cfg.isEditable()) {
@@ -81,7 +81,10 @@ public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
             EComponentPopupMenu.installPopupMenu(this);
         }
 
-        this.addMouseMotionListener(new TreeFocusScanner());
+        if (cfg.getFocusColor() != null) {
+            renderer.setFocusColor(cfg.getFocusColor());
+            this.addMouseMotionListener(new TreeFocusScanner());
+        }
 
         // FIXME does not seem to work because of popupmenu
         // this.addMouseListener(new MouseAdapter() {
@@ -219,6 +222,17 @@ public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
     @Override
     public TreePath getTopNodePath() {
         return new TreePath(this.getModel().getRoot());
+    }
+
+    /**
+     * @see javax.swing.JTree#setCellRenderer(javax.swing.tree.TreeCellRenderer)
+     */
+    @Override
+    public void setCellRenderer(TreeCellRenderer x) {
+        super.setCellRenderer(x);
+        if ((this.cfg != null) && (this.cfg.getFocusColor() != null) && (x instanceof ETreeNodeRenderer)) {
+            ((ETreeNodeRenderer) x).setFocusColor(this.cfg.getFocusColor());
+        }
     }
 
     /**

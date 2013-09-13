@@ -18,7 +18,11 @@ public class ETreeNodeRenderer extends DefaultTreeCellRenderer {
 
     protected Color oldBackgroundNonSelectionColor;
 
-    protected Color brighter;
+    protected Color focusColor;
+
+    public Color getFocusColor() {
+        return this.focusColor;
+    }
 
     public int getLastSelected() {
         return this.lastSelected;
@@ -33,8 +37,8 @@ public class ETreeNodeRenderer extends DefaultTreeCellRenderer {
             boolean focusOverridden) {
         this.focused = row == this.lastSelected;
         this.init();
-        if (this.focused && !this.selected) {
-            this.setBackgroundNonSelectionColor(this.brighter);
+        if (this.focused && (this.focusColor != null)) {
+            this.setBackgroundNonSelectionColor(this.focusColor);
         } else {
             this.setBackgroundNonSelectionColor(this.oldBackgroundNonSelectionColor);
         }
@@ -45,15 +49,18 @@ public class ETreeNodeRenderer extends DefaultTreeCellRenderer {
     }
 
     protected void init() {
-        if (this.brighter != null) {
+        if ((this.focusColor != null) && (this.oldBackgroundNonSelectionColor != null)) {
             return;
         }
         this.oldBackgroundNonSelectionColor = this.getBackgroundNonSelectionColor();
-        this.brighter = this.getBackgroundSelectionColor().brighter();
     }
 
     public boolean isFocused() {
         return this.focused;
+    }
+
+    public void setFocusColor(Color focusColor) {
+        this.focusColor = focusColor;
     }
 
     public void setLastSelected(int lastSelected) {
