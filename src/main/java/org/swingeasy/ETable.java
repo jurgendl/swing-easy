@@ -520,8 +520,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
             }
         });
 
-        this.cfg = configuration;
-        this.cfg.lock();
+        this.cfg = configuration.lock();
         if (this.cfg.isVertical()) {
             this.getTableHeader().setDefaultRenderer(new VerticalHeaderRenderer());
         }

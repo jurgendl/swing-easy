@@ -21,6 +21,8 @@ public class ECheckBoxTree<T> extends JTree implements ECheckBoxTreeI<T>, Readab
 
     private ECheckBoxTree<T> stsi;
 
+    protected ECheckBoxTreeConfig cfg;
+
     @SuppressWarnings({ "rawtypes", "unchecked" })
     protected ECheckBoxTree() {
         super(new ECheckBoxTreeNode("root")); //$NON-NLS-1$
@@ -29,7 +31,7 @@ public class ECheckBoxTree<T> extends JTree implements ECheckBoxTreeI<T>, Readab
     public ECheckBoxTree(ECheckBoxTreeConfig cfg, ECheckBoxTreeNode<T> root) {
         super(root);
 
-        cfg.lock();
+        this.cfg = cfg.lock();
 
         this.setCellRenderer(new ECheckBoxTreeNodeRenderer());
 

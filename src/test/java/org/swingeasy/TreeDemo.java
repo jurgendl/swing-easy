@@ -1,6 +1,7 @@
 package org.swingeasy;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -40,7 +41,7 @@ public class TreeDemo {
             UIUtils.systemLookAndFeel();
             final JFrame frame = new JFrame();
             frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-            ETree<String> tree = new ETree<String>(new ETreeConfig().setEditable(false), new TreeDemoNode());
+            ETree<String> tree = new ETree<String>(new ETreeConfig().setEditable(false).setFocusColor(Color.GREEN), new TreeDemoNode());
             frame.getContentPane().add(new JScrollPane(tree), BorderLayout.CENTER);
             frame.getContentPane().add(tree.getSearchComponent(), BorderLayout.NORTH);
             SwingUtilities.invokeLater(new Runnable() {

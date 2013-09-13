@@ -48,8 +48,7 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI, Re
     protected ETreeTable(ETreeTableConfig cfg, final ETreeTableModel model) {
         super(model);
 
-        cfg.lock();
-        this.cfg = cfg;
+        this.cfg = cfg.lock();
 
         this.model = model;
         this.model.parent = this;
