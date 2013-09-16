@@ -404,6 +404,15 @@ public class UIUtils {
         return null;
     }
 
+    public static String getDescriptionForDirectory() {
+        String dirdesc = UIUtils.cachedDescriptions.get(".");
+        if (dirdesc == null) {
+            dirdesc = FileSystemView.getFileSystemView().getSystemTypeDescription(SystemSettings.getTmpdir());
+            UIUtils.cachedDescriptions.put(".", dirdesc);
+        }
+        return dirdesc;
+    }
+
     /**
      * gets file system description for file type
      */
@@ -421,6 +430,19 @@ public class UIUtils {
             ex.printStackTrace();
             return null;
         }
+    }
+
+    public static Icon getIconForDirectory() {
+        Icon diricon = UIUtils.cachedIcons.get(".");
+        if (diricon == null) {
+            diricon = FileSystemView.getFileSystemView().getSystemIcon(SystemSettings.getTmpdir());
+            UIUtils.cachedIcons.put(".", diricon);
+        }
+        return diricon;
+    }
+
+    public static Icon getIconForFile() {
+        return UIUtils.getIconForFileType("-_-");
     }
 
     /**
