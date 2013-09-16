@@ -37,7 +37,7 @@ public class FileSelection extends JPanel implements ActionListener, FileChooser
         this.ext = ext;
         this.textfield = new ETextField(new ETextFieldConfig().setSelectAllOnFocus(true));
         this.textfield.setDragEnabled(true);
-        this.textfield.setTransferHandler(new TransferHandler() {
+        this.textfield.setTransferHandler(new TransferHandler("file") {
             private static final long serialVersionUID = 76844729202962516L;
 
             @Override
