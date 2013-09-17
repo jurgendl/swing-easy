@@ -72,9 +72,9 @@ public final class TristateCheckBox extends JCheckBox {
     public Boolean getStateValue() {
         switch (this.getState()) {
             case SELECTED:
-                return true;
+                return Boolean.TRUE;
             case DESELECTED:
-                return false;
+                return Boolean.FALSE;
             default:
             case INDETERMINATE:
                 return null;

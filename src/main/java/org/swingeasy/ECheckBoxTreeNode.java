@@ -50,6 +50,6 @@ public class ECheckBoxTreeNode<T> extends DefaultMutableTreeNode {
      */
     @Override
     public String toString() {
-        return this.getUserObject() == null ? null : (this.getUserObject().toString() + "=" + this.selected); //$NON-NLS-1$
+        return this.getUserObject() == null ? "" : (this.getUserObject().toString() + "=" + this.selected); //$NON-NLS-1$
     }
 }

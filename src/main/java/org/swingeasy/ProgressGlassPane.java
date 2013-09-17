@@ -209,45 +209,45 @@ public class ProgressGlassPane extends NonBlockingGlassPane {
             return;
         }
 
-        synchronized (this.running) {
-            if (enabled) {
-                if (this.thread == null) {
-                    this.thread = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            while (ProgressGlassPane.this.running) {
-                                try {
-                                    Thread.sleep(ProgressGlassPane.this.speed);
-                                } catch (InterruptedException ex) {
-                                    //
-                                }
-                                SwingUtilities.invokeLater(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (ProgressGlassPane.this.isVisible()) {
-                                            ProgressGlassPane.this.progress++;
-                                            ProgressGlassPane.this.repaint();
-                                        }
-                                    }
-                                });
+        // synchronized (this.running) {
+        if (enabled) {
+            if (this.thread == null) {
+                this.thread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while (ProgressGlassPane.this.running) {
+                            try {
+                                Thread.sleep(ProgressGlassPane.this.speed);
+                            } catch (InterruptedException ex) {
+                                //
                             }
+                            SwingUtilities.invokeLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (ProgressGlassPane.this.isVisible()) {
+                                        ProgressGlassPane.this.progress++;
+                                        ProgressGlassPane.this.repaint();
+                                    }
+                                }
+                            });
                         }
-                    });
-                    this.thread.setDaemon(true);
-                    this.thread.start();
-                    this.running = Boolean.TRUE;
-                } else {
-                    // throw new IllegalArgumentException();
-                }
+                    }
+                });
+                this.thread.setDaemon(true);
+                this.thread.start();
+                this.running = Boolean.TRUE;
             } else {
-                if (this.thread != null) {
-                    this.thread.interrupt();
-                    this.thread = null;
-                    this.running = Boolean.FALSE;
-                } else {
-                    // throw new IllegalArgumentException();
-                }
+                // throw new IllegalArgumentException();
+            }
+        } else {
+            if (this.thread != null) {
+                this.thread.interrupt();
+                this.thread = null;
+                this.running = Boolean.FALSE;
+            } else {
+                // throw new IllegalArgumentException();
             }
         }
+        // }
     }
 }

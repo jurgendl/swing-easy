@@ -21,7 +21,7 @@ import org.swingeasy.tab.TabTransferHandler;
  */
 public class ETabbedPane extends DnDTabbedPane {
     public static class ETabToolbar extends ETabbedPane {
-        
+
         private static final long serialVersionUID = -5439842646697045080L;
 
         public ETabToolbar() {
@@ -47,7 +47,6 @@ public class ETabbedPane extends DnDTabbedPane {
         }
     }
 
-    
     private static final long serialVersionUID = -46108541490198511L;
 
     protected ETabbedPaneConfig config;
@@ -77,7 +76,7 @@ public class ETabbedPane extends DnDTabbedPane {
      */
     @Override
     public void insertTab(final String title, final Icon icon, Component component, final String tip, final int index) {
-        if ((component instanceof ETabToolbar) && !(this instanceof ETabToolbar)) {
+        if ((component instanceof ETabToolbarComponent) && !(this instanceof ETabToolbar)) {
             component = ETabToolbarComponent.class.cast(component).hidden;
         }
         final Component _component = component;
