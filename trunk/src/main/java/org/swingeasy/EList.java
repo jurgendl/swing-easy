@@ -16,9 +16,12 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.ServiceConfigurationError;
+import java.util.ServiceLoader;
 
 import javax.swing.JComponent;
 import javax.swing.JList;
+import javax.swing.JPopupMenu;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 import javax.swing.ToolTipManager;
@@ -29,7 +32,6 @@ import org.swingeasy.EComponentPopupMenu.ReadableComponent;
 import org.swingeasy.list.renderer.ColorListCellRenderer;
 import org.swingeasy.list.renderer.DateListCellRenderer;
 import org.swingeasy.list.renderer.NumberListCellRenderer;
-import org.swingeasy.system.SystemSettings;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
@@ -228,16 +230,15 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
-     * 
      * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy(java.awt.event.ActionEvent)
      */
     @Override
     public void copy(ActionEvent e) {
-        StringBuilder sb = new StringBuilder();
-        for (EListRecord<T> record : this) {
-            sb.append(record.getStringValue()).append(SystemSettings.getNewline());
+        EListRecord<T> selectedRecord = this.getSelectedRecord();
+        if (selectedRecord == null) {
+            return;
         }
-        EComponentPopupMenu.copyToClipboard(sb.toString());
+        EComponentPopupMenu.copyToClipboard(selectedRecord.getStringValue());
     }
 
     /**
@@ -395,7 +396,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         UIUtils.registerLocaleChangeListener((EComponentI) this);
 
         if (config.isDefaultPopupMenu()) {
-            EComponentPopupMenu.installPopupMenu(this);
+            this.installPopupMenuAction(EComponentPopupMenu.installPopupMenu(this));
         }
 
         if (config.isTooltips()) {
@@ -413,6 +414,25 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
                 }
             }
         });
+    }
+
+    /**
+     * JDOC
+     */
+    protected void installPopupMenuAction(JPopupMenu menu) {
+        menu.addSeparator();
+        @SuppressWarnings({ "unchecked", "rawtypes" })
+        ServiceLoader<EListExporter<T>> exporterService = (ServiceLoader) ServiceLoader.load(EListExporter.class);
+        Iterator<EListExporter<T>> iterator = exporterService.iterator();
+        while (iterator.hasNext()) {
+            try {
+                EListExporter<T> exporter = iterator.next();
+                EListExporterAction<T> action = new EListExporterAction<T>(exporter, this);
+                menu.add(action);
+            } catch (ServiceConfigurationError ex) {
+                ex.printStackTrace(System.err);
+            }
+        }
     }
 
     /**
