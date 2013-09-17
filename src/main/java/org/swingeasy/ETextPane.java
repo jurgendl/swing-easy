@@ -5,6 +5,9 @@ import java.awt.Event;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -283,6 +286,44 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         }
     }
 
+    protected static class PrintAction extends EComponentPopupMenuAction<ETextPane> {
+        private static final long serialVersionUID = 649772388750665266L;
+
+        public PrintAction(ETextPane component) {
+            super(component, "print", Resources.getImageResource("printer.png"));
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_P, Event.CTRL_MASK));
+        }
+
+        /**
+         * 
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            PrinterJob printJob = PrinterJob.getPrinterJob();
+            @SuppressWarnings("restriction")
+            Printable printable = sun.swing.text.TextComponentPrintable.getPrintable(this.delegate, null, null);
+            printJob.setPrintable(printable);
+            if (printJob.printDialog()) {
+                try {
+                    printJob.print();
+                } catch (PrinterException pe) {
+                    System.out.println("Error printing: " + pe);
+                }
+            }
+        }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public boolean checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(cfg.hasText);
+            return cfg.hasText;
+        }
+    }
+
     protected static class RightJustifyAction extends EComponentPopupMenuAction<ETextPane> {
         private static final long serialVersionUID = -9207009185034378663L;
 
@@ -460,6 +501,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         this.actions = new Action[] {
                 new OpenAction(this),
                 new SaveAction(this),
+                new PrintAction(this),
                 null,
                 new FontAction(this),
                 new BoldAction(this),
