@@ -427,7 +427,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         while (iterator.hasNext()) {
             try {
                 EListExporter<T> exporter = iterator.next();
-                EListExporterAction<T> action = new EListExporterAction<T>(exporter, this);
+                EComponentExporterAction<EList<T>> action = new EComponentExporterAction<EList<T>>(exporter, this);
                 menu.add(action);
             } catch (ServiceConfigurationError ex) {
                 ex.printStackTrace(System.err);
