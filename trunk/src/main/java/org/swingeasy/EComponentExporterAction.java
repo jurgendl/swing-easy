@@ -2,19 +2,22 @@ package org.swingeasy;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.JComponent;
+
 import org.swingeasy.EComponentPopupMenu.CheckEnabled;
 import org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction;
+import org.swingeasy.EComponentPopupMenu.ReadableComponent;
 
 /**
  * @author Jurgen
  */
-public class EListExporterAction<T> extends EComponentPopupMenuAction<EList<T>> {
+public class EComponentExporterAction<T extends JComponent & EComponentI & ReadableComponent> extends EComponentPopupMenuAction<T> {
     private static final long serialVersionUID = 5801982050032014321L;
 
-    protected final EListExporter<T> exporter;
+    protected final EComponentExporter<T> exporter;
 
-    public EListExporterAction(EListExporter<T> exporter, EList<T> table) {
-        super(table, exporter.getAction(), exporter.getIcon());
+    public EComponentExporterAction(EComponentExporter<T> exporter, T component) {
+        super(component, exporter.getAction(), exporter.getIcon());
         this.exporter = exporter;
     }
 
