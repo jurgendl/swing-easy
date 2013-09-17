@@ -17,15 +17,15 @@ import org.apache.commons.lang.builder.CompareToBuilder;
  * @author Jurgen
  */
 public class ListDemo1 {
-    static class DemoValue implements Comparable<DemoValue> {
+    static class ListDemo1Value implements Comparable<ListDemo1Value> {
         Number number;
 
-        public DemoValue(Number number) {
+        public ListDemo1Value(Number number) {
             this.number = number;
         }
 
         @Override
-        public int compareTo(final DemoValue other) {
+        public int compareTo(final ListDemo1Value other) {
             return new CompareToBuilder().append(this.number, other.number).toComparison();
         }
 
@@ -41,7 +41,7 @@ public class ListDemo1 {
         EListConfig cfg = new EListConfig();
         cfg.setSortable(true);
         cfg.setFilterable(true);
-        EList<DemoValue> cc = new EList<DemoValue>(cfg);
+        EList<ListDemo1Value> cc = new EList<ListDemo1Value>(cfg);
         JFrame f = new JFrame();
         {
             f.getContentPane().add(
@@ -50,11 +50,11 @@ public class ListDemo1 {
             f.getContentPane().add(cc.getFiltercomponent(), BorderLayout.NORTH);
             f.getContentPane().add(cc.getSearchComponent(), BorderLayout.SOUTH);
             f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            final EList<DemoValue> ccc = cc;
+            final EList<ListDemo1Value> ccc = cc;
             f.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosing(WindowEvent e) {
-                    Collection<EListRecord<DemoValue>> selectedRecord = ccc.getSelectedRecords();
+                    Collection<EListRecord<ListDemo1Value>> selectedRecord = ccc.getSelectedRecords();
                     System.out.println(selectedRecord == null ? null : selectedRecord.getClass() + " " + selectedRecord); //$NON-NLS-1$
                 }
             });
@@ -64,13 +64,13 @@ public class ListDemo1 {
 
         final Random r = new Random(256955466579946l);
         for (int i = 0; i < 1000; i++) {
-            EListRecord<DemoValue> record = new EListRecord<DemoValue>(new DemoValue(r.nextInt(1000)));
+            EListRecord<ListDemo1Value> record = new EListRecord<ListDemo1Value>(new ListDemo1Value(r.nextInt(1000)));
             cc.addRecord(record);
         }
 
-        EListRecord<DemoValue> record0 = new EListRecord<DemoValue>(new DemoValue(111));
+        EListRecord<ListDemo1Value> record0 = new EListRecord<ListDemo1Value>(new ListDemo1Value(111));
         cc.addRecord(record0);
-        EListRecord<DemoValue> record = new EListRecord<DemoValue>(new DemoValue(333));
+        EListRecord<ListDemo1Value> record = new EListRecord<ListDemo1Value>(new ListDemo1Value(333));
         cc.addRecord(record);
         // try {
         // cc.setSelectedRecord(new EListRecord<DemoValue>(new DemoValue(666)));
