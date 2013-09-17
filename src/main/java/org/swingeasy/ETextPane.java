@@ -105,6 +105,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
 
         public FontAction(ETextPane component) {
             super(component, "font-chooser", Resources.getImageResource("font.png"));
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_D, Event.CTRL_MASK));
         }
 
         /**
@@ -230,6 +231,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
             try {
                 FileInputStream in = new FileInputStream(file);
                 Document doc = this.delegate.getDocument();
+                doc.remove(0, doc.getLength());
                 EditorKit kit = this.delegate.getEditorKit();
                 kit.read(in, doc, 0);
                 in.close();
@@ -388,29 +390,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
 
     public ETextPane(StyledEditorKit kit) {
         this.setEditorKit(kit);
-        UIUtils.registerLocaleChangeListener((EComponentI) this);
-        EComponentPopupMenu popupMenu = EComponentPopupMenu.installTextComponentPopupMenu(this);
-        popupMenu.addSeparator();
-        this.actions = new Action[] {
-                new OpenAction(this),
-                new SaveAction(this),
-                null,
-                new FontAction(this),
-                new BoldAction(this),
-                new ItalicAction(this),
-                new UnderlineAction(this),
-                new LeftJustifyAction(this),
-                new CenterJustifyAction(this),
-                new RightJustifyAction(this) };
-        for (Action action : this.actions) {
-            if (action == null) {
-                popupMenu.addSeparator();
-            } else {
-                popupMenu.add(action);
-                EComponentPopupMenu.accelerate(this, action);
-            }
-        }
-        popupMenu.checkEnabled();
+        this.init();
     }
 
     /**
@@ -441,6 +421,32 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
 
     public JToolBar getToolbar() {
         return new EToolBar(this.getComponentPopupMenu());
+    }
+
+    protected void init() {
+        UIUtils.registerLocaleChangeListener((EComponentI) this);
+        EComponentPopupMenu popupMenu = EComponentPopupMenu.installTextComponentPopupMenu(this);
+        popupMenu.addSeparator();
+        this.actions = new Action[] {
+                new OpenAction(this),
+                new SaveAction(this),
+                null,
+                new FontAction(this),
+                new BoldAction(this),
+                new ItalicAction(this),
+                new UnderlineAction(this),
+                new LeftJustifyAction(this),
+                new CenterJustifyAction(this),
+                new RightJustifyAction(this) };
+        for (Action action : this.actions) {
+            if (action == null) {
+                popupMenu.addSeparator();
+            } else {
+                popupMenu.add(action);
+                EComponentPopupMenu.accelerate(this, action);
+            }
+        }
+        popupMenu.checkEnabled();
     }
 
     /**

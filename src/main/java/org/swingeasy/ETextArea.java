@@ -1,27 +1,163 @@
 package org.swingeasy;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Event;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.swing.Action;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JTextArea;
 import javax.swing.JToolBar;
+import javax.swing.KeyStroke;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.DocumentEvent;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Caret;
 import javax.swing.text.DefaultCaret;
+import javax.swing.text.Document;
 import javax.swing.text.Highlighter;
 import javax.swing.text.Highlighter.Highlight;
 
 import org.apache.commons.lang.StringUtils;
+import org.swingeasy.EComponentPopupMenu.CheckEnabled;
+import org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction;
+import org.swingeasy.EComponentPopupMenu.ReadableComponent;
 
 /**
  * @author Jurgen
  */
-public class ETextArea extends JTextArea implements EComponentI, HasValue<String>, ETextComponentI {
+public class ETextArea extends JTextArea implements EComponentI, HasValue<String>, ETextComponentI, ReadableComponent {
+    protected static class OpenAction extends EComponentPopupMenuAction<ETextArea> {
+        private static final long serialVersionUID = 649772388750665266L;
+
+        public OpenAction(ETextArea component) {
+            super(component, "open", Resources.getImageResource("folder_page_white.png"));
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_O, Event.CTRL_MASK));
+        }
+
+        /**
+         * 
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            File file = CustomizableOptionPane.showFileChooserDialog(this.getParentComponent(), FileChooserType.OPEN, new FileChooserCustomizer() {
+                @Override
+                public void customize(Component parentComponent, JDialog dialog) {
+                    // dialog.setLocationRelativeTo(null);
+                }
+
+                @Override
+                public void customize(JFileChooser jfc) {
+                    jfc.resetChoosableFileFilters();
+                    jfc.addChoosableFileFilter(new ExtensionFileFilter(UIUtils.getDescriptionForFileType(OpenAction.this.delegate.getFileExt())
+                            + " (" + OpenAction.this.delegate.getFileExt() + ")", OpenAction.this.delegate.getFileExt()));
+                }
+            });
+            if (file == null) {
+                return;
+            }
+            try {
+                FileInputStream in = new FileInputStream(file);
+                // Document doc = this.delegate.getDocument();
+                byte[] buffer = new byte[in.available()];
+                in.read(buffer);
+                in.close();
+                this.delegate.setText(new String(buffer));
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public boolean checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(true);
+            return true;
+        }
+    }
+
+    protected static class SaveAction extends EComponentPopupMenuAction<ETextArea> {
+        private static final long serialVersionUID = 344984528281010531L;
+
+        public SaveAction(ETextArea component) {
+            super(component, "save", Resources.getImageResource("bullet_disk.png"));
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_S, Event.CTRL_MASK));
+        }
+
+        /**
+         * 
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            final String fileExt = SaveAction.this.delegate.getFileExt();
+            File file = CustomizableOptionPane.showFileChooserDialog(this.getParentComponent(), FileChooserType.SAVE, new FileChooserCustomizer() {
+                @Override
+                public void customize(Component parentComponent, JDialog dialog) {
+                    // dialog.setLocationRelativeTo(null);
+                }
+
+                @Override
+                public void customize(JFileChooser jfc) {
+                    jfc.resetChoosableFileFilters();
+                    jfc.addChoosableFileFilter(new ExtensionFileFilter(UIUtils.getDescriptionForFileType(fileExt) + " (" + fileExt + ")", fileExt));
+                }
+            });
+            if (file == null) {
+                return;
+            }
+            if (!file.getName().endsWith(fileExt)) {
+                file = new File(file.getParentFile(), file.getName() + "." + fileExt);
+            }
+            if (file.exists()) {
+                if (ResultType.YES != CustomizableOptionPane.showCustomDialog(this.getParentComponent(),
+                        new JLabel(Messages.getString((Locale) null, "SaveAction.overwrite.warning.message")),
+                        Messages.getString((Locale) null, "SaveAction.overwrite.warning.title"), MessageType.WARNING, OptionType.YES_NO, null, null)) {
+                    return;
+                }
+            }
+            try {
+                BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file));
+                Document doc = this.delegate.getDocument();
+                out.write(doc.getText(0, doc.getLength()).getBytes());
+                out.close();
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            } catch (BadLocationException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public boolean checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(cfg.hasText);
+            return cfg.hasText;
+        }
+    }
+
     protected class SearchHighlightPainter extends ETextAreaFillHighlightPainter {
         public SearchHighlightPainter() {
             super(new Color(245, 225, 145));
@@ -37,6 +173,8 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
     protected String lastSearch = null;
 
     protected ETextAreaConfig cfg;
+
+    protected Action[] actions;
 
     public ETextArea(ETextAreaConfig cfg) {
         super(cfg.lock().getRows(), cfg.getColumns());
@@ -73,6 +211,14 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
     @Override
     public void clearValueChangeListeners() {
         this.valueChangeListeners.clear();
+    }
+
+    /**
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy(java.awt.event.ActionEvent)
+     */
+    @Override
+    public void copy(ActionEvent e) {
+        this.copy();
     }
 
     public void find(String find) {
@@ -121,11 +267,23 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
         this.fireCaretUpdate(new ObjectWrapper(this).get("caretEvent", CaretEvent.class));
     }
 
+    public String getFileExt() {
+        return "txt";
+    }
+
     public ETextAreaHighlightPainter getHighlightPainter() {
         if (this.highlightPainter == null) {
             this.highlightPainter = new SearchHighlightPainter();
         }
         return this.highlightPainter;
+    }
+
+    /**
+     * @see org.swingeasy.HasParentComponent#getParentComponent()
+     */
+    @Override
+    public JComponent getParentComponent() {
+        return this;
     }
 
     public JToolBar getToolbar() {
@@ -166,7 +324,20 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
     protected void init(ETextAreaConfig config) {
         this.setEditable(config.isEnabled());
         this.setAutoScroll(config.isAutoScroll());
-        EComponentPopupMenu.installTextComponentPopupMenu(this);
+
+        EComponentPopupMenu popupMenu = EComponentPopupMenu.installTextComponentPopupMenu(this);
+        popupMenu.addSeparator();
+        this.actions = new Action[] { new OpenAction(this), new SaveAction(this) };
+        for (Action action : this.actions) {
+            if (action == null) {
+                popupMenu.addSeparator();
+            } else {
+                popupMenu.add(action);
+                EComponentPopupMenu.accelerate(this, action);
+            }
+        }
+        popupMenu.checkEnabled();
+
         UIUtils.registerLocaleChangeListener((EComponentI) this);
         this.addDocumentKeyListener(new DocumentKeyListener() {
             @Override
@@ -205,7 +376,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
     @Override
     public void removeValueChangeListener(ValueChangeListener<String> listener) {
         this.valueChangeListeners.remove(listener);
-    }
+    };
 
     public void replace(String find, String replace) {
         this.setText(this.getText().replace(find, replace));
@@ -225,7 +396,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
         }
         ((DefaultCaret) caret).setUpdatePolicy(enable ? DefaultCaret.ALWAYS_UPDATE : DefaultCaret.NEVER_UPDATE);
         return true;
-    };
+    }
 
     /**
      * 
