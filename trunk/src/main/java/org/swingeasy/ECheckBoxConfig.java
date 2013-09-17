@@ -12,6 +12,19 @@ public class ECheckBoxConfig extends EComponentConfig<ECheckBoxConfig> {
 
     protected String text = null;
 
+    public ECheckBoxConfig() {
+        super();
+    }
+
+    public ECheckBoxConfig(String text) {
+        this.text = text;
+    }
+
+    public ECheckBoxConfig(String text, boolean selected) {
+        this.text = text;
+        this.selected = selected;
+    }
+
     public Icon getIcon() {
         return this.icon;
     }
