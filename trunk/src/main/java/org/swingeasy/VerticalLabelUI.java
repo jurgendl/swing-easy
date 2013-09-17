@@ -58,7 +58,7 @@ public class VerticalLabelUI extends BasicLabelUI {
      * Constructs a <code>VerticalLabelUI</code> with the default anticlockwise rotation
      */
     public VerticalLabelUI() {
-        //
+        super();
     }
 
     /**
