@@ -167,6 +167,36 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         }
     }
 
+    protected static class JustifyAction extends EComponentPopupMenuAction<ETextPane> {
+        private static final long serialVersionUID = -9207009185034378663L;
+
+        public JustifyAction(ETextPane component) {
+            super(component, "justify", Resources.getImageResource("text_align_justify.png"));
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_J, Event.CTRL_MASK));
+        }
+
+        /**
+         * 
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            MutableAttributeSet attr = new SimpleAttributeSet();
+            StyleConstants.setAlignment(attr, StyleConstants.ALIGN_JUSTIFIED);
+            this.delegate.setParagraphAttributes(attr, false);
+        }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public boolean checkEnabled(CheckEnabled cfg) {
+            this.setEnabled(cfg.hasSelection);
+            return cfg.hasSelection;
+        }
+    }
+
     protected static class LeftJustifyAction extends EComponentPopupMenuAction<ETextPane> {
         private static final long serialVersionUID = -6642449775102064584L;
 
@@ -435,6 +465,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
                 new BoldAction(this),
                 new ItalicAction(this),
                 new UnderlineAction(this),
+                new JustifyAction(this),
                 new LeftJustifyAction(this),
                 new CenterJustifyAction(this),
                 new RightJustifyAction(this) };
