@@ -138,7 +138,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     /**
      * CopyAction
      */
-    private static class CopyAction extends EComponentPopupMenuAction<ReadableComponent> {
+    protected static class CopyAction extends EComponentPopupMenuAction<ReadableComponent> {
         private static final long serialVersionUID = 3044725124645042202L;
 
         public CopyAction(ReadableComponent component) {
@@ -169,7 +169,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     /**
      * CutAction
      */
-    private static class CutAction extends EComponentPopupMenuAction<WritableComponent> {
+    protected static class CutAction extends EComponentPopupMenuAction<WritableComponent> {
         private static final long serialVersionUID = 4328082010034890480L;
 
         public CutAction(WritableComponent component) {
@@ -200,7 +200,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     /**
      * DeleteAction
      */
-    private static class DeleteAction extends EComponentPopupMenuAction<WritableComponent> {
+    protected static class DeleteAction extends EComponentPopupMenuAction<WritableComponent> {
         private static final long serialVersionUID = -7609111337852520512L;
 
         public DeleteAction(WritableComponent component) {
@@ -231,7 +231,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     /**
      * DeleteAllAction
      */
-    private static class DeleteAllAction extends EComponentPopupMenuAction<WritableComponent> {
+    protected static class DeleteAllAction extends EComponentPopupMenuAction<WritableComponent> {
         private static final long serialVersionUID = -6873629703224034266L;
 
         public DeleteAllAction(WritableComponent component) {
@@ -319,7 +319,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     /**
      * FindAction
      */
-    private static class FindAction extends EComponentPopupMenuAction<WritableComponent> {
+    protected static class FindAction extends EComponentPopupMenuAction<WritableComponent> {
         private static final long serialVersionUID = 4328082010034890480L;
 
         public FindAction(WritableComponent component) {
@@ -350,7 +350,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     /**
      * FindNextAction
      */
-    private static class FindNextAction extends EComponentPopupMenuAction<WritableComponent> {
+    protected static class FindNextAction extends EComponentPopupMenuAction<WritableComponent> {
         private static final long serialVersionUID = 4328082010034890480L;
 
         public FindNextAction(WritableComponent component) {
@@ -381,7 +381,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     /**
      * GotoBeginAction
      */
-    private static class GotoBeginAction extends EComponentPopupMenuAction<WritableComponent> {
+    protected static class GotoBeginAction extends EComponentPopupMenuAction<WritableComponent> {
         private static final long serialVersionUID = 3085509525399492253L;
 
         public GotoBeginAction(WritableComponent component) {
@@ -412,7 +412,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     /**
      * GotoEndAction
      */
-    private static class GotoEndAction extends EComponentPopupMenuAction<WritableComponent> {
+    protected static class GotoEndAction extends EComponentPopupMenuAction<WritableComponent> {
         private static final long serialVersionUID = 6262977802889470104L;
 
         public GotoEndAction(WritableComponent component) {
@@ -444,7 +444,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     /**
      * PasteAction
      */
-    private static class PasteAction extends EComponentPopupMenuAction<WritableComponent> {
+    protected static class PasteAction extends EComponentPopupMenuAction<WritableComponent> {
         private static final long serialVersionUID = -7609111337852520512L;
 
         public PasteAction(WritableComponent component) {
@@ -514,7 +514,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     /**
      * RedoAction
      */
-    private static class RedoAction extends EComponentPopupMenuAction<WritableComponent> {
+    protected static class RedoAction extends EComponentPopupMenuAction<WritableComponent> {
         private static final long serialVersionUID = 700221902961828425L;
 
         private final UndoManager undoManager;
@@ -553,7 +553,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     /**
      * ReplaceAction
      */
-    private static class ReplaceAction extends EComponentPopupMenuAction<WritableComponent> {
+    protected static class ReplaceAction extends EComponentPopupMenuAction<WritableComponent> {
         private static final long serialVersionUID = 4328082010034890480L;
 
         public ReplaceAction(WritableComponent component) {
@@ -584,7 +584,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     /**
      * SelectAllAction
      */
-    private static class SelectAllAction extends EComponentPopupMenuAction<WritableComponent> {
+    protected static class SelectAllAction extends EComponentPopupMenuAction<WritableComponent> {
         private static final long serialVersionUID = -6873629703224034266L;
 
         public SelectAllAction(WritableComponent component) {
@@ -802,7 +802,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     /**
      * UndoAction
      */
-    private static class UndoAction extends EComponentPopupMenuAction<WritableComponent> {
+    protected static class UndoAction extends EComponentPopupMenuAction<WritableComponent> {
         private static final long serialVersionUID = -2639363038955484287L;
 
         private final UndoManager undoManager;
@@ -841,7 +841,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     /**
      * UnselectAction
      */
-    private static class UnselectAction extends EComponentPopupMenuAction<WritableComponent> {
+    protected static class UnselectAction extends EComponentPopupMenuAction<WritableComponent> {
         private static final long serialVersionUID = -736429406339064829L;
 
         public UnselectAction(WritableComponent component) {
@@ -1060,8 +1060,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         final EComponentPopupMenuAction<WritableComponent> cutAction = new CutAction(component);
         final EComponentPopupMenuAction<WritableComponent> pasteAction = new PasteAction(component);
         // FIXME delete action
-        @SuppressWarnings("unused")
-        final EComponentPopupMenuAction<WritableComponent> deleteAction = new DeleteAction(component);
+        // final EComponentPopupMenuAction<WritableComponent> deleteAction = new DeleteAction(component);
         final EComponentPopupMenuAction<WritableComponent> selectAllAction = new SelectAllAction(component);
         final EComponentPopupMenuAction<WritableComponent> unselectAction = new UnselectAction(component);
         final EComponentPopupMenuAction<WritableComponent> deleteAllAction = new DeleteAllAction(component);
