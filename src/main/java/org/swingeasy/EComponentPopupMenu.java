@@ -1260,8 +1260,8 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     public void checkEnabled() {
         if (this.component instanceof WritableComponent) {
             WritableComponent writableComponent = WritableComponent.class.cast(this.component);
-            CheckEnabled cfg = new CheckEnabled(writableComponent.hasSelection(), writableComponent.hasText(), this.undoRedoManager.canUndo(),
-                    this.undoRedoManager.canRedo());
+            CheckEnabled cfg = new CheckEnabled(writableComponent.hasSelection(), writableComponent.hasText(), this.undoRedoManager == null ? false
+                    : this.undoRedoManager.canUndo(), this.undoRedoManager == null ? false : this.undoRedoManager.canRedo());
             // System.out.println(cfg);
             for (int i = 0; i < this.getComponentCount(); i++) {
                 Component menuItem = this.getComponent(i);
