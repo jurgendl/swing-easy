@@ -3,6 +3,7 @@ package org.swingeasy;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Event;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -17,6 +18,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
+import java.awt.print.PrinterException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -30,16 +32,17 @@ import java.util.ServiceConfigurationError;
 import java.util.ServiceLoader;
 import java.util.regex.Pattern;
 
+import javax.swing.Action;
 import javax.swing.DropMode;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JWindow;
+import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellEditor;
@@ -48,6 +51,8 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import org.apache.commons.lang.StringUtils;
+import org.swingeasy.EComponentPopupMenu.CheckEnabled;
+import org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction;
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
 import org.swingeasy.system.SystemSettings;
 import org.swingeasy.table.editor.BooleanTableCellEditor;
@@ -364,6 +369,38 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
         }
     }
 
+    protected class PrintAction extends EComponentPopupMenuAction<ETable<T>> {
+        private static final long serialVersionUID = 649772388750665266L;
+
+        public PrintAction(ETable<T> component) {
+            super(component, "print", Resources.getImageResource("printer.png"));
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_P, Event.CTRL_MASK));
+        }
+
+        /**
+         * 
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            try {
+                this.delegate.print();
+            } catch (PrinterException pe) {
+                System.out.println("Error printing: " + pe);
+            }
+        }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public boolean checkEnabled(CheckEnabled config) {
+            this.setEnabled(config.hasText);
+            return config.hasText;
+        }
+    }
+
     /**
      * JDOC
      */
@@ -493,6 +530,8 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     protected static final String TABLE_EDITORS_DIR = "org.swingeasy.table.editor";
 
     protected ETable<T> stsi;
+
+    protected Action[] actions;
 
     /**
      * use other constructors instead
@@ -889,7 +928,17 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     /**
      * JDOC
      */
-    protected void installPopupMenuAction(JPopupMenu menu) {
+    protected void installPopupMenuAction(EComponentPopupMenu menu) {
+        this.actions = new Action[] { new PrintAction(this) };
+        for (Action action : this.actions) {
+            if (action == null) {
+                menu.addSeparator();
+            } else {
+                menu.add(action);
+                EComponentPopupMenu.accelerate(this, action);
+            }
+        }
+        menu.checkEnabled();
         menu.addSeparator();
         @SuppressWarnings({ "unchecked", "rawtypes" })
         ServiceLoader<ETableExporter<T>> exporterService = (ServiceLoader) ServiceLoader.load(ETableExporter.class);

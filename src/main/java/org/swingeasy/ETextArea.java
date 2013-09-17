@@ -365,8 +365,20 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
     protected void init(ETextAreaConfig config) {
         this.setEditable(config.isEnabled());
         this.setAutoScroll(config.isAutoScroll());
+        this.installPopupMenuAction(EComponentPopupMenu.installTextComponentPopupMenu(this));
+        UIUtils.registerLocaleChangeListener((EComponentI) this);
+        this.addDocumentKeyListener(new DocumentKeyListener() {
+            @Override
+            public void update(Type type, DocumentEvent e) {
+                String value = ETextArea.this.getValue();
+                for (ValueChangeListener<String> valueChangeListener : ETextArea.this.valueChangeListeners) {
+                    valueChangeListener.valueChanged(value);
+                }
+            }
+        });
+    }
 
-        EComponentPopupMenu popupMenu = EComponentPopupMenu.installTextComponentPopupMenu(this);
+    protected void installPopupMenuAction(EComponentPopupMenu popupMenu) {
         popupMenu.addSeparator();
         this.actions = new Action[] {//
         //
@@ -383,17 +395,6 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
             }
         }
         popupMenu.checkEnabled();
-
-        UIUtils.registerLocaleChangeListener((EComponentI) this);
-        this.addDocumentKeyListener(new DocumentKeyListener() {
-            @Override
-            public void update(Type type, DocumentEvent e) {
-                String value = ETextArea.this.getValue();
-                for (ValueChangeListener<String> valueChangeListener : ETextArea.this.valueChangeListeners) {
-                    valueChangeListener.valueChanged(value);
-                }
-            }
-        });
     }
 
     public void removeDocumentKeyListener(DocumentKeyListener listener) {

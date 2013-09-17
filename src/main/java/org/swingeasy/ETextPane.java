@@ -496,7 +496,10 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
 
     protected void init() {
         UIUtils.registerLocaleChangeListener((EComponentI) this);
-        EComponentPopupMenu popupMenu = EComponentPopupMenu.installTextComponentPopupMenu(this);
+        this.installPopupMenuAction(EComponentPopupMenu.installTextComponentPopupMenu(this));
+    }
+
+    protected void installPopupMenuAction(EComponentPopupMenu popupMenu) {
         popupMenu.addSeparator();
         this.actions = new Action[] {
                 new OpenAction(this),

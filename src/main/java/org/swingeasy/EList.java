@@ -21,7 +21,6 @@ import java.util.ServiceLoader;
 
 import javax.swing.JComponent;
 import javax.swing.JList;
-import javax.swing.JPopupMenu;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 import javax.swing.ToolTipManager;
@@ -419,7 +418,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     /**
      * JDOC
      */
-    protected void installPopupMenuAction(JPopupMenu menu) {
+    protected void installPopupMenuAction(EComponentPopupMenu menu) {
         menu.addSeparator();
         @SuppressWarnings({ "unchecked", "rawtypes" })
         ServiceLoader<EListExporter<T>> exporterService = (ServiceLoader) ServiceLoader.load(EListExporter.class);
