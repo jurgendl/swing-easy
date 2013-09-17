@@ -147,9 +147,9 @@ public class VerticalLabelUI extends BasicLabelUI {
 
         text = super.layoutCL(label, fontMetrics, text, icon, this.verticalViewR, this.verticalIconR, this.verticalTextR);
 
-        viewR = this.copyRectangle(this.verticalViewR, viewR);
-        iconR = this.copyRectangle(this.verticalIconR, iconR);
-        textR = this.copyRectangle(this.verticalTextR, textR);
+        /* viewR = */this.copyRectangle(this.verticalViewR, viewR);
+        /* iconR = */this.copyRectangle(this.verticalIconR, iconR);
+        /* textR = */this.copyRectangle(this.verticalTextR, textR);
         return text;
     }
 
