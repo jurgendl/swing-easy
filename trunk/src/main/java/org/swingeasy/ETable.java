@@ -384,7 +384,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
         @Override
         public void actionPerformed(ActionEvent e) {
             try {
-                this.delegate.print();
+                this.delegate.print(PrintMode.NORMAL);
             } catch (PrinterException pe) {
                 System.out.println("Error printing: " + pe);
             }
