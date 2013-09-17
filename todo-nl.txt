@@ -1,5 +1,4 @@
     Ctrl-G: Ga naar pagina ... (Go to)
-    Ctrl-J: Uitlijnen (Justify)
     Ctrl-K: Link invoegen (Insert hyperlink)
     Ctrl-P: Afdrukken (Print)
     Ctrl-M: Inspringen (First Indent)
