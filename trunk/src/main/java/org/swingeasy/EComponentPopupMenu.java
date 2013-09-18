@@ -937,7 +937,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
     public static final String FIND_NEXT = "find-next";
 
-    protected static boolean accelerate(Action action) {
+    public static boolean accelerate(Action action) {
         if (action instanceof HasParentComponent) {
             KeyStroke acceleratorKey = KeyStroke.class.cast(action.getValue(Action.ACCELERATOR_KEY));
             if (acceleratorKey != null) {
@@ -951,7 +951,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         return false;
     }
 
-    protected static boolean accelerate(JComponent parentComponent, Action action) {
+    public static boolean accelerate(JComponent parentComponent, Action action) {
         KeyStroke acceleratorKey = KeyStroke.class.cast(action.getValue(Action.ACCELERATOR_KEY));
         if (acceleratorKey != null) {
             String actionCommandKey = String.valueOf(action.getValue(Action.ACTION_COMMAND_KEY));
@@ -960,7 +960,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         return false;
     }
 
-    protected static boolean accelerate(JComponent parentComponent, Action action, KeyStroke acceleratorKey, String actionCommandKey) {
+    public static boolean accelerate(JComponent parentComponent, Action action, KeyStroke acceleratorKey, String actionCommandKey) {
         // System.out.println(this.component.getClass().getName() + " :: " + acceleratorKey + " :: " + actionCommandKey);
         parentComponent.getActionMap().put(actionCommandKey, action);
 
