@@ -62,7 +62,7 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI, Re
      */
     @Override
     public void copy(ActionEvent e) {
-        throw new UnsupportedOperationException("not implemented"); // TODO implement
+        // TODO implement
     }
 
     /**
