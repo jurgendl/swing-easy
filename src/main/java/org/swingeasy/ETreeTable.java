@@ -8,6 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Collection;
 import java.util.Locale;
 
 import javax.swing.JComponent;
@@ -15,16 +16,16 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.tree.DefaultTreeCellRenderer;
 
 import org.apache.commons.lang.StringUtils;
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
 import org.swingeasy.table.renderer.ETreeTableCellRenderer;
+import org.swingeasy.test.ETreeTableRecord;
 
 /**
  * @author Jurgen
  */
-public class ETreeTable extends JTable implements MouseListener, ETreeTableI, ReadableComponent {
+public class ETreeTable extends JTable implements MouseListener, ETreeTableI<Object>, ReadableComponent {
     public static enum CheckMode {
         NONE, NODE, NODE_AND_PARENTS, NODE_AND_CHILDREN;
     }
@@ -54,6 +55,16 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI, Re
 
     public ETreeTable(ETreeTableRecordNode root, ETreeTableHeaders headers) {
         this(new ETreeTableConfig(), root, headers);
+    }
+
+    @Override
+    public void addRecord(ETreeTableRecord<Object> record) {
+        // TODO Auto-generated method stub
+    }
+
+    @Override
+    public void addRecords(Collection<ETreeTableRecord<Object>> records) {
+        // TODO Auto-generated method stub
     }
 
     /**
@@ -293,7 +304,7 @@ public class ETreeTable extends JTable implements MouseListener, ETreeTableI, Re
 
         switch (checkMode) {
             case NONE:
-                this.tree.setCellRenderer(new DefaultTreeCellRenderer());
+                this.tree.setCellRenderer(new ETreeTableTreeNodeRenderer());
                 break;
             default:
                 this.tree.setCellRenderer(new ETreeTableCheckBoxTreeNodeRenderer());

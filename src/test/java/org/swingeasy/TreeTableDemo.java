@@ -8,8 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
 
-import org.swingeasy.ETreeTable.CheckMode;
-
 /**
  * @author Jurgen
  */
@@ -61,7 +59,7 @@ public class TreeTableDemo {
             }
 
             final ETreeTable treetable = new ETreeTable(root, new ETreeTableHeaders("col1", "col2", "col3")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            treetable.setCheckMode(CheckMode.NODE_AND_CHILDREN);
+            // treetable.setCheckMode(CheckMode.NONE);
 
             frame.getContentPane().add(new JScrollPane(treetable), BorderLayout.CENTER);
             frame.setSize(400, 200);
