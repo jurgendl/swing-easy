@@ -29,10 +29,5 @@ public class CommonTests {
         eCheckBoxTree = new ECheckBoxTree(new ECheckBoxTreeConfig(), new ECheckBoxTreeNode("test")); //$NON-NLS-1$
         eCheckBoxTree.stsi().setEnabled(false);
         Assert.assertEquals(false, eCheckBoxTree.isEnabled());
-
-        ETreeTable eTreeTable = new ETreeTable(new ETreeTableRecordNode(), new ETreeTableHeaders());
-        eTreeTable = new ETreeTable(new ETreeTableConfig(), new ETreeTableRecordNode(), new ETreeTableHeaders());
-        eTreeTable.stsi().setEnabled(false);
-        Assert.assertEquals(false, eTreeTable.isEnabled());
     }
 }
