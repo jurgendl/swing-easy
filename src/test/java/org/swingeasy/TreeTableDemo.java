@@ -1,71 +1,88 @@
 package org.swingeasy;
 
-import java.awt.BorderLayout;
-import java.util.Arrays;
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
-import javax.swing.WindowConstants;
 
 /**
  * @author Jurgen
  */
 public class TreeTableDemo {
-    private static class TreeTableDemoNode extends ETreeTableRecordNode {
-        public TreeTableDemoNode(List<Object> values) {
-            super(values);
+    public static class Rec {
+        String key;
+
+        String value;
+
+        String tmp;
+
+        public Rec(String key, String value, String tmp) {
+            this.key = key;
+            this.value = value;
+            this.tmp = tmp;
+        }
+
+        public String getKey() {
+            return this.key;
+        }
+
+        public String getTmp() {
+            return this.tmp;
+        }
+
+        public String getValue() {
+            return this.value;
+        }
+
+        public void setKey(String key) {
+            this.key = key;
+        }
+
+        public void setTmp(String tmp) {
+            this.tmp = tmp;
+        }
+
+        public void setValue(String value) {
+            this.value = value;
         }
 
         @Override
-        protected void initChildren(java.util.List<ETreeTableRecordNode> list) {
-            for (int i = 0; i < 10; i++) {
-                TreeTableDemoNode _child = new TreeTableDemoNode(Arrays.asList(new Object[] {
-                        this.values.get(0) + "" + i, this.values.get(1) + "" + i, this.values.get(2) + "" + +i })); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                list.add(_child);
-            }
-        };
+        public String toString() {
+            return this.key + "=" + this.value;
+        }
     }
 
     public static void main(String[] args) {
-        try {
-            boolean lazyNodeTest = true;
+        UIUtils.systemLookAndFeel();
 
-            UIUtils.systemLookAndFeel();
+        JFrame f = new JFrame();
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-            final JFrame frame = new JFrame();
-            frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+        String[] h = { "key", "value", "tmp" };
 
-            ETreeTableRecordNode root = new ETreeTableRecordNode();
-
-            ETreeTableRecordNode child1 = new ETreeTableRecordNode(Arrays.asList(new Object[] { "11", "12", "13" })); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            root.add(child1);
-
-            ETreeTableRecordNode child2 = new ETreeTableRecordNode(Arrays.asList(new Object[] { "21", "22", "23" })); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            root.add(child2);
-
-            ETreeTableRecordNode child3 = new ETreeTableRecordNode(Arrays.asList(new Object[] { "31", "32", "33" })); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            child2.add(child3);
-
-            ETreeTableRecordNode child4 = new ETreeTableRecordNode(Arrays.asList(new Object[] { "41", "42", "43" })); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            child2.add(child4);
-
-            ETreeTableRecordNode child5 = new ETreeTableRecordNode(Arrays.asList(new Object[] { "51", "52", "53" })); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            child4.add(child5);
-
-            if (lazyNodeTest) {
-                TreeTableDemoNode child6 = new TreeTableDemoNode(Arrays.asList(new Object[] { "61", "62", "63" })); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-                child4.add(child6);
+        Collection<ETreeTableRecord<Rec>> coll = new ArrayList<ETreeTableRecord<Rec>>();
+        for (int i = 0; i < 10; i++) {
+            Rec lvl1 = new Rec("level 0 : " + i, "description level 0 : " + i, "" + (i * 100));
+            ETreeTableRecordBean<Rec> rec1 = new ETreeTableRecordBean<Rec>(null, lvl1, h);
+            coll.add(rec1);
+            for (int j = 0; j < 10; j++) {
+                Rec lvl2 = new Rec("level 1 : " + j, "description level 1 : " + i, "" + ((i * 100) + (j * 10)));
+                ETreeTableRecordBean<Rec> rec2 = new ETreeTableRecordBean<Rec>(rec1, lvl2, h);
+                coll.add(rec2);
+                for (int k = 0; k < 10; k++) {
+                    Rec lvl3 = new Rec("level 2 : " + k, "value " + ((i * 100) + (j * 10) + k), "" + ((i * 100) + (j * 10) + k));
+                    ETreeTableRecordBean<Rec> rec3 = new ETreeTableRecordBean<Rec>(rec2, lvl3, h);
+                    coll.add(rec3);
+                }
             }
-
-            final ETreeTable treetable = new ETreeTable(root, new ETreeTableHeaders("col1", "col2", "col3")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-            // treetable.setCheckMode(CheckMode.NONE);
-
-            frame.getContentPane().add(new JScrollPane(treetable), BorderLayout.CENTER);
-            frame.setSize(400, 200);
-            frame.setVisible(true);
-        } catch (Exception ex) {
-            ex.printStackTrace();
         }
+
+        ETreeTableHeaders<Rec> headers = new ETreeTableHeaders<Rec>(h);
+        ETreeTable<Rec> t = new ETreeTable<Rec>(new ETreeTableConfig(), headers);
+        t.stsi().addRecords(coll);
+        f.getContentPane().add(new JScrollPane(t));
+        f.pack();
+        f.setVisible(true);
     }
 }

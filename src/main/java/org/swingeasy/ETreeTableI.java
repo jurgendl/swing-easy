@@ -2,7 +2,6 @@ package org.swingeasy;
 
 import java.util.Collection;
 
-import org.swingeasy.test.ETreeTableRecord;
 
 /**
  * @author Jurgen
