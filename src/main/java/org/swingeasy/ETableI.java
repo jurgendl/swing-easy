@@ -26,7 +26,7 @@ public interface ETableI<T> extends EComponentI {
 
     public abstract List<ETableRecord<T>> getRecords();
 
-    public abstract T getSelectedCell();
+    public abstract Object getSelectedCell();
 
     public abstract List<Object> getSelectedCells();
 
