@@ -16,6 +16,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.ServiceConfigurationError;
+import java.util.ServiceLoader;
 
 import javax.swing.Action;
 import javax.swing.JComponent;
@@ -210,6 +212,10 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
         return columnNames;
     }
 
+    public ETreeTableHeaders<T> getHeaders() {
+        return this.tableFormat;
+    }
+
     public ETreeTable<T> getOriginal() {
         return this;
     }
@@ -397,18 +403,18 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
         }
         menu.checkEnabled();
         menu.addSeparator();
-        // @SuppressWarnings({ "unchecked", "rawtypes" })
-        // ServiceLoader<ETreeTableExporter<T>> exporterService = (ServiceLoader) ServiceLoader.load(ETreeTableExporter.class);
-        // Iterator<ETreeTableExporter<T>> iterator = exporterService.iterator();
-        // while (iterator.hasNext()) {
-        // try {
-        // ETreeTableExporter<T> exporter = iterator.next();
-        // EComponentExporterAction<ETreeTable<T>> action = new EComponentExporterAction<ETreeTable<T>>(exporter, this);
-        // menu.add(action);
-        // } catch (ServiceConfigurationError ex) {
-        // ex.printStackTrace(System.err);
-        // }
-        // }
+        @SuppressWarnings({ "unchecked", "rawtypes" })
+        ServiceLoader<ETreeTableExporter<T>> exporterService = (ServiceLoader) ServiceLoader.load(ETreeTableExporter.class);
+        Iterator<ETreeTableExporter<T>> iterator = exporterService.iterator();
+        while (iterator.hasNext()) {
+            try {
+                ETreeTableExporter<T> exporter = iterator.next();
+                EComponentExporterAction<ETreeTable<T>> action = new EComponentExporterAction<ETreeTable<T>>(exporter, this);
+                menu.add(action);
+            } catch (ServiceConfigurationError ex) {
+                ex.printStackTrace(System.err);
+            }
+        }
     }
 
     /**
