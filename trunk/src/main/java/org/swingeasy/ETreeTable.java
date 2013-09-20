@@ -1,18 +1,46 @@
 package org.swingeasy;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Frame;
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 
 import javax.swing.Action;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
+import org.apache.commons.lang.StringUtils;
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
+import org.swingeasy.system.SystemSettings;
+import org.swingeasy.table.editor.BooleanTableCellEditor;
+import org.swingeasy.table.editor.ColorTableCellEditor;
+import org.swingeasy.table.editor.DateTableCellEditor;
+import org.swingeasy.table.editor.NumberTableCellEditor;
+import org.swingeasy.table.renderer.BooleanTableCellRenderer;
+import org.swingeasy.table.renderer.ByteArrayTableCellRenderer;
+import org.swingeasy.table.renderer.ColorTableCellRenderer;
+import org.swingeasy.table.renderer.DateTableCellRenderer;
+import org.swingeasy.table.renderer.NumberTableCellRenderer;
 
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
@@ -26,7 +54,7 @@ import ca.odell.glazedlists.swing.TreeTableSupport;
 /**
  * @author Jurgen
  */
-public class ETreeTable<T> extends JTable implements ETreeTableI<T>, ReadableComponent {
+public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ETreeTableRecord<T>>, ReadableComponent {
     private static final long serialVersionUID = -1389100924292211731L;
 
     protected ETreeTable<T> stsi;
@@ -72,11 +100,118 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, ReadableCom
     }
 
     /**
+     * @see org.swingeasy.ETreeTableI#clear()
+     */
+    @Override
+    public void clear() {
+        this.tableSelectionModel.clearSelection();
+        this.records.clear();
+    }
+
+    /**
      * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy(java.awt.event.ActionEvent)
      */
     @Override
     public void copy(ActionEvent e) {
-        //
+        StringBuilder sb = new StringBuilder();
+        for (Object cell : this.getSelectedCells()) {
+            sb.append(String.valueOf(cell)).append(SystemSettings.getNewline());
+        }
+        EComponentPopupMenu.copyToClipboard(sb.toString());
+    }
+
+    /**
+     * 
+     * @see javax.swing.JTable#createDefaultEditors()
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    protected void createDefaultEditors() {
+        super.createDefaultEditors();
+        this.defaultEditorsByColumnClass.put(Boolean.class, new javax.swing.UIDefaults.ProxyLazyValue(BooleanTableCellEditor.class.getName()));
+        this.defaultEditorsByColumnClass.put(Date.class, new javax.swing.UIDefaults.ProxyLazyValue(DateTableCellEditor.class.getName()));
+        this.defaultEditorsByColumnClass.put(Color.class, new javax.swing.UIDefaults.ProxyLazyValue(ColorTableCellEditor.class.getName()));
+        this.defaultEditorsByColumnClass.put(Number.class, new javax.swing.UIDefaults.ProxyLazyValue(NumberTableCellEditor.class.getName()));
+    }
+
+    /**
+     * 
+     * @see javax.swing.JTable#createDefaultRenderers()
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    protected void createDefaultRenderers() {
+        super.createDefaultRenderers();
+        this.defaultRenderersByColumnClass.put(Boolean.class, new javax.swing.UIDefaults.ProxyLazyValue(BooleanTableCellRenderer.class.getName()));
+        this.defaultRenderersByColumnClass.put(Date.class, new javax.swing.UIDefaults.ProxyLazyValue(DateTableCellRenderer.class.getName()));
+        this.defaultRenderersByColumnClass.put(Color.class, new javax.swing.UIDefaults.ProxyLazyValue(ColorTableCellRenderer.class.getName()));
+        this.defaultRenderersByColumnClass.put(Number.class, new javax.swing.UIDefaults.ProxyLazyValue(NumberTableCellRenderer.class.getName()));
+        this.defaultRenderersByColumnClass.put(Float.class, new javax.swing.UIDefaults.ProxyLazyValue(NumberTableCellRenderer.class.getName()));
+        this.defaultRenderersByColumnClass.put(Double.class, new javax.swing.UIDefaults.ProxyLazyValue(NumberTableCellRenderer.class.getName()));
+        this.defaultRenderersByColumnClass.put(byte[].class, new javax.swing.UIDefaults.ProxyLazyValue(ByteArrayTableCellRenderer.class.getName()));
+        this.defaultRenderersByColumnClass.put(Byte[].class, new javax.swing.UIDefaults.ProxyLazyValue(ByteArrayTableCellRenderer.class.getName()));
+    }
+
+    /**
+     * @see org.swingeasy.ETreeTableI#getColumnValueAtVisualColumn(int)
+     */
+    @Override
+    public Object getColumnValueAtVisualColumn(int i) {
+        return this.getColumnModel().getColumn(i).getHeaderValue();
+    }
+
+    /**
+     * 
+     * @see javax.swing.JTable#getDefaultEditor(java.lang.Class)
+     */
+    @Override
+    public TableCellEditor getDefaultEditor(Class<?> columnClass) {
+        TableCellEditor de = super.getDefaultEditor(columnClass);
+        if (de instanceof EComponentI) {
+            UIUtils.registerLocaleChangeListener(EComponentI.class.cast(de));
+            // } else if (de instanceof Component) {
+            // UIUtils.registerLocaleChangeListener(Component.class.cast(de));
+        }
+        return de;
+    }
+
+    /**
+     * 
+     * @see javax.swing.JTable#getDefaultRenderer(java.lang.Class)
+     */
+    @Override
+    public TableCellRenderer getDefaultRenderer(Class<?> columnClass) {
+        TableCellRenderer dr = super.getDefaultRenderer(columnClass);
+
+        if (dr instanceof EComponentI) {
+            UIUtils.registerLocaleChangeListener(EComponentI.class.cast(dr));
+            // } else if (dr instanceof Component) {
+            // UIUtils.registerLocaleChangeListener(Component.class.cast(dr));
+        }
+        return dr;
+    }
+
+    protected Frame getFrame(Component comp) {
+        if (comp == null) {
+            comp = this;
+        }
+        if (comp.getParent() instanceof Frame) {
+            return (Frame) comp.getParent();
+        }
+        return this.getFrame(comp.getParent());
+    }
+
+    /**
+     * @see org.swingeasy.ETreeTableI#getHeadernames()
+     */
+    @Override
+    public List<String> getHeadernames() {
+        List<String> columnNames = this.tableFormat.getColumnNames();
+        return columnNames;
+    }
+
+    public ETreeTable<T> getOriginal() {
+        return this;
     }
 
     /**
@@ -85,6 +220,79 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, ReadableCom
     @Override
     public JComponent getParentComponent() {
         return this;
+    }
+
+    /**
+     * @see org.swingeasy.ETreeTableI#getRecordAtVisualRow(int)
+     */
+    @Override
+    public ETreeTableRecord<T> getRecordAtVisualRow(int i) {
+        return this.records.get(i);
+    }
+
+    /**
+     * @see org.swingeasy.ETreeTableI#getRecords()
+     */
+    @Override
+    public List<ETreeTableRecord<T>> getRecords() {
+        return this.records;
+    }
+
+    /**
+     * @see #getRowHeader()
+     */
+    public RowNumberTable getRowHeader() {
+        return this.getRowHeader(4);
+    }
+
+    /**
+     * gets row header that can be added to the RowHeaderView of a {@link JScrollPane} or can be docked WEST in a {@link BorderLayout}
+     */
+    public RowNumberTable getRowHeader(int cw) {
+        return new RowNumberTable(this, cw);
+    }
+
+    /**
+     * @see org.swingeasy.ETreeTableI#getSelectedCell()
+     */
+    @Override
+    public Object getSelectedCell() {
+        ETableRecord<T> record = this.getSelectedRecord();
+        if (record == null) {
+            return null;
+        }
+        return record.get(this.getSelectedColumn());
+    }
+
+    /**
+     * @see org.swingeasy.ETreeTableI#getSelectedCells()
+     */
+    @Override
+    public List<Object> getSelectedCells() {
+        List<Object> cells = new ArrayList<Object>();
+        for (ETreeTableRecord<T> record : this.getSelectedRecords()) {
+            cells.add(record.get(this.getSelectedColumn()));
+        }
+        return cells;
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.ETreeTableI#getSelectedRecord()
+     */
+    @Override
+    public ETreeTableRecord<T> getSelectedRecord() {
+        EventList<ETreeTableRecord<T>> selected = this.tableSelectionModel.getSelected();
+        return selected.size() == 0 ? null : selected.iterator().next();
+    }
+
+    /**
+     * 
+     * @see org.swingeasy.ETreeTableI#getSelectedRecords()
+     */
+    @Override
+    public List<ETreeTableRecord<T>> getSelectedRecords() {
+        return this.tableSelectionModel.getSelected();
     }
 
     /**
@@ -204,6 +412,160 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, ReadableCom
     }
 
     /**
+     * threadsafe unmodifiable iterator
+     * 
+     * @see java.lang.Iterable#iterator()
+     */
+    @Override
+    public Iterator<ETreeTableRecord<T>> iterator() {
+        return Collections.unmodifiableCollection(this.getRecords()).iterator();
+    }
+
+    /**
+     * @see org.swingeasy.ETreeTableI#packColumn(int)
+     */
+    @Override
+    public void packColumn(int vColIndex) {
+        this.packColumn(vColIndex, 4);
+    }
+
+    /**
+     * Sets the preferred width of the visible column specified by vColIndex. The column will be just wide enough to show the column head and the
+     * widest cell in the column. margin pixels are added to the left and right (resulting in an additional width of 2*margin pixels).
+     * 
+     * @param table
+     * @param vColIndex
+     * @param margin
+     */
+    @Override
+    public void packColumn(int vColIndex, int margin) {
+        TableColumnModel colModel = this.getColumnModel();
+        TableColumn col = colModel.getColumn(vColIndex);
+        int width = 0;
+
+        // Get width of column header
+        TableCellRenderer renderer = col.getHeaderRenderer();
+        if (renderer == null) {
+            renderer = this.getTableHeader().getDefaultRenderer();
+        }
+        Component comp = renderer.getTableCellRendererComponent(this, col.getHeaderValue(), false, false, 0, 0);
+        width = comp.getPreferredSize().width;
+
+        // Get maximum width of column data
+        for (int r = 0; r < this.getRowCount(); r++) {
+            renderer = this.getCellRenderer(r, vColIndex);
+            comp = renderer.getTableCellRendererComponent(this, this.getValueAt(r, vColIndex), false, false, r, vColIndex);
+            width = Math.max(width, comp.getPreferredSize().width);
+        }
+
+        // Add margin
+        width += 2 * margin;
+
+        // Set the width
+        col.setPreferredWidth(width);
+        col.setWidth(width);
+        col.setMaxWidth(width);
+    }
+
+    /**
+     * @see javax.swing.JTable#prepareRenderer(javax.swing.table.TableCellRenderer, int, int)
+     */
+    @Override
+    public Component prepareRenderer(TableCellRenderer renderer, int rowIndex, int vColIndex) {
+        Component c = this.super_prepareRenderer(renderer, rowIndex, vColIndex);
+        if (c instanceof JLabel) {
+            String text = JLabel.class.cast(c).getText();
+            JLabel.class.cast(c).setToolTipText(StringUtils.isNotBlank(text) ? text : null);
+        }
+        return c;
+    }
+
+    /**
+     * @see org.swingeasy.ETreeTableI#removeAllRecords()
+     */
+    @Override
+    public void removeAllRecords() {
+        this.records.clear();
+    }
+
+    /**
+     * @see org.swingeasy.ETreeTableI#removeRecord(org.swingeasy.ETableRecord)
+     */
+    @Override
+    public void removeRecord(final ETableRecord<T> record) {
+        this.records.remove(record);
+    }
+
+    /**
+     * @see org.swingeasy.ETreeTableI#removeRecordAtVisualRow(int)
+     */
+    @Override
+    public void removeRecordAtVisualRow(final int i) {
+        this.records.remove(this.records.get(i));
+    }
+
+    /**
+     * remove rowheader
+     */
+    public void removeRowHeader(JScrollPane scrollpane) {
+        if (scrollpane.getRowHeader().getView() instanceof RowNumberTable) {
+            scrollpane.getRowHeader().removeAll();
+            scrollpane.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, new JComponent() {
+                private static final long serialVersionUID = 1L;
+            });
+        }
+    }
+
+    /**
+     * @see org.swingeasy.ETreeTableI#scrollToVisibleRecord(org.swingeasy.ETableRecord)
+     */
+    @Override
+    public void scrollToVisibleRecord(ETableRecord<T> record) {
+        if (!this.isDisplayable()) {
+            throw new IllegalArgumentException("can only be used when table is displayable (visible)"); //$NON-NLS-1$
+        }
+        int index = this.getRecords().indexOf(record);
+        Rectangle cellbounds = this.getCellRect(index, index, true);
+        this.scrollRectToVisible(cellbounds);
+    }
+
+    /**
+     * @see org.swingeasy.ETreeTableI#selectCell(java.awt.Point)
+     */
+    @Override
+    public void selectCell(Point p) {
+        int r = this.rowAtPoint(p);
+        if (r == -1) {
+            return;
+        }
+        int c = this.columnAtPoint(p);
+        if (c == -1) {
+            return;
+        }
+        // if already selected: do nothing (this keeps multiple selection when current cell is part of it
+        for (int sr : this.getSelectedRows()) {
+            if (sr == r) {
+                for (int sc : this.getSelectedColumns()) {
+                    if (sc == c) {
+                        return;
+                    }
+                }
+            }
+        }
+        this.setColumnSelectionInterval(c, c);
+        this.setRowSelectionInterval(r, r);
+    }
+
+    /**
+     * @see org.swingeasy.ETreeTableI#setLocale(java.util.Locale)
+     */
+    @Override
+    public void setLocale(Locale l) {
+        super.setLocale(l);
+        this.repaint();
+    }
+
+    /**
      * @see #getSimpleThreadSafeInterface()
      */
     public ETreeTable<T> stsi() {
@@ -215,5 +577,17 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, ReadableCom
      */
     public ETreeTable<T> STSI() {
         return this.getSimpleThreadSafeInterface();
+    }
+
+    /**
+     * calls original renderer
+     * 
+     * @param renderer
+     * @param rowIndex
+     * @param vColIndex
+     * @return
+     */
+    protected Component super_prepareRenderer(TableCellRenderer renderer, int rowIndex, int vColIndex) {
+        return super.prepareRenderer(renderer, rowIndex, vColIndex);
     }
 }
