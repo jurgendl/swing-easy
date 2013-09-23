@@ -7,17 +7,18 @@ import java.util.Vector;
 import org.apache.commons.lang.builder.CompareToBuilder;
 
 import ca.odell.glazedlists.gui.AdvancedTableFormat;
+import ca.odell.glazedlists.gui.WritableTableFormat;
 
 /**
  * @author Jurgen
  */
-@SuppressWarnings("rawtypes")
-public class ETreeTableHeaders<T> implements AdvancedTableFormat<ETableRecord<T>> {
+public class ETreeTableHeaders<T> implements AdvancedTableFormat<ETableRecord<T>>, WritableTableFormat<ETableRecord<T>> {
     protected final List<String> columnNames = new Vector<String>();
 
+    @SuppressWarnings("rawtypes")
     protected final List<Class> columnClasses = new Vector<Class>();
 
-    // protected final List<Boolean> editable = new Vector<Boolean>();
+    protected final List<Boolean> editable = new Vector<Boolean>();
 
     public ETreeTableHeaders() {
         super();
@@ -38,10 +39,6 @@ public class ETreeTableHeaders<T> implements AdvancedTableFormat<ETableRecord<T>
         this.add(column, Object.class);
     }
 
-    // public void add(String column, Class<?> clazz) {
-    // this.add(column, clazz, Boolean.FALSE);
-    // }
-
     /**
      * 
      * JDOC
@@ -49,10 +46,22 @@ public class ETreeTableHeaders<T> implements AdvancedTableFormat<ETableRecord<T>
      * @param column
      * @param clazz
      */
-    public void add(String column, Class<?> clazz/* , Boolean edit */) {
+    public void add(String column, Class<?> clazz) {
+        this.add(column, clazz, Boolean.FALSE);
+    }
+
+    /**
+     * 
+     * JDOC
+     * 
+     * @param column
+     * @param clazz
+     * @param edit
+     */
+    public void add(String column, Class<?> clazz, Boolean edit) {
         this.columnNames.add(column);
         this.columnClasses.add(clazz);
-        // this.editable.add(edit);
+        this.editable.add(edit);
     }
 
     /**
@@ -65,7 +74,6 @@ public class ETreeTableHeaders<T> implements AdvancedTableFormat<ETableRecord<T>
             return Object.class;
         }
         Class<?> clas = this.columnClasses.get(columnIndex);
-        // System.out.println("ETableHeaders.getColumnClass(" + columnIndex + ")=" + clas);
         return clas;
     }
 
@@ -110,16 +118,24 @@ public class ETreeTableHeaders<T> implements AdvancedTableFormat<ETableRecord<T>
      * @see ca.odell.glazedlists.gui.TableFormat#getColumnValue(java.lang.Object, int)
      */
     @Override
-    public Object getColumnValue(ETableRecord row, int column) {
+    public Object getColumnValue(ETableRecord<T> row, int column) {
         return row.get(column);
     }
 
-    // @Override
-    // public boolean isEditable(ETableRecord baseObject, int column) {
-    // return Boolean.TRUE.equals(this.editable.get(column));
-    // }
-    // public ETableRecord setColumnValue(ETableRecord row, Object newValue, int column) {
-    // row.set(column, newValue);
-    // return row;
-    // }
+    /**
+     * @see ca.odell.glazedlists.gui.WritableTableFormat#isEditable(java.lang.Object, int)
+     */
+    @Override
+    public boolean isEditable(ETableRecord<T> baseObject, int column) {
+        return (column != ETreeTable.TREE_COL_INDEX) && Boolean.TRUE.equals(this.editable.get(column));
+    }
+
+    /**
+     * @see ca.odell.glazedlists.gui.WritableTableFormat#setColumnValue(java.lang.Object, java.lang.Object, int)
+     */
+    @Override
+    public ETableRecord<T> setColumnValue(ETableRecord<T> row, Object editedValue, int column) {
+        row.set(column, editedValue);
+        return row;
+    }
 }

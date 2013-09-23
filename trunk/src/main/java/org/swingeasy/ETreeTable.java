@@ -77,6 +77,8 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
 
     protected Format<ETreeTableRecord<T>> format;
 
+    protected static final int TREE_COL_INDEX = 0;
+
     protected ETreeTable() {
         this.cfg = null;
     }
@@ -381,7 +383,7 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
                 @Override
                 public void run() {
                     try {
-                        TreeTableSupport support = TreeTableSupport.install(ETreeTable.this, ETreeTable.this.treeList, 0);
+                        TreeTableSupport support = TreeTableSupport.install(ETreeTable.this, ETreeTable.this.treeList, ETreeTable.TREE_COL_INDEX);
                         support.setArrowKeyExpansionEnabled(true);
                         support.setShowExpanderForEmptyParent(false);
                         support.setSpaceKeyExpansionEnabled(true);
@@ -430,6 +432,15 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
                 ex.printStackTrace(System.err);
             }
         }
+    }
+
+    /**
+     * 
+     * @see javax.swing.JTable#isCellEditable(int, int)
+     */
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        return this.cfg.isEditable() && (column != ETreeTable.TREE_COL_INDEX) && super.isCellEditable(row, column);
     }
 
     /**
