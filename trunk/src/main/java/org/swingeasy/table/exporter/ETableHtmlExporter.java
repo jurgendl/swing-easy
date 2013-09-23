@@ -64,8 +64,11 @@ public class ETableHtmlExporter<T> extends ETableExporterImpl<T> {
         return "html";
     }
 
-    protected void postHeaderCreate(@SuppressWarnings("unused") ETable<T> table, @SuppressWarnings("unused") BufferedWriter writer)
-            throws IOException {
+    /**
+     * @see org.swingeasy.EComponentStreamExporter#postHeaderCreate(javax.swing.JComponent, java.io.BufferedWriter)
+     */
+    @SuppressWarnings("unused")
+    public void postHeaderCreate(ETable<T> table, BufferedWriter writer) throws IOException {
         //
     }
 }

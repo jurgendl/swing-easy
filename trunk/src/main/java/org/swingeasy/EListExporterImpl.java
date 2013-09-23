@@ -7,10 +7,6 @@ import java.io.OutputStream;
  * @author Jurgen
  */
 public abstract class EListExporterImpl<T> extends EComponentExporterImpl<EList<T>> implements EListExporter<T> {
-    public EListExporterImpl() {
-        this.customizer = new EComponentExporterFileChooserCustomizer<EList<T>>(this);
-    }
-
     /**
      * @see org.swingeasy.EComponentExporterImpl#exportStream(javax.swing.JComponent, java.io.OutputStream)
      */

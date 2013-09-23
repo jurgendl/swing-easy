@@ -57,7 +57,11 @@ public class EListHtmlExporter<T> extends EListExporterImpl<T> {
         return "html";
     }
 
-    protected void postHeaderCreate(@SuppressWarnings("unused") EList<T> table, @SuppressWarnings("unused") BufferedWriter writer) throws IOException {
+    /**
+     * @see org.swingeasy.EComponentStreamExporter#postHeaderCreate(javax.swing.JComponent, java.io.BufferedWriter)
+     */
+    @SuppressWarnings("unused")
+    public void postHeaderCreate(EList<T> table, BufferedWriter writer) throws IOException {
         //
     }
 }

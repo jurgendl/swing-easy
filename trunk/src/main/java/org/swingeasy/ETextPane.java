@@ -13,7 +13,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Locale;
+import java.util.ServiceConfigurationError;
+import java.util.ServiceLoader;
 
 import javax.swing.Action;
 import javax.swing.JComponent;
@@ -523,6 +526,19 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
             }
         }
         popupMenu.checkEnabled();
+        popupMenu.addSeparator();
+        @SuppressWarnings("cast")
+        ServiceLoader<ETextPaneExporter> exporterService = (ServiceLoader<ETextPaneExporter>) ServiceLoader.load(ETextPaneExporter.class);
+        Iterator<ETextPaneExporter> iterator = exporterService.iterator();
+        while (iterator.hasNext()) {
+            try {
+                ETextPaneExporter exporter = iterator.next();
+                EComponentExporterAction<ETextPane> action = new EComponentExporterAction<ETextPane>(exporter, this);
+                popupMenu.add(action);
+            } catch (ServiceConfigurationError ex) {
+                ex.printStackTrace(System.err);
+            }
+        }
     }
 
     /**
