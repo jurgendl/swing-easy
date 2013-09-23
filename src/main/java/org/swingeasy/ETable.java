@@ -48,7 +48,6 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 
 import org.apache.commons.lang.StringUtils;
 import org.swingeasy.EComponentPopupMenu.CheckEnabled;
@@ -959,41 +958,11 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * Sets the preferred width of the visible column specified by vColIndex. The column will be just wide enough to show the column head and the
-     * widest cell in the column. margin pixels are added to the left and right (resulting in an additional width of 2*margin pixels).
-     * 
-     * @param table
-     * @param vColIndex
-     * @param margin
+     * @see org.swingeasy.ETreeTableI#packColumn(int, int)
      */
     @Override
     public void packColumn(int vColIndex, int margin) {
-        TableColumnModel colModel = this.getColumnModel();
-        TableColumn col = colModel.getColumn(vColIndex);
-        int width = 0;
-
-        // Get width of column header
-        TableCellRenderer renderer = col.getHeaderRenderer();
-        if (renderer == null) {
-            renderer = this.getTableHeader().getDefaultRenderer();
-        }
-        Component comp = renderer.getTableCellRendererComponent(this, col.getHeaderValue(), false, false, 0, 0);
-        width = comp.getPreferredSize().width;
-
-        // Get maximum width of column data
-        for (int r = 0; r < this.getRowCount(); r++) {
-            renderer = this.getCellRenderer(r, vColIndex);
-            comp = renderer.getTableCellRendererComponent(this, this.getValueAt(r, vColIndex), false, false, r, vColIndex);
-            width = Math.max(width, comp.getPreferredSize().width);
-        }
-
-        // Add margin
-        width += 2 * margin;
-
-        // Set the width
-        col.setPreferredWidth(width);
-        col.setWidth(width);
-        col.setMaxWidth(width);
+        EComponentHelper.packColumn(this, vColIndex, margin);
     }
 
     /**
@@ -1043,7 +1012,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
         if (scrollpane.getRowHeader().getView() instanceof RowNumberTable) {
             scrollpane.getRowHeader().removeAll();
             scrollpane.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, new JComponent() {
-                private static final long serialVersionUID = 1L;
+                private static final long serialVersionUID = 1226312179864992736L;
             });
         }
     }

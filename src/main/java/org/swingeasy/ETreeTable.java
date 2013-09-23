@@ -28,8 +28,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 
 import org.apache.commons.lang.StringUtils;
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
@@ -44,12 +42,12 @@ import org.swingeasy.table.renderer.ColorTableCellRenderer;
 import org.swingeasy.table.renderer.DateTableCellRenderer;
 import org.swingeasy.table.renderer.NumberTableCellRenderer;
 
+import ca.odell.glazedlists.DefaultExternalExpansionModel;
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
 import ca.odell.glazedlists.TreeList;
 import ca.odell.glazedlists.TreeList.ExpansionModel;
 import ca.odell.glazedlists.TreeList.Format;
-import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 import ca.odell.glazedlists.swing.DefaultEventTableModel;
 import ca.odell.glazedlists.swing.TreeTableSupport;
 
@@ -69,7 +67,7 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
 
     protected DefaultEventTableModel<ETreeTableRecord<T>> tableModel;
 
-    protected DefaultEventSelectionModel<ETreeTableRecord<T>> tableSelectionModel;
+    // protected DefaultEventSelectionModel<ETreeTableRecord<T>> tableSelectionModel;
 
     protected ETreeTableHeaders<T> tableFormat;
 
@@ -82,7 +80,7 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
     }
 
     public ETreeTable(ETreeTableConfig cfg, ETreeTableHeaders<T> headers) {
-        this.init(this.cfg = cfg._lock(), headers);
+        this.init(this.cfg = cfg.lock(), headers);
     }
 
     /**
@@ -106,7 +104,7 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
      */
     @Override
     public void clear() {
-        this.tableSelectionModel.clearSelection();
+        // this.tableSelectionModel.clearSelection();
         this.records.clear();
     }
 
@@ -288,8 +286,9 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
      */
     @Override
     public ETreeTableRecord<T> getSelectedRecord() {
-        EventList<ETreeTableRecord<T>> selected = this.tableSelectionModel.getSelected();
-        return selected.size() == 0 ? null : selected.iterator().next();
+        // EventList<ETreeTableRecord<T>> selected = this.tableSelectionModel.getSelected();
+        // return selected.size() == 0 ? null : selected.iterator().next();
+        return null;
     }
 
     /**
@@ -298,7 +297,8 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
      */
     @Override
     public List<ETreeTableRecord<T>> getSelectedRecords() {
-        return this.tableSelectionModel.getSelected();
+        // return this.tableSelectionModel.getSelected();
+        return null;
     }
 
     /**
@@ -354,12 +354,27 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
                 }
             }
         };
-        @SuppressWarnings("unchecked")
-        ExpansionModel<ETreeTableRecord<T>> expansionModel = ca.odell.glazedlists.TreeList.NODES_START_COLLAPSED;
+
+        DefaultExternalExpansionModel<ETreeTableRecord<T>> expansionModel = new DefaultExternalExpansionModel<ETreeTableRecord<T>>(
+                new ExpansionModel<ETreeTableRecord<T>>() {
+                    @Override
+                    public boolean isExpanded(ETreeTableRecord<T> element, List<ETreeTableRecord<T>> path) {
+                        return false; // all start of collapsed
+                    }
+
+                    @Override
+                    public void setExpanded(ETreeTableRecord<T> element, List<ETreeTableRecord<T>> path, boolean expanded) {
+                        //
+                    }
+                });
         this.treeList = new TreeList<ETreeTableRecord<T>>(this.records, this.format, expansionModel);
 
         this.tableModel = new DefaultEventTableModel<ETreeTableRecord<T>>(this.treeList, this.tableFormat);
         this.setModel(this.tableModel);
+
+        // this.tableSelectionModel = new DefaultEventSelectionModel<ETreeTableRecord<T>>(this.records);
+        // this.tableSelectionModel.setSelectionMode(ListSelection.MULTIPLE_INTERVAL_SELECTION_DEFENSIVE);
+        // this.setSelectionModel(this.tableSelectionModel);
 
         try {
             SwingUtilities.invokeAndWait(new Runnable() {
@@ -436,41 +451,11 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
     }
 
     /**
-     * Sets the preferred width of the visible column specified by vColIndex. The column will be just wide enough to show the column head and the
-     * widest cell in the column. margin pixels are added to the left and right (resulting in an additional width of 2*margin pixels).
-     * 
-     * @param table
-     * @param vColIndex
-     * @param margin
+     * @see org.swingeasy.ETreeTableI#packColumn(int, int)
      */
     @Override
     public void packColumn(int vColIndex, int margin) {
-        TableColumnModel colModel = this.getColumnModel();
-        TableColumn col = colModel.getColumn(vColIndex);
-        int width = 0;
-
-        // Get width of column header
-        TableCellRenderer renderer = col.getHeaderRenderer();
-        if (renderer == null) {
-            renderer = this.getTableHeader().getDefaultRenderer();
-        }
-        Component comp = renderer.getTableCellRendererComponent(this, col.getHeaderValue(), false, false, 0, 0);
-        width = comp.getPreferredSize().width;
-
-        // Get maximum width of column data
-        for (int r = 0; r < this.getRowCount(); r++) {
-            renderer = this.getCellRenderer(r, vColIndex);
-            comp = renderer.getTableCellRendererComponent(this, this.getValueAt(r, vColIndex), false, false, r, vColIndex);
-            width = Math.max(width, comp.getPreferredSize().width);
-        }
-
-        // Add margin
-        width += 2 * margin;
-
-        // Set the width
-        col.setPreferredWidth(width);
-        col.setWidth(width);
-        col.setMaxWidth(width);
+        EComponentHelper.packColumn(this, vColIndex, margin);
     }
 
     /**
@@ -517,7 +502,7 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
         if (scrollpane.getRowHeader().getView() instanceof RowNumberTable) {
             scrollpane.getRowHeader().removeAll();
             scrollpane.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, new JComponent() {
-                private static final long serialVersionUID = 1L;
+                private static final long serialVersionUID = -7233488612928322618L;
             });
         }
     }
