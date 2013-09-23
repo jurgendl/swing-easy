@@ -45,9 +45,11 @@ import org.swingeasy.table.renderer.NumberTableCellRenderer;
 import ca.odell.glazedlists.DefaultExternalExpansionModel;
 import ca.odell.glazedlists.EventList;
 import ca.odell.glazedlists.GlazedLists;
+import ca.odell.glazedlists.ListSelection;
 import ca.odell.glazedlists.TreeList;
 import ca.odell.glazedlists.TreeList.ExpansionModel;
 import ca.odell.glazedlists.TreeList.Format;
+import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 import ca.odell.glazedlists.swing.DefaultEventTableModel;
 import ca.odell.glazedlists.swing.TreeTableSupport;
 
@@ -67,7 +69,7 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
 
     protected DefaultEventTableModel<ETreeTableRecord<T>> tableModel;
 
-    // protected DefaultEventSelectionModel<ETreeTableRecord<T>> tableSelectionModel;
+    protected DefaultEventSelectionModel<ETreeTableRecord<T>> tableSelectionModel;
 
     protected ETreeTableHeaders<T> tableFormat;
 
@@ -104,7 +106,7 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
      */
     @Override
     public void clear() {
-        // this.tableSelectionModel.clearSelection();
+        this.tableSelectionModel.clearSelection();
         this.records.clear();
     }
 
@@ -286,9 +288,8 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
      */
     @Override
     public ETreeTableRecord<T> getSelectedRecord() {
-        // EventList<ETreeTableRecord<T>> selected = this.tableSelectionModel.getSelected();
-        // return selected.size() == 0 ? null : selected.iterator().next();
-        return null;
+        EventList<ETreeTableRecord<T>> selected = this.tableSelectionModel.getSelected();
+        return selected.size() == 0 ? null : selected.iterator().next();
     }
 
     /**
@@ -297,8 +298,7 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
      */
     @Override
     public List<ETreeTableRecord<T>> getSelectedRecords() {
-        // return this.tableSelectionModel.getSelected();
-        return null;
+        return this.tableSelectionModel.getSelected();
     }
 
     /**
@@ -372,9 +372,9 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
         this.tableModel = new DefaultEventTableModel<ETreeTableRecord<T>>(this.treeList, this.tableFormat);
         this.setModel(this.tableModel);
 
-        // this.tableSelectionModel = new DefaultEventSelectionModel<ETreeTableRecord<T>>(this.records);
-        // this.tableSelectionModel.setSelectionMode(ListSelection.MULTIPLE_INTERVAL_SELECTION_DEFENSIVE);
-        // this.setSelectionModel(this.tableSelectionModel);
+        this.tableSelectionModel = new DefaultEventSelectionModel<ETreeTableRecord<T>>(this.records);
+        this.tableSelectionModel.setSelectionMode(ListSelection.MULTIPLE_INTERVAL_SELECTION_DEFENSIVE);
+        this.setSelectionModel(this.tableSelectionModel);
 
         try {
             SwingUtilities.invokeAndWait(new Runnable() {
