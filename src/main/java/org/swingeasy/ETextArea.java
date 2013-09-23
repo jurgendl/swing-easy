@@ -14,8 +14,11 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.ServiceConfigurationError;
+import java.util.ServiceLoader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -395,6 +398,19 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
             }
         }
         popupMenu.checkEnabled();
+        popupMenu.addSeparator();
+        @SuppressWarnings("cast")
+        ServiceLoader<ETextAreaExporter> exporterService = (ServiceLoader<ETextAreaExporter>) ServiceLoader.load(ETextAreaExporter.class);
+        Iterator<ETextAreaExporter> iterator = exporterService.iterator();
+        while (iterator.hasNext()) {
+            try {
+                ETextAreaExporter exporter = iterator.next();
+                EComponentExporterAction<ETextArea> action = new EComponentExporterAction<ETextArea>(exporter, this);
+                popupMenu.add(action);
+            } catch (ServiceConfigurationError ex) {
+                ex.printStackTrace(System.err);
+            }
+        }
     }
 
     public void removeDocumentKeyListener(DocumentKeyListener listener) {

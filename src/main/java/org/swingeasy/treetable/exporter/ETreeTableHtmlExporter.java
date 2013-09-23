@@ -64,8 +64,11 @@ public class ETreeTableHtmlExporter<T> extends ETreeTableExporterImpl<T> {
         return "html";
     }
 
-    protected void postHeaderCreate(@SuppressWarnings("unused") ETreeTable<T> table, @SuppressWarnings("unused") BufferedWriter writer)
-            throws IOException {
+    /**
+     * @see org.swingeasy.EComponentStreamExporter#postHeaderCreate(org.swingeasy.ETreeTable, java.io.BufferedWriter)
+     */
+    @SuppressWarnings("unused")
+    public void postHeaderCreate(ETreeTable<T> table, BufferedWriter writer) throws IOException {
         //
     }
 }

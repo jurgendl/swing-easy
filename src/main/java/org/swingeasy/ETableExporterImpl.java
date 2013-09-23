@@ -7,10 +7,6 @@ import java.io.OutputStream;
  * @author Jurgen
  */
 public abstract class ETableExporterImpl<T> extends EComponentExporterImpl<ETable<T>> implements ETableExporter<T> {
-    public ETableExporterImpl() {
-        this.customizer = new EComponentExporterFileChooserCustomizer<ETable<T>>(this);
-    }
-
     /**
      * @see org.swingeasy.EComponentExporterImpl#exportStream(javax.swing.JComponent, java.io.OutputStream)
      */

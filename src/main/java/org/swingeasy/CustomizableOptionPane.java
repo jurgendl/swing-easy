@@ -53,7 +53,9 @@ public class CustomizableOptionPane {
             });
             this.setReturnValue(JFileChooser.ERROR_OPTION);
             this.rescanCurrentDirectory();
-            this.customizer.customize(parent, dialog);
+            if (this.customizer != null) {
+                this.customizer.customize(parent, dialog);
+            }
             dialog.setVisible(true);
             this.firePropertyChange("JFileChooserDialogIsClosingProperty", dialog, null);
             dialog.removeAll();

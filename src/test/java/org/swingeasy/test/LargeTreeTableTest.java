@@ -29,6 +29,7 @@ import ca.odell.glazedlists.swing.GlazedListsSwing;
 import ca.odell.glazedlists.swing.TextComponentMatcherEditor;
 import ca.odell.glazedlists.swing.TreeTableSupport;
 
+@SuppressWarnings({ "unchecked", "rawtypes", "deprecation" })
 public class LargeTreeTableTest {
 
     public static enum Continent {
