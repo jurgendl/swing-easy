@@ -74,7 +74,6 @@ public class ETableHeaders<T> implements WritableTableFormat<ETableRecord<T>>, A
             return Object.class;
         }
         Class<?> clas = this.columnClasses.get(columnIndex);
-        // System.out.println("ETableHeaders.getColumnClass(" + columnIndex + ")=" + clas);
         return clas;
     }
 
