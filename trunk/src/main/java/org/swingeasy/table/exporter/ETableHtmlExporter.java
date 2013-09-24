@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
+import org.swingeasy.EComponentHelper;
 import org.swingeasy.ETable;
 import org.swingeasy.ETableExporterImpl;
 import org.swingeasy.ETableRecord;
@@ -23,9 +24,10 @@ public class ETableHtmlExporter<T> extends ETableExporterImpl<T> {
         writer.write("<html xmlns=\"http://www.w3.org/1999/xhtml\"><head><title></title>");
         this.postHeaderCreate(table, writer);
         writer.write("</head><body><table border=\"1\"><tr>");
+        writer.write("\n");
         for (String name : table.getHeadernames()) {
             writer.write("<th>");
-            writer.write(name);
+            writer.write(EComponentHelper.removeHtml(name));
             writer.write("</th>");
         }
         writer.write("</tr>");
@@ -35,7 +37,7 @@ public class ETableHtmlExporter<T> extends ETableExporterImpl<T> {
                 writer.write("<td>");
                 String stringValue = record.getStringValue(column);
                 if (stringValue != null) {
-                    writer.write(stringValue);
+                    writer.write(EComponentHelper.removeHtml(stringValue));
                 }
                 writer.write("</td>");
             }

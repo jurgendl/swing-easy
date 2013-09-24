@@ -88,4 +88,8 @@ public class EComponentHelper {
         col.setWidth(width);
         col.setMaxWidth(width);
     }
+
+    public static String removeHtml(String s) {
+        return s.replaceAll("<html>", "").replaceAll("</html>", "").replaceAll("<body>", "").replaceAll("</body>", "");
+    }
 }
