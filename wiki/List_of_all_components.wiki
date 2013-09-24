@@ -26,7 +26,7 @@ the names all Swing components start with J, replace it with E for their upgrade
   * EToggleButton
   * EToggleToolBarButton
   * ETree
-  * ETreeTable (WIP)
+  * ETreeTable (!WIP!)
   * ETextPane
   * more in development
 
@@ -41,7 +41,7 @@ the names all Swing components start with J, replace it with E for their upgrade
   * TristateCheckBox
   * EFontChooser
   * GradientPanel
-  * EWizard
+  * EWizard (!WIP!)
   * EURILabel
   * FileSelection
   * more in development
