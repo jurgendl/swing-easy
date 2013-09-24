@@ -30,4 +30,8 @@ public class ETreeTableRecordBean<T> extends ETableRecordBean<T> implements ETre
     public ETreeTableRecord<T> getParent() {
         return this.parent;
     }
+
+    public void setParent(ETreeTableRecord<T> parent) {
+        this.parent = parent;
+    }
 }
