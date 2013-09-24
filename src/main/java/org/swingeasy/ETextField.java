@@ -107,6 +107,9 @@ public class ETextField extends JTextField implements EComponentI, HasValue<Stri
         //
     }
 
+    /**
+     * JDOC
+     */
     public void removeDocumentKeyListener(DocumentKeyListener listener) {
         this.getDocument().removeDocumentListener(listener);
         this.removeKeyListener(listener);
