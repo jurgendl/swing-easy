@@ -87,7 +87,7 @@ public class ETextField extends JTextField implements EComponentI, HasValue<Stri
         if (config.isTooltips()) {
             ToolTipManager.sharedInstance().registerComponent(this);
         }
-        EComponentPopupMenu.installTextComponentPopupMenu(this);
+        this.installPopupMenuAction(EComponentPopupMenu.installTextComponentPopupMenu(this));
         UIUtils.registerLocaleChangeListener((EComponentI) this);
         this.addDocumentKeyListener(new DocumentKeyListener() {
             @Override
@@ -98,6 +98,13 @@ public class ETextField extends JTextField implements EComponentI, HasValue<Stri
                 }
             }
         });
+    }
+
+    /**
+     * JDOC
+     */
+    protected void installPopupMenuAction(@SuppressWarnings("unused") EComponentPopupMenu menu) {
+        //
     }
 
     public void removeDocumentKeyListener(DocumentKeyListener listener) {

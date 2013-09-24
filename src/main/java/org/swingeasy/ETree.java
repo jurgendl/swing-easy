@@ -218,13 +218,20 @@ public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
         UIUtils.registerLocaleChangeListener((EComponentI) this);
 
         if (config.isDefaultPopupMenu()) {
-            EComponentPopupMenu.installPopupMenu(this);
+            this.installPopupMenuAction(EComponentPopupMenu.installPopupMenu(this));
         }
 
         if (config.getFocusColor() != null) {
             renderer.setFocusColor(config.getFocusColor());
             this.addMouseMotionListener(new TreeFocusScanner());
         }
+    }
+
+    /**
+     * JDOC
+     */
+    protected void installPopupMenuAction(@SuppressWarnings("unused") EComponentPopupMenu menu) {
+        //
     }
 
     /**
