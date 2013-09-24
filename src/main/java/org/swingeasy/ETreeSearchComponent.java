@@ -36,7 +36,7 @@ public class ETreeSearchComponent<T> extends ELabeledTextFieldButtonComponent im
      */
     @Override
     public void copy(ActionEvent e) {
-        throw new UnsupportedOperationException("not implemented"); // TODO implement
+        // TODO implement
     }
 
     /**
