@@ -284,8 +284,9 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
          */
         @Override
         public boolean checkEnabled(CheckEnabled cfg) {
-            this.setEnabled(true);
-            return true;
+            boolean e = this.delegate.isEditable() && this.delegate.isEnabled();
+            this.setEnabled(e);
+            return e;
         }
     }
 
