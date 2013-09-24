@@ -1,92 +1,95 @@
 package org.swingeasy;
 
+import java.io.FileInputStream;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Properties;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 
 /**
  * @author Jurgen
  */
 public class TreeTableDemo {
-    public static class Rec {
-        String key;
-
-        String value;
-
-        Date tmp;
-
-        public Rec(String key, String value, int i) {
-            this.key = key;
-            this.value = value;
-            this.tmp = new Date(new Date().getTime() + (i * 10000000l));
-        }
-
-        public String getKey() {
-            return this.key;
-        }
-
-        public Date getTmp() {
-            return this.tmp;
-        }
-
-        public String getValue() {
-            return this.value;
-        }
-
-        public void setKey(String key) {
-            this.key = key;
-        }
-
-        public void setTmp(Date tmp) {
-            this.tmp = tmp;
-        }
-
-        public void setValue(String value) {
-            this.value = value;
-        }
-
-        @Override
-        public String toString() {
-            return this.key + "=" + this.value;
-        }
-    }
-
+    @SuppressWarnings("unchecked")
     public static void main(String[] args) {
-        UIUtils.systemLookAndFeel();
+        try {
+            UIUtils.systemLookAndFeel();
 
-        JFrame f = new JFrame();
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            JFrame f = new JFrame();
+            f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        String[] h = { "key", "value", "tmp" };
+            String[] h = { "key", "value" };
 
-        Collection<ETreeTableRecord<Rec>> coll = new ArrayList<ETreeTableRecord<Rec>>();
-        for (int i = 0; i < 10; i++) {
-            Rec lvl1 = new Rec("level 0 : " + i, "description level 0 : " + i, (i * 100));
-            ETreeTableRecordBean<Rec> rec1 = new ETreeTableRecordBean<Rec>(null, lvl1, h);
-            coll.add(rec1);
-            for (int j = 0; j < 10; j++) {
-                Rec lvl2 = new Rec("level 1 : " + j, "description level 1 : " + i, ((i * 100) + (j * 10)));
-                ETreeTableRecordBean<Rec> rec2 = new ETreeTableRecordBean<Rec>(rec1, lvl2, h);
-                coll.add(rec2);
-                for (int k = 0; k < 10; k++) {
-                    Rec lvl3 = new Rec("level 2 : " + k, "value " + ((i * 100) + (j * 10) + k), ((i * 100) + (j * 10) + k));
-                    ETreeTableRecordBean<Rec> rec3 = new ETreeTableRecordBean<Rec>(rec2, lvl3, h);
-                    coll.add(rec3);
+            Collection<ETreeTableRecord<Entry<String, String>>> col = new ArrayList<ETreeTableRecord<Entry<String, String>>>();
+
+            Properties p = new Properties();
+
+            if ((args != null) && (args.length > 0)) {
+                for (String arg : args) {
+                    Properties pp = new Properties();
+                    FileInputStream in = new FileInputStream(arg);
+                    pp.load(in);
+                    in.close();
+                    p.putAll(pp);
+                }
+            } else {
+                int i = 1;
+                String loc = JOptionPane.showInputDialog("Properties #" + i + " location");
+                while (loc != null) {
+                    Properties pp = new Properties();
+                    FileInputStream in = new FileInputStream(loc);
+                    pp.load(in);
+                    in.close();
+                    p.putAll(pp);
+                    loc = JOptionPane.showInputDialog("Properties #" + (++i) + " location");
                 }
             }
-        }
 
-        ETreeTableHeaders<Rec> headers = new ETreeTableHeaders<Rec>();
-        headers.add(h[0]);
-        headers.add(h[1]);
-        headers.add(h[2], Date.class);
-        ETreeTable<Rec> t = new ETreeTable<Rec>(new ETreeTableConfig(), headers);
-        t.stsi().addRecords(coll);
-        f.getContentPane().add(new JScrollPane(t));
-        f.pack();
-        f.setVisible(true);
+            Map<String, ETreeTableRecordBean<Entry<String, String>>> parents = new HashMap<String, ETreeTableRecordBean<Entry<String, String>>>();
+
+            for (Entry<?, ?> entry : p.entrySet()) {
+                ETreeTableRecordBean<Entry<String, String>> rec = new ETreeTableRecordBean<Entry<String, String>>(null,
+                        (Entry<String, String>) entry, h);
+                String k = entry.getKey().toString();
+                String kpc = null;
+                ETreeTableRecordBean<Entry<String, String>> prevparent = null;
+                for (String kp : k.split("\\.")) {
+                    if (kpc == null) {
+                        kpc = kp;
+                    } else {
+                        kpc += "." + kp;
+                    }
+                    if (kpc.equals(k)) {
+                        continue;
+                    }
+                    ETreeTableRecordBean<Entry<String, String>> parent = parents.get(kpc);
+                    if (parent == null) {
+                        parent = new ETreeTableRecordBean<Entry<String, String>>(prevparent, new SimpleEntry<String, String>(kp, null), h);
+                        parents.put(kpc, parent);
+                    }
+                    prevparent = parent;
+
+                }
+                rec.setParent(prevparent);
+                col.add(rec);
+            }
+
+            ETreeTableHeaders<Map.Entry<String, String>> headers = new ETreeTableHeaders<Map.Entry<String, String>>(h);
+            ETreeTable<Map.Entry<String, String>> t = new ETreeTable<Map.Entry<String, String>>(new ETreeTableConfig(), headers);
+            t.stsi().addRecords(col);
+
+            f.getContentPane().add(new JScrollPane(t));
+            f.pack();
+            f.setVisible(true);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
 }
