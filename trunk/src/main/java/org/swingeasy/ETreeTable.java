@@ -121,7 +121,10 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
         if (this.getSelectedColumn() == -1) {
             for (ETreeTableRecord<T> record : this.getSelectedRecords()) {
                 for (int i = 0; i < record.size(); i++) {
-                    sb.append(record.getStringValue(i)).append("\t");
+                    sb.append(record.getStringValue(i));
+                    if ((i + 1) < record.size()) {
+                        sb.append("\t");
+                    }
                 }
                 sb.append(SystemSettings.getNewline());
             }
