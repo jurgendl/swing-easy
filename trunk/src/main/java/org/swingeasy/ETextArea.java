@@ -96,8 +96,8 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
          */
         @Override
         public boolean checkEnabled(CheckEnabled cfg) {
-            this.setEnabled(true);
-            return true;
+            this.setEnabled(this.delegate.isEditable() && this.delegate.isEnabled());
+            return this.delegate.isEditable() && this.delegate.isEnabled();
         }
     }
 
