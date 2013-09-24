@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
+import org.swingeasy.EComponentHelper;
 import org.swingeasy.ETreeTable;
 import org.swingeasy.ETreeTableExporterImpl;
 import org.swingeasy.ETreeTableRecord;
@@ -25,7 +26,7 @@ public class ETreeTableHtmlExporter<T> extends ETreeTableExporterImpl<T> {
         writer.write("</head><body><table border=\"1\"><tr>");
         for (String name : table.getHeadernames()) {
             writer.write("<th>");
-            writer.write(name);
+            writer.write(EComponentHelper.removeHtml(name));
             writer.write("</th>");
         }
         writer.write("</tr>");
@@ -35,7 +36,7 @@ public class ETreeTableHtmlExporter<T> extends ETreeTableExporterImpl<T> {
                 writer.write("<td>");
                 String stringValue = record.getStringValue(column);
                 if (stringValue != null) {
-                    writer.write(stringValue);
+                    writer.write(EComponentHelper.removeHtml(stringValue));
                 }
                 writer.write("</td>");
             }
