@@ -345,7 +345,7 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
         UIUtils.registerLocaleChangeListener((EComponentI) this);
 
         if (config.isDefaultPopupMenu()) {
-            EComponentPopupMenu.installPopupMenu(this);
+            this.installPopupMenuAction(EComponentPopupMenu.installPopupMenu(this));
         }
 
         if (config.isTooltips()) {
@@ -367,6 +367,10 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
         if (config.isAutoResizePopup()) {
             this.addPopupMenuListener(new EComboBoxAutoResizingPopupListener());
         }
+    }
+
+    protected void installPopupMenuAction(@SuppressWarnings("unused") EComponentPopupMenu menu) {
+        //
     }
 
     /**
