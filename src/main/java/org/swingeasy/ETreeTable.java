@@ -31,7 +31,6 @@ import javax.swing.table.TableCellRenderer;
 
 import org.apache.commons.lang.StringUtils;
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
-import org.swingeasy.system.SystemSettings;
 import org.swingeasy.table.editor.BooleanTableCellEditor;
 import org.swingeasy.table.editor.ColorTableCellEditor;
 import org.swingeasy.table.editor.DateTableCellEditor;
@@ -117,23 +116,7 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
      */
     @Override
     public void copy(ActionEvent e) {
-        StringBuilder sb = new StringBuilder();
-        if (this.getSelectedColumn() == -1) {
-            for (ETreeTableRecord<T> record : this.getSelectedRecords()) {
-                for (int i = 0; i < record.size(); i++) {
-                    sb.append(record.getStringValue(i));
-                    if ((i + 1) < record.size()) {
-                        sb.append("\t");
-                    }
-                }
-                sb.append(SystemSettings.getNewline());
-            }
-        } else {
-            for (Object cell : this.getSelectedCells()) {
-                sb.append(String.valueOf(cell)).append(SystemSettings.getNewline());
-            }
-        }
-        EComponentPopupMenu.copyToClipboard(sb.toString());
+        EComponentHelper.copySelectionToClipboard(this);
     }
 
     /**
