@@ -180,20 +180,39 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * library GlazedLists updated
   * fixed: ETable: selection model when sorting
   * fixed: ETable: html/pdf export: fixed css
-  * UIUtils: maximize frame
-  * SystemSettings: open file, load library, new system specific info
+  * new: UIUtils: maximize frame
+  * new: SystemSettings: open file, load library, new system specific info
   * new: SplashScreen
-  * UIUtils: simple system tray
- * 2.6.1.0 (featured)
-  * fixed: EDT safe interface does not return actual object in case of an exception anymore but throws wrapped exception (javassist is not optional, glazedlists REQUIRES safe access)
+  * new: UIUtils: simple system tray
+ * 2.6.1.0
+  * fixed: EDT safe interface does not return actual object in case of an exception anymore but throws wrapped exception (javassist is not optional anymore, glazedlists REQUIRES safe access)
   * fixed: the same EDT safe interface is always returned, even from that interface
   * new: #getOriginal() always returns original object which is needed when adding to a container
   * performance: EDT safe interface is cached on actual object, calling it multiple times does not create new wrapper but returns existing
   * fixed: ETable: ByteArrayTableCellRenderer on Byte[]
   * fixed: exception when opening filebrowser when customizer is null
-  * new: EWizard (rudimentary, expect a lot of changes)
-  * new: GradientPanel
-  * new: EURILabel
+  * new: EWizard (!WIP!): new component
+  * new: GradientPanel: new component
+  * new: EURILabel: new component
+ * 2.7.0.0 (featured)
+  * new: ETable: 'editable' in config
+  * new: ETree: node hover color
+  * new: ECheckBox: configurable (breaks backwards compatibility)
+  * fixed: EComboBox: nullpointer
+  * new: EComponent: all have 'init' and 'installPopupMenuAction' method
+  * new: FileSelection: new component
+  * fixed: EList: 'copy' only selected record (method/action)
+  * new: EList: exporters
+  * fixed: ETextPane: 'open' action
+  * new: ETextArea: 'open' and 'save' actions
+  * fixed: translations and accelerators for component actions
+  * new: ETextPane: 'justify' action
+  * new: ETextArea & ETextPane & ETable: 'print' action
+  * fixed: ETable: 'copy' method does not throw exception but is implemented
+  * reworked: ETreeTable: completely reworked using Glazedlists (!WIP!) (breaks backwards compatibility)
+  * new: ETextArea: 'export to html' and 'export to pdf' actions
+  * fixed: ETable: 'getSelectedCells' method fixed
+  * fixed: ETable: 'copy' method and action in case multiple cells/records are selected
  * some version in the future or maybe never (unplanned)
   * form builder and components
   * tip of the day
