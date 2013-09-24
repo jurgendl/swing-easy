@@ -305,8 +305,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         @Override
         public void actionPerformed(ActionEvent e) {
             PrinterJob printJob = PrinterJob.getPrinterJob();
-            @SuppressWarnings("restriction")
-            Printable printable = sun.swing.text.TextComponentPrintable.getPrintable(this.delegate, null, null);
+            Printable printable = this.delegate.getPrintable(null, null);
             printJob.setPrintable(printable);
             if (printJob.printDialog()) {
                 try {
