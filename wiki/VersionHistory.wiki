@@ -199,7 +199,8 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * new: ETree: node hover color
   * new: ECheckBox: configurable (breaks backwards compatibility)
   * fixed: EComboBox: nullpointer
-  * new: EComponent: all have 'init' and 'installPopupMenuAction' method
+  * new: EComponent having a context sensitive popup menu: 'installPopupMenuAction' method to add actions
+  * new: EComponent: 'init' method
   * new: FileSelection: new component
   * fixed: EList: 'copy' only selected record (method/action)
   * new: EList: exporters
