@@ -29,6 +29,6 @@ public class WrapperTest {
         new EList<String>(new EListConfig()).stsi().setVisible(true);
         new ETable<String>(new ETableConfig()).stsi().setVisible(true);
         new ETree<String>(new ETreeNode<String>(null)).stsi().setVisible(true);
-        new ETreeTable<String>(new ETreeTableConfig(), new ETreeTableHeaders<String>()).stsi().setVisible(true);
+        new ETreeTable<String>(new ETreeTableConfig(), new ETreeTableHeaders<String>("test")).stsi().setVisible(true);
     }
 }
