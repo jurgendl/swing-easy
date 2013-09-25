@@ -585,11 +585,6 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
 
     /**
      * calls original renderer
-     * 
-     * @param renderer
-     * @param rowIndex
-     * @param vColIndex
-     * @return
      */
     protected Component super_prepareRenderer(TableCellRenderer renderer, int rowIndex, int vColIndex) {
         return super.prepareRenderer(renderer, rowIndex, vColIndex);
