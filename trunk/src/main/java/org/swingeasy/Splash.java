@@ -130,10 +130,14 @@ public class Splash extends JComponent {
         }
 
         if (this.text != null) {
-            g2.setColor(this.colorInv);
             if (this.textLocation == null) {
                 this.textLocation = new Point(this.progressBarLocation.x, this.progressBarLocation.y - (this.getFont().getSize() / 2));
             }
+            g2.setColor(this.color);
+            g2.drawString(this.text, this.textLocation.x, this.textLocation.y + 1);
+            g2.drawString(this.text, this.textLocation.x + 1, this.textLocation.y);
+            g2.drawString(this.text, this.textLocation.x + 1, this.textLocation.y + 1);
+            g2.setColor(this.colorInv);
             g2.drawString(this.text, this.textLocation.x, this.textLocation.y);
         }
     }
