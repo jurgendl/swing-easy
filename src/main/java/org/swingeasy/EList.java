@@ -2,9 +2,11 @@ package org.swingeasy;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Event;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -19,14 +21,18 @@ import java.util.Locale;
 import java.util.ServiceConfigurationError;
 import java.util.ServiceLoader;
 
+import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.JList;
+import javax.swing.KeyStroke;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
 import javax.swing.ToolTipManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.swingeasy.EComponentPopupMenu.CheckEnabled;
+import org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction;
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
 import org.swingeasy.list.renderer.ColorListCellRenderer;
 import org.swingeasy.list.renderer.DateListCellRenderer;
@@ -102,6 +108,71 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         }
     }
 
+    /**
+     * SelectAllAction
+     */
+    protected class SelectAllAction extends EComponentPopupMenuAction<EList<T>> {
+        private static final long serialVersionUID = -6873629703224034266L;
+
+        public SelectAllAction(EList<T> component) {
+            super(component, EComponentPopupMenu.SELECT_ALL, Resources.getImageResource("page_white_text_width.png"));
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_A, Event.CTRL_MASK));
+        }
+
+        /**
+         * 
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int size = this.delegate.getRecords().size();
+            int[] indices = new int[size];
+            for (int i = 0; i < size; i++) {
+                indices[i] = i;
+            }
+            this.delegate.setSelectedIndices(indices);
+        }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public boolean checkEnabled(CheckEnabled config) {
+            return true;
+        }
+    }
+
+    /**
+     * UnselectAction
+     */
+    protected class UnselectAction extends EComponentPopupMenuAction<EList<T>> {
+        private static final long serialVersionUID = 380268668990447297L;
+
+        public UnselectAction(EList<T> component) {
+            super(component, EComponentPopupMenu.UNSELECT, Resources.getImageResource("page_white_width.png"));
+            this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0));
+        }
+
+        /**
+         * 
+         * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+         */
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            this.delegate.setSelectedIndices(new int[0]);
+        }
+
+        /**
+         * 
+         * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
+         */
+        @Override
+        public boolean checkEnabled(CheckEnabled config) {
+            return true;
+        }
+    }
+
     private static final long serialVersionUID = -3602504810131193505L;
 
     /**
@@ -171,6 +242,8 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     protected final List<ValueChangeListener<T>> valueChangeListeners = new ArrayList<ValueChangeListener<T>>();
 
     protected EList<T> stsi;
+
+    protected Action[] actions;
 
     /**
      * do not use, do not change access
@@ -419,6 +492,16 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
      * JDOC
      */
     protected void installPopupMenuAction(EComponentPopupMenu menu) {
+        this.actions = new Action[] { new SelectAllAction(this), new UnselectAction(this) };
+        for (Action action : this.actions) {
+            if (action == null) {
+                menu.addSeparator();
+            } else {
+                menu.add(action);
+                EComponentPopupMenu.accelerate(this, action);
+            }
+        }
+        menu.checkEnabled();
         menu.addSeparator();
         @SuppressWarnings({ "unchecked", "rawtypes" })
         ServiceLoader<EListExporter<T>> exporterService = (ServiceLoader) ServiceLoader.load(EListExporter.class);
@@ -560,6 +643,11 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     public void selectCell(Point point) {
         int idx = this.locationToIndex(point);
         if (idx != -1) {
+            for (int sel : this.getSelectedIndices()) {
+                if (sel == idx) {
+                    return;
+                }
+            }
             this.setSelectedIndex(idx);
         }
     }
