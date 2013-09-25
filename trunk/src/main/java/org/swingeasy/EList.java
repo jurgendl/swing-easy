@@ -259,6 +259,23 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
 
     /**
      * 
+     * @see org.swingeasy.EListI#selectCell(java.awt.Point)
+     */
+    @Override
+    public void addCellSelection(Point point) {
+        int idx = this.locationToIndex(point);
+        if (idx != -1) {
+            for (int sel : this.getSelectedIndices()) {
+                if (sel == idx) {
+                    return;
+                }
+            }
+            this.setSelectedIndex(idx);
+        }
+    }
+
+    /**
+     * 
      * @see org.swingeasy.EListI#addRecord(org.swingeasy.EListRecord)
      */
     @Override
@@ -446,7 +463,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
             @Override
             public void mousePressed(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON3) {
-                    EList.this.selectCell(new Point(e.getX(), e.getY()));
+                    EList.this.addCellSelection(new Point(e.getX(), e.getY()));
                 }
             }
         });
@@ -643,11 +660,6 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     public void selectCell(Point point) {
         int idx = this.locationToIndex(point);
         if (idx != -1) {
-            for (int sel : this.getSelectedIndices()) {
-                if (sel == idx) {
-                    return;
-                }
-            }
             this.setSelectedIndex(idx);
         }
     }
