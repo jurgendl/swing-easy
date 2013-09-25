@@ -54,6 +54,7 @@ import ca.odell.glazedlists.swing.TreeTableSupport;
 
 /**
  * @author Jurgen
+ * @see http://publicobject.com/glazedlists/glazedlists-1.8.0/api/ca/odell/glazedlists/swing/TreeTableSupport.html
  */
 public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ETreeTableRecord<T>>, ReadableComponent {
     private static final long serialVersionUID = -1389100924292211731L;
