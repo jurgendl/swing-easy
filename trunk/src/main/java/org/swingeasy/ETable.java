@@ -13,6 +13,7 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -50,6 +51,8 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 import org.swingeasy.EComponentPopupMenu.CheckEnabled;
 import org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction;
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
@@ -87,11 +90,11 @@ import ca.odell.glazedlists.swing.TableComparatorChooser;
 public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterable<ETableRecord<T>>, ReadableComponent {
     protected class EFiltering {
         /**
-         * JDOC
+         * J_DOC
          */
         protected class FilterPopup extends JWindow {
             /**
-             * JDOC
+             * J_DOC
              */
             protected class RecordMatcher implements Matcher<ETableRecord<T>> {
                 protected final Map<Integer, Pattern> filters = new HashMap<Integer, Pattern>();
@@ -117,7 +120,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
                 public boolean matches(ETableRecord<T> item) {
                     for (Map.Entry<Integer, Pattern> entry : this.filters.entrySet()) {
                         String value = item.getStringValue(entry.getKey());
-                        if (!entry.getValue().matcher(value).find()) {
+                        if ((value == null) || !entry.getValue().matcher(value).find()) {
                             return false;
                         }
                     }
@@ -133,10 +136,12 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
 
             protected Map<Integer, String> popupFilters = new HashMap<Integer, String>();
 
+            protected Color popupBackgroundColor = new Color(246, 243, 149);
+
             protected FilterPopup(Frame frame) {
                 super(frame);
 
-                this.popupTextfield.setBackground(new Color(246, 243, 149));
+                this.popupTextfield.setBackground(this.popupBackgroundColor);
                 this.getContentPane().add(this.popupTextfield, BorderLayout.CENTER);
                 this.popupTextfield.setFocusTraversalKeysEnabled(false);
                 this.popupTextfield.addFocusListener(new FocusAdapter() {
@@ -145,35 +150,35 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
                         FilterPopup.this.setVisible(false);
                     }
                 });
+                this.popupTextfield.addFocusListener(new FocusListener() {
+                    @Override
+                    public void focusGained(FocusEvent e) {
+                        // nothing to do
+                    }
+
+                    @Override
+                    public void focusLost(FocusEvent e) {
+                        FilterPopup.this.revert();
+                    }
+                });
                 this.popupTextfield.addKeyListener(new KeyAdapter() {
                     @Override
                     public void keyReleased(KeyEvent e) {
                         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                            // preview filtering
-                            System.out.println("preview filter " + FilterPopup.this.popupTextfield.getText()); //$NON-NLS-1$
-                            ETable.this.filtering.matcherEditor.fire(new RecordMatcher(FilterPopup.this.popupForColumn,
-                                    FilterPopup.this.popupTextfield.getText()));
+                            FilterPopup.this.preview();
                         } else if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-                            // revert filtering, close
-                            System.out.println("revert filter"); //$NON-NLS-1$
-                            ETable.this.filtering.matcherEditor.fire(new RecordMatcher(FilterPopup.this.popupForColumn, FilterPopup.this.popupFilters
-                                    .get(FilterPopup.this.popupForColumn)));
-                            FilterPopup.this.setVisible(false);
+                            FilterPopup.this.revert();
                         } else if (e.getKeyCode() == KeyEvent.VK_TAB) {
-                            // commit filtering
-                            FilterPopup.this.popupFilters.put(FilterPopup.this.popupForColumn, FilterPopup.this.popupTextfield.getText());
-                            System.out.println("filter " + FilterPopup.this.popupFilters); //$NON-NLS-1$
-                            ETable.this.filtering.matcherEditor.fire(new RecordMatcher(FilterPopup.this.popupFilters));
-                            FilterPopup.this.setVisible(false);
+                            FilterPopup.this.commit();
                         } else {
-                            //
+                            // nothing to do
                         }
                     }
                 });
             }
 
             /**
-             * JDOC
+             * J_DOC
              * 
              * @param p
              */
@@ -192,21 +197,56 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
                 this.popupTextfield.requestFocusInWindow();
             }
 
-            /**
-             * JDOC
-             */
+            /** clear all filters */
             public void clear() {
                 this.popupFilters.clear();
                 this.popupForColumn = -1;
             }
+
+            /** commit filtering */
+            protected void commit() {
+                int colidx = FilterPopup.this.popupForColumn;
+                String filtertext = FilterPopup.this.popupTextfield.getText();
+                Map<Integer, String> popupFilters0 = FilterPopup.this.popupFilters;
+                FilterPopup.this.popupFilters.put(colidx, filtertext);
+                RecordMatcher matcher = new RecordMatcher(popupFilters0);
+                ETable.this.filtering.matcherEditor.fire(matcher);
+                FilterPopup.this.setVisible(false);
+            }
+
+            /** preview filtering */
+            protected void preview() {
+                int colidx = FilterPopup.this.popupForColumn;
+                String filtertext = FilterPopup.this.popupTextfield.getText();
+                RecordMatcher matcher = new RecordMatcher(colidx, filtertext);
+                ETable.this.filtering.matcherEditor.fire(matcher);
+            }
+
+            /** revert filtering, close */
+            protected void revert() {
+                int colidx = FilterPopup.this.popupForColumn;
+                Map<Integer, String> popupFilters0 = FilterPopup.this.popupFilters;
+                String popupFilter = popupFilters0.get(colidx);
+                RecordMatcher matcher = new RecordMatcher(colidx, popupFilter);
+                ETable.this.filtering.matcherEditor.fire(matcher);
+                FilterPopup.this.setVisible(false);
+            }
+
+            /**
+             * @see java.awt.Component#toString()
+             */
+            @Override
+            public String toString() {
+                return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("popupForColumn", this.popupForColumn)
+                        .append("popupFilters", this.popupFilters).toString();
+            }
         }
 
         /**
-         * JDOC
+         * J_DOC
          */
         protected class FilterPopupActivate extends MouseAdapter {
             /**
-             * 
              * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
              */
             @Override
@@ -276,6 +316,14 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
             if ((e.getClickCount() == 1) && (e.getButton() == MouseEvent.BUTTON3)) {
                 this.getFilterPopup().activate(e.getPoint());
             }
+        }
+
+        /**
+         * @see java.lang.Object#toString()
+         */
+        @Override
+        public String toString() {
+            return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("filterPopup", this.filterPopup).toString();
         }
 
     }
@@ -356,7 +404,6 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
         @Override
         public Class<?> getColumnClass(int columnIndex) {
             Class<?> clas = ETable.this.tableFormat.getColumnClass(columnIndex);
-            // System.out.println("ETableModel.getColumnClass(" + columnIndex + ")=" + clas);
             return clas;
         }
     }
@@ -400,7 +447,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * JDOC
+     * J_DOC
      */
     protected static class RecordMatcherEditor<T> extends AbstractMatcherEditor<ETableRecord<T>> {
         protected void fire(Matcher<ETableRecord<T>> matcher) {
@@ -648,6 +695,9 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
         JTableHeader jTableHeader = new JTableHeader(this.columnModel) {
             private static final long serialVersionUID = -378778832166135907L;
 
+            /**
+             * @see javax.swing.table.JTableHeader#getToolTipText(java.awt.event.MouseEvent)
+             */
             @Override
             public String getToolTipText(MouseEvent e) {
                 Point p = e.getPoint();
@@ -658,7 +708,8 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
                 String headerValue = String.valueOf(ETable.this.getSimpleThreadSafeInterface().getColumnValueAtVisualColumn(index));
 
                 if (ETable.this.cfg.isFilterable()) {
-                    String filter = ETable.this.filtering.getFilterPopup().popupFilters.get(index);
+                    EFiltering filtering0 = ETable.this.filtering;
+                    String filter = filtering0.getFilterPopup().popupFilters.get(index);
 
                     if ((filter != null) && (filter.trim().length() > 0)) {
                         headerValue += "<br/>" + "filter: '" + filter + "'"; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -716,7 +767,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * JDOC
+     * J_DOC
      * 
      * @param comp
      * @return
@@ -844,7 +895,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * JDOC
+     * J_DOC
      * 
      * @return
      */
@@ -904,7 +955,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * JDOC
+     * J_DOC
      */
     protected void installPopupMenuAction(EComponentPopupMenu menu) {
         this.actions = new Action[] { new PrintAction(this) };
@@ -1121,11 +1172,6 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
 
     /**
      * calls original renderer
-     * 
-     * @param renderer
-     * @param rowIndex
-     * @param vColIndex
-     * @return
      */
     protected Component super_prepareRenderer(TableCellRenderer renderer, int rowIndex, int vColIndex) {
         return super.prepareRenderer(renderer, rowIndex, vColIndex);
