@@ -136,7 +136,7 @@ public class EListTransferHandler<T> extends TransferHandler {
             Object transferData = t.getTransferData(this.getLocalDataFlavor());
             records = new ArrayList<EListRecord<T>>();
             for (T data : this.castData(transferData)) {
-                records.add(new EListRecord<T>(data));
+                records.add(this.newEListRecord(data));
             }
         } catch (RuntimeException ex) {
             //
@@ -152,7 +152,7 @@ public class EListTransferHandler<T> extends TransferHandler {
             Object transferData = ois.readObject();
             records = new ArrayList<EListRecord<T>>();
             for (T data : this.castData(transferData)) {
-                records.add(new EListRecord<T>(data));
+                records.add(this.newEListRecord(data));
             }
         } catch (RuntimeException ex) {
             //
@@ -169,5 +169,9 @@ public class EListTransferHandler<T> extends TransferHandler {
         }
         elist.addRecords(records);
         return true;
+    }
+
+    protected EListRecord<T> newEListRecord(T data) {
+        return new EListRecord<T>(data);
     }
 }
