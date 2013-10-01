@@ -16,13 +16,13 @@ public class ListDemo3 {
     public static void main(String[] args) {
         UIUtils.systemLookAndFeel();
         ListDemo3.newFrameOld();
-        ListDemo3.newFrame();
+        // ListDemo3.newFrame();
     }
 
     protected static void newFrame() {
         JFrame f = new JFrame("new");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        final ECheckBoxList cbl = new ECheckBoxList(new EListConfig());
+        final ECheckBoxList cbl = new ECheckBoxList(new EListConfig().setSortable(false));
         final EList<Boolean> stsi = cbl.stsi();
         for (int i = 0; i < 10; i++) {
             stsi.addRecord(new ECheckBoxListRecord("item " + i, true));
@@ -56,7 +56,7 @@ public class ListDemo3 {
     protected static void newFrameOld() {
         JFrame f = new JFrame("old");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        final EList<String> cbl = new EList<String>(new EListConfig());
+        final EList<String> cbl = new EList<String>(new EListConfig().setSortable(false));
         final EList<String> stsi = cbl.stsi();
         for (int i = 0; i < 10; i++) {
             stsi.addRecord(new EListRecord<String>("item " + i));

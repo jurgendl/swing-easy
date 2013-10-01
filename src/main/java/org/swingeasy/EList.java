@@ -506,6 +506,17 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
+     * @see org.swingeasy.EListI#insertRecord(int, org.swingeasy.EListRecord)
+     */
+    @Override
+    public void insertRecord(int index, EListRecord<T> r) {
+        if (r == null) {
+            throw new NullPointerException();
+        }
+        this.records.add(index, r);
+    }
+
+    /**
      * JDOC
      */
     protected void installPopupMenuAction(EComponentPopupMenu menu) {

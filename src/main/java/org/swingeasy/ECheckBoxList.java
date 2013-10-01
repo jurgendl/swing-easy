@@ -98,10 +98,10 @@ public class ECheckBoxList extends EList<Boolean> {
         this.setTransferHandler(new EListTransferHandler<Boolean>() {
             private static final long serialVersionUID = 5134392681200624282L;
 
-            @Override
-            protected EListRecord<Boolean> newEListRecord(Boolean data) {
-                return new ECheckBoxListRecord(data);
-            }
+            // @Override
+            // protected EListRecord<Boolean> newEListRecord(Boolean data) {
+            // return new ECheckBoxListRecord(data);
+            // }
         });
 
         this.addMouseListener(new MouseAdapter() {
