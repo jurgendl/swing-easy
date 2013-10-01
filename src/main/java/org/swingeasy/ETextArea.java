@@ -27,6 +27,7 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
@@ -381,6 +382,10 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
         });
     }
 
+    public JScrollPane inScrollPane(boolean autoscroll) {
+        return EComponentHelper.inScrollPane(this, autoscroll);
+    }
+
     protected void installPopupMenuAction(EComponentPopupMenu popupMenu) {
         popupMenu.addSeparator();
         this.actions = new Action[] {//
@@ -430,7 +435,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
                 hilite.removeHighlight(hi);
             }
         }
-    }
+    };
 
     /**
      * 
@@ -439,7 +444,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
     @Override
     public void removeValueChangeListener(ValueChangeListener<String> listener) {
         this.valueChangeListeners.remove(listener);
-    };
+    }
 
     public void replace(String find, String replace) {
         this.setText(this.getText().replace(find, replace));
