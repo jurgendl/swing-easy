@@ -24,6 +24,8 @@ public interface EListI<T> extends EComponentI {
 
     public abstract List<EListRecord<T>> getSelectedRecords();
 
+    public abstract void insertRecord(int index, EListRecord<T> r);
+
     public abstract void moveSelectedDown();
 
     public abstract void moveSelectedUp();
