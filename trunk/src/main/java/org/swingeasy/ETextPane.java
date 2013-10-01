@@ -23,6 +23,7 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
@@ -502,6 +503,10 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         this.installPopupMenuAction(EComponentPopupMenu.installTextComponentPopupMenu(this));
     }
 
+    public JScrollPane inScrollPane(boolean autoscroll) {
+        return EComponentHelper.inScrollPane(this, autoscroll);
+    }
+
     protected void installPopupMenuAction(EComponentPopupMenu popupMenu) {
         popupMenu.addSeparator();
         this.actions = new Action[] {
@@ -539,7 +544,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
                 ex.printStackTrace(System.err);
             }
         }
-    }
+    };
 
     /**
      * 
@@ -549,7 +554,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
     public void setCaret(int pos) {
         this.setCaretPosition(pos);
         this.fireCaretUpdate();
-    };
+    }
 
     /**
      * 

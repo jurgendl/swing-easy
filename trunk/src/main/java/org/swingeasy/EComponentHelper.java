@@ -3,10 +3,13 @@ package org.swingeasy;
 import java.awt.Component;
 import java.util.List;
 
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.text.DefaultCaret;
+import javax.swing.text.JTextComponent;
 
 import org.swingeasy.system.SystemSettings;
 
@@ -50,6 +53,16 @@ public class EComponentHelper {
             }
         }
         EComponentPopupMenu.copyToClipboard(sb.toString());
+    }
+
+    public static JScrollPane inScrollPane(JTextComponent textComponent, boolean autoscroll) {
+        JScrollPane pane = new JScrollPane(textComponent);
+        if (autoscroll) {
+            DefaultCaret caret = (DefaultCaret) textComponent.getCaret();
+            caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+            pane.setAutoscrolls(true);
+        }
+        return pane;
     }
 
     /**
