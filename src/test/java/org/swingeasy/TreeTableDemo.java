@@ -66,7 +66,7 @@ public class TreeTableDemo {
                     } else {
                         kpc += "." + kp;
                     }
-                    if (kpc.equals(k)) {
+                    if ((kpc == null) || kpc.equals(k)) {
                         continue;
                     }
                     ETreeTableRecordBean<Entry<String, String>> parent = parents.get(kpc);
