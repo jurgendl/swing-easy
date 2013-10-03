@@ -28,6 +28,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeListenerProxy;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -423,6 +424,7 @@ public class UIUtils {
             if (description == null) {
                 File createTempFile = File.createTempFile("test", "." + ext);
                 description = FileSystemView.getFileSystemView().getSystemTypeDescription(createTempFile);
+                createTempFile.delete();
                 UIUtils.cachedDescriptions.put(ext, description);
             }
             return description;
@@ -697,7 +699,9 @@ public class UIUtils {
 
         try {
             Properties props = new Properties();
-            props.load(UIUtils.class.getClassLoader().getResourceAsStream(resource));
+            InputStream in = UIUtils.class.getClassLoader().getResourceAsStream(resource);
+            props.load(in);
+            in.close();
 
             Set<String> missing = new HashSet<String>();
 
