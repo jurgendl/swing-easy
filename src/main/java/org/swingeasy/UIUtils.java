@@ -457,6 +457,7 @@ public class UIUtils {
             if (icon == null) {
                 File createTempFile = File.createTempFile("test", "." + ext);
                 icon = FileSystemView.getFileSystemView().getSystemIcon(createTempFile);
+                createTempFile.delete();
                 UIUtils.cachedIcons.put(ext, icon);
             }
             return icon;
