@@ -43,7 +43,8 @@ public class ECheckBoxTree<T> extends JTree implements ECheckBoxTreeI<T>, Readab
      */
     @Override
     public void copy(ActionEvent e) {
-        throw new UnsupportedOperationException("not implemented"); // TODO implement
+        // FIXME
+        System.err.println("not implemented");
     }
 
     public ECheckBoxTreeI<T> getOriginal() {

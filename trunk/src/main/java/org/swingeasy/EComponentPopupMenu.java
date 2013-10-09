@@ -161,8 +161,8 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public boolean checkEnabled(CheckEnabled cfg) {
-            this.setEnabled(cfg.hasSelection);
-            return cfg.hasSelection;
+            this.setEnabled(true);
+            return true;
         }
     }
 
@@ -640,10 +640,11 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
             if (this.hasSelection()) {
                 this.parentComponent.copy();
             } else {
+                int caretPosition = this.parentComponent.getCaretPosition();
                 this.selectAll(e);
                 this.parentComponent.copy();
                 this.unselect(e);
-                this.gotoBegin(e);
+                this.parentComponent.setCaretPosition(caretPosition);
             }
         }
 
