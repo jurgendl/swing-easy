@@ -36,7 +36,8 @@ public class ETreeSearchComponent<T> extends ELabeledTextFieldButtonComponent im
      */
     @Override
     public void copy(ActionEvent e) {
-        // TODO implement
+        // FIXME
+        System.err.println("not implemented");
     }
 
     /**

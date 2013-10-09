@@ -36,7 +36,8 @@ public class EListSearchComponent<T> extends ELabeledTextFieldButtonComponent im
      */
     @Override
     public void copy(ActionEvent e) {
-        throw new UnsupportedOperationException("not implemented"); // TODO implement
+        // FIXME
+        System.err.println("not implemented");
     }
 
     /**

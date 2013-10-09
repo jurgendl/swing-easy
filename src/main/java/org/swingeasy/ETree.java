@@ -89,7 +89,8 @@ public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
      */
     @Override
     public void copy(ActionEvent e) {
-        // TODO implement
+        // FIXME
+        System.err.println("not implemented");
     }
 
     /**
