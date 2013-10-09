@@ -4,7 +4,10 @@ set MAVEN_OPTS=-Xms64m -Xmx1024m -Xss2048k -Xmn32m -XX:PermSize=64m -XX:MaxPermS
 
 :start
 cls
-echo %~dp0
+echo WORKING_DIR=%~dp0
+echo MAVEN_HOME=%MAVEN_HOME%
+echo MAVEN_OPTS=%MAVEN_OPTS%
+echo JAVA_HOME=%JAVA_HOME%
 echo ------------------
 echo u. svn update
 echo i. install (no tests)
@@ -18,9 +21,11 @@ echo y. update, deploy
 echo s. generate sources
 echo m. assembly
 echo t. status
+echo j. update java home
+echo a. update maven home
 echo q. quit
 echo ------------------
-CHOICE /N /C:uieocdbrysmtq
+CHOICE /N /C:uieocdbrysmtjaq
 set nr=%ERRORLEVEL%
 IF %nr% EQU 1 goto lsvnup
 IF %nr% EQU 2 goto llocinstall
@@ -34,7 +39,17 @@ IF %nr% EQU 9 goto ldeploy
 IF %nr% EQU 10 goto lgen
 IF %nr% EQU 11 goto lass
 IF %nr% EQU 12 goto lstatus
-IF %nr% EQU 13 goto lquit
+IF %nr% EQU 13 goto ljavahome
+IF %nr% EQU 14 goto lmavenhome
+IF %nr% EQU 15 goto lquit
+goto start
+
+:lmavenhome
+set MAVEN_HOME=%MAVEN3_HOME%
+goto start
+
+:ljavahome
+@for /d %%i in ("\Program Files\Java\jdk*") do set JAVA_HOME=%%i
 goto start
 
 :lstatus
