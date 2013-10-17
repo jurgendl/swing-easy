@@ -44,4 +44,5 @@ the names all Swing components start with J, replace it with E for their upgrade
   * EWizard (!WIP!)
   * EURILabel
   * FileSelection
+  * ECheckBoxList (!WIP!)
   * more in development

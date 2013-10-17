@@ -3,7 +3,7 @@
 
 = Version History =
 
-latest change: 2013-09-24
+latest change: 2013-10-17
 
 featured: downloads are available on the front page
 
@@ -194,7 +194,7 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * new: EWizard (!WIP!): new component
   * new: GradientPanel: new component
   * new: EURILabel: new component
- * 2.7.0.0 (featured)
+ * 2.7.0.0
   * new: ETable: 'editable' in config
   * new: ETree: node hover color
   * new: ECheckBox: configurable (breaks backwards compatibility)
@@ -214,6 +214,19 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * new: ETextArea: 'export to html' and 'export to pdf' actions
   * fixed: ETable: 'getSelectedCells' method fixed
   * fixed: ETable: 'copy' method and action in case multiple cells/records are selected
+ * 2.7.1.0
+  * fixed: methods do not throw exception when not implemented (log error to console)
+  * fixed: copy action on disabled textcomponent
+  * fixed: UIUtils: streams not closed
+  * fixed: UIUtils: temp file not removed
+  * new: ETextArea/Pane: inScrollpane method
+  * new: ECheckBoxList: new component (!WIP), based on GlazedLists
+  * fixed: EList: drag and drop
+  * new: EList: 'select-all' & 'unselect' action
+  * new: Splash: shadow for splash text
+  * fixed: ETable: filtering: filterpreview disabled when focus lost, nullpointer 
+  * fixed: export to html: html and body tags removed
+  * fixed: EList: rightclicking does not select cell under mouse when already selected
  * some version in the future or maybe never (unplanned)
   * form builder and components
   * tip of the day
