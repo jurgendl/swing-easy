@@ -31,6 +31,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import org.swingeasy.EButton;
+import org.swingeasy.EButtonConfig;
 import org.swingeasy.EComponentI;
 import org.swingeasy.ELabel;
 import org.swingeasy.GradientPanel;
@@ -236,15 +237,15 @@ public class EWizard extends JPanel implements EComponentI {
         gbc_bottomPanel.gridy = 4;
         this.add(bottomPanel, gbc_bottomPanel);
 
-        this.btnHelp = new EButton("Help");
+        this.btnHelp = new EButton(new EButtonConfig("Help"));
         this.btnHelp.setPreferredSize(this.getButtonSize());
         bottomPanel.add(this.btnHelp);
 
-        this.btnCancel = new EButton("Cancel");
+        this.btnCancel = new EButton(new EButtonConfig("Cancel"));
         this.btnCancel.setPreferredSize(this.getButtonSize());
         bottomPanel.add(this.btnCancel);
 
-        this.btnBack = new EButton("< Back");
+        this.btnBack = new EButton(new EButtonConfig("< Back"));
         this.btnBack.setPreferredSize(this.getButtonSize());
         this.btnBack.addActionListener(new ActionListener() {
             @Override
@@ -254,7 +255,7 @@ public class EWizard extends JPanel implements EComponentI {
         });
         bottomPanel.add(this.btnBack);
 
-        this.btnNext = new EButton("Next >");
+        this.btnNext = new EButton(new EButtonConfig("Next >"));
         this.btnNext.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -264,7 +265,7 @@ public class EWizard extends JPanel implements EComponentI {
         this.btnNext.setPreferredSize(this.getButtonSize());
         bottomPanel.add(this.btnNext);
 
-        this.btnFinish = new EButton("Finish");
+        this.btnFinish = new EButton(new EButtonConfig("Finish"));
         this.btnFinish.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

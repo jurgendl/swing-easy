@@ -30,7 +30,7 @@ public class ListDemo3 {
         f.getContentPane().add(new JScrollPane(cbl));
         f.setSize(400, 400);
         f.setLocationRelativeTo(null);
-        EButton selectedbtn = new EButton("selected?");
+        EButton selectedbtn = new EButton(new EButtonConfig("selected?"));
         selectedbtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -40,7 +40,7 @@ public class ListDemo3 {
             }
         });
         f.getContentPane().add(selectedbtn, BorderLayout.NORTH);
-        EButton checkedbtn = new EButton("checked?");
+        EButton checkedbtn = new EButton(new EButtonConfig("checked?"));
         checkedbtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -64,7 +64,7 @@ public class ListDemo3 {
         f.getContentPane().add(new JScrollPane(cbl));
         f.setSize(400, 400);
         f.setLocationRelativeTo(null);
-        EButton selectedbtn = new EButton("selected?");
+        EButton selectedbtn = new EButton(new EButtonConfig("selected?"));
         selectedbtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

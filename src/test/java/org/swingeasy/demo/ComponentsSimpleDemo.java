@@ -13,7 +13,7 @@ import javax.swing.WindowConstants;
 import net.miginfocom.swing.MigLayout;
 
 import org.swingeasy.EButton;
-import org.swingeasy.EButtonCustomizer;
+import org.swingeasy.EButtonConfig;
 import org.swingeasy.ECheckBox;
 import org.swingeasy.ECheckBoxConfig;
 import org.swingeasy.ECheckBoxList;
@@ -46,6 +46,8 @@ import org.swingeasy.ETextPane;
 import org.swingeasy.ETextPaneConfig;
 import org.swingeasy.EToggleButton;
 import org.swingeasy.EToggleToolBarButton;
+import org.swingeasy.EToggleToolBarButtonConfig;
+import org.swingeasy.EToolBarButtonCustomizer;
 import org.swingeasy.ETree;
 import org.swingeasy.ETreeConfig;
 import org.swingeasy.ETreeNode;
@@ -70,7 +72,7 @@ public class ComponentsSimpleDemo {
         frame.getContentPane().add(new JScrollPane(cp));
 
         cp.add(new ELabel("EButton"), "growx");
-        cp.add(new EButton("EButton"), "growx");
+        cp.add(new EButton(new EButtonConfig("EButton")), "growx");
 
         cp.add(new ELabel("ECheckBox"), "growx");
         cp.add(new ECheckBox(new ECheckBoxConfig()), "growx");
@@ -106,15 +108,15 @@ public class ComponentsSimpleDemo {
         cp.add(new ETextField(new ETextFieldConfig("ETextField")), "growx");
 
         cp.add(new ELabel("EToggleButton"), "growx");
-        cp.add(new EToggleButton("EToggleButton"), "growx");
+        cp.add(new EToggleButton(new EButtonConfig("EToggleButton")), "growx");
 
         cp.add(new ELabel("EToggleToolBarButton"), "growx");
-        cp.add(new EToggleToolBarButton(new EButtonCustomizer() {
+        cp.add(new EToggleToolBarButton(new EToggleToolBarButtonConfig(new EToolBarButtonCustomizer() {
             @Override
             public void customize(AbstractButton button) {
                 button.setText("EToggleToolBarButton");
             }
-        }), "growx");
+        })), "growx");
 
         cp.add(new ELabel("ETree"), "growx");
         cp.add(new ETree<String>(new ETreeConfig(), new ETreeNode<String>("root")), "growx");

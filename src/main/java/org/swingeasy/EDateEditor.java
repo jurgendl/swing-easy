@@ -92,7 +92,7 @@ public class EDateEditor extends AbstractELabeledTextFieldButtonComponent<ELabel
     @Override
     public EButton getButton() {
         if (this.button == null) {
-            this.button = new EButton(new EIconButtonCustomizer(new Dimension(20, 20)), this.getIcon());
+            this.button = new EButton(new EButtonConfig(new EIconButtonCustomizer(new Dimension(20, 20)), this.getIcon()));
             this.button.setActionCommand(this.getAction());
             this.button.addActionListener(new ActionListener() {
                 @Override
@@ -120,7 +120,7 @@ public class EDateEditor extends AbstractELabeledTextFieldButtonComponent<ELabel
             this.datePanel = new JPanel(new BorderLayout());
             JPanel actions = new JPanel(new FlowLayout());
             {
-                EButton okbtn = new EButton(Messages.getString(this.getLocale(), "EDateEditor.OK"));//$NON-NLS-1$
+                EButton okbtn = new EButton(new EButtonConfig(Messages.getString(this.getLocale(), "EDateEditor.OK")));//$NON-NLS-1$
                 okbtn.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -131,7 +131,7 @@ public class EDateEditor extends AbstractELabeledTextFieldButtonComponent<ELabel
                 actions.add(okbtn);
             }
             {
-                EButton nullbtn = new EButton(Messages.getString(this.getLocale(), "EDateEditor.Null"));//$NON-NLS-1$
+                EButton nullbtn = new EButton(new EButtonConfig(Messages.getString(this.getLocale(), "EDateEditor.Null")));//$NON-NLS-1$
                 nullbtn.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
@@ -142,7 +142,7 @@ public class EDateEditor extends AbstractELabeledTextFieldButtonComponent<ELabel
                 actions.add(nullbtn);
             }
             {
-                EButton cancelbtn = new EButton(Messages.getString(this.getLocale(), "EDateEditor.Cancel"));//$NON-NLS-1$
+                EButton cancelbtn = new EButton(new EButtonConfig(Messages.getString(this.getLocale(), "EDateEditor.Cancel")));//$NON-NLS-1$
                 cancelbtn.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {

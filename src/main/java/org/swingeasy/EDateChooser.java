@@ -273,7 +273,7 @@ public class EDateChooser extends JPanel {
         int y = 0;
         for (int i = 0; i < maximum; i++) {
             final String id = String.valueOf((i + 1));
-            EToggleButton comp = new EToggleButton(new EToolBarButtonCustomizer(defaultDimension), id);
+            EToggleButton comp = new EToggleButton(new EButtonConfig(new EToolBarButtonCustomizer(defaultDimension), id));
             comp.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {

@@ -13,6 +13,7 @@ import javax.swing.Icon;
 import javax.swing.JComponent;
 
 import org.swingeasy.EButton;
+import org.swingeasy.EButtonConfig;
 import org.swingeasy.EIconButtonCustomizer;
 import org.swingeasy.EventThreadSafeWrapper;
 import org.swingeasy.Resources;
@@ -45,7 +46,7 @@ public class EValidationMessage extends EButton implements EValidationMessageI {
     }
 
     public EValidationMessage(final EValidationPane parent, final JComponent component) {
-        super(new EIconButtonCustomizer(Resources.getImageResource("bullet_red_small.png")));
+        super(new EButtonConfig(new EIconButtonCustomizer(Resources.getImageResource("bullet_red_small.png"))));
 
         this.invalidIcon = this.getIcon();
         this.validIcon = Resources.getImageResource("bullet_green_small.png");

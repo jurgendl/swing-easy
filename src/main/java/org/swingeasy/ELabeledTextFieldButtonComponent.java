@@ -19,7 +19,7 @@ public abstract class ELabeledTextFieldButtonComponent extends AbstractELabeledT
     @Override
     public EButton getButton() {
         if (this.button == null) {
-            EButton _button = new EButton(new EIconButtonCustomizer(new Dimension(20, 20)), this.getIcon());
+            EButton _button = new EButton(new EButtonConfig(new EIconButtonCustomizer(new Dimension(20, 20)), this.getIcon()));
             _button.setActionCommand(this.getAction());
             _button.addActionListener(new ActionListener() {
                 @Override
