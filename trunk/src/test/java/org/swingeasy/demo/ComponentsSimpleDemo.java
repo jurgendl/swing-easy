@@ -45,8 +45,8 @@ import org.swingeasy.ETextFieldConfig;
 import org.swingeasy.ETextPane;
 import org.swingeasy.ETextPaneConfig;
 import org.swingeasy.EToggleButton;
-import org.swingeasy.EToggleToolBarButton;
-import org.swingeasy.EToggleToolBarButtonConfig;
+import org.swingeasy.EToolBarToggleButton;
+import org.swingeasy.EToolBarButtonConfig;
 import org.swingeasy.EToolBarButtonCustomizer;
 import org.swingeasy.ETree;
 import org.swingeasy.ETreeConfig;
@@ -111,7 +111,7 @@ public class ComponentsSimpleDemo {
         cp.add(new EToggleButton(new EButtonConfig("EToggleButton")), "growx");
 
         cp.add(new ELabel("EToggleToolBarButton"), "growx");
-        cp.add(new EToggleToolBarButton(new EToggleToolBarButtonConfig(new EToolBarButtonCustomizer() {
+        cp.add(new EToolBarToggleButton(new EToolBarButtonConfig(new EToolBarButtonCustomizer() {
             @Override
             public void customize(AbstractButton button) {
                 button.setText("EToggleToolBarButton");
