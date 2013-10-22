@@ -152,7 +152,7 @@ public class SettingsDemo {
 
                 for (Map.Entry<String, Object> setting : settings.getSettings().entrySet()) {
                     right.add(new ELabel(setting.getKey()));
-                    right.add(new ETextField(new ETextFieldConfig(), String.valueOf(setting.getValue())));
+                    right.add(new ETextField(new ETextFieldConfig(String.valueOf(setting.getValue()))));
                 }
             }
         });

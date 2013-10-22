@@ -6,9 +6,9 @@ import java.awt.Color;
  * @author Jurgen
  */
 public class ETreeConfig extends EComponentConfig<ETreeConfig> {
-    private boolean editable = true;
+    protected boolean editable = true;
 
-    private Color focusColor;
+    protected Color focusColor;
 
     public ETreeConfig() {
         super();

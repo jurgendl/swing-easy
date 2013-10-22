@@ -189,7 +189,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     /**
      * convert
      */
-    public static <T> List<EListRecord<T>> convert(T[] records) {
+    public static <T> List<EListRecord<T>> convert(T... records) {
         return EList.convert(Arrays.asList(records));
     }
 
@@ -249,6 +249,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
      * do not use, do not change access
      */
     protected EList() {
+        this.cfg = null;
         this.filtercomponent = null;
     }
 

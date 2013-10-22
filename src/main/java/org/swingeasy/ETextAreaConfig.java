@@ -4,13 +4,15 @@ package org.swingeasy;
  * @author Jurgen
  */
 public class ETextAreaConfig extends EComponentConfig<ETextAreaConfig> {
-    private int rows = 0;
+    protected int rows = 0;
 
-    private int columns = 0;
+    protected int columns = 0;
 
-    private boolean enabled = true;
+    protected boolean enabled = true;
 
-    private boolean autoScroll = true;
+    protected boolean autoScroll = true;
+
+    protected String text = null;
 
     public ETextAreaConfig() {
         super();
@@ -28,12 +30,20 @@ public class ETextAreaConfig extends EComponentConfig<ETextAreaConfig> {
         this.columns = columns;
     }
 
+    public ETextAreaConfig(String text) {
+        this.text = text;
+    }
+
     public int getColumns() {
         return this.columns;
     }
 
     public int getRows() {
         return this.rows;
+    }
+
+    public String getText() {
+        return this.text;
     }
 
     public boolean isAutoScroll() {
@@ -63,6 +73,12 @@ public class ETextAreaConfig extends EComponentConfig<ETextAreaConfig> {
     public ETextAreaConfig setRows(int rows) {
         this.lockCheck();
         this.rows = rows;
+        return this;
+    }
+
+    public ETextAreaConfig setText(String text) {
+        this.lockCheck();
+        this.text = text;
         return this;
     }
 }

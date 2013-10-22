@@ -39,11 +39,11 @@ public class ValidationDemo {
 
         frame.getContentPane().add(parent, BorderLayout.CENTER);
 
-        final ETextField comp1 = new ETextField(new ETextFieldConfig(), "invalid1");
-        final ETextField comp2 = new ETextField(new ETextFieldConfig(), "invalid2");
-        final ETextField comp3 = new ETextField(new ETextFieldConfig(), "");
-        final ETextField comp4 = new ETextField(new ETextFieldConfig(), "");
-        final ETextField comp5 = new ETextField(new ETextFieldConfig(), "");
+        final ETextField comp1 = new ETextField(new ETextFieldConfig("invalid1"));
+        final ETextField comp2 = new ETextField(new ETextFieldConfig("invalid2"));
+        final ETextField comp3 = new ETextField(new ETextFieldConfig(""));
+        final ETextField comp4 = new ETextField(new ETextFieldConfig(""));
+        final ETextField comp5 = new ETextField(new ETextFieldConfig(""));
 
         JPanel inner = new JPanel(new GridLayout(-1, 2));
         inner.add(new JLabel("invalid"));

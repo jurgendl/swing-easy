@@ -5,27 +5,24 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.Action;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.ToolTipManager;
+
+import org.swingeasy.EComponentPopupMenu.ReadableComponent;
 
 /**
  * @author Jurgen
  */
-public class ECheckBox extends JCheckBox implements EComponentI, HasValue<Boolean> {
+public class ECheckBox extends JCheckBox implements EComponentI, HasValue<Boolean>, ReadableComponent {
     private static final long serialVersionUID = -7050606626337213461L;
 
     protected final List<ValueChangeListener<Boolean>> valueChangeListeners = new ArrayList<ValueChangeListener<Boolean>>();
 
     protected ECheckBoxConfig cfg;
 
-    public ECheckBox() {
-        this(new ECheckBoxConfig());
-    }
-
-    public ECheckBox(Action a) {
-        super(a);
-        this.init(this.cfg = this.cfg.lock());
+    protected ECheckBox() {
+        this.cfg = null;
     }
 
     public ECheckBox(ECheckBoxConfig cfg) {
@@ -49,6 +46,23 @@ public class ECheckBox extends JCheckBox implements EComponentI, HasValue<Boolea
     @Override
     public void clearValueChangeListeners() {
         this.valueChangeListeners.clear();
+    }
+
+    /**
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy(java.awt.event.ActionEvent)
+     */
+    @Override
+    public void copy(ActionEvent e) {
+        // TODO
+        System.err.println("not implemented");
+    }
+
+    /**
+     * @see org.swingeasy.HasParentComponent#getParentComponent()
+     */
+    @Override
+    public JComponent getParentComponent() {
+        return this;
     }
 
     /**
@@ -91,6 +105,17 @@ public class ECheckBox extends JCheckBox implements EComponentI, HasValue<Boolea
                 }
             }
         });
+
+        if (this.cfg.isDefaultPopupMenu()) {
+            this.installPopupMenuAction(EComponentPopupMenu.installPopupMenu(this));
+        }
+    }
+
+    /**
+     * JDOC
+     */
+    protected void installPopupMenuAction(@SuppressWarnings("unused") EComponentPopupMenu menu) {
+        //
     }
 
     /**

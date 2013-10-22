@@ -13,7 +13,7 @@ import javax.swing.event.DocumentEvent;
  */
 public class TextFieldDemo {
     private static ETextField addComponents(Container container) throws IOException {
-        ETextField jtf = new ETextField(new ETextFieldConfig(), "text");
+        ETextField jtf = new ETextField(new ETextFieldConfig("text"));
         container.add(new JScrollPane(jtf));
         EComponentPopupMenu.debug(jtf);
         jtf.addDocumentKeyListener(new DocumentKeyListener() {
