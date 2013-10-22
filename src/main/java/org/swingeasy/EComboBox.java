@@ -338,11 +338,14 @@ public class EComboBox<T> extends JComboBox implements EComboBoxI<T>, Iterable<E
         if (config.isAutoComplete()) {
             this.stsi().activateAutoCompletion();
         }
+
         if (config.isScrolling()) {
             this.activateScrolling();
         }
 
-        UIUtils.registerLocaleChangeListener((EComponentI) this);
+        if (config.isLocalized()) {
+            UIUtils.registerLocaleChangeListener((EComponentI) this);
+        }
 
         if (config.isDefaultPopupMenu()) {
             this.installPopupMenuAction(EComponentPopupMenu.installPopupMenu(this));

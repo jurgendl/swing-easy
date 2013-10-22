@@ -109,6 +109,10 @@ public class ECheckBox extends JCheckBox implements EComponentI, HasValue<Boolea
         if (this.cfg.isDefaultPopupMenu()) {
             this.installPopupMenuAction(EComponentPopupMenu.installPopupMenu(this));
         }
+
+        if (config.isLocalized()) {
+            UIUtils.registerLocaleChangeListener((EComponentI) this);
+        }
     }
 
     /**

@@ -483,7 +483,9 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         this.setDragEnabled(true);
         this.setTransferHandler(new EListTransferHandler<T>());
 
-        UIUtils.registerLocaleChangeListener((EComponentI) this);
+        if (config.isLocalized()) {
+            UIUtils.registerLocaleChangeListener((EComponentI) this);
+        }
 
         if (config.isDefaultPopupMenu()) {
             this.installPopupMenuAction(EComponentPopupMenu.installPopupMenu(this));

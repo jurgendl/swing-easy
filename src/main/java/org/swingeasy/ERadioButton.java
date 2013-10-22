@@ -12,7 +12,7 @@ import org.swingeasy.EComponentPopupMenu.ReadableComponent;
 /**
  * @author Jurgen
  */
-public class ERadioButton extends JRadioButton implements ReadableComponent {
+public class ERadioButton extends JRadioButton implements EComponentI, ReadableComponent {
     private static final long serialVersionUID = -1359464901174268318L;
 
     protected final ERadioButtonConfig cfg;
@@ -63,18 +63,27 @@ public class ERadioButton extends JRadioButton implements ReadableComponent {
         if (config.isTooltips()) {
             ToolTipManager.sharedInstance().registerComponent(this);
         }
+
         if (config.getAction() != null) {
             this.setAction(config.getAction());
         }
+
         if (StringUtils.isNotBlank(config.getText())) {
             this.setText(config.getText());
         }
+
         if (config.getIcon() != null) {
             this.setIcon(config.getIcon());
         }
+
         this.setSelected(config.isSelected());
+
         if (config.isDefaultPopupMenu()) {
             this.installPopupMenuAction(EComponentPopupMenu.installPopupMenu(this));
+        }
+
+        if (config.isLocalized()) {
+            UIUtils.registerLocaleChangeListener((EComponentI) this);
         }
     }
 

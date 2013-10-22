@@ -947,7 +947,9 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
         this.getTableHeader().setReorderingAllowed(configuration.isReorderable());
         this.getTableHeader().setResizingAllowed(configuration.isResizable());
 
-        UIUtils.registerLocaleChangeListener((EComponentI) this);
+        if (configuration.isLocalized()) {
+            UIUtils.registerLocaleChangeListener((EComponentI) this);
+        }
 
         if (configuration.isDefaultPopupMenu()) {
             this.installPopupMenuAction(EComponentPopupMenu.installPopupMenu(this));
