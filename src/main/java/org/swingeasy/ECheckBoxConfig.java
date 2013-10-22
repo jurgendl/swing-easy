@@ -37,15 +37,21 @@ public class ECheckBoxConfig extends EComponentConfig<ECheckBoxConfig> {
         return this.selected;
     }
 
-    public void setIcon(Icon icon) {
+    public ECheckBoxConfig setIcon(Icon icon) {
+        this.lockCheck();
         this.icon = icon;
+        return this;
     }
 
-    public void setSelected(boolean selected) {
+    public ECheckBoxConfig setSelected(boolean selected) {
+        this.lockCheck();
         this.selected = selected;
+        return this;
     }
 
-    public void setText(String text) {
+    public ECheckBoxConfig setText(String text) {
+        this.lockCheck();
         this.text = text;
+        return this;
     }
 }
