@@ -215,7 +215,7 @@ public class UIExceptionHandler {
         jsp.setMinimumSize(size);
         jsp.setPreferredSize(size);
         jsp.setSize(size);
-        EButton button = new EButton(new EIconButtonCustomizer() {
+        EButton button = new EButton(new EButtonConfig(new EIconButtonCustomizer() {
             @Override
             public void customize(AbstractButton _button) {
                 super.customize(_button);
@@ -223,7 +223,7 @@ public class UIExceptionHandler {
                 _button.setBackground(Color.WHITE);
                 _button.setHorizontalAlignment(SwingConstants.LEFT);
             }
-        }, "<HTML><FONT color=\"#000099\"><U>" + message + "</U></FONT></HTML>");
+        }, "<HTML><FONT color=\"#000099\"><U>" + message + "</U></FONT></HTML>"));
         final JPanel panel = new JPanel(new BorderLayout());
         panel.add(button, BorderLayout.CENTER);
         final ValueHolder<JDialog> jdialog = new ValueHolder<JDialog>();

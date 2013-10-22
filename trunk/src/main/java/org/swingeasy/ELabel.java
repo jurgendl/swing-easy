@@ -1,44 +1,50 @@
 package org.swingeasy;
 
-import javax.swing.Icon;
+import java.awt.event.ActionEvent;
+
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.ToolTipManager;
+
+import org.swingeasy.EComponentPopupMenu.ReadableComponent;
 
 /**
  * @author Jurgen
  */
-public class ELabel extends JLabel {
-
+public class ELabel extends JLabel implements EComponentI, ReadableComponent {
     private static final long serialVersionUID = 8880462529209952297L;
 
+    protected final ELabelConfig cfg;
+
     public ELabel() {
-        super();
-        this.init();
+        this.cfg = null;
     }
 
-    public ELabel(Icon image) {
-        super(image);
-        this.init();
-    }
-
-    public ELabel(Icon image, int horizontalAlignment) {
-        super(image, horizontalAlignment);
-        this.init();
+    public ELabel(ELabelConfig cfg) {
+        this.init(this.cfg = cfg.lock());
     }
 
     public ELabel(String text) {
-        super(text);
-        this.init();
+        this(new ELabelConfig(text));
     }
 
-    public ELabel(String text, Icon icon, int horizontalAlignment) {
-        super(text, icon, horizontalAlignment);
-        this.init();
+    /**
+     * 
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy(java.awt.event.ActionEvent)
+     */
+    @Override
+    public void copy(ActionEvent e) {
+        // TODO
+        System.err.println("not implemented");
     }
 
-    public ELabel(String text, int horizontalAlignment) {
-        super(text, horizontalAlignment);
-        this.init();
+    /**
+     * 
+     * @see org.swingeasy.HasParentComponent#getParentComponent()
+     */
+    @Override
+    public JComponent getParentComponent() {
+        return this;
     }
 
     /**
@@ -58,9 +64,26 @@ public class ELabel extends JLabel {
         return toolTipText;
     }
 
-    protected void init() {
-        // if (cfg.isTooltips()) {
-        ToolTipManager.sharedInstance().registerComponent(this);
-        // }
+    protected void init(ELabelConfig config) {
+        if (config.getText() != null) {
+            this.setText(config.getText());
+        }
+        if (config.getIcon() != null) {
+            this.setIcon(config.getIcon());
+        }
+        if (config.getHorizontalAlignment() != null) {
+            this.setHorizontalAlignment(config.getHorizontalAlignment());
+        }
+        if (config.isTooltips()) {
+            ToolTipManager.sharedInstance().registerComponent(this);
+        }
+        UIUtils.registerLocaleChangeListener((EComponentI) this);
+        if (config.isDefaultPopupMenu()) {
+            this.installPopupMenuAction(EComponentPopupMenu.installPopupMenu(this));
+        }
+    }
+
+    protected void installPopupMenuAction(@SuppressWarnings("unused") EComponentPopupMenu menu) {
+        //
     }
 }

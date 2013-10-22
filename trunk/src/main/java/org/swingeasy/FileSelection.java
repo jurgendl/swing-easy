@@ -99,7 +99,7 @@ public class FileSelection extends JPanel implements ActionListener, FileChooser
             this.filter = new ExtensionFileFilter(Arrays.asList(this.ext));
             this.directory = false;
         }
-        EButton select = new EButton(new EIconButtonCustomizer(icon));
+        EButton select = new EButton(new EButtonConfig(new EIconButtonCustomizer(icon)));
         select.setToolTipText(tooltip.append("</html>").toString());
         select.addActionListener(this);
         this.add(select, BorderLayout.EAST);

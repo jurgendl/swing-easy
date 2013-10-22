@@ -17,7 +17,7 @@ import javax.swing.UIManager;
  * @author Jurgen
  */
 public class ETabbedPaneHeader extends JComponent {
-    
+
     private static final long serialVersionUID = -1987585120165138408L;
 
     public static final String ACTION_MINIMIZE = "minimize";
@@ -38,7 +38,7 @@ public class ETabbedPaneHeader extends JComponent {
         this.setLayout(new BorderLayout());
 
         if (config.getRotation() == Rotation.DEFAULT) {
-            ELabel label = new ELabel(title, icon, SwingConstants.LEADING);
+            ELabel label = new ELabel(new ELabelConfig(title, icon, SwingConstants.LEADING));
             label.setBorder(BorderFactory.createEmptyBorder(0, 3, 0, 3));
             this.add(label, BorderLayout.CENTER);
 
@@ -87,7 +87,8 @@ public class ETabbedPaneHeader extends JComponent {
         if (_icon == null) {
             return;
         }
-        EButton closeButton = new EButton(new EIconButtonCustomizer(new Dimension(_icon.getIconWidth(), _icon.getIconHeight())), _icon);
+        EButton closeButton = new EButton(new EButtonConfig(new EIconButtonCustomizer(new Dimension(_icon.getIconWidth(), _icon.getIconHeight())),
+                _icon));
         closeButton.setActionCommand(ETabbedPaneHeader.ACTION_CLOSE);
         closeButton.addActionListener(actionlistener);
         container.add(closeButton);
@@ -99,7 +100,8 @@ public class ETabbedPaneHeader extends JComponent {
         if (_icon == null) {
             return;
         }
-        EButton minimizeButton = new EButton(new EIconButtonCustomizer(new Dimension(_icon.getIconWidth(), _icon.getIconHeight())), _icon);
+        EButton minimizeButton = new EButton(new EButtonConfig(new EIconButtonCustomizer(new Dimension(_icon.getIconWidth(), _icon.getIconHeight())),
+                _icon));
         minimizeButton.setActionCommand(ETabbedPaneHeader.ACTION_MINIMIZE);
         minimizeButton.addActionListener(actionlistener);
         container.add(minimizeButton);
