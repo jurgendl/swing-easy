@@ -25,6 +25,7 @@ import org.swingeasy.EDateEditor;
 import org.swingeasy.EDateTimeChooser;
 import org.swingeasy.EDateTimeEditor;
 import org.swingeasy.EFormattedTextField;
+import org.swingeasy.EFormattedTextFieldConfig;
 import org.swingeasy.ELabel;
 import org.swingeasy.EList;
 import org.swingeasy.EListConfig;
@@ -53,6 +54,7 @@ import org.swingeasy.FileSelection;
 import org.swingeasy.GradientPanel;
 import org.swingeasy.TristateCheckBox;
 import org.swingeasy.UIUtils;
+import org.swingeasy.formatters.NumberFormatBuilder;
 
 /**
  * @author Jurgen
@@ -77,7 +79,8 @@ public class ComponentsSimpleDemo {
         cp.add(new EComboBox<String>(new EComboBoxConfig()), "growx");
 
         cp.add(new ELabel("EFormattedTextField"), "growx");
-        cp.add(new EFormattedTextField("100"), "growx");
+        cp.add(new EFormattedTextField<Integer>(new EFormattedTextFieldConfig(new NumberFormatBuilder(NumberFormatBuilder.Type.Integer)), 100),
+                "growx");
 
         cp.add(new ELabel("EList"), "growx");
         EList<String> elist = new EList<String>(new EListConfig());

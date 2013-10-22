@@ -5,7 +5,6 @@ import java.util.Locale;
 
 import javax.swing.JFormattedTextField;
 import javax.swing.ToolTipManager;
-import javax.swing.text.DefaultFormatter;
 import javax.swing.text.DefaultFormatterFactory;
 
 import org.swingeasy.MethodInvoker.InvocationException;
@@ -15,35 +14,29 @@ import org.swingeasy.system.SystemSettings;
 /**
  * @author Jurgen
  */
-public class EFormattedTextField extends JFormattedTextField implements EComponentI {
+public class EFormattedTextField<T> extends JFormattedTextField implements EComponentI {
     private static final long serialVersionUID = 3962285208926281649L;
 
     protected EFormatBuilder factory;
 
-    public EFormattedTextField(DefaultFormatter factory) {
-        this(new DefaultFormatterFactory(factory, factory, factory, factory));
+    protected final EFormattedTextFieldConfig cfg;
+
+    // public EFormattedTextField(DefaultFormatter factory) {
+    // this(new DefaultFormatterFactory(factory, factory, factory, factory));
+    // }
+    //
+    // public EFormattedTextField(DefaultFormatter factory, T currentValue) {
+    // this(new DefaultFormatterFactory(factory, factory, factory, factory));
+    // this.setValue(currentValue);
+    // }
+
+    public EFormattedTextField(EFormattedTextFieldConfig cfg) {
+        this.init(this.cfg = cfg.lock());
     }
 
-    public EFormattedTextField(DefaultFormatter factory, Object currentValue) {
-        this(new DefaultFormatterFactory(factory, factory, factory, factory));
+    public EFormattedTextField(EFormattedTextFieldConfig cfg, T currentValue) {
+        this.init(this.cfg = cfg.lock());
         this.setValue(currentValue);
-    }
-
-    public EFormattedTextField(EFormatBuilder factory) {
-        super();
-        this.setFormat(factory.build(SystemSettings.getCurrentLocale()));
-        this.factory = factory;
-        this.init();
-    }
-
-    public EFormattedTextField(EFormatBuilder factory, Object currentValue) {
-        super();
-        this.setFormat(factory.build(SystemSettings.getCurrentLocale()));
-        this.setValue(currentValue);
-    }
-
-    public EFormattedTextField(Object currentValue) {
-        super(currentValue);
     }
 
     public void addDocumentKeyListener(DocumentKeyListener listener) {
@@ -68,13 +61,25 @@ public class EFormattedTextField extends JFormattedTextField implements ECompone
         return toolTipText;
     }
 
-    protected void init() {
-        // if (cfg.isTooltips()) {
-        ToolTipManager.sharedInstance().registerComponent(this);
-        // }
-        this.installPopupMenuAction(EComponentPopupMenu.installTextComponentPopupMenu(this));
+    protected void init(EFormattedTextFieldConfig config) {
+        if (config.isTooltips()) {
+            ToolTipManager.sharedInstance().registerComponent(this);
+        }
+
+        if (config.isDefaultPopupMenu()) {
+            this.installPopupMenuAction(EComponentPopupMenu.installTextComponentPopupMenu(this));
+        }
+
         UIUtils.registerLocaleChangeListener((EComponentI) this);
+
         this.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
+
+        if (config.getFactory() != null) {
+            this.factory = config.getFactory();
+            this.setFormat(this.factory.build(SystemSettings.getCurrentLocale()));
+        } else {
+            this.setFormatter(config.other);
+        }
     }
 
     protected void installPopupMenuAction(@SuppressWarnings("unused") EComponentPopupMenu menu) {

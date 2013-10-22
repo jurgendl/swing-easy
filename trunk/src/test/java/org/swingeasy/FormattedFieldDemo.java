@@ -12,6 +12,7 @@ import java.util.Locale;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
+import javax.swing.text.DefaultFormatter;
 import javax.swing.text.MaskFormatter;
 
 import org.swingeasy.formatters.DateFormatBuilder;
@@ -42,29 +43,44 @@ public class FormattedFieldDemo {
         });
 
         container.add(new ELabel(""));
-        container.add(new EFormattedTextField(new NumberFormatBuilder(NumberFormatBuilder.Type.Default), 1234.5678));
+        container.add(new EFormattedTextField<Double>(new EFormattedTextFieldConfig(new NumberFormatBuilder(NumberFormatBuilder.Type.Default)),
+                1234.5678));
         container.add(new ELabel("currency"));
-        container.add(new EFormattedTextField(new NumberFormatBuilder(NumberFormatBuilder.Type.Currency), 1234.5678));
+        container.add(new EFormattedTextField<Double>(new EFormattedTextFieldConfig(new NumberFormatBuilder(NumberFormatBuilder.Type.Currency)),
+                1234.5678));
         container.add(new ELabel("integer"));
-        container.add(new EFormattedTextField(new NumberFormatBuilder(NumberFormatBuilder.Type.Integer), 1234));
+        container
+                .add(new EFormattedTextField<Integer>(new EFormattedTextFieldConfig(new NumberFormatBuilder(NumberFormatBuilder.Type.Integer)), 1234));
         container.add(new ELabel("number"));
-        container.add(new EFormattedTextField(new NumberFormatBuilder(NumberFormatBuilder.Type.Number), 1234.5678));
+        container.add(new EFormattedTextField<Double>(new EFormattedTextFieldConfig(new NumberFormatBuilder(NumberFormatBuilder.Type.Number)),
+                1234.5678));
         container.add(new ELabel("percent"));
-        container.add(new EFormattedTextField(new NumberFormatBuilder(NumberFormatBuilder.Type.Percentage), 0.12345678));
+        container.add(new EFormattedTextField<Double>(new EFormattedTextFieldConfig(new NumberFormatBuilder(NumberFormatBuilder.Type.Percentage)),
+                0.12345678));
         container.add(new ELabel("date"));
-        container.add(new EFormattedTextField(new DateFormatBuilder(DateFormatBuilder.Type.Date, DateFormatBuilder.Length.Default), new Date()));
+        container.add(new EFormattedTextField<Date>(new EFormattedTextFieldConfig(new DateFormatBuilder(DateFormatBuilder.Type.Date,
+                DateFormatBuilder.Length.Default)), new Date()));
         container.add(new ELabel("time"));
-        container.add(new EFormattedTextField(new DateFormatBuilder(DateFormatBuilder.Type.Time, DateFormatBuilder.Length.Default), new Date()));
+        container.add(new EFormattedTextField<Date>(new EFormattedTextFieldConfig(new DateFormatBuilder(DateFormatBuilder.Type.Time,
+                DateFormatBuilder.Length.Default)), new Date()));
         container.add(new ELabel("date/time"));
-        container.add(new EFormattedTextField(new DateFormatBuilder(DateFormatBuilder.Type.Both, DateFormatBuilder.Length.Default), new Date()));
+        container.add(new EFormattedTextField<Date>(new EFormattedTextFieldConfig(new DateFormatBuilder(DateFormatBuilder.Type.Both,
+                DateFormatBuilder.Length.Default)), new Date()));
         container.add(new ELabel("mask"));
-        container.add(new EFormattedTextField(new MaskFormatter("(###) ###-###"), "(032) 111-222"));
+        container.add(new EFormattedTextField<String>(new EFormattedTextFieldConfig(new MaskFormatter("(###) ###-###")), "(032) 111-222"));
         container.add(new ELabel("url"));
-        container.add(new EFormattedTextField(new URL("http://www.google.com")));
+        container.add(new EFormattedTextField<URL>(new EFormattedTextFieldConfig((DefaultFormatter) null)), new URL("http://www.google.com"));
         container.add(new ELabel("ip4"));
-        container.add(new EFormattedTextField(new IPAddressFormatter(), new byte[] { (byte) 130, 65, 86, 66 }));
+        container
+                .add(new EFormattedTextField<byte[]>(new EFormattedTextFieldConfig(new IPAddressFormatter()), new byte[] { (byte) 130, 65, 86, 66 }));
         container.add(new ELabel("ip6"));
-        container.add(new EFormattedTextField(new IPAddressFormatter(true), new byte[] { (byte) 130, 65, 86, 66, 2, 3 }));
+        container.add(new EFormattedTextField<byte[]>(new EFormattedTextFieldConfig(new IPAddressFormatter(true)), new byte[] {
+                (byte) 130,
+                65,
+                86,
+                66,
+                2,
+                3 }));
     }
 
     public static void main(String[] args) {
