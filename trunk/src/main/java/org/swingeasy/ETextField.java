@@ -17,16 +17,14 @@ public class ETextField extends JTextField implements EComponentI, HasValue<Stri
 
     protected final List<ValueChangeListener<String>> valueChangeListeners = new ArrayList<ValueChangeListener<String>>();
 
-    protected ETextFieldConfig cfg;
+    protected final ETextFieldConfig cfg;
 
-    public ETextField(ETextFieldConfig cfg) {
-        super(cfg.lock().getColumns());
-        this.init(this.cfg = cfg);
+    protected ETextField() {
+        this.cfg = null;
     }
 
-    public ETextField(ETextFieldConfig cfg, String text) {
-        super(text, cfg.lock().getColumns());
-        this.init(this.cfg = cfg);
+    public ETextField(ETextFieldConfig cfg) {
+        this.init(this.cfg = cfg.lock());
     }
 
     public void addDocumentKeyListener(DocumentKeyListener listener) {
@@ -80,6 +78,7 @@ public class ETextField extends JTextField implements EComponentI, HasValue<Stri
     }
 
     protected void init(ETextFieldConfig config) {
+        this.setColumns(this.cfg.getColumns());
         this.setEditable(config.isEnabled());
         if (config.isSelectAllOnFocus()) {
             this.addFocusListener(new ETextComponentSelectAllOnFocus());
@@ -87,7 +86,9 @@ public class ETextField extends JTextField implements EComponentI, HasValue<Stri
         if (config.isTooltips()) {
             ToolTipManager.sharedInstance().registerComponent(this);
         }
-        this.installPopupMenuAction(EComponentPopupMenu.installTextComponentPopupMenu(this));
+        if (config.isDefaultPopupMenu()) {
+            this.installPopupMenuAction(EComponentPopupMenu.installTextComponentPopupMenu(this));
+        }
         UIUtils.registerLocaleChangeListener((EComponentI) this);
         this.addDocumentKeyListener(new DocumentKeyListener() {
             @Override
@@ -98,6 +99,9 @@ public class ETextField extends JTextField implements EComponentI, HasValue<Stri
                 }
             }
         });
+        if (config.getText() != null) {
+            this.setText(config.getText());
+        }
     }
 
     /**

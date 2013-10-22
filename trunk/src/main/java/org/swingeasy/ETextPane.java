@@ -35,7 +35,6 @@ import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledEditorKit;
-import javax.swing.text.rtf.RTFEditorKit;
 
 import org.swingeasy.EComponentPopupMenu.CheckEnabled;
 import org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction;
@@ -457,15 +456,16 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
 
     private static final long serialVersionUID = -2601772157437823356L;
 
+    protected final ETextPaneConfig cfg;
+
     protected Action[] actions;
 
-    public ETextPane() {
-        this(new RTFEditorKit());
+    protected ETextPane() {
+        this.cfg = null;
     }
 
-    public ETextPane(StyledEditorKit kit) {
-        this.setEditorKit(kit);
-        this.init();
+    public ETextPane(ETextPaneConfig cfg) {
+        this.init(this.cfg = cfg.lock());
     }
 
     /**
@@ -498,9 +498,12 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         return new EToolBar(this.getComponentPopupMenu());
     }
 
-    protected void init() {
+    protected void init(ETextPaneConfig config) {
+        this.setEditorKit(config.getKit());
         UIUtils.registerLocaleChangeListener((EComponentI) this);
-        this.installPopupMenuAction(EComponentPopupMenu.installTextComponentPopupMenu(this));
+        if (config.isDefaultPopupMenu()) {
+            this.installPopupMenuAction(EComponentPopupMenu.installTextComponentPopupMenu(this));
+        }
     }
 
     public JScrollPane inScrollPane(boolean autoscroll) {

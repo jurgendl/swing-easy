@@ -217,9 +217,13 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
 
     protected String lastSearch = null;
 
-    protected ETextAreaConfig cfg;
+    protected final ETextAreaConfig cfg;
 
     protected Action[] actions;
+
+    protected ETextArea() {
+        this.cfg = null;
+    }
 
     public ETextArea(ETextAreaConfig cfg) {
         super(cfg.lock().getRows(), cfg.getColumns());
@@ -369,7 +373,9 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
     protected void init(ETextAreaConfig config) {
         this.setEditable(config.isEnabled());
         this.setAutoScroll(config.isAutoScroll());
-        this.installPopupMenuAction(EComponentPopupMenu.installTextComponentPopupMenu(this));
+        if (config.isDefaultPopupMenu()) {
+            this.installPopupMenuAction(EComponentPopupMenu.installTextComponentPopupMenu(this));
+        }
         UIUtils.registerLocaleChangeListener((EComponentI) this);
         this.addDocumentKeyListener(new DocumentKeyListener() {
             @Override
@@ -380,6 +386,9 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
                 }
             }
         });
+        if (config.getText() != null) {
+            this.setText(config.getText());
+        }
     }
 
     public JScrollPane inScrollPane(boolean autoscroll) {

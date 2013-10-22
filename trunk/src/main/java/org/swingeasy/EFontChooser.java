@@ -34,7 +34,7 @@ public class EFontChooser extends JPanel implements EComponentI {
 
     protected ESpinner<Integer> size = new ESpinner<Integer>(new SpinnerNumberModel(12, 4, 48, 2));
 
-    private EFontChooser() {
+    public EFontChooser() {
         super(new MigLayout());
         this.add(this.fc);
         Dimension cbsize = new Dimension(200, 20);

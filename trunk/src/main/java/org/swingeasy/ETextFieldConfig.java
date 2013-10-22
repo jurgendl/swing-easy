@@ -4,38 +4,46 @@ package org.swingeasy;
  * @author Jurgen
  */
 public class ETextFieldConfig extends EComponentConfig<ETextFieldConfig> {
-    private int columns = 0;
+    protected int columns = 0;
 
-    private boolean enabled = true;
+    protected boolean enabled = true;
 
-    private boolean selectAllOnFocus = false;
+    protected boolean selectAllOnFocus = false;
+
+    protected String text = null;
 
     public ETextFieldConfig() {
         super();
     }
 
     public ETextFieldConfig(boolean enabled) {
-        super();
         this.enabled = enabled;
     }
 
     public ETextFieldConfig(boolean enabled, int columns) {
-        this(enabled, columns, false);
-    }
-
-    public ETextFieldConfig(boolean enabled, int columns, boolean selectAllOnFocus) {
-        super();
-        this.selectAllOnFocus = selectAllOnFocus;
         this.enabled = enabled;
         this.columns = columns;
     }
 
+    public ETextFieldConfig(boolean enabled, String text) {
+        this.enabled = enabled;
+        this.text = text;
+    }
+
     public ETextFieldConfig(int columns) {
-        this(true, columns, false);
+        this.columns = columns;
+    }
+
+    public ETextFieldConfig(String text) {
+        this.text = text;
     }
 
     public int getColumns() {
         return this.columns;
+    }
+
+    public String getText() {
+        return this.text;
     }
 
     public boolean isEnabled() {
@@ -61,6 +69,12 @@ public class ETextFieldConfig extends EComponentConfig<ETextFieldConfig> {
     public ETextFieldConfig setSelectAllOnFocus(boolean selectAllOnFocus) {
         this.lockCheck();
         this.selectAllOnFocus = selectAllOnFocus;
+        return this;
+    }
+
+    public ETextFieldConfig setText(String text) {
+        this.lockCheck();
+        this.text = text;
         return this;
     }
 }

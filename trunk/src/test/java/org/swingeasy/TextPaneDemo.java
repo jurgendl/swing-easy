@@ -14,7 +14,7 @@ import javax.swing.WindowConstants;
  */
 public class TextPaneDemo {
     private static void addComponents(Container container) {
-        final ETextPane pane = new ETextPane(/* new HTMLEditorKit() */);
+        final ETextPane pane = new ETextPane(new ETextPaneConfig());
         container.add(pane);
         container.add(pane.getToolbar(), BorderLayout.NORTH);
 

@@ -1,53 +1,45 @@
 package org.swingeasy;
 
-import javax.swing.Action;
-import javax.swing.Icon;
+import java.awt.event.ActionEvent;
+
+import javax.swing.JComponent;
 import javax.swing.JRadioButton;
 import javax.swing.ToolTipManager;
+
+import org.apache.commons.lang.StringUtils;
+import org.swingeasy.EComponentPopupMenu.ReadableComponent;
 
 /**
  * @author Jurgen
  */
-public class ERadioButton extends JRadioButton {
+public class ERadioButton extends JRadioButton implements ReadableComponent {
     private static final long serialVersionUID = -1359464901174268318L;
 
-    public ERadioButton() {
-        this.init();
+    protected final ERadioButtonConfig cfg;
+
+    protected ERadioButton() {
+        this.cfg = null;
     }
 
-    public ERadioButton(Action a) {
-        super(a);
-        this.init();
+    public ERadioButton(ERadioButtonConfig cfg) {
+        this.init(this.cfg = cfg.lock());
     }
 
-    public ERadioButton(Icon icon) {
-        super(icon);
-        this.init();
+    /**
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy(java.awt.event.ActionEvent)
+     */
+    @Override
+    public void copy(ActionEvent e) {
+        // TODO
+        System.err.println("not implemented");
     }
 
-    public ERadioButton(Icon icon, boolean selected) {
-        super(icon, selected);
-        this.init();
-    }
-
-    public ERadioButton(String text) {
-        super(text);
-        this.init();
-    }
-
-    public ERadioButton(String text, boolean selected) {
-        super(text, selected);
-        this.init();
-    }
-
-    public ERadioButton(String text, Icon icon) {
-        super(text, icon);
-        this.init();
-    }
-
-    public ERadioButton(String text, Icon icon, boolean selected) {
-        super(text, icon, selected);
-        this.init();
+    /**
+     * @see org.swingeasy.HasParentComponent#getParentComponent()
+     */
+    @Override
+    public JComponent getParentComponent() {
+        return this;
     }
 
     /**
@@ -67,9 +59,29 @@ public class ERadioButton extends JRadioButton {
         return toolTipText;
     }
 
-    protected void init() {
-        // if (cfg.isTooltips()) {
-        ToolTipManager.sharedInstance().registerComponent(this);
-        // }
+    protected void init(ERadioButtonConfig config) {
+        if (config.isTooltips()) {
+            ToolTipManager.sharedInstance().registerComponent(this);
+        }
+        if (config.getAction() != null) {
+            this.setAction(config.getAction());
+        }
+        if (StringUtils.isNotBlank(config.getText())) {
+            this.setText(config.getText());
+        }
+        if (config.getIcon() != null) {
+            this.setIcon(config.getIcon());
+        }
+        this.setSelected(config.isSelected());
+        if (config.isDefaultPopupMenu()) {
+            this.installPopupMenuAction(EComponentPopupMenu.installPopupMenu(this));
+        }
+    }
+
+    /**
+     * JDOC
+     */
+    protected void installPopupMenuAction(@SuppressWarnings("unused") EComponentPopupMenu menu) {
+        //
     }
 }

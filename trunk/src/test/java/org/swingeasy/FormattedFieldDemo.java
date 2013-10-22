@@ -27,10 +27,10 @@ public class FormattedFieldDemo {
         container.setLayout(new GridLayout(-1, 2));
 
         final EButtonGroup localegroup = new EButtonGroup();
-        ERadioButton en = new ERadioButton("en");//$NON-NLS-1$
+        ERadioButton en = new ERadioButton(new ERadioButtonConfig("en"));//$NON-NLS-1$
         container.add(en);
         localegroup.add(en);
-        ERadioButton nl = new ERadioButton("nl");//$NON-NLS-1$
+        ERadioButton nl = new ERadioButton(new ERadioButtonConfig("nl"));//$NON-NLS-1$
         container.add(nl);
         localegroup.add(nl);
         localegroup.addPropertyChangeListener(EButtonGroup.SELECTION, new PropertyChangeListener() {

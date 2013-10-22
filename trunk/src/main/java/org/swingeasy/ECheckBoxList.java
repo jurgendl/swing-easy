@@ -19,7 +19,8 @@ public class ECheckBoxList extends EList<Boolean> {
 
         @Override
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-            ECheckBoxListRecord record = ECheckBoxListRecord.class.cast(value);
+            @SuppressWarnings("unchecked")
+            EListRecord<Boolean> record = EListRecord.class.cast(value);
             boolean selected = (record != null) && Boolean.TRUE.equals(record.get());
             this.setText(record == null ? null : record.getStringValue());
             this.setSelected(selected);
