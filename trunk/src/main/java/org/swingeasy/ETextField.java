@@ -79,17 +79,25 @@ public class ETextField extends JTextField implements EComponentI, HasValue<Stri
 
     protected void init(ETextFieldConfig config) {
         this.setColumns(this.cfg.getColumns());
+
         this.setEditable(config.isEnabled());
+
         if (config.isSelectAllOnFocus()) {
             this.addFocusListener(new ETextComponentSelectAllOnFocus());
         }
+
         if (config.isTooltips()) {
             ToolTipManager.sharedInstance().registerComponent(this);
         }
+
         if (config.isDefaultPopupMenu()) {
             this.installPopupMenuAction(EComponentPopupMenu.installTextComponentPopupMenu(this));
         }
-        UIUtils.registerLocaleChangeListener((EComponentI) this);
+
+        if (config.isLocalized()) {
+            UIUtils.registerLocaleChangeListener((EComponentI) this);
+        }
+
         this.addDocumentKeyListener(new DocumentKeyListener() {
             @Override
             public void update(Type type, DocumentEvent e) {
@@ -99,6 +107,7 @@ public class ETextField extends JTextField implements EComponentI, HasValue<Stri
                 }
             }
         });
+
         if (config.getText() != null) {
             this.setText(config.getText());
         }

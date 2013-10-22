@@ -10,6 +10,8 @@ public abstract class EComponentConfig<T> {
 
     protected boolean tooltips = true;
 
+    protected boolean localized = true;
+
     @SuppressWarnings("unchecked")
     final protected T castThis() {
         return (T) this;
@@ -17,6 +19,10 @@ public abstract class EComponentConfig<T> {
 
     final public boolean isDefaultPopupMenu() {
         return this.defaultPopupMenu;
+    }
+
+    final public boolean isLocalized() {
+        return this.localized;
     }
 
     final protected boolean isLocked() {
@@ -41,6 +47,12 @@ public abstract class EComponentConfig<T> {
     final public T setDefaultPopupMenu(boolean defaultPopupMenu) {
         this.lockCheck();
         this.defaultPopupMenu = defaultPopupMenu;
+        return this.castThis();
+    }
+
+    final public T setLocalized(boolean localized) {
+        this.lockCheck();
+        this.localized = localized;
         return this.castThis();
     }
 

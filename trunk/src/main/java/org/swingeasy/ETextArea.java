@@ -372,11 +372,17 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
 
     protected void init(ETextAreaConfig config) {
         this.setEditable(config.isEnabled());
+
         this.setAutoScroll(config.isAutoScroll());
+
         if (config.isDefaultPopupMenu()) {
             this.installPopupMenuAction(EComponentPopupMenu.installTextComponentPopupMenu(this));
         }
-        UIUtils.registerLocaleChangeListener((EComponentI) this);
+
+        if (config.isLocalized()) {
+            UIUtils.registerLocaleChangeListener((EComponentI) this);
+        }
+
         this.addDocumentKeyListener(new DocumentKeyListener() {
             @Override
             public void update(Type type, DocumentEvent e) {
@@ -386,6 +392,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
                 }
             }
         });
+
         if (config.getText() != null) {
             this.setText(config.getText());
         }

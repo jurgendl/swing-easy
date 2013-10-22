@@ -68,16 +68,23 @@ public class ELabel extends JLabel implements EComponentI, ReadableComponent {
         if (config.getText() != null) {
             this.setText(config.getText());
         }
+
         if (config.getIcon() != null) {
             this.setIcon(config.getIcon());
         }
+
         if (config.getHorizontalAlignment() != null) {
             this.setHorizontalAlignment(config.getHorizontalAlignment());
         }
+
         if (config.isTooltips()) {
             ToolTipManager.sharedInstance().registerComponent(this);
         }
-        UIUtils.registerLocaleChangeListener((EComponentI) this);
+
+        if (config.isLocalized()) {
+            UIUtils.registerLocaleChangeListener((EComponentI) this);
+        }
+
         if (config.isDefaultPopupMenu()) {
             this.installPopupMenuAction(EComponentPopupMenu.installPopupMenu(this));
         }

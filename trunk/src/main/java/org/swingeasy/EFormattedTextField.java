@@ -70,7 +70,9 @@ public class EFormattedTextField<T> extends JFormattedTextField implements EComp
             this.installPopupMenuAction(EComponentPopupMenu.installTextComponentPopupMenu(this));
         }
 
-        UIUtils.registerLocaleChangeListener((EComponentI) this);
+        if (config.isLocalized()) {
+            UIUtils.registerLocaleChangeListener((EComponentI) this);
+        }
 
         this.setFocusLostBehavior(JFormattedTextField.COMMIT_OR_REVERT);
 

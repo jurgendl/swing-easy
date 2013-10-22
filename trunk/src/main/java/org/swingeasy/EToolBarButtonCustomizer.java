@@ -34,7 +34,7 @@ public class EToolBarButtonCustomizer extends EButtonCustomizer {
         }
         button.setFocusable(false);
         button.setHideActionText(true);
-        UIUtils.registerLocaleChangeListener(button);
+
         if (button.getAction() != null) {
             KeyStroke key = KeyStroke.class.cast(button.getAction().getValue(Action.ACCELERATOR_KEY));
             String kst = EComponentPopupMenu.keyStroke2String(key).trim();

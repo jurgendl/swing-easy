@@ -47,16 +47,23 @@ public class EToolBarButton extends JButton implements EComponentI, ReadableComp
             this.setAction(config.getAction());
             this.setName(String.valueOf(config.getAction().getValue(Action.NAME)));
         }
+
         if (config.getIcon() != null) {
             this.setIcon(config.getIcon());
         }
+
         if (config.getButtonCustomizer() != null) {
             config.getButtonCustomizer().customize(this);
         }
+
         if (config.isDefaultPopupMenu()) {
             this.installPopupMenuAction(EComponentPopupMenu.installPopupMenu(this));
         }
-        UIUtils.registerLocaleChangeListener((EComponentI) this);
+
+        if (config.isLocalized()) {
+            UIUtils.registerLocaleChangeListener((EComponentI) this);
+        }
+
         if (config.isTooltips()) {
             ToolTipManager.sharedInstance().registerComponent(this);
         }

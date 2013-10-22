@@ -101,7 +101,9 @@ public class ECheckBoxTree<T> extends JTree implements ECheckBoxTreeI<T>, Readab
             ToolTipManager.sharedInstance().registerComponent(this);
         }
 
-        UIUtils.registerLocaleChangeListener((EComponentI) this);
+        if (config.isLocalized()) {
+            UIUtils.registerLocaleChangeListener((EComponentI) this);
+        }
 
         if (config.isDefaultPopupMenu()) {
             this.installPopupMenuAction(EComponentPopupMenu.installPopupMenu(this));
