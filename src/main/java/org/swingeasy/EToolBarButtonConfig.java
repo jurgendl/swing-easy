@@ -6,36 +6,36 @@ import javax.swing.Icon;
 /**
  * @author Jurgen
  */
-public class EToggleToolBarButtonConfig extends EComponentConfig<EToggleToolBarButtonConfig> {
+public class EToolBarButtonConfig extends EComponentConfig<EToolBarButtonConfig> {
     protected EToolBarButtonCustomizer buttonCustomizer;
 
     protected Action action;
 
     protected Icon icon;
 
-    public EToggleToolBarButtonConfig() {
+    public EToolBarButtonConfig() {
         super();
     }
 
-    public EToggleToolBarButtonConfig(Action a) {
+    public EToolBarButtonConfig(Action a) {
         this.action = a;
     }
 
-    public EToggleToolBarButtonConfig(EToolBarButtonCustomizer ebc) {
+    public EToolBarButtonConfig(EToolBarButtonCustomizer ebc) {
         this.buttonCustomizer = ebc;
     }
 
-    public EToggleToolBarButtonConfig(EToolBarButtonCustomizer ebc, Action a) {
+    public EToolBarButtonConfig(EToolBarButtonCustomizer ebc, Action a) {
         this.buttonCustomizer = ebc;
         this.action = a;
     }
 
-    public EToggleToolBarButtonConfig(EToolBarButtonCustomizer ebc, Icon icon) {
+    public EToolBarButtonConfig(EToolBarButtonCustomizer ebc, Icon icon) {
         this.buttonCustomizer = ebc;
         this.icon = icon;
     }
 
-    public EToggleToolBarButtonConfig(Icon icon) {
+    public EToolBarButtonConfig(Icon icon) {
         this.icon = icon;
     }
 
@@ -51,19 +51,19 @@ public class EToggleToolBarButtonConfig extends EComponentConfig<EToggleToolBarB
         return this.icon;
     }
 
-    public EToggleToolBarButtonConfig setAction(Action action) {
+    public EToolBarButtonConfig setAction(Action action) {
         this.lockCheck();
         this.action = action;
         return this;
     }
 
-    public EToggleToolBarButtonConfig setButtonCustomizer(EToolBarButtonCustomizer buttonCustomizer) {
+    public EToolBarButtonConfig setButtonCustomizer(EToolBarButtonCustomizer buttonCustomizer) {
         this.lockCheck();
         this.buttonCustomizer = buttonCustomizer;
         return this;
     }
 
-    public EToggleToolBarButtonConfig setIcon(Icon icon) {
+    public EToolBarButtonConfig setIcon(Icon icon) {
         this.lockCheck();
         this.icon = icon;
         return this;

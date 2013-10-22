@@ -3,8 +3,8 @@ package org.swingeasy;
 import java.awt.event.ActionEvent;
 
 import javax.swing.Action;
+import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JToggleButton;
 import javax.swing.ToolTipManager;
 
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
@@ -12,16 +12,16 @@ import org.swingeasy.EComponentPopupMenu.ReadableComponent;
 /**
  * @author Jurgen
  */
-public class EToggleToolBarButton extends JToggleButton implements EComponentI, ReadableComponent {
+public class EToolBarButton extends JButton implements EComponentI, ReadableComponent {
     private static final long serialVersionUID = -6193067407274776197L;
 
-    protected EButtonConfig cfg;
+    protected EToolBarButtonConfig cfg;
 
-    protected EToggleToolBarButton() {
+    protected EToolBarButton() {
         this.cfg = null;
     }
 
-    public EToggleToolBarButton(EToggleToolBarButtonConfig cfg) {
+    public EToolBarButton(EToolBarButtonConfig cfg) {
         this.init(cfg = cfg.lock());
     }
 
@@ -42,7 +42,7 @@ public class EToggleToolBarButton extends JToggleButton implements EComponentI, 
         return this;
     }
 
-    protected void init(EToggleToolBarButtonConfig config) {
+    protected void init(EToolBarButtonConfig config) {
         if (config.getAction() != null) {
             this.setAction(config.getAction());
             this.setName(String.valueOf(config.getAction().getValue(Action.NAME)));
