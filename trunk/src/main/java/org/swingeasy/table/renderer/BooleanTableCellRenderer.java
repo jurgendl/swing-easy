@@ -21,6 +21,7 @@ public class BooleanTableCellRenderer extends DefaultTableCellRenderer implement
     public BooleanTableCellRenderer() {
         this.renderer = new JCheckBox();
         this.renderer.setHorizontalAlignment(SwingConstants.CENTER);
+        this.renderer.setBorderPaintedFlat(true);
     }
 
     /**

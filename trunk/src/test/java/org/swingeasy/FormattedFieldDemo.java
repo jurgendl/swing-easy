@@ -5,14 +5,12 @@ import java.awt.GridLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.net.MalformedURLException;
-import java.net.URL;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Locale;
 
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
-import javax.swing.text.DefaultFormatter;
 import javax.swing.text.MaskFormatter;
 
 import org.swingeasy.formatters.DateFormatBuilder;
@@ -68,8 +66,8 @@ public class FormattedFieldDemo {
                 DateFormatBuilder.Length.Default)), new Date()));
         container.add(new ELabel("mask"));
         container.add(new EFormattedTextField<String>(new EFormattedTextFieldConfig(new MaskFormatter("(###) ###-###")), "(032) 111-222"));
-        container.add(new ELabel("url"));
-        container.add(new EFormattedTextField<URL>(new EFormattedTextFieldConfig((DefaultFormatter) null)), new URL("http://www.google.com"));
+        // container.add(new ELabel("url"));
+        // container.add(new EFormattedTextField<URL>(new EFormattedTextFieldConfig((DefaultFormatter) null)), new URL("http://www.google.com"));
         container.add(new ELabel("ip4"));
         container
                 .add(new EFormattedTextField<byte[]>(new EFormattedTextFieldConfig(new IPAddressFormatter()), new byte[] { (byte) 130, 65, 86, 66 }));
