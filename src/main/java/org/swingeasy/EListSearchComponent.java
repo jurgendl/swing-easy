@@ -1,6 +1,5 @@
 package org.swingeasy;
 
-import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
@@ -28,16 +27,6 @@ public class EListSearchComponent<T> extends ELabeledTextFieldButtonComponent im
     public EListSearchComponent(EList<T> eList) {
         this.eList = eList;
         this.sList = eList.stsi();
-    }
-
-    /**
-     * 
-     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy(java.awt.event.ActionEvent)
-     */
-    @Override
-    public void copy(ActionEvent e) {
-        // FIXME
-        System.err.println("not implemented");
     }
 
     /**

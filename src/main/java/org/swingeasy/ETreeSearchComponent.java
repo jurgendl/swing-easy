@@ -1,6 +1,5 @@
 package org.swingeasy;
 
-import java.awt.event.ActionEvent;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
@@ -28,16 +27,6 @@ public class ETreeSearchComponent<T> extends ELabeledTextFieldButtonComponent im
     public ETreeSearchComponent(ETree<T> eTree) {
         this.eTree = eTree;
         this.sTree = eTree.stsi();
-    }
-
-    /**
-     * 
-     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy(java.awt.event.ActionEvent)
-     */
-    @Override
-    public void copy(ActionEvent e) {
-        // FIXME
-        System.err.println("not implemented");
     }
 
     /**

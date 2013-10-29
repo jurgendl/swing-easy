@@ -30,8 +30,7 @@ public class EButton extends JButton implements EComponentI, ReadableComponent {
      */
     @Override
     public void copy(ActionEvent e) {
-        // TODO
-        System.err.println("not implemented");
+        EComponentPopupMenu.copyToClipboard(this.getText());
     }
 
     /**
