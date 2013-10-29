@@ -14,6 +14,15 @@ public abstract class ELabeledTextFieldButtonComponent extends AbstractELabeledT
 
     /**
      * 
+     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy(java.awt.event.ActionEvent)
+     */
+    @Override
+    public void copy(ActionEvent e) {
+        EComponentPopupMenu.copyToClipboard(this.getInput().getText());
+    }
+
+    /**
+     * 
      * @see org.swingeasy.AbstractELabeledTextFieldButtonComponent#getButton()
      */
     @Override

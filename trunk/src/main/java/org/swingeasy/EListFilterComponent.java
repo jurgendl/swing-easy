@@ -1,6 +1,5 @@
 package org.swingeasy;
 
-import java.awt.event.ActionEvent;
 import java.util.List;
 import java.util.Locale;
 
@@ -32,16 +31,6 @@ public class EListFilterComponent<T> extends ELabeledTextFieldButtonComponent im
         this.createComponent();
         this.filter = new TextComponentMatcherEditor<EListRecord<T>>(JTextField.class.cast(this.getInput()), this, false);
         this.tmprecords = new FilterList<EListRecord<T>>(records, this.filter);
-    }
-
-    /**
-     * 
-     * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy(java.awt.event.ActionEvent)
-     */
-    @Override
-    public void copy(ActionEvent e) {
-        // FIXME
-        System.err.println("not implemented");
     }
 
     /**

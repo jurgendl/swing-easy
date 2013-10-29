@@ -30,8 +30,7 @@ public class ERadioButton extends JRadioButton implements EComponentI, ReadableC
      */
     @Override
     public void copy(ActionEvent e) {
-        // TODO
-        System.err.println("not implemented");
+        EComponentPopupMenu.copyToClipboard(this.getText());
     }
 
     /**

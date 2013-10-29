@@ -53,8 +53,7 @@ public class ECheckBox extends JCheckBox implements EComponentI, HasValue<Boolea
      */
     @Override
     public void copy(ActionEvent e) {
-        // TODO
-        System.err.println("not implemented");
+        EComponentPopupMenu.copyToClipboard(this.getText());
     }
 
     /**

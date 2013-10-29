@@ -30,8 +30,7 @@ public class EToggleButton extends JToggleButton implements EComponentI, Readabl
      */
     @Override
     public void copy(ActionEvent e) {
-        // TODO
-        System.err.println("not implemented");
+        EComponentPopupMenu.copyToClipboard(this.getText());
     }
 
     /**

@@ -30,8 +30,7 @@ public class EToolBarButton extends JButton implements EComponentI, ReadableComp
      */
     @Override
     public void copy(ActionEvent e) {
-        // TODO
-        System.err.println("not implemented");
+        EComponentPopupMenu.copyToClipboard(this.getText());
     }
 
     /**
