@@ -7,6 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.ToolTipManager;
 
+import org.apache.commons.lang.StringUtils;
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
 
 /**
@@ -30,7 +31,8 @@ public class EToolBarButton extends JButton implements EComponentI, ReadableComp
      */
     @Override
     public void copy(ActionEvent e) {
-        EComponentPopupMenu.copyToClipboard(this.getText());
+        String text = this.getText();
+        EComponentPopupMenu.copyToClipboard(StringUtils.isNotBlank(text) ? text : this.getToolTipText());
     }
 
     /**
