@@ -9,6 +9,7 @@ import java.util.Locale;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -30,27 +31,27 @@ public class SearchDialog extends JDialog implements EComponentI {
 
     protected EButton btnHighlightAll;
 
-    protected JTextField tfFind;
+    protected ETextField tfFind;
 
     protected EButton btnFind;
 
-    protected ELabel lblReplace;
-
-    protected JTextField tfReplace;
+    protected ETextField tfReplace;
 
     protected EButton btnReplace;
+
+    protected ECheckBox cbReplace;
 
     public SearchDialog(boolean replacing, ETextArea textComponent) {
         super(UIUtils.getRootWindow(textComponent), Messages.getString((Locale) null, "SearchDialog.title"), ModalityType.MODELESS);
         this.textComponent = textComponent;
         this.init();
-        this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(textComponent);
         this.setReplacing(replacing);
         UIUtils.registerLocaleChangeListener((EComponentI) this);
     }
 
     protected void closed() {
-        this.textComponent.removeHighlights();
+        // this.textComponent.removeHighlights();
     }
 
     protected void find(String find) {
@@ -59,63 +60,64 @@ public class SearchDialog extends JDialog implements EComponentI {
 
     protected EButton getBtnClose() {
         if (this.btnClose == null) {
-            this.btnClose = new EButton();
+            this.btnClose = new EButton(new EButtonConfig());
         }
         return this.btnClose;
     }
 
     protected EButton getBtnFind() {
         if (this.btnFind == null) {
-            this.btnFind = new EButton();
+            this.btnFind = new EButton(new EButtonConfig());
         }
         return this.btnFind;
     }
 
     protected EButton getBtnHighlightAll() {
         if (this.btnHighlightAll == null) {
-            this.btnHighlightAll = new EButton();
+            this.btnHighlightAll = new EButton(new EButtonConfig());
         }
         return this.btnHighlightAll;
     }
 
     protected EButton getBtnReplace() {
         if (this.btnReplace == null) {
-            this.btnReplace = new EButton();
+            this.btnReplace = new EButton(new EButtonConfig());
         }
         return this.btnReplace;
     }
 
     protected EButton getBtnReplaceAll() {
         if (this.btnReplaceAll == null) {
-            this.btnReplaceAll = new EButton();
+            this.btnReplaceAll = new EButton(new EButtonConfig());
         }
         return this.btnReplaceAll;
     }
 
+    protected ECheckBox getCbReplace() {
+        if (this.cbReplace == null) {
+            this.cbReplace = new ECheckBox(new ECheckBoxConfig());
+            this.cbReplace.setHorizontalAlignment(SwingConstants.RIGHT);
+        }
+        return this.cbReplace;
+    }
+
     protected ELabel getLblFind() {
         if (this.lblFind == null) {
-            this.lblFind = new ELabel();
+            this.lblFind = new ELabel(new ELabelConfig("").setHorizontalAlignment(SwingConstants.RIGHT));
         }
         return this.lblFind;
     }
 
-    protected ELabel getLblReplace() {
-        if (this.lblReplace == null) {
-            this.lblReplace = new ELabel();
-        }
-        return this.lblReplace;
-    }
-
     protected JTextField getTfFind() {
         if (this.tfFind == null) {
-            this.tfFind = new JTextField();
+            this.tfFind = new ETextField(new ETextFieldConfig());
         }
         return this.tfFind;
     }
 
     protected JTextField getTfReplace() {
         if (this.tfReplace == null) {
-            this.tfReplace = new JTextField();
+            this.tfReplace = new ETextField(new ETextFieldConfig());
         }
         return this.tfReplace;
     }
@@ -136,14 +138,25 @@ public class SearchDialog extends JDialog implements EComponentI {
             }
         });
 
-        this.setLayout(new MigLayout("wrap 4", "[right,fill]rel[grow,fill,220::]14px[fill,sg grp1]14px[fill,sg grp1]", ""));
+        String layoutConstraints = "wrap 4, insets 5 5 0 5";
+        String colConstraints = "[right,fill]rel[grow,fill,220::]14px[fill,sg grp1]14px[fill,sg grp1]";
+        String rowConstraints = "[]rel[]rel[]0px";
+        this.setLayout(new MigLayout(layoutConstraints, colConstraints, rowConstraints));
 
         this.add(this.getLblFind());
         this.add(this.getTfFind());
         this.add(this.getBtnFind());
         this.add(this.getBtnHighlightAll(), "wrap");
 
-        this.add(this.getLblReplace());
+        this.add(this.getCbReplace());
+
+        this.getCbReplace().addValueChangeListener(new ValueChangeListener<Boolean>() {
+            @Override
+            public void valueChanged(Boolean value) {
+                SearchDialog.this.setReplacing(value);
+            }
+        });
+
         this.add(this.getTfReplace());
         this.add(this.getBtnReplace());
         this.add(this.getBtnReplaceAll(), "wrap");
@@ -244,7 +257,7 @@ public class SearchDialog extends JDialog implements EComponentI {
         this.getLblFind().setText(Messages.getString(l, "SearchDialog.find") + ": ");
         this.getBtnHighlightAll().setText(Messages.getString(l, "SearchDialog.highlight-all"));
         this.getBtnFind().setText(Messages.getString(l, "SearchDialog.find"));
-        this.getLblReplace().setText(Messages.getString(l, "SearchDialog.replace-by") + ": ");
+        this.getCbReplace().setText(Messages.getString(l, "SearchDialog.replace-by") + ": ");
         this.getBtnReplace().setText(Messages.getString(l, "SearchDialog.replace"));
     }
 
@@ -253,5 +266,6 @@ public class SearchDialog extends JDialog implements EComponentI {
         this.getTfReplace().setEnabled(replacing);
         this.getBtnReplace().setEnabled(replacing);
         this.getBtnReplaceAll().setEnabled(replacing);
+        this.getCbReplace().setSelected(replacing);
     }
 }
