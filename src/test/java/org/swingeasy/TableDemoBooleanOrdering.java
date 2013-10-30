@@ -22,10 +22,10 @@ public class TableDemoBooleanOrdering {
         headers.add("info"); //$NON-NLS-1$
         table.setHeaders(headers);
 
-        table.addRecord(new ETableRecordArray<Object>("kol.a", true, "1(a)")); //$NON-NLS-1$ //$NON-NLS-2$
-        table.addRecord(new ETableRecordArray<Object>("kol.b", false, "0(b)")); //$NON-NLS-1$ //$NON-NLS-2$
-        table.addRecord(new ETableRecordArray<Object>("kol.c", true, "1(c)")); //$NON-NLS-1$ //$NON-NLS-2$
-        table.addRecord(new ETableRecordArray<Object>("kol.d", false, "0(d)")); //$NON-NLS-1$ //$NON-NLS-2$
+        table.stsi().addRecord(new ETableRecordArray<Object>("kol.a", true, "1(a)")); //$NON-NLS-1$ //$NON-NLS-2$
+        table.stsi().addRecord(new ETableRecordArray<Object>("kol.b", false, "0(b)")); //$NON-NLS-1$ //$NON-NLS-2$
+        table.stsi().addRecord(new ETableRecordArray<Object>("kol.c", true, "1(c)")); //$NON-NLS-1$ //$NON-NLS-2$
+        table.stsi().addRecord(new ETableRecordArray<Object>("kol.d", false, "0(d)")); //$NON-NLS-1$ //$NON-NLS-2$
 
         frame.getContentPane().add(new JScrollPane(table), BorderLayout.CENTER);
         frame.setSize(400, 400);
