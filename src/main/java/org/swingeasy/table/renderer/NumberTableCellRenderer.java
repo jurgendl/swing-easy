@@ -3,15 +3,11 @@ package org.swingeasy.table.renderer;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import javax.swing.table.DefaultTableCellRenderer;
-
-import org.swingeasy.EComponentI;
-
 // javax.swing.text.NumberFormatter
 /**
  * @author Jurgen
  */
-public class NumberTableCellRenderer extends DefaultTableCellRenderer.UIResource implements EComponentI {
+public class NumberTableCellRenderer extends ETableCellRenderer {
     private static final long serialVersionUID = 5169127745067354714L;
 
     protected NumberFormat formatter;

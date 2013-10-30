@@ -5,15 +5,12 @@ import java.text.DateFormat;
 import java.util.Locale;
 
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableCellRenderer;
-
-import org.swingeasy.EComponentI;
 
 // javax.swing.text.DateFormatter
 /**
  * @author Jurgen
  */
-public class DateTableCellRenderer extends DefaultTableCellRenderer.UIResource implements EComponentI {
+public class DateTableCellRenderer extends ETableCellRenderer {
     public enum Type {
         DATE, TIME, DATE_TIME;
     }

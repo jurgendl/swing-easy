@@ -5,18 +5,15 @@ import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JList;
 
-import org.swingeasy.EComponentI;
-
 /**
  * @author Jurgen
  */
-public class ColorListCellRenderer extends DefaultListCellRenderer.UIResource implements EComponentI {
-    
+public class ColorListCellRenderer extends EListCellRenderer {
+
     private static final long serialVersionUID = -7605301072046365348L;
 
     protected Icon emptyIcon;

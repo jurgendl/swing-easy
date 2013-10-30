@@ -2,14 +2,10 @@ package org.swingeasy.table.renderer;
 
 import java.util.Locale;
 
-import javax.swing.table.DefaultTableCellRenderer;
-
-import org.swingeasy.EComponentI;
-
 /**
  * @author Jurgen
  */
-public class ByteArrayTableCellRenderer extends DefaultTableCellRenderer.UIResource implements EComponentI {
+public class ByteArrayTableCellRenderer extends ETableCellRenderer {
     private static final long serialVersionUID = 393779263932701309L;
 
     private static final char[] hexArray = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
