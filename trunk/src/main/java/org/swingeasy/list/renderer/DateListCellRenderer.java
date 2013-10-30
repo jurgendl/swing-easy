@@ -4,21 +4,17 @@ import java.awt.Component;
 import java.text.DateFormat;
 import java.util.Locale;
 
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
-
-import org.swingeasy.EComponentI;
 
 // javax.swing.text.DateFormatter
 /**
  * @author Jurgen
  */
-public class DateListCellRenderer extends DefaultListCellRenderer.UIResource implements EComponentI {
+public class DateListCellRenderer extends EListCellRenderer {
     public enum Type {
         DATE, TIME, DATE_TIME;
     }
 
-    
     private static final long serialVersionUID = -1237135359072682865L;
 
     protected DateFormat formatter;

@@ -4,16 +4,13 @@ import java.awt.Component;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.JList;
-
-import org.swingeasy.EComponentI;
 
 // javax.swing.text.NumberFormatter
 /**
  * @author Jurgen
  */
-public class NumberListCellRenderer extends DefaultListCellRenderer.UIResource implements EComponentI {
+public class NumberListCellRenderer extends EListCellRenderer {
     private static final long serialVersionUID = 5169127745067354714L;
 
     protected NumberFormat formatter;

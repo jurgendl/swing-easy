@@ -6,14 +6,11 @@ import java.awt.Component;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
-
-import org.swingeasy.EComponentI;
 
 /**
  * @see http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6723524
  */
-public class BooleanTableCellRenderer extends DefaultTableCellRenderer implements EComponentI {
+public class BooleanTableCellRenderer extends ETableCellRenderer {
     private static final long serialVersionUID = 2577869717107398445L;
 
     private JCheckBox renderer;
