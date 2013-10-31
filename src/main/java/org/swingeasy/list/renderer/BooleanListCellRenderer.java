@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 
+import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
 import javax.swing.JList;
 import javax.swing.SwingConstants;
@@ -26,8 +27,9 @@ public class BooleanListCellRenderer extends EListCellRenderer<Boolean> {
                 super.paintComponent(g);
             }
         };
-        this.renderer.setHorizontalAlignment(SwingConstants.CENTER);
+        this.renderer.setHorizontalAlignment(SwingConstants.LEFT);
         this.renderer.setBorderPaintedFlat(true);
+        this.renderer.setBorder(BorderFactory.createEmptyBorder(1, 1, 1, 1));
     }
 
     /**
@@ -44,6 +46,7 @@ public class BooleanListCellRenderer extends EListCellRenderer<Boolean> {
         if (isSelected) {
             this.renderer.setForeground(list.getSelectionForeground());
             this.renderer.setBackground(list.getSelectionBackground());
+            this.renderer.setOpaque(true);
         } else {
             Color bg = this.getBackground();
             this.renderer.setForeground(this.getForeground());
@@ -51,8 +54,8 @@ public class BooleanListCellRenderer extends EListCellRenderer<Boolean> {
             // a color of type DerivedColor, which behaves strange, not sure
             // why.
             this.renderer.setBackground(new Color(bg.getRed(), bg.getGreen(), bg.getBlue()));
+            this.renderer.setOpaque(false);
         }
-        this.renderer.setOpaque(false);
         return this.renderer;
     }
 }
