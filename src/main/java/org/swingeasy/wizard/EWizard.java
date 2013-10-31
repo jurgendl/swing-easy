@@ -32,10 +32,10 @@ import javax.swing.border.EmptyBorder;
 
 import org.swingeasy.EButton;
 import org.swingeasy.EButtonConfig;
+import org.swingeasy.EComponentGradientRenderer.GradientOrientation;
 import org.swingeasy.EComponentI;
 import org.swingeasy.ELabel;
 import org.swingeasy.GradientPanel;
-import org.swingeasy.GradientPanel.GradientOrientation;
 import org.swingeasy.Messages;
 import org.swingeasy.UIUtils;
 
@@ -115,7 +115,7 @@ public class EWizard extends JPanel implements EComponentI {
         this.setLayout(gridBagLayout);
 
         this.topPanel = new GradientPanel();
-        this.topPanel.setOrientation(GradientOrientation.HORIZONTAL);
+        this.topPanel.getGradientRenderer().setOrientation(GradientOrientation.HORIZONTAL);
         GridBagConstraints gbc_topPanel = new GridBagConstraints();
         gbc_topPanel.anchor = GridBagConstraints.NORTH;
         gbc_topPanel.fill = GridBagConstraints.HORIZONTAL;

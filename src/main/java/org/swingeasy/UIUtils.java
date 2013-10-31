@@ -284,6 +284,8 @@ public class UIUtils {
 
     protected static Map<String, String> cachedDescriptions = new HashMap<String, String>();
 
+    public static final char[] hexArray = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+
     /**
      * put window on bottomright, the size of the window must be set<br>
      * TODO check on multi-monitor setup
@@ -294,6 +296,26 @@ public class UIUtils {
         int x = (int) bounds.getMaxX() - w.getWidth();
         int y = (int) bounds.getMaxY() - w.getHeight();
         w.setLocation(x, y);
+    }
+
+    public static String bytesToHex(byte[] bytes) {
+        char[] hexChars = new char[bytes.length * 2];
+        int v;
+        for (int j = 0; j < bytes.length; j++) {
+            v = bytes[j] & 0xFF;
+            UIUtils.toHex(hexChars, v, j);
+        }
+        return new String(hexChars);
+    }
+
+    public static String bytesToHex(Byte[] bytes) {
+        char[] hexChars = new char[bytes.length * 2];
+        int v;
+        for (int j = 0; j < bytes.length; j++) {
+            v = bytes[j] & 0xFF;
+            UIUtils.toHex(hexChars, v, j);
+        }
+        return new String(hexChars);
     }
 
     /**
@@ -782,6 +804,11 @@ public class UIUtils {
             frame.toFront();
             frame.repaint();
         }
+    }
+
+    public static void toHex(char[] hexChars, int v, int j) {
+        hexChars[j * 2] = UIUtils.hexArray[v >>> 4];
+        hexChars[(j * 2) + 1] = UIUtils.hexArray[v & 0x0F];
     }
 
     /**

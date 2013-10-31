@@ -1,28 +1,28 @@
-package org.swingeasy.table.renderer;
+package org.swingeasy.list.renderer;
 
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 
 import javax.swing.JCheckBox;
-import javax.swing.JTable;
+import javax.swing.JList;
 import javax.swing.SwingConstants;
 
 /**
  * @see http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6723524
  */
-public class BooleanTableCellRenderer extends ETableCellRenderer<Boolean> {
+public class BooleanListCellRenderer extends EListCellRenderer<Boolean> {
     private static final long serialVersionUID = 2577869717107398445L;
 
     private JCheckBox renderer;
 
-    public BooleanTableCellRenderer() {
+    public BooleanListCellRenderer() {
         this.renderer = new JCheckBox() {
             private static final long serialVersionUID = 2759192766733886746L;
 
             @Override
             protected void paintComponent(Graphics g) {
-                BooleanTableCellRenderer.this.renderBackground(this, g);
+                BooleanListCellRenderer.this.renderBackground(this, g);
                 super.paintComponent(g);
             }
         };
@@ -31,19 +31,19 @@ public class BooleanTableCellRenderer extends ETableCellRenderer<Boolean> {
     }
 
     /**
-     * @see org.swingeasy.table.renderer.ETableCellRenderer#render(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
+     * @see org.swingeasy.list.renderer.EListCellRenderer#render(javax.swing.JList, java.lang.Object, int, boolean, boolean)
      */
     @Override
-    public Component render(JTable table, Boolean b, boolean isSelected, boolean hasFocus, int row, int column) {
-        this.super_getTableCellRendererComponent(table, b, isSelected, hasFocus, row, column);
+    protected Component render(JList list, Boolean b, int index, boolean isSelected, boolean cellHasFocus) {
+        this.super_getListCellRendererComponent(list, b, index, isSelected, cellHasFocus);
         if (b != null) {
             this.renderer.setSelected(b);
         } else {
             this.renderer.setSelected(false);
         }
         if (isSelected) {
-            this.renderer.setForeground(table.getSelectionForeground());
-            this.renderer.setBackground(table.getSelectionBackground());
+            this.renderer.setForeground(list.getSelectionForeground());
+            this.renderer.setBackground(list.getSelectionBackground());
         } else {
             Color bg = this.getBackground();
             this.renderer.setForeground(this.getForeground());

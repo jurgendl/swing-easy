@@ -2,6 +2,7 @@ package org.swingeasy.list.renderer;
 
 import java.awt.Component;
 import java.text.DateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import javax.swing.JList;
@@ -10,7 +11,7 @@ import javax.swing.JList;
 /**
  * @author Jurgen
  */
-public class DateListCellRenderer extends EListCellRenderer {
+public class DateListCellRenderer extends EListCellRenderer<Date> {
     public enum Type {
         DATE, TIME, DATE_TIME;
     }
@@ -30,16 +31,7 @@ public class DateListCellRenderer extends EListCellRenderer {
         this.newFormatter();
     }
 
-    /**
-     * 
-     * @see javax.swing.DefaultListCellRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
-     */
-    @Override
-    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-        return super.getListCellRendererComponent(list, this.getValue(value), index, isSelected, cellHasFocus);
-    }
-
-    protected String getValue(Object value) {
+    protected String getValue(Date value) {
         return ((value == null) ? "" : this.formatter.format(value)); //$NON-NLS-1$
     }
 
@@ -55,6 +47,17 @@ public class DateListCellRenderer extends EListCellRenderer {
                 this.formatter = DateFormat.getTimeInstance(DateFormat.LONG, this.getLocale());
                 break;
         }
+    }
+
+    /**
+     * @see org.swingeasy.list.renderer.EListCellRenderer#render(javax.swing.JList, java.lang.Object, int, boolean, boolean)
+     */
+    @Override
+    protected Component render(JList list, Date value, int index, boolean isSelected, boolean cellHasFocus) {
+        String text = this.getValue(value);
+        Component tmp = this.super_getListCellRendererComponent(list, text, index, isSelected, cellHasFocus);
+        this.setToolTipText(text);
+        return tmp;
     }
 
     /**

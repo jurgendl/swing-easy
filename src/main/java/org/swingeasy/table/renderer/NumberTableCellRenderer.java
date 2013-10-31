@@ -7,7 +7,7 @@ import java.util.Locale;
 /**
  * @author Jurgen
  */
-public class NumberTableCellRenderer extends ETableCellRenderer {
+public class NumberTableCellRenderer extends ETableCellRenderer<Number> {
     private static final long serialVersionUID = 5169127745067354714L;
 
     protected NumberFormat formatter;

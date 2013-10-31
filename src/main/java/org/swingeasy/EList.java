@@ -34,8 +34,11 @@ import javax.swing.event.ListSelectionListener;
 import org.swingeasy.EComponentPopupMenu.CheckEnabled;
 import org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction;
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
+import org.swingeasy.list.renderer.BooleanListCellRenderer;
+import org.swingeasy.list.renderer.ByteArrayListCellRenderer;
 import org.swingeasy.list.renderer.ColorListCellRenderer;
 import org.swingeasy.list.renderer.DateListCellRenderer;
+import org.swingeasy.list.renderer.EListCellRenderer;
 import org.swingeasy.list.renderer.NumberListCellRenderer;
 
 import ca.odell.glazedlists.BasicEventList;
@@ -53,11 +56,16 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         @SuppressWarnings("rawtypes")
         protected transient Hashtable<Class, ListCellRenderer> defaultRenderersByClass = new Hashtable<Class, ListCellRenderer>();
 
-        public DelegatingListCellRenderer(ListCellRenderer defaultListCellRenderer) {
-            this.setDefaultRenderer(Object.class, defaultListCellRenderer);
+        public DelegatingListCellRenderer(@SuppressWarnings("unused") ListCellRenderer defaultListCellRenderer) {
             this.setDefaultRenderer(Date.class, new DateListCellRenderer());
             this.setDefaultRenderer(Number.class, new NumberListCellRenderer());
+            this.setDefaultRenderer(Float.class, new NumberListCellRenderer());
+            this.setDefaultRenderer(Double.class, new NumberListCellRenderer());
             this.setDefaultRenderer(Color.class, new ColorListCellRenderer());
+            this.setDefaultRenderer(Boolean.class, new BooleanListCellRenderer());
+            this.setDefaultRenderer(Byte[].class, new ByteArrayListCellRenderer());
+            this.setDefaultRenderer(byte[].class, new ByteArrayListCellRenderer());
+            this.setDefaultRenderer(Object.class, new EListCellRenderer<Object>());
         }
 
         public ListCellRenderer getDefaultRenderer(Class<?> columnClass) {
@@ -342,6 +350,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
             EListModel<T> model = EListModel.class.cast(this.getModel());
             return new DefaultEventSelectionModel<EListRecord<T>>(model.sourceList);
         } catch (ClassCastException ex) {
+            System.out.println(ex);
             return super.createSelectionModel();
         }
     }

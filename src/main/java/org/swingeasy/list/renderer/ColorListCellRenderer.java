@@ -12,8 +12,7 @@ import javax.swing.JList;
 /**
  * @author Jurgen
  */
-public class ColorListCellRenderer extends EListCellRenderer {
-
+public class ColorListCellRenderer extends EListCellRenderer<Color> {
     private static final long serialVersionUID = -7605301072046365348L;
 
     protected Icon emptyIcon;
@@ -35,18 +34,16 @@ public class ColorListCellRenderer extends EListCellRenderer {
     }
 
     /**
-     * 
-     * @see javax.swing.DefaultListCellRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
+     * @see org.swingeasy.list.renderer.EListCellRenderer#render(javax.swing.JList, java.lang.Object, int, boolean, boolean)
      */
     @Override
-    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-        super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-        if (value == null) {
+    protected Component render(JList list, Color color, int index, boolean isSelected, boolean cellHasFocus) {
+        this.super_getListCellRendererComponent(list, color, index, isSelected, cellHasFocus);
+        if (color == null) {
             this.setIcon(this.emptyIcon);
             this.setText(""); //$NON-NLS-1$
             return this;
         }
-        Color color = Color.class.cast(value);
         String red = Integer.toHexString(color.getRed());
         if (red.length() == 1) {
             red = "0" + red; //$NON-NLS-1$

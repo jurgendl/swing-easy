@@ -39,6 +39,7 @@ import org.swingeasy.table.renderer.BooleanTableCellRenderer;
 import org.swingeasy.table.renderer.ByteArrayTableCellRenderer;
 import org.swingeasy.table.renderer.ColorTableCellRenderer;
 import org.swingeasy.table.renderer.DateTableCellRenderer;
+import org.swingeasy.table.renderer.ETableCellRenderer;
 import org.swingeasy.table.renderer.NumberTableCellRenderer;
 
 import ca.odell.glazedlists.DefaultExternalExpansionModel;
@@ -150,6 +151,7 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
         this.defaultRenderersByColumnClass.put(Double.class, new javax.swing.UIDefaults.ProxyLazyValue(NumberTableCellRenderer.class.getName()));
         this.defaultRenderersByColumnClass.put(byte[].class, new javax.swing.UIDefaults.ProxyLazyValue(ByteArrayTableCellRenderer.class.getName()));
         this.defaultRenderersByColumnClass.put(Byte[].class, new javax.swing.UIDefaults.ProxyLazyValue(ByteArrayTableCellRenderer.class.getName()));
+        this.defaultRenderersByColumnClass.put(Object.class, new javax.swing.UIDefaults.ProxyLazyValue(ETableCellRenderer.class.getName()));
     }
 
     /**
