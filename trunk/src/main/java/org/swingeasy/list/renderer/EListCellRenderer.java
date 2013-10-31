@@ -1,6 +1,5 @@
 package org.swingeasy.list.renderer;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 
@@ -8,7 +7,6 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JComponent;
 import javax.swing.JList;
 
-import org.swingeasy.EComponentGradientRenderer;
 import org.swingeasy.EComponentI;
 import org.swingeasy.EComponentRenderer;
 
@@ -18,8 +16,7 @@ import org.swingeasy.EComponentRenderer;
 public class EListCellRenderer<T> extends DefaultListCellRenderer.UIResource implements EComponentI {
     private static final long serialVersionUID = -4058183204571727427L;
 
-    protected EComponentRenderer backgroundRenderer = new EComponentGradientRenderer(EComponentGradientRenderer.GradientOrientation.VERTICAL,
-            Color.white, new Color(212, 212, 212));
+    protected EComponentRenderer backgroundRenderer;
 
     public EComponentRenderer getBackgroundRenderer() {
         return this.backgroundRenderer;
@@ -53,8 +50,9 @@ public class EListCellRenderer<T> extends DefaultListCellRenderer.UIResource imp
         }
     }
 
-    public void setBackgroundRenderer(EComponentRenderer backgroundRenderer) {
+    public EListCellRenderer<T> setBackgroundRenderer(EComponentRenderer backgroundRenderer) {
         this.backgroundRenderer = backgroundRenderer;
+        return this;
     }
 
     protected Component super_getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {

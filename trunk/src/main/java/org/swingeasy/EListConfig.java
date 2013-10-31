@@ -10,8 +10,14 @@ public class EListConfig extends EComponentConfig<EListConfig> {
 
     protected boolean filterable = false;
 
+    protected EComponentRenderer backgroundRenderer;
+
     public EListConfig() {
         super();
+    }
+
+    public EComponentRenderer getBackgroundRenderer() {
+        return this.backgroundRenderer;
     }
 
     public boolean isFilterable() {
@@ -24,6 +30,12 @@ public class EListConfig extends EComponentConfig<EListConfig> {
 
     public boolean isThreadSafe() {
         return this.threadSafe;
+    }
+
+    public EListConfig setBackgroundRenderer(EComponentRenderer backgroundRenderer) {
+        this.lockCheck();
+        this.backgroundRenderer = backgroundRenderer;
+        return this;
     }
 
     public EListConfig setFilterable(boolean filterable) {

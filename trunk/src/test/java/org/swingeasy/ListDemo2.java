@@ -27,7 +27,8 @@ public class ListDemo2 {
     public static void main(String[] args) {
         UIUtils.systemLookAndFeel();
         SystemSettings.setCurrentLocale(Locale.ENGLISH);
-        EListConfig cfg = new EListConfig();
+        EListConfig cfg = new EListConfig().setBackgroundRenderer(new EComponentGradientRenderer(
+                EComponentGradientRenderer.GradientOrientation.VERTICAL, Color.white, new Color(212, 212, 212)));
         cfg.setSortable(false);
         @SuppressWarnings("rawtypes")
         EList cc = new EList(cfg);

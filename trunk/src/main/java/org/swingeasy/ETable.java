@@ -765,6 +765,11 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
             // } else if (dr instanceof Component) {
             // UIUtils.registerLocaleChangeListener(Component.class.cast(dr));
         }
+
+        if (dr instanceof ETableCellRenderer<?>) {
+            ETableCellRenderer.class.cast(dr).setBackgroundRenderer(this.cfg.getBackgroundRenderer());
+        }
+
         return dr;
     }
 

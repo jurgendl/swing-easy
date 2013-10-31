@@ -56,16 +56,16 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         @SuppressWarnings("rawtypes")
         protected transient Hashtable<Class, ListCellRenderer> defaultRenderersByClass = new Hashtable<Class, ListCellRenderer>();
 
-        public DelegatingListCellRenderer(@SuppressWarnings("unused") ListCellRenderer defaultListCellRenderer) {
-            this.setDefaultRenderer(Date.class, new DateListCellRenderer());
-            this.setDefaultRenderer(Number.class, new NumberListCellRenderer());
-            this.setDefaultRenderer(Float.class, new NumberListCellRenderer());
-            this.setDefaultRenderer(Double.class, new NumberListCellRenderer());
-            this.setDefaultRenderer(Color.class, new ColorListCellRenderer());
-            this.setDefaultRenderer(Boolean.class, new BooleanListCellRenderer());
-            this.setDefaultRenderer(Byte[].class, new ByteArrayListCellRenderer());
-            this.setDefaultRenderer(byte[].class, new ByteArrayListCellRenderer());
-            this.setDefaultRenderer(Object.class, new EListCellRenderer<Object>());
+        public DelegatingListCellRenderer(@SuppressWarnings("unused") ListCellRenderer defaultListCellRenderer, EComponentRenderer backgroundRenderer) {
+            this.setDefaultRenderer(Date.class, new DateListCellRenderer().setBackgroundRenderer(backgroundRenderer));
+            this.setDefaultRenderer(Number.class, new NumberListCellRenderer().setBackgroundRenderer(backgroundRenderer));
+            this.setDefaultRenderer(Float.class, new NumberListCellRenderer().setBackgroundRenderer(backgroundRenderer));
+            this.setDefaultRenderer(Double.class, new NumberListCellRenderer().setBackgroundRenderer(backgroundRenderer));
+            this.setDefaultRenderer(Color.class, new ColorListCellRenderer().setBackgroundRenderer(backgroundRenderer));
+            this.setDefaultRenderer(Boolean.class, new BooleanListCellRenderer().setBackgroundRenderer(backgroundRenderer));
+            this.setDefaultRenderer(Byte[].class, new ByteArrayListCellRenderer().setBackgroundRenderer(backgroundRenderer));
+            this.setDefaultRenderer(byte[].class, new ByteArrayListCellRenderer().setBackgroundRenderer(backgroundRenderer));
+            this.setDefaultRenderer(Object.class, new EListCellRenderer<Object>().setBackgroundRenderer(backgroundRenderer));
         }
 
         public ListCellRenderer getDefaultRenderer(Class<?> columnClass) {
@@ -350,6 +350,8 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
             EListModel<T> model = EListModel.class.cast(this.getModel());
             return new DefaultEventSelectionModel<EListRecord<T>>(model.sourceList);
         } catch (ClassCastException ex) {
+            // FIXME
+            System.out.println(this.getModel());
             System.out.println(ex);
             return super.createSelectionModel();
         }
@@ -485,7 +487,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
             this.filtercomponent.setList(this);
         }
         elistModel.filtercomponent = null;
-        this.delegatingListCellRenderer = new DelegatingListCellRenderer(this.getCellRenderer());
+        this.delegatingListCellRenderer = new DelegatingListCellRenderer(this.getCellRenderer(), config.getBackgroundRenderer());
         this.setCellRenderer(this.delegatingListCellRenderer);
 
         // drag and drop test jvm internally, intra jvm, tostring

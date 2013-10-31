@@ -20,6 +20,8 @@ public class ETableConfig extends EComponentConfig<ETableConfig> {
 
     protected boolean draggable;
 
+    protected EComponentRenderer backgroundRenderer;
+
     public ETableConfig() {
         super();
         this.threadSafe = true;
@@ -42,6 +44,10 @@ public class ETableConfig extends EComponentConfig<ETableConfig> {
         this.resizable = resizable;
         this.vertical = vertical;
         this.draggable = draggable;
+    }
+
+    public EComponentRenderer getBackgroundRenderer() {
+        return this.backgroundRenderer;
     }
 
     public boolean isDraggable() {
@@ -74,6 +80,12 @@ public class ETableConfig extends EComponentConfig<ETableConfig> {
 
     public boolean isVertical() {
         return this.vertical;
+    }
+
+    public ETableConfig setBackgroundRenderer(EComponentRenderer backgroundRenderer) {
+        this.lockCheck();
+        this.backgroundRenderer = backgroundRenderer;
+        return this;
     }
 
     public ETableConfig setDraggable(boolean draggable) {
