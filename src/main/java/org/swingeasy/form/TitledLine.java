@@ -3,14 +3,16 @@ package org.swingeasy.form;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.UIManager;
+
+import org.swingeasy.ELabel;
 
 public class TitledLine extends JComponent {
     class Line extends JComponent {
@@ -43,13 +45,15 @@ public class TitledLine extends JComponent {
 
     private static final long serialVersionUID = 5956004089983509968L;
 
+    protected ELabel label;
+
     public TitledLine(String title) {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        JLabel label = new JLabel(title);
-        label.setFont(UIManager.getFont("TitledBorder.font"));
+        this.label = new ELabel(title);
+        this.label.setFont(UIManager.getFont("TitledBorder.font"));
         Color color = UIManager.getColor("TitledBorder.titleColor");
-        label.setForeground(color);
-        this.add(label);
+        this.label.setForeground(color);
+        this.add(this.label);
         Line comp = new Line();
         comp.setForeground(color);
         this.add(comp);
@@ -62,5 +66,14 @@ public class TitledLine extends JComponent {
     @Override
     public void setEnabled(boolean enabled) {
         super.setEnabled(true);
+    }
+
+    /**
+     * @see javax.swing.JComponent#setFont(java.awt.Font)
+     */
+    @Override
+    public void setFont(Font font) {
+        super.setFont(font);
+        this.label.setFont(font);
     }
 }
