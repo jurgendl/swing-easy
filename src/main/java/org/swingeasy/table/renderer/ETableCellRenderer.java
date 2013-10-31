@@ -1,6 +1,5 @@
 package org.swingeasy.table.renderer;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
 
@@ -8,7 +7,6 @@ import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 
-import org.swingeasy.EComponentGradientRenderer;
 import org.swingeasy.EComponentI;
 import org.swingeasy.EComponentRenderer;
 
@@ -18,8 +16,7 @@ import org.swingeasy.EComponentRenderer;
 public class ETableCellRenderer<T> extends DefaultTableCellRenderer.UIResource implements EComponentI {
     private static final long serialVersionUID = 2588181759941994912L;
 
-    protected EComponentRenderer backgroundRenderer = new EComponentGradientRenderer(EComponentGradientRenderer.GradientOrientation.VERTICAL,
-            Color.white, new Color(212, 212, 212));
+    protected EComponentRenderer backgroundRenderer;
 
     public EComponentRenderer getBackgroundRenderer() {
         return this.backgroundRenderer;
