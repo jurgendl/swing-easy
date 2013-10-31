@@ -2,6 +2,7 @@ package org.swingeasy.table.renderer;
 
 import java.awt.Component;
 import java.text.DateFormat;
+import java.util.Date;
 import java.util.Locale;
 
 import javax.swing.JTable;
@@ -10,7 +11,7 @@ import javax.swing.JTable;
 /**
  * @author Jurgen
  */
-public class DateTableCellRenderer extends ETableCellRenderer {
+public class DateTableCellRenderer extends ETableCellRenderer<Date> {
     public enum Type {
         DATE, TIME, DATE_TIME;
     }
@@ -30,15 +31,6 @@ public class DateTableCellRenderer extends ETableCellRenderer {
         this.newFormatter();
     }
 
-    /**
-     * 
-     * @see javax.swing.table.DefaultTableCellRenderer#getTableCellRendererComponent(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
-     */
-    @Override
-    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-    }
-
     protected void newFormatter() {
         switch (this.type) {
             case DATE:
@@ -51,6 +43,14 @@ public class DateTableCellRenderer extends ETableCellRenderer {
                 this.formatter = DateFormat.getTimeInstance(DateFormat.LONG, this.getLocale());
                 break;
         }
+    }
+
+    /**
+     * @see org.swingeasy.table.renderer.ETableCellRenderer#render(javax.swing.JTable, java.lang.Object, boolean, boolean, int, int)
+     */
+    @Override
+    public Component render(JTable table, Date value, boolean isSelected, boolean hasFocus, int row, int column) {
+        return this.super_getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
     }
 
     /**
@@ -69,14 +69,8 @@ public class DateTableCellRenderer extends ETableCellRenderer {
      */
     @Override
     public void setValue(Object value) {
-        this.setText((value == null) ? "" : this.formatter.format(value)); //$NON-NLS-1$
+        String text = (value == null) ? "" : this.formatter.format(value);
+        this.setText(text);
+        this.setToolTipText(text);
     }
-
-    // @Override
-    // public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-    // if (value != null) {
-    // value = Config.DATE_FORMAT.format(Date.class.cast(value));
-    // }
-    // return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-    // }
 }

@@ -10,7 +10,7 @@ import javax.swing.JList;
 /**
  * @author Jurgen
  */
-public class NumberListCellRenderer extends EListCellRenderer {
+public class NumberListCellRenderer extends EListCellRenderer<Number> {
     private static final long serialVersionUID = 5169127745067354714L;
 
     protected NumberFormat formatter;
@@ -19,21 +19,20 @@ public class NumberListCellRenderer extends EListCellRenderer {
         this.newFormatter();
     }
 
-    /**
-     * 
-     * @see javax.swing.DefaultListCellRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
-     */
-    @Override
-    public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-        return super.getListCellRendererComponent(list, this.getValue(value), index, isSelected, cellHasFocus);
-    }
-
-    protected String getValue(Object value) {
+    protected String getValue(Number value) {
         return ((value == null) ? "" : this.formatter.format(value)); //$NON-NLS-1$
     }
 
     protected void newFormatter() {
         this.formatter = NumberFormat.getInstance(this.getLocale());
+    }
+
+    /**
+     * @see org.swingeasy.list.renderer.EListCellRenderer#render(javax.swing.JList, java.lang.Object, int, boolean, boolean)
+     */
+    @Override
+    public Component render(JList list, Number value, int index, boolean isSelected, boolean cellHasFocus) {
+        return this.super_getListCellRendererComponent(list, this.getValue(value), index, isSelected, cellHasFocus);
     }
 
     /**

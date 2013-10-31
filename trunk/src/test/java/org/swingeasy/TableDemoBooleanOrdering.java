@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
+import javax.swing.WindowConstants;
 
 /**
  * @author Jurgen
@@ -29,6 +30,7 @@ public class TableDemoBooleanOrdering {
 
         frame.getContentPane().add(new JScrollPane(table), BorderLayout.CENTER);
         frame.setSize(400, 400);
+        frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         frame.setVisible(true);
     }
 }

@@ -10,7 +10,7 @@ import javax.swing.ImageIcon;
 /**
  * @author Jurgen
  */
-public class ColorTableCellRenderer extends ETableCellRenderer {
+public class ColorTableCellRenderer extends ETableCellRenderer<Color> {
 
     private static final long serialVersionUID = -7605301072046365348L;
 

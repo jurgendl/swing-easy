@@ -38,7 +38,7 @@ public class ListDemo2 {
                     BorderLayout.CENTER);
             f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             cc = cc.stsi();
-            f.setSize(200, 200);
+            f.setSize(400, 400);
             {
                 JPanel jp = new JPanel(new FlowLayout());
                 ButtonGroup bg = new ButtonGroup();
@@ -79,6 +79,7 @@ public class ListDemo2 {
                 f.getContentPane().add(btn, BorderLayout.SOUTH);
             }
             f.setVisible(true);
+            f.setLocationRelativeTo(null);
         }
         cc.addRecord(new EListRecord<Date>(new Date()));
         cc.addRecord(new EListRecord<Color>(Color.red));
@@ -87,6 +88,6 @@ public class ListDemo2 {
         cc.addRecord(new EListRecord<Float>(100.01f));
         cc.addRecord(new EListRecord<Double>(1000.001d));
         cc.addRecord(new EListRecord<Boolean>(true));
-        System.out.println(cc.getCellRenderer());
+        cc.addRecord(new EListRecord<byte[]>("bytes".getBytes()));
     }
 }
