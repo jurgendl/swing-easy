@@ -374,6 +374,10 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         return this;
     }
 
+    public int getRecordCount() {
+        return this.records.size();
+    }
+
     /**
      * 
      * @see org.swingeasy.EListI#getRecords()
