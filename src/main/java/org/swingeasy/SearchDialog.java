@@ -7,8 +7,6 @@ import java.awt.event.WindowEvent;
 import java.util.Locale;
 
 import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
@@ -117,14 +115,14 @@ public class SearchDialog extends JDialog implements EComponentI {
         return this.lblFind;
     }
 
-    protected JTextField getTfFind() {
+    protected ETextField getTfFind() {
         if (this.tfFind == null) {
             this.tfFind = new ETextField(new ETextFieldConfig());
         }
         return this.tfFind;
     }
 
-    protected JTextField getTfReplace() {
+    protected ETextField getTfReplace() {
         if (this.tfReplace == null) {
             this.tfReplace = new ETextField(new ETextFieldConfig());
         }
@@ -170,7 +168,7 @@ public class SearchDialog extends JDialog implements EComponentI {
         this.add(this.getBtnReplace());
         this.add(this.getBtnReplaceAll(), "wrap");
 
-        this.add(new JLabel(), "span 3");
+        this.add(new ELabel(), "span 3");
         this.add(this.getBtnClose());
 
         ActionListener findAction = new ActionListener() {
@@ -239,6 +237,15 @@ public class SearchDialog extends JDialog implements EComponentI {
 
         this.pack();
         this.setResizable(false);
+        this.getBtnReplaceAll().setName("SearchDialog.replace-all");
+        this.getBtnClose().setName("SearchDialog.cancelButtonText");
+        this.getLblFind().setName("SearchDialog.find");
+        this.getBtnHighlightAll().setName("SearchDialog.highlight-all");
+        this.getBtnFind().setName("SearchDialog.find");
+        this.getCbReplace().setName("SearchDialog.replace-by");
+        this.getBtnReplace().setName("SearchDialog.replace");
+        this.getTfFind().setName("SearchDialog.find.input");
+        this.getTfReplace().setName("SearchDialog.replace.input");
     }
 
     public boolean isReplacing() {

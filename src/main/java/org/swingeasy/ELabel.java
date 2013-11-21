@@ -17,7 +17,7 @@ public class ELabel extends JLabel implements EComponentI, ReadableComponent {
     protected final ELabelConfig cfg;
 
     public ELabel() {
-        this.cfg = null;
+        this(new ELabelConfig(""));
     }
 
     public ELabel(ELabelConfig cfg) {
