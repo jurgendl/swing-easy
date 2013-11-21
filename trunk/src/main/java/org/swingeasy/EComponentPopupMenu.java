@@ -673,7 +673,9 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         @Override
         public void find(ActionEvent e) {
             if (this.parentComponent instanceof ETextArea) {
-                new SearchDialog(false, ETextArea.class.cast(this.parentComponent)).setVisible(true);
+                SearchDialog searchDialog = new SearchDialog(false, ETextArea.class.cast(this.parentComponent));
+                searchDialog.setVisible(true);
+                searchDialog.updateFocus();
             }
         }
 
@@ -762,7 +764,9 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         @Override
         public void replace(ActionEvent e) {
             if (this.parentComponent instanceof ETextArea) {
-                new SearchDialog(true, ETextArea.class.cast(this.parentComponent)).setVisible(true);
+                SearchDialog searchDialog = new SearchDialog(true, ETextArea.class.cast(this.parentComponent));
+                searchDialog.setVisible(true);
+                searchDialog.updateFocus();
             }
         }
 
