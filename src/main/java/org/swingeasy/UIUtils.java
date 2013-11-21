@@ -3,6 +3,7 @@ package org.swingeasy;
 import java.awt.AWTException;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.FocusTraversalPolicy;
 import java.awt.Frame;
 import java.awt.GraphicsEnvironment;
 import java.awt.Image;
@@ -29,6 +30,7 @@ import java.beans.PropertyChangeListenerProxy;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintStream;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -417,10 +419,20 @@ public class UIUtils {
         focusLog.addHandler(handler);
     }
 
+    public static void debugFocusTraversal(Window window, PrintStream out) {
+        FocusTraversalPolicy ft = window.getFocusTraversalPolicy();
+        Component first = ft.getInitialComponent(window);
+        Component current = first;
+        do {
+            out.println(current);
+            current = ft.getComponentAfter(window, current);
+        } while ((current != null) && !first.equals(current));
+    }
+
     /**
      * lists all current locale change listeners
      */
-    public static void debugLocaleChangeListeners() {
+    public static void debugLocaleChangeListeners(PrintStream out) {
         for (Object o : SystemSettings.getSingleton().propertyChangeSupport.getPropertyChangeListeners()) {
             try {
                 PropertyChangeListenerProxy pclp = (PropertyChangeListenerProxy) o;
@@ -428,9 +440,9 @@ public class UIUtils {
                     continue;
                 }
                 Object component = WeakReferencedListener.<PropertyChangeListenerDelegate> unwrap(pclp.getListener()).getReference().getDelageting();
-                System.out.println((component == null ? null : component.hashCode()) + " : " + component);
+                out.println((component == null ? null : component.hashCode()) + " : " + component);
             } catch (Exception ex) {
-                System.out.println(ex);
+                out.println(ex);
             }
         }
     }
