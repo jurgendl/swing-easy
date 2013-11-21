@@ -40,6 +40,9 @@ import java.util.Properties;
 import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -395,6 +398,23 @@ public class UIUtils {
             return popupmenu;
         }
         return null;
+    }
+
+    public static void debugFocusChanges() {
+        // Obtain a reference to the logger
+        Logger focusLog = Logger.getLogger("java.awt.focus.Component");
+
+        // The logger should log all messages
+        focusLog.setLevel(Level.ALL);
+
+        // Create a new handler
+        ConsoleHandler handler = new ConsoleHandler();
+
+        // The handler must handle all messages
+        handler.setLevel(Level.ALL);
+
+        // Add the handler to the logger
+        focusLog.addHandler(handler);
     }
 
     /**

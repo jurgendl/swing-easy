@@ -10,8 +10,12 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 import net.miginfocom.swing.MigLayout;
+
+import org.apache.commons.lang.StringUtils;
+import org.swingeasy.system.SystemSettings;
 
 /**
  * @author Jurgen
@@ -42,11 +46,16 @@ public class SearchDialog extends JDialog implements EComponentI {
     protected ECheckBox cbReplace;
 
     public SearchDialog(boolean replacing, ETextArea textComponent) {
-        super(UIUtils.getRootWindow(textComponent), Messages.getString((Locale) null, "SearchDialog.title"), ModalityType.MODELESS);
+        super(UIUtils.getRootWindow(textComponent), Messages.getString(SystemSettings.getCurrentLocale(), "SearchDialog.title"),
+                ModalityType.MODELESS);
         this.textComponent = textComponent;
         this.init();
-        this.setLocationRelativeTo(textComponent);
+        this.setLocationRelativeTo(UIUtils.getRootWindow(textComponent));
         this.setReplacing(replacing);
+        String selectedText = textComponent.getSelectedText();
+        if (StringUtils.isNotBlank(selectedText)) {
+            this.tfFind.setText(selectedText);
+        }
         UIUtils.registerLocaleChangeListener((EComponentI) this);
     }
 
@@ -267,5 +276,14 @@ public class SearchDialog extends JDialog implements EComponentI {
         this.getBtnReplace().setEnabled(replacing);
         this.getBtnReplaceAll().setEnabled(replacing);
         this.getCbReplace().setSelected(replacing);
+    }
+
+    public void updateFocus() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                SearchDialog.this.tfFind.requestFocusInWindow();
+            }
+        });
     }
 }
