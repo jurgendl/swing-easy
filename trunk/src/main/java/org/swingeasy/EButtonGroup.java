@@ -4,6 +4,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.Enumeration;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
@@ -64,6 +65,16 @@ public class EButtonGroup extends ButtonGroup implements ItemListener {
      */
     public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
         return this.propertyChangeSupport.getPropertyChangeListeners(propertyName);
+    }
+
+    public String getSelectedButtonText() {
+        for (Enumeration<AbstractButton> b = this.getElements(); b.hasMoreElements();) {
+            AbstractButton button = b.nextElement();
+            if (button.isSelected()) {
+                return button.getText();
+            }
+        }
+        return null;
     }
 
     /**
