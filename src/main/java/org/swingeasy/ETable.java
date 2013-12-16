@@ -620,17 +620,18 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     /**
      * add rowheader to scrollpane, 4 digit number
      */
-    public void addRowHeader(JScrollPane scrollpane) {
-        this.addRowHeader(scrollpane, 4);
+    public JScrollPane addRowHeader(JScrollPane scrollpane) {
+        return this.addRowHeader(scrollpane, 4);
     }
 
     /**
      * add rowheader to scrollpane
      */
-    public void addRowHeader(JScrollPane scrollpane, int cw) {
+    public JScrollPane addRowHeader(JScrollPane scrollpane, int cw) {
         RowNumberTable rowTable = this.getRowHeader(cw);
         scrollpane.setRowHeaderView(rowTable);
         scrollpane.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER, rowTable.getTableHeader());
+        return scrollpane;
     }
 
     /**
