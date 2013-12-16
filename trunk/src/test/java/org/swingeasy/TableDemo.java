@@ -2,6 +2,7 @@ package org.swingeasy;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -77,7 +78,8 @@ public class TableDemo {
             final JFrame frame = new JFrame();
             JScrollPane jsp = new JScrollPane(table, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
             table.addRowHeader(jsp);
-            frame.getContentPane().add(jsp, BorderLayout.CENTER);
+            Container cp = frame.getContentPane();
+            cp.add(jsp, BorderLayout.CENTER);
             JPanel localepanel = new JPanel(new FlowLayout());
             final EButtonGroup localegroup = new EButtonGroup();
             JRadioButton en = new JRadioButton("en");//$NON-NLS-1$
@@ -94,7 +96,7 @@ public class TableDemo {
                     table.repaint();
                 }
             });
-            frame.getContentPane().add(localepanel, BorderLayout.NORTH);
+            cp.add(localepanel, BorderLayout.NORTH);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setSize(800, 400);
             final Random r = new Random(256955466579946l);
@@ -145,7 +147,7 @@ public class TableDemo {
                     }
                 }
             });
-            frame.getContentPane().add(selectedButton, BorderLayout.SOUTH);
+            cp.add(selectedButton, BorderLayout.SOUTH);
 
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
