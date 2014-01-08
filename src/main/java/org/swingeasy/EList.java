@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -40,6 +42,8 @@ import org.swingeasy.list.renderer.ColorListCellRenderer;
 import org.swingeasy.list.renderer.DateListCellRenderer;
 import org.swingeasy.list.renderer.EListCellRenderer;
 import org.swingeasy.list.renderer.NumberListCellRenderer;
+import org.swingeasy.list.renderer.URIListCellRenderer;
+import org.swingeasy.list.renderer.URLListCellRenderer;
 
 import ca.odell.glazedlists.BasicEventList;
 import ca.odell.glazedlists.EventList;
@@ -65,6 +69,8 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
             this.setDefaultRenderer(Boolean.class, new BooleanListCellRenderer().setBackgroundRenderer(backgroundRenderer));
             this.setDefaultRenderer(Byte[].class, new ByteArrayListCellRenderer().setBackgroundRenderer(backgroundRenderer));
             this.setDefaultRenderer(byte[].class, new ByteArrayListCellRenderer().setBackgroundRenderer(backgroundRenderer));
+            this.setDefaultRenderer(URL.class, new URLListCellRenderer().setBackgroundRenderer(backgroundRenderer));
+            this.setDefaultRenderer(URI.class, new URIListCellRenderer().setBackgroundRenderer(backgroundRenderer));
             this.setDefaultRenderer(Object.class, new EListCellRenderer<Object>().setBackgroundRenderer(backgroundRenderer));
         }
 
