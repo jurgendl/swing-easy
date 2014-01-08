@@ -8,6 +8,8 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -41,6 +43,8 @@ import org.swingeasy.table.renderer.ColorTableCellRenderer;
 import org.swingeasy.table.renderer.DateTableCellRenderer;
 import org.swingeasy.table.renderer.ETableCellRenderer;
 import org.swingeasy.table.renderer.NumberTableCellRenderer;
+import org.swingeasy.table.renderer.URITableCellRenderer;
+import org.swingeasy.table.renderer.URLTableCellRenderer;
 
 import ca.odell.glazedlists.DefaultExternalExpansionModel;
 import ca.odell.glazedlists.EventList;
@@ -151,6 +155,8 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
         this.defaultRenderersByColumnClass.put(Double.class, new javax.swing.UIDefaults.ProxyLazyValue(NumberTableCellRenderer.class.getName()));
         this.defaultRenderersByColumnClass.put(byte[].class, new javax.swing.UIDefaults.ProxyLazyValue(ByteArrayTableCellRenderer.class.getName()));
         this.defaultRenderersByColumnClass.put(Byte[].class, new javax.swing.UIDefaults.ProxyLazyValue(ByteArrayTableCellRenderer.class.getName()));
+        this.defaultRenderersByColumnClass.put(URL.class, new javax.swing.UIDefaults.ProxyLazyValue(URLTableCellRenderer.class.getName()));
+        this.defaultRenderersByColumnClass.put(URI.class, new javax.swing.UIDefaults.ProxyLazyValue(URITableCellRenderer.class.getName()));
         this.defaultRenderersByColumnClass.put(Object.class, new javax.swing.UIDefaults.ProxyLazyValue(ETableCellRenderer.class.getName()));
     }
 
