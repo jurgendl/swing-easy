@@ -1,24 +1,29 @@
 package org.swingeasy;
 
-import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.awt.Point;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JFrame;
 import javax.swing.JList;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  * @author Jurgen
@@ -27,7 +32,7 @@ public class PopupDemo {
     private static void addComponents(Container container) {
         EListConfig cfg = new EListConfig();
         cfg.setFilterable(true);
-        EList<String> options = new EList<String>(cfg);
+        final EList<String> options = new EList<String>(cfg);
         for (int i = 0; i < 26; i++) {
             options.stsi().addRecord(new EListRecord<String>((char) ('a' + i) + " option " + i));
         }
@@ -45,15 +50,62 @@ public class PopupDemo {
         EListFilterComponent<String> filtercomponent = options.getFiltercomponent();
         filtercomponent.setLive(true);
         final ETextField input = filtercomponent.getInput();
-        final JPopupMenu popup = new JPopupMenu();
+        final JPopupMenu popup = new JPopupMenu() {
+            private static final long serialVersionUID = 2839148329518264654L;
+
+            @Override
+            public void setVisible(boolean b) {
+                if (b) {
+                    new RuntimeException().printStackTrace(System.out);
+                }
+                super.setVisible(b);
+            }
+        };
+        options.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent ev) {
+                if ((ev.getClickCount() == 1) && (ev.getButton() == MouseEvent.BUTTON1)) {
+                    input.setText(String.valueOf(options.getSelectedValue()));
+                    popup.setVisible(false);
+                }
+            }
+        });
         popup.setBorderPainted(false);
         popup.add(new JScrollPane(options));
         popup.setLightWeightPopupEnabled(true);
-        container.add(input, BorderLayout.NORTH);
+        container.add(input);
+        input.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent ev) {
+                if ((ev.getClickCount() == 1) && (ev.getButton() == MouseEvent.BUTTON1)) {
+                    PopupDemo.show(options, popup);
+                }
+            }
+        });
+        input.getDocument().addDocumentListener(new DocumentListener() {
+            public void change() {
+                PopupDemo.show(options, popup);
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                this.change();
+            }
+
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                this.change();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                this.change();
+            }
+        });
         input.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                popup.setVisible(true);
+                PopupDemo.show(options, popup);
             }
 
             @Override
@@ -69,7 +121,6 @@ public class PopupDemo {
 
             @Override
             public void ancestorMoved(AncestorEvent event) {
-                System.out.println("*moved");
                 PopupDemo.reloc(input, popup);
             }
 
@@ -86,13 +137,11 @@ public class PopupDemo {
 
             @Override
             public void componentMoved(ComponentEvent e) {
-                System.out.println("moved");
                 PopupDemo.reloc(input, popup);
             }
 
             @Override
             public void componentResized(ComponentEvent e) {
-                System.out.println("resized");
                 PopupDemo.reloc(input, popup);
             }
 
@@ -104,35 +153,50 @@ public class PopupDemo {
     }
 
     public static void main(String[] args) {
+        UIUtils.systemLookAndFeel();
         final JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        PopupDemo.addComponents(frame.getContentPane());
-        frame.pack();
-        frame.setLocationRelativeTo(null);
+        Container cp = frame.getContentPane();
+        cp.setLayout(new GridLayout(-1, 1));
+        final JTextField dummy = new JTextField("whut?");
+        cp.add(dummy);
+        PopupDemo.addComponents(cp);
+        for (int i = 0; i < 8; i++) {
+            cp.add(new JTextField("whut?"));
+        }
         frame.setTitle("PopupDemo");
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
+                frame.pack();
+                frame.setSize(new Dimension(Math.max(400, frame.getWidth()), frame.getHeight()));
+                frame.setLocationRelativeTo(null);
                 frame.setVisible(true);
             }
         });
     }
 
     private static void reloc(ETextField input, final JPopupMenu popup) {
-        try {
-            Dimension dim = new Dimension(input.getWidth(), Math.max(100, popup.getPreferredSize().height));
-            System.out.println(dim);
-            popup.setSize(dim);
-            popup.setPreferredSize(dim);
-            int x = (input.getLocationOnScreen().x + input.getWidth()) - (int) popup.getPreferredSize().getWidth();
-            int y = input.getLocationOnScreen().y + input.getHeight();
-            Point loc = new Point(x, y);
-            System.out.println(loc);
-            popup.setLocation(loc);
-            popup.setVisible(false);
+        if (popup.isVisible()) {
+            try {
+                Dimension dim = new Dimension(input.getWidth(), popup.getPreferredSize().height);
+                popup.setSize(dim);
+                popup.setPreferredSize(dim);
+                int x = (input.getLocationOnScreen().x + input.getWidth()) - (int) popup.getPreferredSize().getWidth();
+                int y = input.getLocationOnScreen().y + input.getHeight();
+                Point loc = new Point(x, y);
+                popup.setLocation(loc);
+                popup.setVisible(false);
+                popup.setVisible(true);
+            } catch (Exception ex) {
+                //
+            }
+        }
+    }
+
+    private static void show(final EList<String> options, final JPopupMenu popup) {
+        if (!popup.isVisible() && (options.getRecordCount() > 1)) {
             popup.setVisible(true);
-        } catch (Exception ex) {
-            //
         }
     }
 }

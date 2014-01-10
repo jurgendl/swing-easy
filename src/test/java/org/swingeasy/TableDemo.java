@@ -62,12 +62,6 @@ public class TableDemo {
                                 System.out.println("col Integer"); //$NON-NLS-1$
                             }
                         }
-
-                        for (int i = 0; i < table.getColumnModel().getColumnCount(); i++) {
-                            System.out.println(i);
-                            System.out.println(table.getCellRenderer(1, i));
-                            System.out.println(table.getCellEditor(1, i));
-                        }
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
