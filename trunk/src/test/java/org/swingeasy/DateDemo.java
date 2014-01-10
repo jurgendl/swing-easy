@@ -18,17 +18,22 @@ public class DateDemo {
         container.setLayout(new GridLayout(-1, 1));
         final EDateEditor ede0 = new EDateEditor();
         final EDateTimeEditor edte0 = new EDateTimeEditor();
+        final ETimeEditor edt0 = new ETimeEditor();
         {
             container.add(ede0, BorderLayout.NORTH);
-            container.add(edte0, BorderLayout.SOUTH);
+            container.add(edte0, BorderLayout.CENTER);
+            container.add(edt0, BorderLayout.SOUTH);
         }
         final EDateEditor ede = new EDateEditor();
         final EDateTimeEditor edte = new EDateTimeEditor();
+        final ETimeEditor edt = new ETimeEditor();
         {
             ede.setDate(null);
             container.add(ede, BorderLayout.NORTH);
             edte.setDate(null);
-            container.add(edte, BorderLayout.SOUTH);
+            container.add(edte, BorderLayout.CENTER);
+            edt.setDate(null);
+            container.add(edt, BorderLayout.SOUTH);
         }
         JButton log = new JButton("log");
         log.addActionListener(new ActionListener() {

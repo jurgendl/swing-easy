@@ -61,7 +61,9 @@ import org.swingeasy.EComponentPopupMenu.ReadableComponent;
 import org.swingeasy.table.editor.BooleanTableCellEditor;
 import org.swingeasy.table.editor.ColorTableCellEditor;
 import org.swingeasy.table.editor.DateTableCellEditor;
+import org.swingeasy.table.editor.DateTimeTableCellEditor;
 import org.swingeasy.table.editor.NumberTableCellEditor;
+import org.swingeasy.table.editor.TimeTableCellEditor;
 import org.swingeasy.table.renderer.BooleanTableCellRenderer;
 import org.swingeasy.table.renderer.ByteArrayTableCellRenderer;
 import org.swingeasy.table.renderer.ColorTableCellRenderer;
@@ -671,7 +673,9 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     protected void createDefaultEditors() {
         super.createDefaultEditors();
         this.defaultEditorsByColumnClass.put(Boolean.class, new javax.swing.UIDefaults.ProxyLazyValue(BooleanTableCellEditor.class.getName()));
-        this.defaultEditorsByColumnClass.put(Date.class, new javax.swing.UIDefaults.ProxyLazyValue(DateTableCellEditor.class.getName()));
+        this.defaultEditorsByColumnClass.put(java.sql.Date.class, new javax.swing.UIDefaults.ProxyLazyValue(DateTableCellEditor.class.getName()));
+        this.defaultEditorsByColumnClass.put(java.sql.Time.class, new javax.swing.UIDefaults.ProxyLazyValue(TimeTableCellEditor.class.getName()));
+        this.defaultEditorsByColumnClass.put(Date.class, new javax.swing.UIDefaults.ProxyLazyValue(DateTimeTableCellEditor.class.getName()));
         this.defaultEditorsByColumnClass.put(Color.class, new javax.swing.UIDefaults.ProxyLazyValue(ColorTableCellEditor.class.getName()));
         this.defaultEditorsByColumnClass.put(Number.class, new javax.swing.UIDefaults.ProxyLazyValue(NumberTableCellEditor.class.getName()));
     }

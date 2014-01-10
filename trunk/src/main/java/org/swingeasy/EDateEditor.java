@@ -51,9 +51,7 @@ public class EDateEditor extends AbstractELabeledTextFieldButtonComponent<ELabel
      */
     @Override
     public void copy(ActionEvent e) {
-        // FIXME
-        System.err.println("not implemented");
-        // EComponentPopupMenu.copyToClipboard(this.getInput().getText());
+        EComponentPopupMenu.copyToClipboard(String.valueOf(this.getInput().getValue()));
     }
 
     protected EDateChooser createEDateChooser() {
