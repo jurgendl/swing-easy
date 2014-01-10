@@ -34,14 +34,15 @@ public class EDateEditor extends AbstractELabeledTextFieldButtonComponent<ELabel
 
     protected JPanel datePanel = null;
 
+    protected SimpleDateFormat formatter;
+
     public EDateEditor() {
         this(new Date());
-        this.init();
     }
 
     public EDateEditor(Date date) {
-        this.setDate(date);
         this.init();
+        this.setDate(date);
     }
 
     /**
@@ -157,6 +158,13 @@ public class EDateEditor extends AbstractELabeledTextFieldButtonComponent<ELabel
         return this.datePanel;
     }
 
+    public SimpleDateFormat getFormatter() {
+        if (this.formatter == null) {
+            this.formatter = SimpleDateFormat.class.cast(DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault()));
+        }
+        return this.formatter;
+    }
+
     /**
      * 
      * @see org.swingeasy.ELabeledTextFieldButtonComponent#getIcon()
@@ -176,8 +184,7 @@ public class EDateEditor extends AbstractELabeledTextFieldButtonComponent<ELabel
             ESpinnerDateModel model = new ESpinnerDateModel();
             model.setValue(new Date());
             this.input = new ESpinner<Date>(model);
-            this.input.setEditor(new ESpinner.DateEditor(this.input, SimpleDateFormat.class.cast(
-                    DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault())).toPattern()));
+            this.input.setEditor(new ESpinner.DateEditor(this.input, this.getFormatter().toPattern()));
             this.input.setBorder(null);
         }
         return this.input;

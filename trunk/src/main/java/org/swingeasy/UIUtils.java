@@ -553,18 +553,18 @@ public class UIUtils {
     /**
      * activate Nimbus look and feel (returns true) or system look and feel (returns false) if not java 1.7 (7) or higher
      */
-    public static boolean niceLookAndFeel() {
+    public static String niceLookAndFeel() {
         try {
             try {
                 UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel"); //$NON-NLS-1$
-                return true;
+                return "javax.swing.plaf.nimbus.NimbusLookAndFeel";
             } catch (Exception ex) {
-                UIUtils.systemLookAndFeel();
+                return UIUtils.systemLookAndFeel();
             }
         } catch (Exception ex) {
             UIUtils.log(ex);
         }
-        return false;
+        return UIManager.getLookAndFeel().getName();
     }
 
     /**
@@ -816,12 +816,15 @@ public class UIUtils {
     /**
      * activate system look and feel
      */
-    public static void systemLookAndFeel() {
+    public static String systemLookAndFeel() {
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            String systemLookAndFeelClassName = UIManager.getSystemLookAndFeelClassName();
+            UIManager.setLookAndFeel(systemLookAndFeelClassName);
+            return systemLookAndFeelClassName;
         } catch (Exception ex) {
             UIUtils.log(ex);
         }
+        return UIManager.getLookAndFeel().getName();
     }
 
     /**

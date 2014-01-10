@@ -14,7 +14,6 @@ public class EDateTimeEditor extends EDateEditor {
     private static final long serialVersionUID = 1682632931152108808L;
 
     /**
-     * 
      * @see org.swingeasy.EDateEditor#createEDateChooser()
      */
     @Override
@@ -23,7 +22,6 @@ public class EDateTimeEditor extends EDateEditor {
     }
 
     /**
-     * 
      * @see org.swingeasy.EDateEditor#getAction()
      */
     @Override
@@ -32,7 +30,17 @@ public class EDateTimeEditor extends EDateEditor {
     }
 
     /**
-     * 
+     * @see org.swingeasy.EDateEditor#getFormatter()
+     */
+    @Override
+    public SimpleDateFormat getFormatter() {
+        if (this.formatter == null) {
+            this.formatter = SimpleDateFormat.class.cast(DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.getDefault()));
+        }
+        return this.formatter;
+    }
+
+    /**
      * @see org.swingeasy.EDateEditor#getInput()
      */
     @Override
@@ -41,15 +49,13 @@ public class EDateTimeEditor extends EDateEditor {
             ESpinnerDateModel model = new ESpinnerDateModel();
             model.setValue(new Date());
             this.input = new ESpinner<Date>(model);
-            this.input.setEditor(new JSpinner.DateEditor(this.input, SimpleDateFormat.class.cast(
-                    DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.getDefault())).toPattern()));
+            this.input.setEditor(new JSpinner.DateEditor(this.input, this.getFormatter().toPattern()));
             this.input.setBorder(null);
         }
         return this.input;
     }
 
     /**
-     * 
      * @see org.swingeasy.EDateEditor#setLocale(java.util.Locale)
      */
     @Override
