@@ -12,6 +12,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.Time;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Random;
@@ -98,6 +99,8 @@ public class TableDemo {
             headers.add("String", String.class, true); //$NON-NLS-1$
             headers.add("Boolean", Boolean.class, true); //$NON-NLS-1$
             headers.add("Date", Date.class, true); //$NON-NLS-1$
+            headers.add("sql.Date", java.sql.Date.class, true); //$NON-NLS-1$
+            headers.add("sql.Time", Time.class, true); //$NON-NLS-1$
             headers.add("Double", Double.class, true); //$NON-NLS-1$
             headers.add("Float", Float.class, true); //$NON-NLS-1$
             headers.add("Integer", Integer.class, true); //$NON-NLS-1$
@@ -111,11 +114,14 @@ public class TableDemo {
             safetable.addRecord(new ETableRecordArray<Object>(empty));
             for (int i = 0; i < 100; i++) {
                 int next = r.nextInt(1000);
+                long ts = new Date().getTime() + (next * 1000000l);
                 safetable.addRecord(new ETableRecordArray<Object>(new Object[] {
                         next,
                         String.valueOf(next),
                         Boolean.TRUE,
-                        new Date(new Date().getTime() + (next * 1000000l)),
+                        new Date(ts),
+                        new java.sql.Date(ts),
+                        new Time(ts),
                         r.nextDouble(),
                         r.nextFloat(),
                         r.nextInt(1000),
