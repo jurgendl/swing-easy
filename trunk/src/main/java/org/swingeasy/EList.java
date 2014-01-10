@@ -40,8 +40,10 @@ import org.swingeasy.list.renderer.BooleanListCellRenderer;
 import org.swingeasy.list.renderer.ByteArrayListCellRenderer;
 import org.swingeasy.list.renderer.ColorListCellRenderer;
 import org.swingeasy.list.renderer.DateListCellRenderer;
+import org.swingeasy.list.renderer.DateTimeListCellRenderer;
 import org.swingeasy.list.renderer.EListCellRenderer;
 import org.swingeasy.list.renderer.NumberListCellRenderer;
+import org.swingeasy.list.renderer.TimeListCellRenderer;
 import org.swingeasy.list.renderer.URIListCellRenderer;
 import org.swingeasy.list.renderer.URLListCellRenderer;
 
@@ -61,7 +63,9 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         protected transient Hashtable<Class, ListCellRenderer> defaultRenderersByClass = new Hashtable<Class, ListCellRenderer>();
 
         public DelegatingListCellRenderer(@SuppressWarnings("unused") ListCellRenderer defaultListCellRenderer, EComponentRenderer backgroundRenderer) {
-            this.setDefaultRenderer(Date.class, new DateListCellRenderer().setBackgroundRenderer(backgroundRenderer));
+            this.setDefaultRenderer(java.sql.Date.class, new DateListCellRenderer().setBackgroundRenderer(backgroundRenderer));
+            this.setDefaultRenderer(java.sql.Time.class, new TimeListCellRenderer().setBackgroundRenderer(backgroundRenderer));
+            this.setDefaultRenderer(Date.class, new DateTimeListCellRenderer().setBackgroundRenderer(backgroundRenderer));
             this.setDefaultRenderer(Number.class, new NumberListCellRenderer().setBackgroundRenderer(backgroundRenderer));
             this.setDefaultRenderer(Float.class, new NumberListCellRenderer().setBackgroundRenderer(backgroundRenderer));
             this.setDefaultRenderer(Double.class, new NumberListCellRenderer().setBackgroundRenderer(backgroundRenderer));

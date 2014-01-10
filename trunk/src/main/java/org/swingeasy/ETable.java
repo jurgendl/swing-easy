@@ -66,8 +66,10 @@ import org.swingeasy.table.renderer.BooleanTableCellRenderer;
 import org.swingeasy.table.renderer.ByteArrayTableCellRenderer;
 import org.swingeasy.table.renderer.ColorTableCellRenderer;
 import org.swingeasy.table.renderer.DateTableCellRenderer;
+import org.swingeasy.table.renderer.DateTimeTableCellRenderer;
 import org.swingeasy.table.renderer.ETableCellRenderer;
 import org.swingeasy.table.renderer.NumberTableCellRenderer;
+import org.swingeasy.table.renderer.TimeTableCellRenderer;
 import org.swingeasy.table.renderer.URITableCellRenderer;
 import org.swingeasy.table.renderer.URLTableCellRenderer;
 
@@ -683,7 +685,9 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     protected void createDefaultRenderers() {
         super.createDefaultRenderers();
         this.defaultRenderersByColumnClass.put(Boolean.class, new javax.swing.UIDefaults.ProxyLazyValue(BooleanTableCellRenderer.class.getName()));
-        this.defaultRenderersByColumnClass.put(Date.class, new javax.swing.UIDefaults.ProxyLazyValue(DateTableCellRenderer.class.getName()));
+        this.defaultRenderersByColumnClass.put(java.sql.Date.class, new javax.swing.UIDefaults.ProxyLazyValue(DateTableCellRenderer.class.getName()));
+        this.defaultRenderersByColumnClass.put(java.sql.Time.class, new javax.swing.UIDefaults.ProxyLazyValue(TimeTableCellRenderer.class.getName()));
+        this.defaultRenderersByColumnClass.put(Date.class, new javax.swing.UIDefaults.ProxyLazyValue(DateTimeTableCellRenderer.class.getName()));
         this.defaultRenderersByColumnClass.put(Color.class, new javax.swing.UIDefaults.ProxyLazyValue(ColorTableCellRenderer.class.getName()));
         this.defaultRenderersByColumnClass.put(Number.class, new javax.swing.UIDefaults.ProxyLazyValue(NumberTableCellRenderer.class.getName()));
         this.defaultRenderersByColumnClass.put(Float.class, new javax.swing.UIDefaults.ProxyLazyValue(NumberTableCellRenderer.class.getName()));
