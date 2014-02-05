@@ -28,7 +28,7 @@ public class EDateEditor extends AbstractELabeledTextFieldButtonComponent<ELabel
 
     protected JComponent parentComponent = null;
 
-    protected EDateChooser dateChooser = null;
+    protected EDateTimeChooser dateChooser = null;
 
     protected JPopupMenu popup = null;
 
@@ -54,8 +54,8 @@ public class EDateEditor extends AbstractELabeledTextFieldButtonComponent<ELabel
         EComponentPopupMenu.copyToClipboard(String.valueOf(this.getInput().getValue()));
     }
 
-    protected EDateChooser createEDateChooser() {
-        return new EDateChooser();
+    protected EDateTimeChooser createDateChooser() {
+        return new EDateTimeChooser(DateTimeType.DATE);
     }
 
     /**
@@ -64,15 +64,15 @@ public class EDateEditor extends AbstractELabeledTextFieldButtonComponent<ELabel
      */
     @Override
     protected void doAction() {
-        JPopupMenu _popup = this.getPopup();
-        _popup.setLocation(new Point((this.getLocationOnScreen().x + this.getWidth()) - (int) _popup.getPreferredSize().getWidth(), this
+        JPopupMenu pop = this.getPopup();
+        pop.setLocation(new Point((this.getLocationOnScreen().x + this.getWidth()) - (int) pop.getPreferredSize().getWidth(), this
                 .getLocationOnScreen().y + this.getHeight()));
         Date date = this.getInput().get();
         if (date == null) {
             date = new Date();
         }
         this.getDateChooser().setDate(date);
-        _popup.setVisible(true);
+        pop.setVisible(true);
     }
 
     /**
@@ -107,9 +107,9 @@ public class EDateEditor extends AbstractELabeledTextFieldButtonComponent<ELabel
         return this.getInput().get();
     }
 
-    protected EDateChooser getDateChooser() {
+    protected EDateTimeChooser getDateChooser() {
         if (this.dateChooser == null) {
-            this.dateChooser = this.createEDateChooser();
+            this.dateChooser = this.createDateChooser();
         }
         return this.dateChooser;
     }

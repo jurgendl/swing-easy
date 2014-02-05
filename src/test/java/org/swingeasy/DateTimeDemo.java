@@ -13,7 +13,7 @@ import javax.swing.WindowConstants;
 /**
  * @author Jurgen
  */
-public class DateDemo {
+public class DateTimeDemo {
     private static void addComponents(Container container) {
         container.setLayout(new GridLayout(-1, 1));
         final EDateEditor ede0 = new EDateEditor();
@@ -53,7 +53,7 @@ public class DateDemo {
         UIUtils.niceLookAndFeel();
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        DateDemo.addComponents(frame.getContentPane());
+        DateTimeDemo.addComponents(frame.getContentPane());
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setTitle("DateDemo");

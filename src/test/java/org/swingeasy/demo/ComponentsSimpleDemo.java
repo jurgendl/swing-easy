@@ -20,7 +20,6 @@ import org.swingeasy.ECheckBoxList;
 import org.swingeasy.ECheckBoxList.ECheckBoxListRecord;
 import org.swingeasy.EComboBox;
 import org.swingeasy.EComboBoxConfig;
-import org.swingeasy.EDateChooser;
 import org.swingeasy.EDateEditor;
 import org.swingeasy.EDateTimeChooser;
 import org.swingeasy.EDateTimeEditor;
@@ -45,14 +44,15 @@ import org.swingeasy.ETextFieldConfig;
 import org.swingeasy.ETextPane;
 import org.swingeasy.ETextPaneConfig;
 import org.swingeasy.EToggleButton;
-import org.swingeasy.EToolBarToggleButton;
 import org.swingeasy.EToolBarButtonConfig;
 import org.swingeasy.EToolBarButtonCustomizer;
+import org.swingeasy.EToolBarToggleButton;
 import org.swingeasy.ETree;
 import org.swingeasy.ETreeConfig;
 import org.swingeasy.ETreeNode;
 import org.swingeasy.EURILabel;
 import org.swingeasy.FileSelection;
+import org.swingeasy.FileSelectionConfig;
 import org.swingeasy.GradientPanel;
 import org.swingeasy.TristateCheckBox;
 import org.swingeasy.UIUtils;
@@ -129,13 +129,10 @@ public class ComponentsSimpleDemo {
         // cp.add(new ECheckboxTree(new ECheckBoxTreeConfig(), new ECheckBoxTreeNode<String>("root")));
 
         cp.add(new ELabel("EDateChooser"), "growx");
-        cp.add(new EDateChooser(), "growx");
+        cp.add(new EDateTimeChooser(), "growx");
 
         cp.add(new ELabel("EDateEditor"), "growx");
         cp.add(new EDateEditor(), "growx");
-
-        cp.add(new ELabel("EDateTimeChooser"), "growx");
-        cp.add(new EDateTimeChooser(), "growx");
 
         cp.add(new ELabel("EDateTimeEditor"), "growx");
         cp.add(new EDateTimeEditor(), "growx");
@@ -150,7 +147,7 @@ public class ComponentsSimpleDemo {
         cp.add(new EURILabel(URI.create("http://www.google.com")), "growx");
 
         cp.add(new ELabel("FileSelection"), "growx");
-        cp.add(new FileSelection(), "growx");
+        cp.add(new FileSelection(new FileSelectionConfig()), "growx");
 
         cp.add(new ELabel("ECheckBoxList"), "growx");
         ECheckBoxList echeckboxlist = new ECheckBoxList(new EListConfig());

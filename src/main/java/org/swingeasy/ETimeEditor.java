@@ -14,11 +14,11 @@ public class ETimeEditor extends EDateEditor {
     private static final long serialVersionUID = 75826218735013158L;
 
     /**
-     * @see org.swingeasy.EDateEditor#createEDateChooser()
+     * @see org.swingeasy.EDateEditor#createDateChooser()
      */
     @Override
-    protected EDateChooser createEDateChooser() {
-        return new ETimeChooser();
+    protected EDateTimeChooser createDateChooser() {
+        return new EDateTimeChooser(DateTimeType.TIME);
     }
 
     /**

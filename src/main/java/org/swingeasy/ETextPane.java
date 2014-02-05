@@ -539,8 +539,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         }
         popupMenu.checkEnabled();
         popupMenu.addSeparator();
-        @SuppressWarnings("cast")
-        ServiceLoader<ETextPaneExporter> exporterService = (ServiceLoader<ETextPaneExporter>) ServiceLoader.load(ETextPaneExporter.class);
+        ServiceLoader<ETextPaneExporter> exporterService = ServiceLoader.load(ETextPaneExporter.class);
         Iterator<ETextPaneExporter> iterator = exporterService.iterator();
         while (iterator.hasNext()) {
             try {
@@ -572,5 +571,24 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         this.setCaretPosition(from);
         this.moveCaretPosition(to);
         this.fireCaretUpdate();
+    }
+
+    /**
+     * shows line numbers
+     */
+    public JScrollPane withLineNumbers() {
+        JScrollPane scrollPane = new JScrollPane(this);
+        this.withLineNumbers(scrollPane);
+        return scrollPane;
+    }
+
+    /**
+     * shows line numbers
+     */
+    public TextLineNumber withLineNumbers(JScrollPane scrollPane) {
+        TextLineNumber tln = new TextLineNumber(this);
+        tln.setUpdateFont(true);
+        scrollPane.setRowHeaderView(tln);
+        return tln;
     }
 }

@@ -420,8 +420,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
         }
         popupMenu.checkEnabled();
         popupMenu.addSeparator();
-        @SuppressWarnings("cast")
-        ServiceLoader<ETextAreaExporter> exporterService = (ServiceLoader<ETextAreaExporter>) ServiceLoader.load(ETextAreaExporter.class);
+        ServiceLoader<ETextAreaExporter> exporterService = ServiceLoader.load(ETextAreaExporter.class);
         Iterator<ETextAreaExporter> iterator = exporterService.iterator();
         while (iterator.hasNext()) {
             try {
@@ -505,5 +504,24 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
 
     public void setHighlightPainter(ETextAreaHighlightPainter highlightPainter) {
         this.highlightPainter = highlightPainter;
+    }
+
+    /**
+     * shows line numbers
+     */
+    public JScrollPane withLineNumbers() {
+        JScrollPane scrollPane = new JScrollPane(this);
+        this.withLineNumbers(scrollPane);
+        return scrollPane;
+    }
+
+    /**
+     * shows line numbers
+     */
+    public TextLineNumber withLineNumbers(JScrollPane scrollPane) {
+        TextLineNumber tln = new TextLineNumber(this);
+        tln.setUpdateFont(true);
+        scrollPane.setRowHeaderView(tln);
+        return tln;
     }
 }
