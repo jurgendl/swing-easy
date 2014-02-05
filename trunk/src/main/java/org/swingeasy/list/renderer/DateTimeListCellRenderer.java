@@ -7,26 +7,24 @@ import java.util.Locale;
 
 import javax.swing.JList;
 
+import org.swingeasy.DateTimeType;
+
 // javax.swing.text.DateFormatter
 /**
  * @author Jurgen
  */
 public class DateTimeListCellRenderer extends EListCellRenderer<Date> {
-    public enum Type {
-        DATE, TIME, DATE_TIME;
-    }
-
     private static final long serialVersionUID = -1237135359072682865L;
 
     protected DateFormat formatter;
 
-    protected Type type;
+    protected DateTimeType type;
 
     public DateTimeListCellRenderer() {
-        this(Type.DATE_TIME);
+        this(DateTimeType.DATE_TIME);
     }
 
-    public DateTimeListCellRenderer(Type type) {
+    public DateTimeListCellRenderer(DateTimeType type) {
         this.type = type;
         this.newFormatter();
     }

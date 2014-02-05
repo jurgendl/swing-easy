@@ -5,7 +5,6 @@ import java.awt.Container;
 import java.io.IOException;
 
 import javax.swing.JFrame;
-import javax.swing.JScrollPane;
 import javax.swing.WindowConstants;
 
 /**
@@ -15,7 +14,7 @@ public class TextAreaDemo {
     private static ETextArea addComponents(Container container) throws IOException {
         String text = new String(Resources.getResource("org/swingeasy/resources/swing-easy.properties"));
         ETextArea jtf = new ETextArea(new ETextAreaConfig(), text);
-        container.add(new JScrollPane(jtf));
+        container.add(jtf.withLineNumbers());
         container.add(jtf.getToolbar(), BorderLayout.NORTH);
         EComponentPopupMenu.debug(jtf);
         return jtf;

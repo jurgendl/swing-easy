@@ -7,6 +7,7 @@ import java.util.Locale;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JTextField;
 
+import org.swingeasy.DateTimeType;
 import org.swingeasy.EComponentI;
 
 // javax.swing.text.DateFormatter
@@ -14,21 +15,17 @@ import org.swingeasy.EComponentI;
  * @author Jurgen
  */
 public class DateTimeTableCellEditor extends DefaultCellEditor implements EComponentI {
-    public enum Type {
-        DATE, TIME, DATE_TIME;
-    }
-
     private static final long serialVersionUID = 5169127745067354714L;
 
     protected DateFormat formatter;
 
-    protected Type type;
+    protected DateTimeType type;
 
     public DateTimeTableCellEditor() {
-        this(Type.DATE_TIME);
+        this(DateTimeType.DATE_TIME);
     }
 
-    public DateTimeTableCellEditor(Type type) {
+    public DateTimeTableCellEditor(DateTimeType type) {
         super(new JTextField());
 
         final JTextField jtf = JTextField.class.cast(this.getComponent());
