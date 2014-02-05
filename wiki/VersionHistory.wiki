@@ -214,7 +214,7 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * new: ETextArea: 'export to html' and 'export to pdf' actions
   * fixed: ETable: 'getSelectedCells' method fixed
   * fixed: ETable: 'copy' method and action in case multiple cells/records are selected
- * 2.7.1.0
+ * 2.7.1.0 (preferred version)
   * fixed: methods do not throw exception when not implemented (log error to console)
   * fixed: copy action on disabled textcomponent
   * fixed: UIUtils: streams not closed
@@ -227,6 +227,27 @@ all releases can also be downloaded from https://swing-easy.googlecode.com/svn/m
   * fixed: ETable: filtering: filterpreview disabled when focus lost, nullpointer 
   * fixed: export to html: html and body tags removed
   * fixed: EList: rightclicking does not select cell under mouse when already selected
+ * 3.0.0.0 (not released)
+ * 3.0.0.1 (not released)
+ * 3.0.0.2 (latest version)
+  * change: EComponentConfig reworked
+  * change: ERadioButton and ETextPane config
+  * change: EFormattedTextField config
+  * change: ELabel, EButton, EToogleToolBarButton config
+  * change: EButton/EToggleButton => EButtonConfig with EButtonCustomizer
+  * change: EToolBarButton/EToggleToolBarButton => EToolBarButtonConfig with EToolBarButtonCustomizer
+  * new: mouse double click action invoker
+  * new: BooleanTableCellRenderer flat border
+  * new: copy action implementations
+  * new: ETable & EList: reusable parent 
+  * new: EList: record count
+  * new: debug focus
+  * new: finddialog find field requests focus + centered on parent component owner window
+  * new: ETable: addRowHeader(JScrollPane, int) returns JScrollPane
+  * new: URL/I table&list cellrenderer
+  * change: date&time table&list renderer&editor
+  * new: ETextPane,ETextArea: line numbers
+  * change: FileSelection
  * some version in the future or maybe never (unplanned)
   * form builder and components
   * tip of the day
