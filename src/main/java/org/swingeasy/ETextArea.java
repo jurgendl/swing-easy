@@ -436,7 +436,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
     public void removeDocumentKeyListener(DocumentKeyListener listener) {
         this.getDocument().removeDocumentListener(listener);
         this.removeKeyListener(listener);
-    }
+    };
 
     /** Removes only our private highlights */
     public void removeHighlights() {
@@ -450,7 +450,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
                 hilite.removeHighlight(hi);
             }
         }
-    };
+    }
 
     /**
      * 
