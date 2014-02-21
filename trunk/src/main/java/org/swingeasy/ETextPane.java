@@ -5,6 +5,7 @@ import java.awt.Event;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
@@ -27,6 +28,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
+import javax.swing.ToolTipManager;
 import javax.swing.event.CaretEvent;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
@@ -35,7 +37,9 @@ import javax.swing.text.MutableAttributeSet;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledEditorKit;
+import javax.swing.text.Utilities;
 
+import org.apache.commons.lang.StringUtils;
 import org.swingeasy.EComponentPopupMenu.CheckEnabled;
 import org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction;
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
@@ -498,6 +502,25 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         return new EToolBar(this.getComponentPopupMenu());
     }
 
+    /**
+     * @see javax.swing.text.JTextComponent#getToolTipText(java.awt.event.MouseEvent)
+     */
+    @Override
+    public String getToolTipText(MouseEvent event) {
+        if (this.cfg.isTooltips()) {
+            try {
+                int offs = this.viewToModel(event.getPoint());
+                int startIndex = Utilities.getWordStart(this, offs);
+                int endIndex = Utilities.getWordEnd(this, offs);
+                String substring = this.getText().substring(startIndex, endIndex);
+                return StringUtils.isBlank(substring) ? null : substring.trim();
+            } catch (BadLocationException ex) {
+                return null;
+            }
+        }
+        return super.getToolTipText(event);
+    }
+
     protected void init(ETextPaneConfig config) {
         this.setEditorKit(config.getKit());
 
@@ -508,11 +531,15 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         if (config.isDefaultPopupMenu()) {
             this.installPopupMenuAction(EComponentPopupMenu.installTextComponentPopupMenu(this));
         }
+
+        if (config.isTooltips()) {
+            ToolTipManager.sharedInstance().registerComponent(this);
+        }
     }
 
     public JScrollPane inScrollPane(boolean autoscroll) {
         return EComponentHelper.inScrollPane(this, autoscroll);
-    }
+    };
 
     protected void installPopupMenuAction(EComponentPopupMenu popupMenu) {
         popupMenu.addSeparator();
@@ -550,7 +577,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
                 ex.printStackTrace(System.err);
             }
         }
-    };
+    }
 
     /**
      * 
