@@ -243,8 +243,8 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
         this.addKeyListener(listener);
     }
 
-    public void addHighlight(int from, int to, ETextAreaHighlightPainter painter) throws BadLocationException {
-        this.getHighlighter().addHighlight(from, to, painter);
+    public Highlighter.Highlight addHighlight(int from, int to, ETextAreaHighlightPainter painter) throws BadLocationException {
+        return (Highlighter.Highlight) this.getHighlighter().addHighlight(from, to, painter);
     }
 
     /**
