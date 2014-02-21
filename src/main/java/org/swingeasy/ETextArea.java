@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Event;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
@@ -31,6 +32,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
+import javax.swing.ToolTipManager;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.DocumentEvent;
 import javax.swing.text.BadLocationException;
@@ -39,6 +41,7 @@ import javax.swing.text.DefaultCaret;
 import javax.swing.text.Document;
 import javax.swing.text.Highlighter;
 import javax.swing.text.Highlighter.Highlight;
+import javax.swing.text.Utilities;
 
 import org.apache.commons.lang.StringUtils;
 import org.swingeasy.EComponentPopupMenu.CheckEnabled;
@@ -340,6 +343,25 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
     }
 
     /**
+     * @see javax.swing.text.JTextComponent#getToolTipText(java.awt.event.MouseEvent)
+     */
+    @Override
+    public String getToolTipText(MouseEvent event) {
+        if (this.cfg.isTooltips()) {
+            try {
+                int offs = this.viewToModel(event.getPoint());
+                int startIndex = Utilities.getWordStart(this, offs);
+                int endIndex = Utilities.getWordEnd(this, offs);
+                String substring = this.getText().substring(startIndex, endIndex);
+                return StringUtils.isBlank(substring) ? null : substring.trim();
+            } catch (BadLocationException ex) {
+                return null;
+            }
+        }
+        return super.getToolTipText(event);
+    }
+
+    /**
      * 
      * @see org.swingeasy.ValidationDemo.HasValue#getValue()
      */
@@ -396,6 +418,10 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
         if (config.getText() != null) {
             this.setText(config.getText());
         }
+
+        if (config.isTooltips()) {
+            ToolTipManager.sharedInstance().registerComponent(this);
+        }
     }
 
     public JScrollPane inScrollPane(boolean autoscroll) {
@@ -431,12 +457,12 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
                 ex.printStackTrace(System.err);
             }
         }
-    }
+    };
 
     public void removeDocumentKeyListener(DocumentKeyListener listener) {
         this.getDocument().removeDocumentListener(listener);
         this.removeKeyListener(listener);
-    };
+    }
 
     /** Removes only our private highlights */
     public void removeHighlights() {
