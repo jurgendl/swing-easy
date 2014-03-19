@@ -23,6 +23,7 @@ import org.swingeasy.system.SystemSettings;
  * @author Jurgen
  */
 public class ListDemo2 {
+
     @SuppressWarnings("unchecked")
     public static void main(String[] args) {
         UIUtils.systemLookAndFeel();
@@ -34,9 +35,10 @@ public class ListDemo2 {
         EList cc = new EList(cfg);
         {
             JFrame f = new JFrame();
-            f.getContentPane().add(
-                    new JScrollPane(cc, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED),
-                    BorderLayout.CENTER);
+            JScrollPane scroller = new JScrollPane(cc, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+                    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            cc.addRowHeader(scroller);
+            f.getContentPane().add(scroller, BorderLayout.CENTER);
             f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             cc = cc.stsi();
             f.setSize(400, 400);
@@ -82,6 +84,7 @@ public class ListDemo2 {
             f.setVisible(true);
             f.setLocationRelativeTo(null);
         }
+
         cc.addRecord(new EListRecord<Date>(new Date()));
         cc.addRecord(new EListRecord<Color>(Color.red));
         cc.addRecord(new EListRecord<Long>(1000l));
@@ -90,5 +93,9 @@ public class ListDemo2 {
         cc.addRecord(new EListRecord<Double>(1000.001d));
         cc.addRecord(new EListRecord<Boolean>(true));
         cc.addRecord(new EListRecord<byte[]>("bytes".getBytes()));
+
+        for (int i = 0; i < 1000; i++) {
+            cc.addRecord(new EListRecord<Integer>(i));
+        }
     }
 }
