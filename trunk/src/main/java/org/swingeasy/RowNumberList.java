@@ -61,7 +61,7 @@ public class RowNumberList extends JList implements ChangeListener, PropertyChan
         this.setModel(new RowNumberListModel(this.main.getModel()));
         this.setSelectionModel(this.main.getSelectionModel());
 
-        ListCellRenderer renderer = this.getCellRenderer();
+        ListCellRenderer renderer = list.getCellRenderer();
         if (renderer instanceof JLabel) {
             JLabel labelRenderer = JLabel.class.cast(renderer);
             labelRenderer.setHorizontalAlignment(SwingConstants.RIGHT);
