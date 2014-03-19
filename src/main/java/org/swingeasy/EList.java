@@ -1,5 +1,6 @@
 package org.swingeasy;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Event;
@@ -26,6 +27,7 @@ import java.util.ServiceLoader;
 import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.JList;
+import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 import javax.swing.ListCellRenderer;
 import javax.swing.ListSelectionModel;
@@ -320,6 +322,22 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
+     * add rowheader to scrollpane, 2 digit number
+     */
+    public JScrollPane addRowHeader(JScrollPane scrollpane) {
+        return this.addRowHeader(scrollpane, 2);
+    }
+
+    /**
+     * add rowheader to scrollpane
+     */
+    public JScrollPane addRowHeader(JScrollPane scrollpane, int cw) {
+        RowNumberList rowList = this.getRowHeader(cw);
+        scrollpane.setRowHeaderView(rowList);
+        return scrollpane;
+    }
+
+    /**
      * 
      * @see org.swingeasy.HasValue#addValueChangeListener(org.swingeasy.ValueChangeListener)
      */
@@ -395,6 +413,13 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     @Override
     public List<EListRecord<T>> getRecords() {
         return this.records;
+    }
+
+    /**
+     * gets row header that can be added to the RowHeaderView of a {@link JScrollPane} or can be docked WEST in a {@link BorderLayout}
+     */
+    public RowNumberList getRowHeader(int cw) {
+        return new RowNumberList(this, cw);
     }
 
     /**

@@ -24,13 +24,13 @@ import javax.swing.table.TableColumn;
 public class RowNumberTable extends JTable implements ChangeListener, PropertyChangeListener {
     private static final long serialVersionUID = 1854035830771958284L;
 
-    private JTable main;
+    protected JTable main;
 
     public RowNumberTable(JTable table) {
         this(table, 4);
     }
 
-    private RowNumberTable(JTable table, double w) {
+    protected RowNumberTable(JTable table, double w) {
         this.main = table;
         this.main.addPropertyChangeListener(this);
 
