@@ -97,7 +97,9 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
          */
         @Override
         public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-            value = EListRecord.class.cast(value).get();
+            if (value instanceof EListRecord) {
+                value = EListRecord.class.cast(value).get();
+            }
             return this.getDefaultRenderer(value.getClass()).getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
         }
 
