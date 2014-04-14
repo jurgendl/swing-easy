@@ -203,7 +203,7 @@ public class DnDTabbedPane extends JTabbedPane {
     }
 
     // warning can be ignored
-    public DropLocation dropLocationForPoint(Point p) {
+    public DropLocation dropLocationForPoint(final Point p) {
         @SuppressWarnings("unused")
         boolean isTB = (this.getTabPlacement() == SwingConstants.TOP) || (this.getTabPlacement() == SwingConstants.BOTTOM);
         switch (this.dropMode) {
@@ -318,7 +318,7 @@ public class DnDTabbedPane extends JTabbedPane {
 
     // warning can be ignored
     @SuppressWarnings("unused")
-    public Object setDropLocation(TransferHandler.DropLocation location, Object state, boolean forDrop) {
+    public Object setDropLocation(final TransferHandler.DropLocation location, final Object state, final boolean forDrop) {
         DropLocation old = this.dropLocation;
         if ((location == null) || !forDrop) {
             this.dropLocation = new DropLocation(new Point(), -1);
