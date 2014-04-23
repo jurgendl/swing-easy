@@ -19,7 +19,7 @@
 				wil create a jar without debugging info: swing-easy-{version}.jar -->
 			<id>nodebuginfo</id>
 			<build>
-				<finalName>${artifactId}-nodebuginfo-${version}</finalName>
+				<finalName>${project.artifactId}-nodebuginfo-${project.version}</finalName>
 				<plugins>
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -175,6 +175,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.4</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
