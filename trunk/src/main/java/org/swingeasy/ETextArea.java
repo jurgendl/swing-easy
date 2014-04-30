@@ -546,6 +546,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
      */
     public TextLineNumber withLineNumbers(JScrollPane scrollPane) {
         TextLineNumber tln = new TextLineNumber(this);
+        tln.setCurrentLineForeground(javax.swing.UIManager.getDefaults().getColor("List.selectionBackground"));
         tln.setUpdateFont(true);
         scrollPane.setRowHeaderView(tln);
         return tln;
