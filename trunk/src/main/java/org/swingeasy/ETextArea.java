@@ -46,12 +46,12 @@ import javax.swing.text.Utilities;
 import org.apache.commons.lang.StringUtils;
 import org.swingeasy.EComponentPopupMenu.CheckEnabled;
 import org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction;
-import org.swingeasy.EComponentPopupMenu.ReadableComponent;
+import org.swingeasy.EComponentPopupMenu.ReadableTextComponent;
 
 /**
  * @author Jurgen
  */
-public class ETextArea extends JTextArea implements EComponentI, HasValue<String>, ETextComponentI, ReadableComponent {
+public class ETextArea extends JTextArea implements EComponentI, HasValue<String>, ETextComponentI, ReadableTextComponent {
     protected static class OpenAction extends EComponentPopupMenuAction<ETextArea> {
         private static final long serialVersionUID = 649772388750665266L;
 
@@ -273,6 +273,16 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
         this.copy();
     }
 
+    /**
+     * @see org.swingeasy.EComponentPopupMenu.ReadableTextComponent#find(java.awt.event.ActionEvent)
+     */
+    @Override
+    public void find(ActionEvent e) {
+        SearchDialog searchDialog = new SearchDialog(false, this);
+        searchDialog.setVisible(true);
+        searchDialog.updateFocus();
+    }
+
     public void find(String find) {
         int start = this.getSelectionStart();
         Pattern pattern = Pattern.compile(find, Pattern.CASE_INSENSITIVE);
@@ -313,6 +323,14 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
         if (this.lastSearch != null) {
             this.find(this.lastSearch);
         }
+    }
+
+    /**
+     * @see org.swingeasy.EComponentPopupMenu.ReadableTextComponent#findNext(java.awt.event.ActionEvent)
+     */
+    @Override
+    public void findNext(ActionEvent e) {
+        ETextArea.class.cast(this).findNext();
     }
 
     public void fireCaretUpdate() {
@@ -422,7 +440,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
         if (config.isTooltips()) {
             ToolTipManager.sharedInstance().registerComponent(this);
         }
-    }
+    };
 
     public JScrollPane inScrollPane(boolean autoscroll) {
         return EComponentHelper.inScrollPane(this, autoscroll);
@@ -457,7 +475,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
                 ex.printStackTrace(System.err);
             }
         }
-    };
+    }
 
     public void removeDocumentKeyListener(DocumentKeyListener listener) {
         this.getDocument().removeDocumentListener(listener);
