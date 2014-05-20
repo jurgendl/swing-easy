@@ -319,10 +319,10 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     /**
      * FindAction
      */
-    protected static class FindAction extends EComponentPopupMenuAction<WritableComponent> {
+    protected static class FindAction extends EComponentPopupMenuAction<ReadableTextComponent> {
         private static final long serialVersionUID = 4328082010034890480L;
 
-        public FindAction(WritableComponent component) {
+        public FindAction(ReadableTextComponent component) {
             super(component, EComponentPopupMenu.FIND, Resources.getImageResource("find.png"));
             this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_F, Event.CTRL_MASK));
         }
@@ -350,10 +350,10 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     /**
      * FindNextAction
      */
-    protected static class FindNextAction extends EComponentPopupMenuAction<WritableComponent> {
+    protected static class FindNextAction extends EComponentPopupMenuAction<ReadableTextComponent> {
         private static final long serialVersionUID = 4328082010034890480L;
 
-        public FindNextAction(WritableComponent component) {
+        public FindNextAction(ReadableTextComponent component) {
             super(component, EComponentPopupMenu.FIND_NEXT, Resources.getImageResource("find.png"));
             this.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0));
         }
@@ -509,6 +509,12 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
      */
     public static interface ReadableComponent extends HasParentComponent {
         public void copy(ActionEvent e);
+    }
+
+    public static interface ReadableTextComponent extends ReadableComponent {
+        public void find(ActionEvent e);
+
+        public void findNext(ActionEvent e);
     }
 
     /**
@@ -877,16 +883,12 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     /**
      * JDOC
      */
-    public static interface WritableComponent extends ReadableComponent {
+    public static interface WritableComponent extends ReadableTextComponent {
         public void addUndoableEditListener(UndoManager manager);
 
         public void cut(ActionEvent e);
 
         public void delete(ActionEvent e);
-
-        public void find(ActionEvent e);
-
-        public void findNext(ActionEvent e);
 
         public void gotoBegin(ActionEvent e);
 
@@ -1017,6 +1019,12 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         final EComponentPopupMenuAction<ReadableComponent> copyAction = new CopyAction(component);
         final EComponentPopupMenu popup = new EComponentPopupMenu(component, null);
         popup.add(copyAction);
+        if (component instanceof ReadableTextComponent) {
+            final EComponentPopupMenuAction<ReadableTextComponent> findAction = new FindAction(ReadableTextComponent.class.cast(component));
+            final EComponentPopupMenuAction<ReadableTextComponent> findNextAction = new FindNextAction(ReadableTextComponent.class.cast(component));
+            popup.add(findAction);
+            popup.add(findNextAction);
+        }
         component.getParentComponent().addAncestorListener(new AncestorAdapter() {
             @Override
             public void ancestorAdded(AncestorEvent e) {
@@ -1071,8 +1079,8 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         final EComponentPopupMenuAction<WritableComponent> deleteAllAction = new DeleteAllAction(component);
         final EComponentPopupMenuAction<WritableComponent> gotoBeginAction = new GotoBeginAction(component);
         final EComponentPopupMenuAction<WritableComponent> gotoEndAction = new GotoEndAction(component);
-        final EComponentPopupMenuAction<WritableComponent> findAction = new FindAction(component);
-        final EComponentPopupMenuAction<WritableComponent> findNextAction = new FindNextAction(component);
+        final EComponentPopupMenuAction<ReadableTextComponent> findAction = new FindAction(component);
+        final EComponentPopupMenuAction<ReadableTextComponent> findNextAction = new FindNextAction(component);
         final EComponentPopupMenuAction<WritableComponent> replaceAction = new ReplaceAction(component);
 
         final JComponent parentComponent = component.getParentComponent();
