@@ -342,8 +342,10 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public boolean checkEnabled(CheckEnabled cfg) {
-            this.setEnabled(cfg.hasText);
-            return cfg.hasText;
+            // this.setEnabled(cfg.hasText);
+            // return cfg.hasText;
+            this.setEnabled(true);
+            return true;
         }
     }
 
@@ -373,8 +375,10 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
          */
         @Override
         public boolean checkEnabled(CheckEnabled cfg) {
-            this.setEnabled(cfg.hasText);
-            return cfg.hasText;
+            // this.setEnabled(cfg.hasText);
+            // return cfg.hasText;
+            this.setEnabled(true);
+            return true;
         }
     }
 
