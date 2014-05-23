@@ -49,7 +49,7 @@ public class SearchDialog extends JDialog implements EComponentI {
         this.textComponent = textComponent;
         this.init();
         this.setLocationRelativeTo(UIUtils.getRootWindow(textComponent));
-        this.setReplacing(replacing);
+        this.setReplacing(replacing && textComponent.isEditable() && textComponent.isEnabled());
         String selectedText = textComponent.getSelectedText();
         if (StringUtils.isNotBlank(selectedText)) {
             this.tfFind.setText(selectedText);
@@ -155,6 +155,7 @@ public class SearchDialog extends JDialog implements EComponentI {
         this.add(this.getBtnFind());
         this.add(this.getBtnHighlightAll(), "wrap");
 
+        this.getCbReplace().setEnabled(this.textComponent.isEditable() && this.textComponent.isEnabled());
         this.add(this.getCbReplace());
 
         this.getCbReplace().addValueChangeListener(new ValueChangeListener<Boolean>() {
