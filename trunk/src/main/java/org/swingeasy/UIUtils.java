@@ -166,7 +166,7 @@ public class UIUtils {
         }
 
         /**
-         * 
+         *
          * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
          */
         @Override
@@ -186,7 +186,7 @@ public class UIUtils {
         }
 
         /**
-         * 
+         *
          * @see java.lang.Object#toString()
          */
         @Override
@@ -198,7 +198,7 @@ public class UIUtils {
 
     private static class StaticPropertyChangeListener implements PropertyChangeListener {
         /**
-         * 
+         *
          * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
          */
         @Override
@@ -207,7 +207,7 @@ public class UIUtils {
         }
     }
 
-    public static class SystemTrayCfg {
+    public static class SystemTrayConfig {
         /** null: use icon from parent */
         private Image trayIcon = null;
 
@@ -216,28 +216,54 @@ public class UIUtils {
 
         private AbstractAction exitAction;
 
+        private PopupMenu popupmenu;
+
+        private TrayIcon trayItem;
+
+        private boolean showToggle = true;
+
         public AbstractAction getExitAction() {
             return this.exitAction;
+        }
+
+        public PopupMenu getPopupmenu() {
+            return this.popupmenu;
         }
 
         public Image getTrayIcon() {
             return this.trayIcon;
         }
 
+        public TrayIcon getTrayItem() {
+            return this.trayItem;
+        }
+
         public String getTrayTitle() {
             return this.trayTitle;
         }
 
-        public void setExitAction(AbstractAction exitAction) {
+        public boolean isShowToggle() {
+            return this.showToggle;
+        }
+
+        public SystemTrayConfig setExitAction(AbstractAction exitAction) {
             this.exitAction = exitAction;
+            return this;
         }
 
-        public void setTrayIcon(Image trayIcon) {
+        public SystemTrayConfig setShowToggle(boolean showToggle) {
+            this.showToggle = showToggle;
+            return this;
+        }
+
+        public SystemTrayConfig setTrayIcon(Image trayIcon) {
             this.trayIcon = trayIcon;
+            return this;
         }
 
-        public void setTrayTitle(String trayTitle) {
+        public SystemTrayConfig setTrayTitle(String trayTitle) {
             this.trayTitle = trayTitle;
+            return this;
         }
     }
 
@@ -252,7 +278,7 @@ public class UIUtils {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.UIUtils.UncaughtExceptionHandler#handle(java.lang.Throwable)
          */
         public void handle(Throwable t) {
@@ -260,7 +286,7 @@ public class UIUtils {
         }
 
         /**
-         * 
+         *
          * @see java.lang.Thread.UncaughtExceptionHandler#uncaughtException(java.lang.Thread, java.lang.Throwable)
          */
         @Override
@@ -268,28 +294,6 @@ public class UIUtils {
             UncaughtExceptionHandlerDelegate.delegate.uncaughtException(t, e);
         }
     }
-
-    {
-        SystemSettings.getSingleton().addPropertyChangeListener(SystemSettings.LOCALE, new StaticPropertyChangeListener());
-    }
-
-    static {
-        // http://tips4java.wordpress.com/2008/10/25/enter-key-and-button/
-        // TODO
-        UIManager.put("Button.defaultButtonFollowsFocus", Boolean.TRUE);
-    }
-
-    static {
-        UIUtils.setUILanguage(null);
-    }
-
-    protected static final UIUtils singleton = new UIUtils();
-
-    protected static Map<String, Icon> cachedIcons = new HashMap<String, Icon>();
-
-    protected static Map<String, String> cachedDescriptions = new HashMap<String, String>();
-
-    public static final char[] hexArray = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
     /**
      * put window on bottomright, the size of the window must be set<br>
@@ -333,38 +337,36 @@ public class UIUtils {
     /**
      * create simple tray menu (exit and toggle visibility), returns popupmenu to add more menu items (or remove)
      */
-    public static PopupMenu createSystemTray(final JFrame frame, final SystemTrayCfg cfg) {
-        if (SystemTray.isSupported()) {
-            if (cfg.getExitAction() == null) {
-                cfg.setExitAction(new AbstractAction(Messages.getString((Locale) null, "tray.exit.title")) {
-                    private static final long serialVersionUID = 8188465232565268116L;
-
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(frame,
-                                Messages.getString((Locale) null, "tray.exit.confirmation"), Messages.getString((Locale) null, "tray.exit.title"),
-                                JOptionPane.YES_NO_OPTION)) {
-                            System.exit(0);
-                        }
-                    }
-                });
-            }
-            AbstractAction toggle = new AbstractAction(Messages.getString((Locale) null, "tray.toggle.title")) {
-                private static final long serialVersionUID = 1L;
+    public static PopupMenu createSystemTray(final JFrame frame, final SystemTrayConfig cfg) {
+        if (!SystemTray.isSupported()) {
+            return null;
+        }
+        if (cfg.getExitAction() == null) {
+            cfg.setExitAction(new AbstractAction(Messages.getString((Locale) null, "tray.exit.title")) {
+                private static final long serialVersionUID = 8188465232565268116L;
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    UIUtils.toggleVisibility(frame);
+                    if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(frame, Messages.getString((Locale) null, "tray.exit.confirmation"),
+                            Messages.getString((Locale) null, "tray.exit.title"), JOptionPane.YES_NO_OPTION)) {
+                        System.exit(0);
+                    }
                 }
-            };
+            });
+        }
+        if (frame != null) {
             if (cfg.getTrayIcon() == null) {
                 cfg.setTrayIcon(frame.getIconImage() == null ? new BufferedImage(16, 16, BufferedImage.TYPE_INT_RGB) : frame.getIconImage());
             }
             if (cfg.getTrayTitle() == null) {
                 cfg.setTrayTitle(frame.getTitle());
             }
-            TrayIcon trayItem = new TrayIcon(cfg.getTrayIcon(), cfg.getTrayTitle());
-            trayItem.addMouseListener(new MouseAdapter() {
+        }
+        cfg.popupmenu = new PopupMenu(cfg.getTrayTitle());
+        cfg.trayItem = new TrayIcon(cfg.getTrayIcon(), cfg.getTrayTitle(), cfg.popupmenu);
+        cfg.trayItem.setImageAutoSize(true);
+        if ((frame != null) && cfg.isShowToggle()) {
+            cfg.trayItem.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     if ((e.getClickCount() == 2) && (e.getButton() == MouseEvent.BUTTON1)) {
@@ -372,34 +374,39 @@ public class UIUtils {
                     }
                 }
             });
-            PopupMenu popupmenu = new PopupMenu(cfg.getTrayTitle());
-            {
-                MenuItem emi = new MenuItem((String) toggle.getValue(Action.NAME));
-                emi.addActionListener(toggle);
-                popupmenu.add(emi);
-            }
-            {
-                MenuItem emi = new MenuItem((String) cfg.getExitAction().getValue(Action.NAME));
-                emi.addActionListener(cfg.getExitAction());
-                popupmenu.add(emi);
-            }
-            trayItem.setPopupMenu(popupmenu);
-            trayItem.setToolTip(Messages.getString((Locale) null, "tray.toggle.tooltip"));
-            try {
-                SystemTray.getSystemTray().add(trayItem);
-            } catch (AWTException ex) {
-                ex.printStackTrace();
-                return null;
-            }
+            cfg.trayItem.setToolTip(Messages.getDefaultString("tray.toggle.tooltip"));
+            AbstractAction toggle = new AbstractAction(Messages.getString((Locale) null, "tray.toggle.title")) {
+                private static final long serialVersionUID = -58991936990224202L;
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    UIUtils.toggleVisibility(frame);
+                }
+            };
+            MenuItem emi = new MenuItem((String) toggle.getValue(Action.NAME));
+            emi.addActionListener(toggle);
+            cfg.popupmenu.add(emi);
+        }
+        {
+            MenuItem emi = new MenuItem((String) cfg.getExitAction().getValue(Action.NAME));
+            emi.addActionListener(cfg.getExitAction());
+            cfg.popupmenu.add(emi);
+        }
+        try {
+            SystemTray.getSystemTray().add(cfg.trayItem);
+        } catch (AWTException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        if (frame != null) {
             frame.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowIconified(WindowEvent e) {
                     UIUtils.toggleVisibility(frame);
                 }
             });
-            return popupmenu;
         }
-        return null;
+        return cfg.popupmenu;
     }
 
     public static void debugFocusChanges() {
@@ -672,7 +679,7 @@ public class UIUtils {
 
     /**
      * sets rounded borders with arc of 20
-     * 
+     *
      * @see http://java.sun.com/developer/technicalArticles/GUI/translucent_shaped_windows/
      */
     public static void rounded(Window w) {
@@ -681,7 +688,7 @@ public class UIUtils {
 
     /**
      * sets rounded borders with given arc
-     * 
+     *
      * @see http://java.sun.com/developer/technicalArticles/GUI/translucent_shaped_windows/
      */
     public static void rounded(Window w, float arc) {
@@ -739,7 +746,7 @@ public class UIUtils {
     /**
      * sets localization, expects a properties file with name {prefix}_{locale.toString()}.properties in the directory javax/swing; for all possible
      * keys, see source documentation
-     * 
+     *
      * @param resource
      * @param baseName
      * @param locale Locale
@@ -800,7 +807,7 @@ public class UIUtils {
 
     /**
      * give window a shape
-     * 
+     *
      * @see http://java.sun.com/developer/technicalArticles/GUI/translucent_shaped_windows/
      */
     public static void shaped(Window w, Shape shape) {
@@ -848,7 +855,7 @@ public class UIUtils {
 
     /**
      * sets translucency with default value of .93
-     * 
+     *
      * @see http://java.sun.com/developer/technicalArticles/GUI/translucent_shaped_windows/
      */
     public static void translucent(Window w) {
@@ -857,7 +864,7 @@ public class UIUtils {
 
     /**
      * sets window translucency value
-     * 
+     *
      * @see http://java.sun.com/developer/technicalArticles/GUI/translucent_shaped_windows/
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
@@ -877,6 +884,28 @@ public class UIUtils {
         }
         return false;
     }
+
+    {
+        SystemSettings.getSingleton().addPropertyChangeListener(SystemSettings.LOCALE, new StaticPropertyChangeListener());
+    }
+
+    static {
+        // http://tips4java.wordpress.com/2008/10/25/enter-key-and-button/
+        // TODO
+        UIManager.put("Button.defaultButtonFollowsFocus", Boolean.TRUE);
+    }
+
+    static {
+        UIUtils.setUILanguage(null);
+    }
+
+    protected static final UIUtils singleton = new UIUtils();
+
+    protected static Map<String, Icon> cachedIcons = new HashMap<String, Icon>();
+
+    protected static Map<String, String> cachedDescriptions = new HashMap<String, String>();
+
+    public static final char[] hexArray = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
 
     /**
      * singleton
