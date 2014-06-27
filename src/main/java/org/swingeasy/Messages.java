@@ -13,11 +13,9 @@ import org.swingeasy.validation.Translator;
  * @author Jurgen
  */
 public class Messages implements Translator {
-    protected static final String BUNDLE_NAME = "org.swingeasy.resources.swing-easy"; //$NON-NLS-1$
-
-    protected static final Map<Locale, ResourceBundle> RESOURCE_BUNDLES = new HashMap<Locale, ResourceBundle>();
-
-    protected static final Messages instance = new Messages();
+    public static String getDefaultString(String key, Object... arguments) {
+        return Messages.getString((Locale) null, key, arguments);
+    }
 
     public static Messages getInstance() {
         return Messages.instance;
@@ -57,12 +55,18 @@ public class Messages implements Translator {
         }
     }
 
+    protected static final String BUNDLE_NAME = "org.swingeasy.resources.swing-easy"; //$NON-NLS-1$
+
+    protected static final Map<Locale, ResourceBundle> RESOURCE_BUNDLES = new HashMap<Locale, ResourceBundle>();
+
+    protected static final Messages instance = new Messages();
+
     protected Messages() {
         super();
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.validation.Translator#getString(java.lang.String, java.lang.Object[])
      */
     @Override

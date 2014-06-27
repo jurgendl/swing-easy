@@ -3,7 +3,7 @@ package org.swingeasy;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-import org.swingeasy.UIUtils.SystemTrayCfg;
+import org.swingeasy.UIUtils.SystemTrayConfig;
 
 /**
  * @author Jurgen
@@ -17,6 +17,6 @@ public class TrayDemo {
         UIUtils.center(frame);
         frame.setSize(100, 100);
         frame.setVisible(true);
-        UIUtils.createSystemTray(frame, new SystemTrayCfg());
+        UIUtils.createSystemTray(frame, new SystemTrayConfig());
     }
 }
