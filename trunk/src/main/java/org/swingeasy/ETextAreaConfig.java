@@ -4,9 +4,9 @@ package org.swingeasy;
  * @author Jurgen
  */
 public class ETextAreaConfig extends EComponentConfig<ETextAreaConfig> {
-    protected int rows = 0;
+    protected int rows = 3;
 
-    protected int columns = 0;
+    protected int columns = 80;
 
     protected boolean enabled = true;
 
