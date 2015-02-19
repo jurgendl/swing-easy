@@ -30,31 +30,31 @@ import javax.swing.text.PlainDocument;
 /**
  * Combobox which lists all installed fonts, sorted alphabetically. In the dropdown, each font name is shown in the default font together with some
  * characters in its own font, which can be customized calling the <code>setPreviewString</code> method.
- * 
+ *
  * In the main text field, the default font is used to display the font name. It is editable and supports auto completion.
- * 
+ *
  * The last <code>n</code> selected fonts can be shown on the top by calling <code>setRecentFontsCount(n)</code>.
- * 
+ *
  * This file is public domain. However, if you improve it, please share your work with andi@xenoage.com. Thanks!
- * 
+ *
  * @author Andreas Wenger
  * @see http://zongmusic.wordpress.com/2010/12/02/fontchoosercombobo/
  */
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "rawtypes", "unchecked" })
 public class FontChooserComboBox extends JComboBox implements ItemListener {
 
     /**
      * The editor component of the list. This is an editable text area which supports auto completion.
-     * 
+     *
      * @author Andreas Wenger
      */
     class FontChooserComboBoxEditor extends BasicComboBoxEditor {
 
         /**
          * Plain text document for the text area. Needed for text selection.
-         * 
+         *
          * Inspired by http://www.java2s.com/Code/Java/Swing-Components/AutocompleteComboBox.htm
-         * 
+         *
          * @author Andreas Wenger
          */
         class AutoCompletionDocument extends PlainDocument {
@@ -143,7 +143,7 @@ public class FontChooserComboBox extends JComboBox implements ItemListener {
 
     /**
      * The renderer for a list item.
-     * 
+     *
      * @author Andreas Wenger
      */
     class FontChooserComboBoxRenderer implements ListCellRenderer {
@@ -161,7 +161,7 @@ public class FontChooserComboBox extends JComboBox implements ItemListener {
 
     /**
      * The component for a list item.
-     * 
+     *
      * @author Andreas Wenger
      */
     class Item extends JPanel {
