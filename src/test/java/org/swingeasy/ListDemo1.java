@@ -35,7 +35,6 @@ public class ListDemo1 {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public static void main(String[] args) {
         UIUtils.systemLookAndFeel();
         EListConfig cfg = new EListConfig();

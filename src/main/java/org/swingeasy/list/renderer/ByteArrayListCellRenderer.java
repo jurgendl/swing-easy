@@ -21,7 +21,7 @@ public class ByteArrayListCellRenderer extends EListCellRenderer<Object> {
      * @see org.swingeasy.list.renderer.EListCellRenderer#render(javax.swing.JList, java.lang.Object, int, boolean, boolean)
      */
     @Override
-    protected Component render(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+    protected Component render(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         super.render(list, value, index, isSelected, cellHasFocus);
         String text;
         if (value instanceof byte[]) {
@@ -39,7 +39,7 @@ public class ByteArrayListCellRenderer extends EListCellRenderer<Object> {
     }
 
     /**
-     * 
+     *
      * @see java.awt.Component#setLocale(java.util.Locale)
      */
     @Override

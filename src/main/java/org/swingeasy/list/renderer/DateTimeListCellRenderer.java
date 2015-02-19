@@ -51,7 +51,7 @@ public class DateTimeListCellRenderer extends EListCellRenderer<Date> {
      * @see org.swingeasy.list.renderer.EListCellRenderer#render(javax.swing.JList, java.lang.Object, int, boolean, boolean)
      */
     @Override
-    protected Component render(JList list, Date value, int index, boolean isSelected, boolean cellHasFocus) {
+    protected Component render(JList<?> list, Date value, int index, boolean isSelected, boolean cellHasFocus) {
         String text = this.getValue(value);
         Component tmp = this.super_getListCellRendererComponent(list, text, index, isSelected, cellHasFocus);
         this.setToolTipText(text);
@@ -59,7 +59,7 @@ public class DateTimeListCellRenderer extends EListCellRenderer<Date> {
     }
 
     /**
-     * 
+     *
      * @see java.awt.Component#setLocale(java.util.Locale)
      */
     @Override

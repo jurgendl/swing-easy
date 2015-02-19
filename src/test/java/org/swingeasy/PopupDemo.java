@@ -40,7 +40,7 @@ public class PopupDemo {
             private static final long serialVersionUID = -2332228089292536681L;
 
             @Override
-            public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
                 value = "<html><i>" + value + "</i><html>";
                 DefaultListCellRenderer listCellRendererComponent = (DefaultListCellRenderer) super.getListCellRendererComponent(list, value, index,
                         isSelected, cellHasFocus);
