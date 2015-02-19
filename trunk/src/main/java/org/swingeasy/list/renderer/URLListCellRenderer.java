@@ -13,7 +13,7 @@ public class URLListCellRenderer extends EListCellRenderer<URL> {
     }
 
     @Override
-    protected Component render(JList list, URL value, int index, boolean isSelected, boolean cellHasFocus) {
+    protected Component render(JList<?> list, URL value, int index, boolean isSelected, boolean cellHasFocus) {
         String valueHtml = "<html><a href='" + value + "'>" + value + "</a></html>";
         return this.super_getListCellRendererComponent(list, valueHtml, index, isSelected, cellHasFocus);
     }

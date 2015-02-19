@@ -27,7 +27,7 @@ public class EListCellRenderer<T> extends DefaultListCellRenderer.UIResource imp
      */
     @SuppressWarnings("unchecked")
     @Override
-    final public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+    final public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         return this.render(list, (T) value, index, isSelected, cellHasFocus);
     }
 
@@ -40,7 +40,7 @@ public class EListCellRenderer<T> extends DefaultListCellRenderer.UIResource imp
         super.paintComponent(g);
     }
 
-    protected Component render(JList list, T value, int index, boolean isSelected, boolean cellHasFocus) {
+    protected Component render(JList<?> list, T value, int index, boolean isSelected, boolean cellHasFocus) {
         return this.super_getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
     }
 
@@ -55,7 +55,7 @@ public class EListCellRenderer<T> extends DefaultListCellRenderer.UIResource imp
         return this;
     }
 
-    protected Component super_getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+    protected Component super_getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
         return super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
     }
 }

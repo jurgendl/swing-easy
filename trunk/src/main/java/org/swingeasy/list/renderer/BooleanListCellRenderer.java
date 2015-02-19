@@ -36,7 +36,7 @@ public class BooleanListCellRenderer extends EListCellRenderer<Boolean> {
      * @see org.swingeasy.list.renderer.EListCellRenderer#render(javax.swing.JList, java.lang.Object, int, boolean, boolean)
      */
     @Override
-    protected Component render(JList list, Boolean b, int index, boolean isSelected, boolean cellHasFocus) {
+    protected Component render(JList<?> list, Boolean b, int index, boolean isSelected, boolean cellHasFocus) {
         this.super_getListCellRendererComponent(list, b, index, isSelected, cellHasFocus);
         if (b != null) {
             this.renderer.setSelected(b);

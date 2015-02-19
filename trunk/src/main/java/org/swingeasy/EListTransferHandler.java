@@ -92,7 +92,8 @@ public class EListTransferHandler<T> extends TransferHandler {
     protected void cleanup(JComponent c, boolean remove) {
         if (remove && (this.indices != null)) {
             EList<T> source = this.castEList(c);
-            DefaultListModel model = (DefaultListModel) source.getModel();
+            @SuppressWarnings("unchecked")
+            DefaultListModel<T> model = (DefaultListModel<T>) source.getModel();
             // If we are moving items around in the same list, we
             // need to adjust the indices accordingly, since those
             // after the insertion point have moved.
@@ -212,10 +213,9 @@ public class EListTransferHandler<T> extends TransferHandler {
     // as a single string, for export.
     protected String exportString(EList<T> list) {
         this.indices = list.getSelectedIndices();
+        @SuppressWarnings("deprecation")
         Object[] values = list.getSelectedValues();
-
         StringBuffer buff = new StringBuffer();
-
         for (int i = 0; i < values.length; i++) {
             Object val = values[i];
             buff.append(val == null ? "" : val.toString());
@@ -256,7 +256,7 @@ public class EListTransferHandler<T> extends TransferHandler {
     }
 
     /**
-     * 
+     *
      * @see javax.swing.TransferHandler#importData(javax.swing.JComponent, java.awt.datatransfer.Transferable)
      */
     @Override

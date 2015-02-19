@@ -13,19 +13,19 @@ public class EComboBoxAutoResizingPopupListener implements PopupMenuListener {
 
     @Override
     public void popupMenuCanceled(PopupMenuEvent e) {
-        JComboBox _box = (JComboBox) e.getSource();
+        JComboBox<?> _box = (JComboBox<?>) e.getSource();
         _box.setPreferredSize(this.preferredSize);
     }
 
     @Override
     public void popupMenuWillBecomeInvisible(PopupMenuEvent e) {
-        JComboBox _box = (JComboBox) e.getSource();
+        JComboBox<?> _box = (JComboBox<?>) e.getSource();
         _box.setPreferredSize(this.preferredSize);
     }
 
     @Override
     public void popupMenuWillBecomeVisible(PopupMenuEvent e) {
-        JComboBox _box = (JComboBox) e.getSource();
+        JComboBox<?> _box = (JComboBox<?>) e.getSource();
         this.preferredSize = _box.getPreferredSize();
 
         Object comp = _box.getUI().getAccessibleChild(_box, 0);

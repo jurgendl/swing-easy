@@ -13,8 +13,6 @@ import org.swingeasy.EComponentI;
  * @author Jurgen
  */
 public class EnumTableCellEditor<T extends Enum<T>> extends DefaultCellEditor implements EComponentI {
-    private static final long serialVersionUID = 5169127745067354714L;
-
     private static <T extends Enum<T>> Vector<T> options(Class<T> enumType) {
         Vector<T> options = new Vector<T>();
         for (T option : EnumSet.allOf(enumType)) {
@@ -23,10 +21,12 @@ public class EnumTableCellEditor<T extends Enum<T>> extends DefaultCellEditor im
         return options;
     }
 
+    private static final long serialVersionUID = 5169127745067354714L;
+
     protected Class<T> enumType;
 
     public EnumTableCellEditor(Class<T> enumType) {
-        super(new JComboBox(EnumTableCellEditor.options(enumType)));
+        super(new JComboBox<T>(EnumTableCellEditor.options(enumType)));
         this.enumType = enumType;
     }
 
@@ -35,7 +35,7 @@ public class EnumTableCellEditor<T extends Enum<T>> extends DefaultCellEditor im
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.EComponentI#setEnabled(boolean)
      */
     @Override
@@ -44,7 +44,7 @@ public class EnumTableCellEditor<T extends Enum<T>> extends DefaultCellEditor im
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.EComponentI#setLocale(java.util.Locale)
      */
     @Override

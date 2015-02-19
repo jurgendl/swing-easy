@@ -31,12 +31,12 @@ public class NumberListCellRenderer extends EListCellRenderer<Number> {
      * @see org.swingeasy.list.renderer.EListCellRenderer#render(javax.swing.JList, java.lang.Object, int, boolean, boolean)
      */
     @Override
-    public Component render(JList list, Number value, int index, boolean isSelected, boolean cellHasFocus) {
+    public Component render(JList<?> list, Number value, int index, boolean isSelected, boolean cellHasFocus) {
         return this.super_getListCellRendererComponent(list, this.getValue(value), index, isSelected, cellHasFocus);
     }
 
     /**
-     * 
+     *
      * @see java.awt.Component#setLocale(java.util.Locale)
      */
     @Override

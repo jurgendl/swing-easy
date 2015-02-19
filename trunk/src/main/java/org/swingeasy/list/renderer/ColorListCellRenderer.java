@@ -37,7 +37,7 @@ public class ColorListCellRenderer extends EListCellRenderer<Color> {
      * @see org.swingeasy.list.renderer.EListCellRenderer#render(javax.swing.JList, java.lang.Object, int, boolean, boolean)
      */
     @Override
-    protected Component render(JList list, Color color, int index, boolean isSelected, boolean cellHasFocus) {
+    protected Component render(JList<?> list, Color color, int index, boolean isSelected, boolean cellHasFocus) {
         this.super_getListCellRendererComponent(list, color, index, isSelected, cellHasFocus);
         if (color == null) {
             this.setIcon(this.emptyIcon);

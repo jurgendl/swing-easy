@@ -14,13 +14,12 @@ import javax.swing.border.EmptyBorder;
  * @author Jurgen
  */
 public class ECheckBoxList extends EList<Boolean> {
-    public static class CheckBoxListCellRenderer extends JCheckBox implements ListCellRenderer {
+    public static class CheckBoxListCellRenderer extends JCheckBox implements ListCellRenderer<EListRecord<Boolean>> {
         private static final long serialVersionUID = -8324269006694944760L;
 
         @Override
-        public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-            @SuppressWarnings("unchecked")
-            EListRecord<Boolean> record = EListRecord.class.cast(value);
+        public Component getListCellRendererComponent(JList<? extends EListRecord<Boolean>> list, EListRecord<Boolean> record, int index,
+                boolean isSelected, boolean cellHasFocus) {
             boolean selected = (record != null) && Boolean.TRUE.equals(record.get());
             this.setText(record == null ? null : record.getStringValue());
             this.setSelected(selected);
