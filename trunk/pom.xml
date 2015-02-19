@@ -8,10 +8,22 @@
 	<description>Java Swing components</description>
 	<url>http://swing-easy.googlecode.com</url>
 	<properties>
-		<targetJdk>1.6</targetJdk><!-- should be compatible with 1.6 and higher -->
+		<targetJdk>1.7</targetJdk><!-- should be compatible with 1.6 and higher -->
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding><!-- fixed encoding -->
 		<project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
 		<maven.javadoc.skip>true</maven.javadoc.skip><!-- skip by default -->
+		<!-- maven-site-plugin -->
+		<maven.site.skip>false</maven.site.skip><!-- do not skip by default -->
+		<!-- maven-compiler-plugin -->
+		<maven.compiler.optimize>true</maven.compiler.optimize>
+		<maven.compiler.fork>true</maven.compiler.fork>
+		<maven.compiler.source>${targetJdk}</maven.compiler.source>
+		<maven.compiler.target>${targetJdk}</maven.compiler.target>
+		<maven.compiler.verbose>true</maven.compiler.verbose>
+		<maven.compiler.debug>true</maven.compiler.debug>
+		<maven.compiler.debuglevel>lines,vars,source</maven.compiler.debuglevel>
+		<!-- maven-surefire-plugin -->
+		<maven.test.failure.ignore>true</maven.test.failure.ignore>
 	</properties>
 	<!-- http://maven.apache.org/guides/introduction/introduction-to-profiles.html -->
 	<profiles>
@@ -406,6 +418,7 @@
 					</tags>
 				</configuration>
 			</plugin>
+			<!-- makes site size very large -->
 			<!-- 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
