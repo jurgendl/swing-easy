@@ -92,7 +92,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         }
 
         /**
-         * 
+         *
          * @see javax.swing.ListCellRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
          */
         @Override
@@ -142,7 +142,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -156,7 +156,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -177,7 +177,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -186,7 +186,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -194,8 +194,6 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
             return true;
         }
     }
-
-    private static final long serialVersionUID = -3602504810131193505L;
 
     /**
      * convert
@@ -211,6 +209,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     /**
      * convert
      */
+    @SafeVarargs
     public static <T> List<EListRecord<T>> convert(T... records) {
         return EList.convert(Arrays.asList(records));
     }
@@ -251,6 +250,8 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         return model;
     }
 
+    private static final long serialVersionUID = -3602504810131193505L;
+
     protected EListConfig cfg;
 
     protected EventList<EListRecord<T>> records;
@@ -281,7 +282,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.EListI#selectCell(java.awt.Point)
      */
     @Override
@@ -298,7 +299,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.EListI#addRecord(org.swingeasy.EListRecord)
      */
     @Override
@@ -310,7 +311,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.EListI#addRecords(java.util.Collection)
      */
     @Override
@@ -340,7 +341,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.HasValue#addValueChangeListener(org.swingeasy.ValueChangeListener)
      */
     @Override
@@ -349,7 +350,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.HasValue#clearValueChangeListeners()
      */
     @Override
@@ -370,7 +371,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
-     * 
+     *
      * @see javax.swing.JList#createSelectionModel()
      */
     @Override
@@ -396,7 +397,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.HasParentComponent#getParentComponent()
      */
     @Override
@@ -409,7 +410,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.EListI#getRecords()
      */
     @Override
@@ -436,7 +437,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.EListI#getSelectedRecord()
      */
     @SuppressWarnings("unchecked")
@@ -446,7 +447,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.EListI#getSelectedRecords()
      */
     @SuppressWarnings("unchecked")
@@ -461,7 +462,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
 
     /**
      * JDOC
-     * 
+     *
      * @return
      */
     @SuppressWarnings("unchecked")
@@ -477,7 +478,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
-     * 
+     *
      * @see javax.swing.JList#getToolTipText(java.awt.event.MouseEvent)
      */
     @Override
@@ -501,7 +502,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.HasValue#getValue()
      */
     @Override
@@ -602,7 +603,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
 
     /**
      * threadsafe unmodifiable iterator
-     * 
+     *
      * @see java.lang.Iterable#iterator()
      */
     @Override
@@ -611,7 +612,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.EListI#moveSelectedDown()
      */
     @Override
@@ -635,7 +636,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.EListI#moveSelectedDown()
      */
     @Override
@@ -659,7 +660,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.EListI#removeAllRecords()
      */
     @Override
@@ -668,7 +669,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.EListI#removeRecord(org.swingeasy.EListRecord)
      */
     @Override
@@ -677,7 +678,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.EListI#removeRecords(java.util.Collection)
      */
     @Override
@@ -686,7 +687,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.EListI#removeSelectedRecords()
      */
     @Override
@@ -696,7 +697,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.HasValue#removeValueChangeListener(org.swingeasy.ValueChangeListener)
      */
     @Override
@@ -705,7 +706,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.EListI#scrollToVisibleRecord(org.swingeasy.EListRecord)
      */
     @Override
@@ -719,7 +720,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.EListI#selectCell(java.awt.Point)
      */
     @Override
@@ -732,7 +733,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
 
     /**
      * JDOC
-     * 
+     *
      * @param columnClass
      * @param renderer
      */
@@ -741,7 +742,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableI#setLocale(java.util.Locale)
      */
     @Override
@@ -752,7 +753,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.EListI#setSelectedRecord(org.swingeasy.EListRecord)
      */
     @Override
@@ -764,7 +765,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.EListI#setSelectedRecords(java.util.Collection)
      */
     @Override
