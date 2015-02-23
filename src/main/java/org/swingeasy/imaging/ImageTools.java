@@ -33,12 +33,17 @@ import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 
+/**
+ * @see Hugo Teixeira High-Quality Image Resize with Java http://www.componenthouse.com/article-20
+ */
 public class ImageTools {
     // /**
     // * bloom effect
@@ -191,6 +196,24 @@ public class ImageTools {
     // public static BufferedImage blurRadial(final Image image, final int radius) {
     // return new RadialBlur(radius).filter(ImageTools.toBufferedImage(image));
     // }
+
+    /**
+     * blur
+     */
+    public static BufferedImage blurImage(BufferedImage image) {
+        float ninth = 1.0f / 9.0f;
+        float[] blurKernel = { ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth, ninth };
+
+        Map<RenderingHints.Key, Object> map = new HashMap<RenderingHints.Key, Object>();
+        map.put(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        map.put(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        map.put(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        RenderingHints hints = new RenderingHints(map);
+        BufferedImageOp op = new ConvolveOp(new Kernel(3, 3, blurKernel), ConvolveOp.EDGE_NO_OP, hints);
+
+        return op.filter(image, null);
+    }
 
     /**
      * brightens an image
@@ -378,24 +401,6 @@ public class ImageTools {
         return ImageTools.getGraphicsConfiguration().createCompatibleImage(width, height);
     }
 
-    /**
-     * <p>
-     * Returns a new translucent compatible image of the specified width and height.
-     * </p>
-     *
-     * @see #createCompatibleImage(java.awt.image.BufferedImage)
-     * @see #createCompatibleImage(java.awt.image.BufferedImage, int, int)
-     * @see #createCompatibleImage(int, int)
-     * @see #loadCompatibleImage(java.net.URL)
-     * @see #toCompatibleImage(java.awt.image.BufferedImage)
-     * @param width the width of the new image
-     * @param height the height of the new image
-     * @return a new translucent compatible <code>BufferedImage</code> of the specified width and height
-     */
-    public static BufferedImage createCompatibleTranslucentImage(int width, int height) {
-        return ImageTools.getGraphicsConfiguration().createCompatibleImage(width, height, Transparency.TRANSLUCENT);
-    }
-
     // /**
     // * NA
     // *
@@ -494,6 +499,24 @@ public class ImageTools {
     // public static BufferedImage createDropShadow(Image image, int shadowSize, float shadowOpacity) {
     // return ImageTools.createDropShadow(image, true, shadowSize, shadowOpacity);
     // }
+
+    /**
+     * <p>
+     * Returns a new translucent compatible image of the specified width and height.
+     * </p>
+     *
+     * @see #createCompatibleImage(java.awt.image.BufferedImage)
+     * @see #createCompatibleImage(java.awt.image.BufferedImage, int, int)
+     * @see #createCompatibleImage(int, int)
+     * @see #loadCompatibleImage(java.net.URL)
+     * @see #toCompatibleImage(java.awt.image.BufferedImage)
+     * @param width the width of the new image
+     * @param height the height of the new image
+     * @return a new translucent compatible <code>BufferedImage</code> of the specified width and height
+     */
+    public static BufferedImage createCompatibleTranslucentImage(int width, int height) {
+        return ImageTools.getGraphicsConfiguration().createCompatibleImage(width, height, Transparency.TRANSLUCENT);
+    }
 
     /**
      * creates a new image with given width and height and given pixel colors (single array)
@@ -769,6 +792,21 @@ public class ImageTools {
         return ImageTools.rescale(image, s);
     }
 
+    // /**
+    // * emboss an image
+    // *
+    // * @param image : Image : source
+    // *
+    // * @return : BufferedImage : embossed image
+    // *
+    // * @throws RuntimeException : on exception
+    // */
+    // public static BufferedImage emboss(final Image image) throws RuntimeException {
+    // FilteredImageSource fis = new FilteredImageSource(ImageTools.toMemoryImageSource(image), new EmbossFilter());
+    //
+    // return ImageTools.toBufferedImage(new Canvas().createImage(fis));
+    // }
+
     /**
      * detect edges
      *
@@ -784,21 +822,6 @@ public class ImageTools {
 
         return cop.filter(ImageTools.toBufferedImage(image), null);
     }
-
-    // /**
-    // * emboss an image
-    // *
-    // * @param image : Image : source
-    // *
-    // * @return : BufferedImage : embossed image
-    // *
-    // * @throws RuntimeException : on exception
-    // */
-    // public static BufferedImage emboss(final Image image) throws RuntimeException {
-    // FilteredImageSource fis = new FilteredImageSource(ImageTools.toMemoryImageSource(image), new EmbossFilter());
-    //
-    // return ImageTools.toBufferedImage(new Canvas().createImage(fis));
-    // }
 
     /**
      * emboss an image without losing color
@@ -1078,6 +1101,18 @@ public class ImageTools {
         }
 
         return pixels;
+    }
+
+    /**
+     * getRatio
+     */
+    private static double getRatio(int width, int height, int iw, int ih) {
+        // bv 200x150 image in 100x100 accessory
+        double rw = (double) iw / width; // 200/100=2
+        double rh = (double) ih / height; // 150/100=1.5
+        double r = Math.max(rw, rh); // 2
+
+        return r;
     }
 
     /**
@@ -1573,6 +1608,70 @@ public class ImageTools {
         RescaleOp op = new RescaleOp(percentage, 0, null);
 
         return op.filter(ImageTools.toBufferedImage(image), null);
+    }
+
+    /**
+     * resize, vergroten gebeurt niet
+     */
+    public static BufferedImage resize(BufferedImage image, int width, int height) {
+        int type = (image.getType() == 0) ? BufferedImage.TYPE_INT_ARGB : image.getType();
+        BufferedImage resizedImage = new BufferedImage(width, height, type);
+        Graphics2D g = resizedImage.createGraphics();
+        g.setComposite(AlphaComposite.Src);
+        g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+        g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g.drawImage(image, 0, 0, width, height, null);
+        g.dispose();
+
+        return resizedImage;
+    }
+
+    /**
+     * resize met behoudt van aspect ration, vergroten gebeurt niet
+     */
+    public static BufferedImage resizeKeepAspect(BufferedImage img, int width, int height) {
+        int iw = img.getWidth();
+        int ih = img.getHeight();
+
+        if ((iw > width) || (ih > height)) {
+            double r = ImageTools.getRatio(width, height, iw, ih);
+            iw = (int) (iw / r); // 200/2=100
+            ih = (int) (ih / r); // 150/2=75
+
+            return ImageTools.resize(img, iw, ih);
+        }
+
+        return img;
+    }
+
+    /**
+     * resize en blur, vergroten gebeurt niet
+     */
+    public static BufferedImage resizeTrick(BufferedImage image, int width, int height) {
+        image = ImageTools.createCompatibleImage(image);
+        image = ImageTools.resize(image, 100, 100);
+        image = ImageTools.blurImage(image);
+
+        return ImageTools.resize(image, width, height);
+    }
+
+    /**
+     * resize en blur met behoudt van aspect ration, vergroten gebeurt niet
+     */
+    public static BufferedImage resizeTrickKeepAspect(BufferedImage img, int width, int height) {
+        int iw = img.getWidth();
+        int ih = img.getHeight();
+
+        if ((iw > width) || (ih > height)) {
+            double r = ImageTools.getRatio(width, height, iw, ih);
+            iw = (int) (iw / r); // 200/2=100
+            ih = (int) (ih / r); // 150/2=75
+
+            return ImageTools.resizeTrick(img, iw, ih);
+        }
+
+        return img;
     }
 
     /**
@@ -2111,4 +2210,17 @@ public class ImageTools {
     /** parameter for flipping */
     public static final int FLIP_HORIZONTALLY = 8;
 
+    // public static BufferedImage createCompatibleImage(BufferedImage image) {
+    // // GraphicsConfiguration gc =
+    // // sun.awt.image.BufferedImageGraphicsConfig.getConfig(image);// Sun
+    // // proprietary API
+    // GraphicsConfiguration gc = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration();
+    // int w = image.getWidth();
+    // int h = image.getHeight();
+    // BufferedImage result = gc.createCompatibleImage(w, h, Transparency.TRANSLUCENT);
+    // Graphics2D g2 = result.createGraphics();
+    // g2.drawRenderedImage(image, null);
+    // g2.dispose();
+    // return result;
+    // }
 }
