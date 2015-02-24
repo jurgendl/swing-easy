@@ -39,7 +39,7 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledEditorKit;
 import javax.swing.text.Utilities;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.swingeasy.EComponentPopupMenu.CheckEnabled;
 import org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction;
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
@@ -57,7 +57,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -70,7 +70,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -89,7 +89,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -100,7 +100,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -119,7 +119,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -135,7 +135,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -154,7 +154,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -167,7 +167,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -186,7 +186,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -197,7 +197,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -216,7 +216,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -228,7 +228,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -247,7 +247,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -283,7 +283,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -303,7 +303,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -321,7 +321,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -340,7 +340,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -351,7 +351,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -370,7 +370,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -415,7 +415,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -434,7 +434,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -448,7 +448,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -473,7 +473,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy(java.awt.event.ActionEvent)
      */
     @Override
@@ -580,7 +580,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETextComponentI#setCaret(int)
      */
     @Override
@@ -590,7 +590,7 @@ public class ETextPane extends JTextPane implements EComponentI, ReadableCompone
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETextComponentI#setCaret(int, int)
      */
     @Override

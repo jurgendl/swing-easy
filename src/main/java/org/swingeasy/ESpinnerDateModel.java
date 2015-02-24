@@ -5,7 +5,7 @@ import java.util.Date;
 
 import javax.swing.SpinnerDateModel;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
 
 /**
  * @author Jurgen
@@ -22,7 +22,7 @@ public class ESpinnerDateModel extends SpinnerDateModel {
     }
 
     /**
-     * 
+     *
      * @see javax.swing.SpinnerDateModel#getNextValue()
      */
     @Override
@@ -35,7 +35,7 @@ public class ESpinnerDateModel extends SpinnerDateModel {
     }
 
     /**
-     * 
+     *
      * @see javax.swing.SpinnerDateModel#getPreviousValue()
      */
     @Override
@@ -48,7 +48,7 @@ public class ESpinnerDateModel extends SpinnerDateModel {
     }
 
     /**
-     * 
+     *
      * @see javax.swing.SpinnerDateModel#getValue()
      */
     @Override
@@ -58,7 +58,7 @@ public class ESpinnerDateModel extends SpinnerDateModel {
     }
 
     /**
-     * 
+     *
      * @see javax.swing.SpinnerDateModel#setValue(java.lang.Object)
      */
     @Override

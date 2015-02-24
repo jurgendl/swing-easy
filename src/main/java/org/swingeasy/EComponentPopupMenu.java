@@ -37,7 +37,7 @@ import javax.swing.undo.CannotRedoException;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.UndoManager;
 
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.swingeasy.system.SystemSettings;
 
 /**
@@ -50,7 +50,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
      */
     public static class AncestorAdapter implements AncestorListener {
         /**
-         * 
+         *
          * @see javax.swing.event.AncestorListener#ancestorAdded(javax.swing.event.AncestorEvent)
          */
         @Override
@@ -59,7 +59,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see javax.swing.event.AncestorListener#ancestorMoved(javax.swing.event.AncestorEvent)
          */
         @Override
@@ -68,7 +68,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see javax.swing.event.AncestorListener#ancestorRemoved(javax.swing.event.AncestorEvent)
          */
         @Override
@@ -112,7 +112,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see java.lang.Object#toString()
          */
         @Override
@@ -147,7 +147,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -156,7 +156,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -178,7 +178,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -187,7 +187,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -209,7 +209,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -218,7 +218,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -240,7 +240,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -250,7 +250,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -264,7 +264,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
      * JDOC
      */
     public abstract static class EComponentPopupMenuAction<C extends ReadableComponent> extends AbstractAction implements EComponentI,
-            HasParentComponent {
+    HasParentComponent {
         private static final long serialVersionUID = 3408961844539862485L;
 
         protected String key;
@@ -281,7 +281,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         public abstract boolean checkEnabled(CheckEnabled cfg);
 
         /**
-         * 
+         *
          * @see org.swingeasy.HasParentComponent#getParentComponent()
          */
         @Override
@@ -290,7 +290,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentI#setLocale(java.util.Locale)
          */
         @Override
@@ -328,7 +328,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -337,7 +337,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -361,7 +361,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -370,7 +370,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -394,7 +394,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -403,7 +403,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -425,7 +425,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -434,7 +434,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -457,7 +457,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -466,7 +466,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -481,7 +481,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
      */
     public static class PopupMenuAdapter implements PopupMenuListener {
         /**
-         * 
+         *
          * @see javax.swing.event.PopupMenuListener#popupMenuCanceled(javax.swing.event.PopupMenuEvent)
          */
         @Override
@@ -490,7 +490,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see javax.swing.event.PopupMenuListener#popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent)
          */
         @Override
@@ -499,7 +499,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see javax.swing.event.PopupMenuListener#popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent)
          */
         @Override
@@ -536,7 +536,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -549,7 +549,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -572,7 +572,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -581,7 +581,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -603,7 +603,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -612,7 +612,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -633,7 +633,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#addUndoableEditListener(javax.swing.undo.UndoManager)
          */
         @Override
@@ -642,7 +642,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy(java.awt.event.ActionEvent)
          */
         @Override
@@ -659,7 +659,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.WritableComponent#cut()
          */
         @Override
@@ -668,7 +668,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.WritableComponent#delete(java.awt.event.ActionEvent)
          */
         @Override
@@ -677,7 +677,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.WritableComponent#find(java.awt.event.ActionEvent)
          */
         @Override
@@ -690,7 +690,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.WritableComponent#findNext(java.awt.event.ActionEvent)
          */
         @Override
@@ -701,7 +701,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.HasParentComponent#getParentComponent()
          */
         @Override
@@ -710,7 +710,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.WritableComponent#gotoBegin(java.awt.event.ActionEvent)
          */
         @Override
@@ -719,7 +719,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.WritableComponent#gotoEnd(java.awt.event.ActionEvent)
          */
         @Override
@@ -728,7 +728,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.WritableComponent#hasSelection()
          */
         @Override
@@ -741,7 +741,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.WritableComponent#hasText()
          */
         @Override
@@ -750,7 +750,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.WritableComponent#isEditable()
          */
         @Override
@@ -759,7 +759,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.WritableComponent#paste(java.awt.event.ActionEvent)
          */
         @Override
@@ -768,7 +768,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.WritableComponent#replace(java.awt.event.ActionEvent)
          */
         @Override
@@ -781,7 +781,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.WritableComponent#selectAll(java.awt.event.ActionEvent)
          */
         @Override
@@ -805,7 +805,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.WritableComponent#unselect(java.awt.event.ActionEvent)
          */
         @Override
@@ -829,7 +829,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -842,7 +842,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -865,7 +865,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -874,7 +874,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -912,41 +912,6 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
 
         public void unselect(ActionEvent e);
     }
-
-    private static final long serialVersionUID = 8362926178135321789L;
-
-    public static final int[] conditions = {
-            JComponent.WHEN_FOCUSED,
-            JComponent.WHEN_IN_FOCUSED_WINDOW,
-            JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT };
-
-    public static final String DELETE = "delete-next";
-
-    public static final String REDO = "redo";
-
-    public static final String UNDO = "undo";
-
-    public static final String CUT = "cut-tx";
-
-    public static final String COPY = "copy-tx";
-
-    public static final String PASTE = "paste-tx";
-
-    public static final String SELECT_ALL = "select-all";
-
-    public static final String DELETE_ALL = "delete-all";
-
-    public static final String GOTO_BEGIN = "goto-begin";
-
-    public static final String GOTO_END = "goto-end";
-
-    public static final String UNSELECT = "unselect";
-
-    public static final String FIND = "find";
-
-    public static final String REPLACE = "replace";
-
-    public static final String FIND_NEXT = "find-next";
 
     public static boolean accelerate(Action action) {
         if (action instanceof HasParentComponent) {
@@ -1244,6 +1209,41 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
         }
     }
 
+    private static final long serialVersionUID = 8362926178135321789L;
+
+    public static final int[] conditions = {
+        JComponent.WHEN_FOCUSED,
+        JComponent.WHEN_IN_FOCUSED_WINDOW,
+        JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT };
+
+    public static final String DELETE = "delete-next";
+
+    public static final String REDO = "redo";
+
+    public static final String UNDO = "undo";
+
+    public static final String CUT = "cut-tx";
+
+    public static final String COPY = "copy-tx";
+
+    public static final String PASTE = "paste-tx";
+
+    public static final String SELECT_ALL = "select-all";
+
+    public static final String DELETE_ALL = "delete-all";
+
+    public static final String GOTO_BEGIN = "goto-begin";
+
+    public static final String GOTO_END = "goto-end";
+
+    public static final String UNSELECT = "unselect";
+
+    public static final String FIND = "find";
+
+    public static final String REPLACE = "replace";
+
+    public static final String FIND_NEXT = "find-next";
+
     protected int cpx = 0;
 
     protected int cpy = 0;
@@ -1316,7 +1316,7 @@ public class EComponentPopupMenu extends JPopupMenu implements EComponentI {
     }
 
     /**
-     * 
+     *
      * @see javax.swing.JPopupMenu#setLocation(int, int)
      */
     @Override

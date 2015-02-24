@@ -52,9 +52,9 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.swingeasy.EComponentPopupMenu.CheckEnabled;
 import org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction;
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
@@ -93,7 +93,7 @@ import ca.odell.glazedlists.swing.TableComparatorChooser;
 
 /**
  * @author Jurgen
- * 
+ *
  * @see http://www.chka.de/swing/table/faq.html
  */
 public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterable<ETableRecord<T>>, ReadableComponent {
@@ -188,7 +188,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
 
             /**
              * J_DOC
-             * 
+             *
              * @param p
              */
             protected void activate(Point p) {
@@ -398,7 +398,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
         }
 
         /**
-         * 
+         *
          * @see javax.swing.table.AbstractTableModel#fireTableCellUpdated(int, int)
          */
         @Override
@@ -407,7 +407,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
         };
 
         /**
-         * 
+         *
          * @see ca.odell.glazedlists.swing.EventTableModel#getColumnClass(int)
          */
         @Override
@@ -432,7 +432,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -445,7 +445,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -478,13 +478,13 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
 
         /**
          * Creates a rotated version of the input image.
-         * 
+         *
          * @param c The component to get properties useful for painting, e.g. the foreground or background color.
          * @param icon the image to be rotated.
          * @param rotatedAngle the rotated angle, in degree, clockwise. It could be any double but we will mod it with 360 before using it.
-         * 
+         *
          * @return the image after rotating.
-         * 
+         *
          * @see http://www.jidesoft.com/blog/2008/02/29/rotate-an-icon-in-java/
          */
         protected ImageIcon createRotatedImage(Component c, Icon icon, double rotatedAngle) {
@@ -536,7 +536,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.VerticalTableHeaderCellRenderer#getIcon(javax.swing.JTable, int)
          */
         @Override
@@ -545,7 +545,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
         }
 
         /**
-         * 
+         *
          * @see ca.odell.glazedlists.swing.SortableRenderer#setSortIcon(javax.swing.Icon)
          */
         @Override
@@ -608,7 +608,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableI#addRecord(org.swingeasy.ETableRecord)
      */
     @Override
@@ -617,7 +617,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableI#addRecords(java.util.Collection)
      */
     @Override
@@ -643,7 +643,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableI#clear()
      */
     @Override
@@ -656,7 +656,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.EComponentPopupMenu.ReadableComponent#copy(java.awt.event.ActionEvent)
      */
     @Override
@@ -665,7 +665,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * 
+     *
      * @see javax.swing.JTable#createDefaultEditors()
      */
     @SuppressWarnings("unchecked")
@@ -681,7 +681,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * 
+     *
      * @see javax.swing.JTable#createDefaultRenderers()
      */
     @SuppressWarnings("unchecked")
@@ -704,7 +704,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * 
+     *
      * @see javax.swing.JTable#createDefaultTableHeader()
      */
     @Override
@@ -744,7 +744,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableI#getColumnValueAtVisualColumn(int)
      */
     @Override
@@ -753,7 +753,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * 
+     *
      * @see javax.swing.JTable#getDefaultEditor(java.lang.Class)
      */
     @Override
@@ -768,7 +768,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * 
+     *
      * @see javax.swing.JTable#getDefaultRenderer(java.lang.Class)
      */
     @Override
@@ -790,7 +790,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
 
     /**
      * J_DOC
-     * 
+     *
      * @param comp
      * @return
      */
@@ -825,7 +825,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.HasParentComponent#getParentComponent()
      */
     @Override
@@ -834,7 +834,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableI#getRecordAtVisualRow(int)
      */
     @Override
@@ -843,7 +843,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableI#getRecords()
      */
     @Override
@@ -878,7 +878,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableI#getSelectedCells()
      */
     @Override
@@ -898,7 +898,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableI#getSelectedRecord()
      */
     @Override
@@ -908,7 +908,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableI#getSelectedRecords()
      */
     @Override
@@ -918,7 +918,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
 
     /**
      * J_DOC
-     * 
+     *
      * @return
      */
     @SuppressWarnings("unchecked")
@@ -1008,7 +1008,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * 
+     *
      * @see javax.swing.JTable#isCellEditable(int, int)
      */
     @Override
@@ -1018,7 +1018,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
 
     /**
      * threadsafe unmodifiable iterator
-     * 
+     *
      * @see java.lang.Iterable#iterator()
      */
     @Override
@@ -1056,7 +1056,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableI#removeAllRecords()
      */
     @Override
@@ -1065,7 +1065,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableI#removeRecord(org.swingeasy.ETableRecord)
      */
     @Override
@@ -1074,7 +1074,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableI#removeRecordAtVisualRow(int)
      */
     @Override
@@ -1095,7 +1095,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.Reorderable#reorder(int, int)
      */
     @Override
@@ -1146,7 +1146,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableI#setHeaders(org.swingeasy.ETableHeaders)
      */
     @Override
@@ -1172,7 +1172,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableI#sort(int)
      */
     @Override
@@ -1202,7 +1202,7 @@ public class ETable<T> extends JTable implements ETableI<T>, Reorderable, Iterab
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableI#unsort()
      */
     @Override

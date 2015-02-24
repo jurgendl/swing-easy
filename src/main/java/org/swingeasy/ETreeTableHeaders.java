@@ -4,7 +4,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Vector;
 
-import org.apache.commons.lang.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.CompareToBuilder;
 
 import ca.odell.glazedlists.gui.AdvancedTableFormat;
 import ca.odell.glazedlists.gui.WritableTableFormat;
@@ -32,7 +32,7 @@ public class ETreeTableHeaders<T> implements AdvancedTableFormat<ETableRecord<T>
 
     /**
      * JDOC
-     * 
+     *
      * @param column
      */
     public void add(String column) {
@@ -40,9 +40,9 @@ public class ETreeTableHeaders<T> implements AdvancedTableFormat<ETableRecord<T>
     }
 
     /**
-     * 
+     *
      * JDOC
-     * 
+     *
      * @param column
      * @param clazz
      */
@@ -51,9 +51,9 @@ public class ETreeTableHeaders<T> implements AdvancedTableFormat<ETableRecord<T>
     }
 
     /**
-     * 
+     *
      * JDOC
-     * 
+     *
      * @param column
      * @param clazz
      * @param edit
@@ -65,7 +65,7 @@ public class ETreeTableHeaders<T> implements AdvancedTableFormat<ETableRecord<T>
     }
 
     /**
-     * 
+     *
      * @see ca.odell.glazedlists.gui.AdvancedTableFormat#getColumnClass(int)
      */
     @Override
@@ -78,7 +78,7 @@ public class ETreeTableHeaders<T> implements AdvancedTableFormat<ETableRecord<T>
     }
 
     /**
-     * 
+     *
      * @see ca.odell.glazedlists.gui.AdvancedTableFormat#getColumnComparator(int)
      */
     @Override

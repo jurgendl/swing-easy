@@ -1,13 +1,13 @@
 package org.swingeasy.validation;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Jurgen
  */
 public class NotNullValidator<T> implements Validator<T> {
     /**
-     * 
+     *
      * @see org.swingeasy.validation.Validator#getArguments(java.lang.Object)
      */
     @Override

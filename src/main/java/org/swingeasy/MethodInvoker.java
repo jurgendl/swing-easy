@@ -4,10 +4,10 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
-import org.apache.commons.lang.builder.ToStringStyle;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
 /**
  * @author Jurgen
@@ -48,13 +48,13 @@ public final class MethodInvoker {
 
     /**
      * find method
-     * 
+     *
      * @param invoker
      * @param methodName
      * @param types
-     * 
+     *
      * @return
-     * 
+     *
      * @throws InvocationException
      */
     public static final Method getMethod(Object invoker, String methodName, Class<?>[] types) throws InvocationException {
@@ -182,7 +182,7 @@ public final class MethodInvoker {
 
     /**
      * conversie
-     * 
+     *
      * @return
      */
     public static Class<?>[] toTypes(Object... params) {
@@ -215,12 +215,12 @@ public final class MethodInvoker {
 
     /**
      * Creates a new MethodInvoker object.
-     * 
+     *
      * @param invoker
      * @param methodName
      * @param types
      * @param parameters
-     * 
+     *
      * @throws InvocationException
      */
     public MethodInvoker(Object invoker, String methodName, Class<?>... types) throws InvocationException {
@@ -230,7 +230,7 @@ public final class MethodInvoker {
     }
 
     /**
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -251,7 +251,7 @@ public final class MethodInvoker {
 
     /**
      * Getter voor invoker
-     * 
+     *
      * @return Returns the invoker.
      */
     public final Object getInvoker() {
@@ -260,9 +260,9 @@ public final class MethodInvoker {
 
     /**
      * Getter voor method
-     * 
+     *
      * @return Returns the method.
-     * 
+     *
      * @throws InvocationException
      */
     public final Method getMethod() throws InvocationException {
@@ -276,7 +276,7 @@ public final class MethodInvoker {
 
     /**
      * Getter voor methodName
-     * 
+     *
      * @return Returns the methodName.
      */
     public final String getMethodName() {
@@ -285,7 +285,7 @@ public final class MethodInvoker {
 
     /**
      * Getter voor parameters
-     * 
+     *
      * @return Returns the parameters.
      */
     public final Object[] getParameters() {
@@ -294,7 +294,7 @@ public final class MethodInvoker {
 
     /**
      * Getter voor returns
-     * 
+     *
      * @return Returns the returns.
      */
     public final Object getReturns() {
@@ -303,7 +303,7 @@ public final class MethodInvoker {
 
     /**
      * Getter voor types
-     * 
+     *
      * @return Returns the types.
      */
     public final Class<?>[] getTypes() {
@@ -311,7 +311,7 @@ public final class MethodInvoker {
     }
 
     /**
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -321,9 +321,9 @@ public final class MethodInvoker {
 
     /**
      * invoke method with parameters
-     * 
+     *
      * @return
-     * 
+     *
      * @throws InvocationException
      */
     public final Object invoke(Object... p) throws InvocationException {
@@ -351,7 +351,7 @@ public final class MethodInvoker {
 
     /**
      * Setter voor method
-     * 
+     *
      * @param method The method to set.
      */
     @SuppressWarnings("unused")
@@ -361,7 +361,7 @@ public final class MethodInvoker {
 
     /**
      * Setter voor parameters
-     * 
+     *
      * @param parameters The parameters to set.
      */
     @SuppressWarnings("unused")
@@ -371,7 +371,7 @@ public final class MethodInvoker {
 
     /**
      * Setter voor returns
-     * 
+     *
      * @param returns The returns to set.
      */
     @SuppressWarnings("unused")
@@ -381,7 +381,7 @@ public final class MethodInvoker {
 
     /**
      * Setter voor types
-     * 
+     *
      * @param types The types to set.
      */
     @SuppressWarnings("unused")
@@ -390,7 +390,7 @@ public final class MethodInvoker {
     }
 
     /**
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override

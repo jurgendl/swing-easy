@@ -1,6 +1,6 @@
 package org.swingeasy;
 
-import org.apache.commons.lang.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.CompareToBuilder;
 
 /**
  * @author Jurgen

@@ -1,8 +1,8 @@
 package org.swingeasy;
 
-import org.apache.commons.lang.builder.CompareToBuilder;
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * @author Jurgen
@@ -20,7 +20,7 @@ public class EComboBoxRecord<T> implements Comparable<EComboBoxRecord<? super T>
     }
 
     /**
-     * 
+     *
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     @Override
@@ -29,7 +29,7 @@ public class EComboBoxRecord<T> implements Comparable<EComboBoxRecord<? super T>
     }
 
     /**
-     * 
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -55,7 +55,7 @@ public class EComboBoxRecord<T> implements Comparable<EComboBoxRecord<? super T>
     }
 
     /**
-     * 
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -68,7 +68,7 @@ public class EComboBoxRecord<T> implements Comparable<EComboBoxRecord<? super T>
     }
 
     /**
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override
