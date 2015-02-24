@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import javax.swing.event.DocumentEvent;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.swingeasy.validation.EValidationMessage;
 import org.swingeasy.validation.EValidationMessageI;
 import org.swingeasy.validation.EValidationPane;
@@ -121,6 +121,6 @@ public class ValidationDemo {
         vm2.setIsValid();
 
         new ValidationFactory().install(parent, comp5, new NotNullValidator<String>(), new EmailValidator(), new RegexValidator(regex))
-                .setShowWhenValid(true);
+        .setShowWhenValid(true);
     }
 }

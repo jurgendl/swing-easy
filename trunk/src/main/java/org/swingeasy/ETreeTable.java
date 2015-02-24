@@ -31,7 +31,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
 import org.swingeasy.table.editor.BooleanTableCellEditor;
 import org.swingeasy.table.editor.ColorTableCellEditor;
@@ -126,7 +126,7 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
     }
 
     /**
-     * 
+     *
      * @see javax.swing.JTable#createDefaultEditors()
      */
     @SuppressWarnings("unchecked")
@@ -140,7 +140,7 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
     }
 
     /**
-     * 
+     *
      * @see javax.swing.JTable#createDefaultRenderers()
      */
     @SuppressWarnings("unchecked")
@@ -169,7 +169,7 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
     }
 
     /**
-     * 
+     *
      * @see javax.swing.JTable#getDefaultEditor(java.lang.Class)
      */
     @Override
@@ -184,7 +184,7 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
     }
 
     /**
-     * 
+     *
      * @see javax.swing.JTable#getDefaultRenderer(java.lang.Class)
      */
     @Override
@@ -296,7 +296,7 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETreeTableI#getSelectedRecord()
      */
     @Override
@@ -306,7 +306,7 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETreeTableI#getSelectedRecords()
      */
     @Override
@@ -316,7 +316,7 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
 
     /**
      * JDOC
-     * 
+     *
      * @return
      */
     @SuppressWarnings("unchecked")
@@ -446,7 +446,7 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
     }
 
     /**
-     * 
+     *
      * @see javax.swing.JTable#isCellEditable(int, int)
      */
     @Override
@@ -456,7 +456,7 @@ public class ETreeTable<T> extends JTable implements ETreeTableI<T>, Iterable<ET
 
     /**
      * threadsafe unmodifiable iterator
-     * 
+     *
      * @see java.lang.Iterable#iterator()
      */
     @Override

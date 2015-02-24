@@ -7,7 +7,7 @@ import javax.swing.JTextField;
 import javax.swing.ToolTipManager;
 import javax.swing.event.DocumentEvent;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * @author Jurgen
@@ -33,7 +33,7 @@ public class ETextField extends JTextField implements EComponentI, HasValue<Stri
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.HasValue#addValueChangeListener(org.swingeasy.ValueChangeListener)
      */
     @Override
@@ -42,7 +42,7 @@ public class ETextField extends JTextField implements EComponentI, HasValue<Stri
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.HasValue#clearValueChangeListeners()
      */
     @Override
@@ -51,7 +51,7 @@ public class ETextField extends JTextField implements EComponentI, HasValue<Stri
     }
 
     /**
-     * 
+     *
      * @see javax.swing.JComponent#getToolTipText()
      */
     @Override
@@ -68,7 +68,7 @@ public class ETextField extends JTextField implements EComponentI, HasValue<Stri
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ValidationDemo.HasValue#getValue()
      */
     @Override
@@ -129,7 +129,7 @@ public class ETextField extends JTextField implements EComponentI, HasValue<Stri
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.HasValue#removeValueChangeListener(org.swingeasy.ValueChangeListener)
      */
     @Override

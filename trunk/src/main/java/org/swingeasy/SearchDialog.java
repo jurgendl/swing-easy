@@ -12,7 +12,7 @@ import javax.swing.SwingUtilities;
 
 import net.miginfocom.swing.MigLayout;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.swingeasy.system.SystemSettings;
 
 /**
@@ -262,7 +262,7 @@ public class SearchDialog extends JDialog implements EComponentI {
     }
 
     /**
-     * 
+     *
      * @see java.awt.Component#setLocale(java.util.Locale)
      */
     @Override

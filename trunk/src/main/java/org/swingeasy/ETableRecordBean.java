@@ -8,11 +8,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
 
 /**
  * requires commons-beanutils-core
- * 
+ *
  * @author Jurgen
  */
 public class ETableRecordBean<T> implements ETableRecord<T> {
@@ -33,7 +33,7 @@ public class ETableRecordBean<T> implements ETableRecord<T> {
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableRecord#get(int)
      */
     @Override
@@ -54,7 +54,7 @@ public class ETableRecordBean<T> implements ETableRecord<T> {
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableRecord#getBean()
      */
     @Override
@@ -63,7 +63,7 @@ public class ETableRecordBean<T> implements ETableRecord<T> {
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableRecord#getStringValue(int)
      */
     @Override
@@ -73,7 +73,7 @@ public class ETableRecordBean<T> implements ETableRecord<T> {
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableRecord#getTooltip(int)
      */
     @Override
@@ -82,7 +82,7 @@ public class ETableRecordBean<T> implements ETableRecord<T> {
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableRecord#hasChanged(int)
      */
     @Override
@@ -102,7 +102,7 @@ public class ETableRecordBean<T> implements ETableRecord<T> {
     }
 
     /**
-     * 
+     *
      * @see java.lang.Iterable#iterator()
      */
     @SuppressWarnings("rawtypes")
@@ -129,7 +129,7 @@ public class ETableRecordBean<T> implements ETableRecord<T> {
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableRecord#set(int, java.lang.Object)
      */
     @Override
@@ -151,7 +151,7 @@ public class ETableRecordBean<T> implements ETableRecord<T> {
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableRecord#size()
      */
     @Override
@@ -160,7 +160,7 @@ public class ETableRecordBean<T> implements ETableRecord<T> {
     }
 
     /**
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override

@@ -8,7 +8,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
 
 /**
  * @author Jurgen
@@ -36,7 +36,7 @@ public class ETableRecordCollection<E> implements ETableRecord<List<E>> {
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableRecord#get(int)
      */
     @Override
@@ -45,7 +45,7 @@ public class ETableRecordCollection<E> implements ETableRecord<List<E>> {
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableRecord#getBean()
      */
     @Override
@@ -54,7 +54,7 @@ public class ETableRecordCollection<E> implements ETableRecord<List<E>> {
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableRecord#getStringValue(int)
      */
     @Override
@@ -64,7 +64,7 @@ public class ETableRecordCollection<E> implements ETableRecord<List<E>> {
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableRecord#getTooltip(int)
      */
     @Override
@@ -73,7 +73,7 @@ public class ETableRecordCollection<E> implements ETableRecord<List<E>> {
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableRecord#hasChanged(int)
      */
     @Override
@@ -84,7 +84,7 @@ public class ETableRecordCollection<E> implements ETableRecord<List<E>> {
     }
 
     /**
-     * 
+     *
      * @see java.lang.Iterable#iterator()
      */
     @Override
@@ -93,7 +93,7 @@ public class ETableRecordCollection<E> implements ETableRecord<List<E>> {
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableRecord#set(int, java.lang.Object)
      */
     @SuppressWarnings("unchecked")
@@ -107,7 +107,7 @@ public class ETableRecordCollection<E> implements ETableRecord<List<E>> {
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETableRecord#size()
      */
     @Override
@@ -116,7 +116,7 @@ public class ETableRecordCollection<E> implements ETableRecord<List<E>> {
     }
 
     /**
-     * 
+     *
      * @see java.lang.Object#toString()
      */
     @Override

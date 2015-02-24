@@ -43,7 +43,7 @@ import javax.swing.text.Highlighter;
 import javax.swing.text.Highlighter.Highlight;
 import javax.swing.text.Utilities;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.swingeasy.EComponentPopupMenu.CheckEnabled;
 import org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction;
 import org.swingeasy.EComponentPopupMenu.ReadableTextComponent;
@@ -61,7 +61,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -95,7 +95,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -115,7 +115,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -133,7 +133,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -152,7 +152,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
         }
 
         /**
-         * 
+         *
          * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
          */
         @Override
@@ -196,7 +196,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
         }
 
         /**
-         * 
+         *
          * @see org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction#checkEnabled(org.swingeasy.EComponentPopupMenu.CheckEnabled)
          */
         @Override
@@ -248,7 +248,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.HasValue#addValueChangeListener(org.swingeasy.ValueChangeListener)
      */
     @Override
@@ -257,7 +257,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.HasValue#clearValueChangeListeners()
      */
     @Override
@@ -380,7 +380,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ValidationDemo.HasValue#getValue()
      */
     @Override
@@ -449,7 +449,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
     protected void installPopupMenuAction(EComponentPopupMenu popupMenu) {
         popupMenu.addSeparator();
         this.actions = new Action[] {//
-        //
+                //
                 new OpenAction(this), //
                 new SaveAction(this),//
                 new PrintAction(this) //
@@ -497,7 +497,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.HasValue#removeValueChangeListener(org.swingeasy.ValueChangeListener)
      */
     @Override
@@ -526,7 +526,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETextComponentI#setCaret(int)
      */
     @Override
@@ -536,7 +536,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
     }
 
     /**
-     * 
+     *
      * @see org.swingeasy.ETextComponentI#setCaret(int, int)
      */
     @Override

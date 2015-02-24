@@ -7,7 +7,7 @@ import javax.swing.JComponent;
 import javax.swing.JToggleButton;
 import javax.swing.ToolTipManager;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
 
 /**

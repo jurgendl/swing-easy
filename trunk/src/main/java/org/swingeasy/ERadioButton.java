@@ -6,7 +6,7 @@ import javax.swing.JComponent;
 import javax.swing.JRadioButton;
 import javax.swing.ToolTipManager;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.swingeasy.EComponentPopupMenu.ReadableComponent;
 
 /**
@@ -42,7 +42,7 @@ public class ERadioButton extends JRadioButton implements EComponentI, ReadableC
     }
 
     /**
-     * 
+     *
      * @see javax.swing.JComponent#getToolTipText()
      */
     @Override

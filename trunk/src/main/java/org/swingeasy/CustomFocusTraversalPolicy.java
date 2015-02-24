@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 import javax.swing.text.JTextComponent;
 
-import org.apache.commons.lang.builder.CompareToBuilder;
+import org.apache.commons.lang3.builder.CompareToBuilder;
 
 /**
  * Window.setFocusCycleRoot(true);<br>
@@ -22,7 +22,7 @@ import org.apache.commons.lang.builder.CompareToBuilder;
  * this.setFocusTraversalPolicy(policy);<br>
  * <br>
  * (static) vertical focus traversal based on x,y position; use this in forms/miglayout
- * 
+ *
  * @author Jurgen
  */
 public class CustomFocusTraversalPolicy extends FocusTraversalPolicy {
