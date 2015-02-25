@@ -164,6 +164,11 @@
 			<artifactId>flying-saucer-pdf-itext5</artifactId>
 			<version>9.0.6</version>
 		</dependency>
+		<dependency><!-- in poi -->
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.9</version>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.poi</groupId>
 			<artifactId>poi-ooxml</artifactId>
@@ -178,11 +183,6 @@
 					<groupId>xml-apis</groupId>
 				</exclusion>
 			</exclusions>
-		</dependency>
-		<dependency><!-- in poi -->
-			<groupId>commons-codec</groupId>
-			<artifactId>commons-codec</artifactId>
-			<version>1.9</version>
 		</dependency>
 		<dependency>
 			<groupId>org.ostermiller</groupId>
