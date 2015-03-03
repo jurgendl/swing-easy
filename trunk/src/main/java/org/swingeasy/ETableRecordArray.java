@@ -15,7 +15,7 @@ public class ETableRecordArray<E> implements ETableRecord<E[]> {
 
     protected final Map<Integer, E> originalValues = new HashMap<Integer, E>();
 
-    public ETableRecordArray(E... o) {
+    public ETableRecordArray(@SuppressWarnings("unchecked") E... o) {
         this.array = o;
     }
 
