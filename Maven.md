@@ -1,0 +1,24 @@
+Maven version 2.2.1 recommended
+
+add this in your project pom.xml
+
+```
+  <repositories>
+    <repository>
+      <id>swing-easy.googlecode</id>
+      <url>http://swing-easy.googlecode.com/svn/maven2</url>
+    </repository>
+  </repositories>
+```
+
+
+```
+  <dependencies>
+    <dependency>
+      <groupId>org.swingeasy</groupId>
+      <artifactId>swing-easy</artifactId>
+      <version>VERSION</version>
+    </dependency>
+    ...
+  <dependencies>
+```

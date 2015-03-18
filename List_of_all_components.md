@@ -1,0 +1,44 @@
+# Rich components #
+
+my purpose was to create components which are easier to use and have more features: context sensitive menus, tooltips, mouse driven (like changing the value of a combobox by scrolling the mouse), at runtime locale changes (English and Dutch is supported) (all swing chooser components and dialog buttons also change locale at runtime), easier event-thread-safe programming, configuring components at instantiation by configuration object, drag and drop, searching and filtering, type based rendering and editing, and many more; a framework to build forms (validation, automatic binding of components) is also in development; many utility classes are created to make everything posible
+
+
+# List of all components based on existing ones #
+
+the names all Swing components start with J, replace it with E for their upgraded counterpart
+
+  * EButton
+  * ECheckBox
+  * EComboBox
+  * EFormattedTextField
+  * ELabel
+  * EList
+  * EProgressBar
+  * ERadioButton
+  * ESpinner
+  * ETable
+  * ETextArea
+  * ETextField
+  * EToggleButton
+  * EToggleToolBarButton
+  * ETree
+  * ETreeTable (!WIP!)
+  * ETextPane
+  * more in development
+
+# List of all new components #
+
+  * ECheckboxTree
+  * EDateChooser
+  * EDateEditor
+  * EDateTimeChooser
+  * EDateTimeEditor
+  * ELabeledTextFieldButtonComponent
+  * TristateCheckBox
+  * EFontChooser
+  * GradientPanel
+  * EWizard (!WIP!)
+  * EURILabel
+  * FileSelection
+  * ECheckBoxList (!WIP!)
+  * more in development

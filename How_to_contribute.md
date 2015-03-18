@@ -1,0 +1,9 @@
+# How to contribute and make this project grow ? #
+
+  * Use it!
+
+  * If you have issues or find bugs: go to the 'Issues' tab and add a new one, if you want to see new functionality you can add it as an issue.
+
+  * Recommend this on Google by pressing the  button on the 'Project Home' tab.
+
+  * If you want to contribute, fix and add code: send me an email by clicking on my account name in 'Members' on the 'Project Home' tab, click the 3 dots and input the catchpa, and ask me to include you in the member list; or you can email me the code changes if you don't want to contribute on a regular basis.

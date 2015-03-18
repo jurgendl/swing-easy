@@ -1,0 +1,252 @@
+# Version History #
+
+latest change: 2013-10-17
+
+featured: downloads are available on the front page
+
+deprecated: downloads are not available, version should not be used
+
+not released: downloads are not available yet, only available by checking out the source repository
+
+major version changes (first number) are possibly not backwards compatible!
+
+all releases can also be downloaded from https://swing-easy.googlecode.com/svn/maven2/org/swingeasy/swing-easy
+
+  * 0.1.0 (deprecated)
+    * initial release of ETable
+    * initial release of UIUtils
+  * 0.2.0 (deprecated)
+    * initial release of EventHelper and EventModifier
+    * initial release of NonBlockingGlassPane
+  * 0.3.0 (deprecated)
+    * initial release of EComboBox
+    * fixed eventthread-safe methods
+  * 1.0.0
+    * EComboBox: many changes
+    * initial release of EList
+  * 1.1.0
+    * ETable: scrollToRecord
+    * EList: filtering redone
+    * eventthread-safe methods return subclass proxy instead of interface proxy
+    * localized strings
+    * initial release of EButtonGroup
+    * initial release of ETree
+    * initial release of ECheckBoxTree
+    * initial release of ProgressGlassPane
+  * 1.2.0
+    * UIUtils: additional methods
+  * 1.3.0
+    * initial release of ETreeTable
+    * UIUtils: renamed method (look-and-feel) breaks backwards compatibility
+  * 2.0.0
+    * every component has a configuration and interface which extends common class
+    * commons-beanutils-core is now optional unless you want to use ETableRecordBean
+    * ETable: hasChanged is part of interface ETableRecord
+    * ETable: generified last classes
+    * javassist is now optional but if not included the component interfaces do not permit safe access from any thread
+  * 2.1.0
+    * ETable: Boolean editor centered
+    * Color renderer is now small circle
+    * ETable, ETreeTable: setting locale, renderers react to changes, field being edited reacts after commit
+    * ETreeTable: bug (nullpointer) fixed
+    * EList: setting locale
+    * ETreeTable: nodes can be lazy initialized just like ETree
+    * EList: drag-and-drop (internal/intra jvm as objects or as string)
+  * 2.2.0
+    * ETree: search component and methods
+    * EList: search component and methods
+    * initial release of EIconButton
+    * initial release of EventThreadTask (alternative for SwingWorker)
+    * easy localization of JFileChooser, JOptionPane, JColorChooser
+    * EventThreadTask as alternative for SwingWorker, see other classes
+  * 2.2.1
+    * initial release of PropertyChangeParent implementing all methods (also used for dynamic component localization)
+    * initial release of WeakReferencedListener (also used for dynamic component localization)
+    * localization redone: dynamic component localization including JFileChooser, JOptionPane, JColorChooser via UIUtils (all EComponents are registered by default; JComponents are supported)
+  * 2.2.2 (not backwards compatible)
+    * EList: reworked filtercomponent
+    * ELabeledTextFieldButtonComponent: all filter and searchcompontn have common superclass
+    * UIUtils: focused button is default button
+  * 2.3.0 (not backwards compatible)
+    * EComboBox, ETable and EList implement iterable
+    * ETable: more utilitymethods
+    * initial release of RotatedLabel
+    * initial release of ETabbedPane (not finished)
+    * E-interfaces do not return EventList but List
+    * EList: more utilitymethods
+    * EList: fixed nullpointer when filtering was disabled
+    * initial release of ObjectWrapper (helper)
+    * initial release of customizable OptionPane
+    * initial release of customizable FileChooser
+    * EComponents default (expandable) popup menu
+    * ETable: exporters (also actions in default popup menu)
+    * progress glasspane: fixed visibility
+  * 2.4.0 (not backwards compatible)
+    * EComponents default (expandable) popup menu reworked
+    * initial release of ETextArea and ETextField
+    * default popup menu for text components
+    * initial release of SearchDialog
+    * extra methods to get resources
+    * renamed EToolbarButton to EButton
+    * EButton customisation
+  * 2.5.0 (not backwards compatible)
+    * several fixes SearchDialog (and ETextArea) and translation
+    * use of MigLayout for SearchDialog
+    * EList/ETable renderers/editors moved to package
+    * some methods moved from UIUtils to SystemSettings
+    * initial release of SystemSettings with propertysupport
+    * fixed some renderers/editors: locale changes
+    * config objects return this in setters
+  * 2.5.1
+    * ETable: rowheader
+    * fixed: ETable: renderers/editors listen to Locale changes
+    * upgrade javassist library
+    * can now use cglib for EDT safe proxies
+  * 2.5.2
+    * EList & ETable: select cell closest to point method & select cell before showing popup
+    * ETable rowheader align right and can set #characters
+    * ETable: dragging is disabled by default
+    * ETable: fix: arrayoutofboundsexception when popup menu not over cell
+    * ValueHolder is standalone class
+    * initial release of exception dialog
+    * ETextArea: highlighting
+  * 2.5.3
+    * initial release EDateTimeChooser & -Editor
+    * initial release EDateChooser & -Editor
+    * initial release ELabel
+    * EList & EComboBox: convert methods
+    * initial release ESpinner & ESpinnerCyclingModel
+  * 2.5.4
+    * fixed: ETextArea: copy action works (depends on editable instead of enabled)
+    * ETextArea: highlight painter redone
+    * first version of validation framework
+    * initial release FormBuilder
+    * EIconButtonCustomizer accepts icon in constructor
+    * E(Formatted)TextField also have add/removeDocumentKeyListener
+    * initial release EProgressBar
+    * tooltips for most EComponents
+    * initial release ERadioButton
+    * initial release EFormattedTextField & Format builders
+    * stub for L10n and i18n
+  * 2.5.4.1
+    * bugfix: ETextField: is set to non editable instead of disabled
+    * bugfix: ETextArea: highlight painter renamed and fixes
+  * 2.5.5
+    * ETable exporters: new: export to xlsx
+    * ETable exporters: streaming
+    * initial release ETextPane and additional actions in contextmenu
+    * initial release font chooser
+    * initial release of EToolbar
+    * EComboBox: auto-resizable popup
+  * 2.5.5.1
+    * fixed: ETextPane: bold/italic/underline toggles
+    * static method to accelerate action with keystroke (used in ETextPane)
+    * fixed: ETextPane: some actions were not enabled
+    * fixed: ETextPane: dialog center on pane and not screen
+    * fixed: ETable exporter: poi is now optional
+  * 2.5.5.2
+    * EComboBox autoresizing popup
+    * fixed: Locale change listener: nullpointer
+    * fixed: Locale change listener: are added only once
+    * dialog with option buttons
+    * ETextPane: fontchooser centered on pane
+    * ETextPane: requires two parameters (parent, default font)
+    * ETable: exporters: single line on error
+  * 2.5.5.3
+    * fixed: EText'components': caret updates fire events
+    * fixed: ETextArea: copy action: endless loop
+  * 2.5.6.0
+    * EText'components': set caret methods
+    * fixed: datechooser/spinner support for null value
+    * ETextArea: autoscroll caret
+  * 2.5.6.1
+    * EComponentPopupMenu: removeRegisteredKeystroke
+    * fixed: replacing keystrokes with another action
+    * fixed: goto begin/end needs control modifier
+    * fixed: delete action temporary removed
+    * ETable: byte array renderer
+    * EComponent: config is saved in object and init method accepts config
+    * ETextField: select all on focus
+  * 2.5.7.0
+    * UIUtils: easy system tray menu
+    * UIUtils: toggleVisibility and set Window relative, center, bottomRight methods
+    * fixed: Resources: nullpointer
+  * 2.6.0.0
+    * libraries upgraded
+    * library Javassist is required
+    * library GlazedLists updated
+    * fixed: ETable: selection model when sorting
+    * fixed: ETable: html/pdf export: fixed css
+    * new: UIUtils: maximize frame
+    * new: SystemSettings: open file, load library, new system specific info
+    * new: SplashScreen
+    * new: UIUtils: simple system tray
+  * 2.6.1.0
+    * fixed: EDT safe interface does not return actual object in case of an exception anymore but throws wrapped exception (javassist is not optional anymore, glazedlists REQUIRES safe access)
+    * fixed: the same EDT safe interface is always returned, even from that interface
+    * new: #getOriginal() always returns original object which is needed when adding to a container
+    * performance: EDT safe interface is cached on actual object, calling it multiple times does not create new wrapper but returns existing
+    * fixed: ETable: ByteArrayTableCellRenderer on Byte[.md](.md)
+    * fixed: exception when opening filebrowser when customizer is null
+    * new: EWizard (!WIP!): new component
+    * new: GradientPanel: new component
+    * new: EURILabel: new component
+  * 2.7.0.0
+    * new: ETable: 'editable' in config
+    * new: ETree: node hover color
+    * new: ECheckBox: configurable (breaks backwards compatibility)
+    * fixed: EComboBox: nullpointer
+    * new: EComponent having a context sensitive popup menu: 'installPopupMenuAction' method to add actions
+    * new: EComponent: 'init' method
+    * new: FileSelection: new component
+    * fixed: EList: 'copy' only selected record (method/action)
+    * new: EList: exporters
+    * fixed: ETextPane: 'open' action
+    * new: ETextArea: 'open' and 'save' actions
+    * fixed: translations and accelerators for component actions
+    * new: ETextPane: 'justify' action
+    * new: ETextArea & ETextPane & ETable: 'print' action
+    * fixed: ETable: 'copy' method does not throw exception but is implemented
+    * reworked: ETreeTable: completely reworked using Glazedlists (!WIP!) (breaks backwards compatibility)
+    * new: ETextArea: 'export to html' and 'export to pdf' actions
+    * fixed: ETable: 'getSelectedCells' method fixed
+    * fixed: ETable: 'copy' method and action in case multiple cells/records are selected
+  * 2.7.1.0 (preferred version)
+    * fixed: methods do not throw exception when not implemented (log error to console)
+    * fixed: copy action on disabled textcomponent
+    * fixed: UIUtils: streams not closed
+    * fixed: UIUtils: temp file not removed
+    * new: ETextArea/Pane: inScrollpane method
+    * new: ECheckBoxList: new component (!WIP), based on GlazedLists
+    * fixed: EList: drag and drop
+    * new: EList: 'select-all' & 'unselect' action
+    * new: Splash: shadow for splash text
+    * fixed: ETable: filtering: filterpreview disabled when focus lost, nullpointer
+    * fixed: export to html: html and body tags removed
+    * fixed: EList: rightclicking does not select cell under mouse when already selected
+  * 3.0.0.0 (not released)
+  * 3.0.0.1 (not released)
+  * 3.0.0.2 (latest version)
+    * change: EComponentConfig reworked
+    * change: ERadioButton and ETextPane config
+    * change: EFormattedTextField config
+    * change: ELabel, EButton, EToogleToolBarButton config
+    * change: EButton/EToggleButton => EButtonConfig with EButtonCustomizer
+    * change: EToolBarButton/EToggleToolBarButton => EToolBarButtonConfig with EToolBarButtonCustomizer
+    * new: mouse double click action invoker
+    * new: BooleanTableCellRenderer flat border
+    * new: copy action implementations
+    * new: ETable & EList: reusable parent
+    * new: EList: record count
+    * new: debug focus
+    * new: finddialog find field requests focus + centered on parent component owner window
+    * new: ETable: addRowHeader(JScrollPane, int) returns JScrollPane
+    * new: URL/I table&list cellrenderer
+    * change: date&time table&list renderer&editor
+    * new: ETextPane,ETextArea: line numbers
+    * change: FileSelection
+  * some version in the future or maybe never (unplanned)
+    * form builder and components
+    * tip of the day
+    * drag and drop, hide and close tabs in multitab component
+    * ...

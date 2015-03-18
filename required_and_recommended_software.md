@@ -1,0 +1,41 @@
+# Required and recommended software #
+
+I use all software and these versions, other software or version are your own responsability
+
+  * Java 5.x or higher is required, the latest version of Java 6.x (6.31) is recommended, Java 7.x is not tested but should not be a problem
+
+  * Eclipse Indigo (3.6) or another IDE
+http://www.eclipse.org/downloads/
+
+  * Subversion for version control or Mercurial with hgsubversion extension:
+http://subversion.tigris.org/ and http://tortoisesvn.tigris.org/ or http://tortoisehg.bitbucket.org/ and http://mercurial.selenic.com/wiki/WorkingWithSubversion
+
+  * Maven 2.2.1 for building, not tested with Maven 3.x
+http://maven.apache.org/
+
+# Libraries #
+
+see the dependency tree of the generated site for details and dependencies of these libraties
+
+## Required ##
+
+**Glazedlists: http://java.net/projects/glazedlists/**
+
+**commons-lang: http://commons.apache.org/lang/**
+
+**MigLayout: http://www.miglayout.com/**
+
+**Ostermiller Java Utilities: http://ostermiller.org/utils/**
+
+**Javassist: http://www.javassist.org/
+if you are using the EDT safe interface, use one of both**
+
+**commons-beanutils: http://commons.apache.org/beanutils/
+only when using ETableRecordBean**
+
+**Flying Saucer: http://code.google.com/p/flying-saucer/
+ETable exporter to pdf**
+
+**iText: http://itextpdf.com/
+ETable exporter to pdf**
+
