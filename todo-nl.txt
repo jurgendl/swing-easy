@@ -4,3 +4,5 @@
     Ctrl-N: Nieuw (bv. een nieuw bestand maken)
     Ctrl-T: Hanging Indent (Hanging Indent)
     Ctrl-W: Document Afsluiten (Close)
+
+	
