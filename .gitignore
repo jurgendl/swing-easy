@@ -1,0 +1,12 @@
+.classpath
+.project
+target
+/.settings/org.eclipse.wst.common.component
+/.settings/org.eclipse.wst.common.project.facet.core.xml
+/.settings/org.eclipse.wst.validation.prefs
+/other/dependencylist.txt
+/src/main/java/org/swingeasy/CopyOfEListTransferHandler.java
+/src/test/java/org/swingeasy/ImageTst.java
+/src/test/java/org/swingeasy/TipTst.java
+/src/test/java/org/swingeasy/test.7z
+/src/test/resources/leaf.jpg
