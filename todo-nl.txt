@@ -5,4 +5,3 @@
     Ctrl-T: Hanging Indent (Hanging Indent)
     Ctrl-W: Document Afsluiten (Close)
 
-	
