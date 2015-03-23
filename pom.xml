@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.swingeasy</groupId>
 	<artifactId>swing-easy</artifactId>
-	<version>3.0.0.5-SNAPSHOT</version>
+	<version>3.0.0.5</version>
 	<packaging>jar</packaging>
 	<name>swing-easy</name>
 	<description>Java Swing components</description>
@@ -125,7 +125,8 @@
 		<connection>scm:git:git@github.com:jurgendl/swing-easy.git</connection>
 		<url>scm:git:git@github.com:jurgendl/swing-easy.git</url>
 		<developerConnection>scm:git:git@github.com:jurgendl/swing-easy.git</developerConnection>
-	</scm>
+	  <tag>swing-easy-3.0.0.5</tag>
+  </scm>
 	<repositories>
 		<repository>
 			<id>swing-easy.googlecode</id>
