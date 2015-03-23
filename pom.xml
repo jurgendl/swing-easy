@@ -6,7 +6,7 @@
 	<packaging>jar</packaging>
 	<name>swing-easy</name>
 	<description>Java Swing components</description>
-	<url>http://swing-easy.googlecode.com</url>
+	<url>https://github.com/jurgendl/swing-easy</url>
 	<properties>
 		<targetJdk>1.7</targetJdk><!-- should be compatible with 1.6 and higher -->
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding><!-- fixed encoding -->
@@ -82,26 +82,19 @@
 		</license>
 	</licenses>
 	<issueManagement>
-		<system>Google</system>
-		<url>http://code.google.com/p/swing-easy/issues/list</url>
+		<system>github</system>
+		<url>https://github.com/jurgendl/swing-easy/issues</url>
 	</issueManagement>
+	<!-- mvn -DaltDeploymentRepository=repo::default::file:../mvn-repo/releases clean deploy -->
+	<!-- mvn -DaltDeploymentRepository=snapshot-repo::default::file:../mvn-repo/snapshots clean deploy -->
 	<distributionManagement>
-		<!--
-		<site>
-			<id>swing-easy.googlecode.site</id>
-			<name>swing-easy.googlecode.site</name>
-			<url>scm:svn:https://swing-easy.googlecode.com/svn/site</url>
-		</site>
-		-->
 		<repository>
-			<id>swing-easy.googlecode.releases</id>
-			<name>swing-easy.googlecode.releases</name>
-			<url>dav:https://swing-easy.googlecode.com/svn/maven2</url>
+			<id>repo</id>
+			<url>https://github.ugent.com/jdlandsh/mvn-repo/raw/master/releases</url>
 		</repository>
 		<snapshotRepository>
-			<id>swing-easy.googlecode.snapshots</id>
-			<name>swing-easy.googlecode.snapshots</name>
-			<url>dav:https://swing-easy.googlecode.com/svn/maven2-snapshots</url>
+			<id>snapshot-repo</id>
+			<url>https://github.ugent.com/jdlandsh/mvn-repo/raw/master/snapshots</url>
 		</snapshotRepository>
 	</distributionManagement>
 	<inceptionYear>2011</inceptionYear>
@@ -116,21 +109,16 @@
 		</developer>
 	</developers>
 	<contributors />
-	<!-- <scm>
-		<connection>scm:svn:http://swing-easy.googlecode.com/svn/trunk</connection>
-		<developerConnection>scm:svn:https://swing-easy.googlecode.com/svn/trunk</developerConnection>
-		<url>http://swing-easy.googlecode.com/svn/trunk</url>
-	</scm> -->
 	<scm>
 		<connection>scm:git:git@github.com:jurgendl/swing-easy.git</connection>
 		<url>scm:git:git@github.com:jurgendl/swing-easy.git</url>
 		<developerConnection>scm:git:git@github.com:jurgendl/swing-easy.git</developerConnection>
-	  <tag>HEAD</tag>
-  </scm>
+		<tag>HEAD</tag>
+	</scm>
 	<repositories>
 		<repository>
-			<id>swing-easy.googlecode</id>
-			<url>http://swing-easy.googlecode.com/svn/maven2</url><!-- FIXME -->
+			<id>github</id>
+			<url>https://github.ugent.be/jdlandsh/mvn-repo/raw/master/releases/</url>
 		</repository>
 	</repositories>
 	<dependencies>

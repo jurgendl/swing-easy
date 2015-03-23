@@ -11,3 +11,5 @@ target
 /src/test/java/org/swingeasy/test.7z
 /src/test/resources/leaf.jpg
 /backup.zip
+/pom.xml.releaseBackup
+/release.properties
