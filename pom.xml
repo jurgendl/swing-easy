@@ -7,6 +7,17 @@
 	<name>swing-easy</name>
 	<description>Java Swing components</description>
 	<url>https://github.com/jurgendl/swing-easy</url>
+	<!--
+	http://cemerick.com/2010/08/24/hosting-maven-repos-on-github/
+	deploy snapshot:
+	mvn -DaltDeploymentRepository=snapshot-repo::default::file:../mvn-repo/snapshots clean deploy
+	release:
+	mvn release:prepare
+	mvn release:perform
+	git checkout swing-easy-3.0.0.6
+	mvn -DaltDeploymentRepository=repo::default::file:../mvn-repo/releases clean deploy
+	git checkout master
+	-->
 	<properties>
 		<targetJdk>1.7</targetJdk><!-- should be compatible with 1.6 and higher -->
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding><!-- fixed encoding -->
@@ -77,16 +88,14 @@
 	</profiles>
 	<licenses>
 		<license>
-			<name>GNU Lesser General Public License v2.1</name>
-			<url>http://www.gnu.org/licenses/lgpl-2.1.txt</url>
+			<name>The MIT License (MIT)</name>
+			<url>https://raw.githubusercontent.com/jurgendl/swing-easy/master/LICENSE.md</url>
 		</license>
 	</licenses>
 	<issueManagement>
 		<system>github</system>
 		<url>https://github.com/jurgendl/swing-easy/issues</url>
 	</issueManagement>
-	<!-- mvn -DaltDeploymentRepository=repo::default::file:../mvn-repo/releases clean deploy -->
-	<!-- mvn -DaltDeploymentRepository=snapshot-repo::default::file:../mvn-repo/snapshots clean deploy -->
 	<distributionManagement>
 		<repository>
 			<id>repo</id>
