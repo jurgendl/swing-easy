@@ -49,6 +49,10 @@ import org.swingeasy.EComponentPopupMenu.EComponentPopupMenuAction;
 import org.swingeasy.EComponentPopupMenu.ReadableTextComponent;
 
 /**
+ * TODO
+ * http://andreinc.net/2013/07/15/how-to-customize-the-font-inside-a-jtextpane-component-java-swing-highlight-java-keywords-inside-a-jtextpane/#more
+ * -1129
+ *
  * @author Jurgen
  */
 public class ETextArea extends JTextArea implements EComponentI, HasValue<String>, ETextComponentI, ReadableTextComponent {
@@ -449,7 +453,7 @@ public class ETextArea extends JTextArea implements EComponentI, HasValue<String
     protected void installPopupMenuAction(EComponentPopupMenu popupMenu) {
         popupMenu.addSeparator();
         this.actions = new Action[] {//
-                //
+        //
                 new OpenAction(this), //
                 new SaveAction(this),//
                 new PrintAction(this) //
