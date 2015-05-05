@@ -96,7 +96,7 @@ public class CustomizableOptionPane {
         }
 
         @SuppressWarnings("unchecked")
-        private static <T> T invoke(Method method, @SuppressWarnings("unused") Class<T> returnClass, Object obj, Object... params) {
+        private static <T> T invoke(Method method,  Class<T> returnClass, Object obj, Object... params) {
             try {
                 return (T) method.invoke(obj, params);
             } catch (IllegalAccessException ex) {

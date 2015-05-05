@@ -64,7 +64,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
         @SuppressWarnings("rawtypes")
         protected transient Hashtable<Class, ListCellRenderer> defaultRenderersByClass = new Hashtable<Class, ListCellRenderer>();
 
-        public DelegatingListCellRenderer(@SuppressWarnings("unused") ListCellRenderer defaultListCellRenderer, EComponentRenderer backgroundRenderer) {
+        public DelegatingListCellRenderer( ListCellRenderer defaultListCellRenderer, EComponentRenderer backgroundRenderer) {
             this.setDefaultRenderer(java.sql.Date.class, new DateListCellRenderer().setBackgroundRenderer(backgroundRenderer));
             this.setDefaultRenderer(java.sql.Time.class, new TimeListCellRenderer().setBackgroundRenderer(backgroundRenderer));
             this.setDefaultRenderer(Date.class, new DateTimeListCellRenderer().setBackgroundRenderer(backgroundRenderer));

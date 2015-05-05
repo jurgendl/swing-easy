@@ -354,7 +354,7 @@ public final class MethodInvoker {
      *
      * @param method The method to set.
      */
-    @SuppressWarnings("unused")
+    
     private final void setMethod(Method method) {
         //
     }
@@ -364,7 +364,7 @@ public final class MethodInvoker {
      *
      * @param parameters The parameters to set.
      */
-    @SuppressWarnings("unused")
+    
     private final void setParameters(Object[] parameters) {
         //
     }
@@ -374,7 +374,7 @@ public final class MethodInvoker {
      *
      * @param returns The returns to set.
      */
-    @SuppressWarnings("unused")
+    
     private final void setReturns(Object returns) {
         //
     }
@@ -384,7 +384,7 @@ public final class MethodInvoker {
      *
      * @param types The types to set.
      */
-    @SuppressWarnings("unused")
+    
     private final void setTypes(Class<?>[] types) {
         //
     }

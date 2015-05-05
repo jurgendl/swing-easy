@@ -72,7 +72,7 @@ public class EButton extends JButton implements EComponentI, ReadableComponent {
         }
     }
 
-    protected void installPopupMenuAction(@SuppressWarnings("unused") EComponentPopupMenu menu) {
+    protected void installPopupMenuAction( EComponentPopupMenu menu) {
         //
     }
 }

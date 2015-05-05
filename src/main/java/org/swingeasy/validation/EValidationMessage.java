@@ -168,7 +168,7 @@ public class EValidationMessage extends EButton implements EValidationMessageI {
         }
     }
 
-    protected void setLocationRelativeToComponent(@SuppressWarnings("unused") String id) {
+    protected void setLocationRelativeToComponent( String id) {
         if (!this.installed) {
             this.lazyInstall();
         }

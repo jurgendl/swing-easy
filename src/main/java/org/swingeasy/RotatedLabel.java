@@ -100,7 +100,7 @@ public class RotatedLabel extends JPanel implements Icon {
      * @param width
      * @param height
      */
-    public void paintHere(@SuppressWarnings("unused") Component c, Graphics g, int x, int y, int width, int height) {
+    public void paintHere( Component c, Graphics g, int x, int y, int width, int height) {
         if ((height <= 0) || (width <= 0)) {
             return;
         }

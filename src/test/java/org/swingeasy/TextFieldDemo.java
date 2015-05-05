@@ -29,7 +29,7 @@ public class TextFieldDemo {
         UIUtils.systemLookAndFeel();
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        @SuppressWarnings("unused")
+        
         ETextField tc = null;
         try {
             tc = TextFieldDemo.addComponents(frame.getContentPane());

@@ -47,7 +47,7 @@ public class ETextAreaHtmlExporter extends EComponentExporterImpl<ETextArea> imp
     /**
      * @see org.swingeasy.EComponentStreamExporter#postHeaderCreate(javax.swing.JComponent, java.io.BufferedWriter)
      */
-    @SuppressWarnings("unused")
+    
     public void postHeaderCreate(ETextArea table, BufferedWriter writer) throws IOException {
         //
     }

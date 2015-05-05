@@ -116,7 +116,7 @@ public class ETextField extends JTextField implements EComponentI, HasValue<Stri
     /**
      * JDOC
      */
-    protected void installPopupMenuAction(@SuppressWarnings("unused") EComponentPopupMenu menu) {
+    protected void installPopupMenuAction( EComponentPopupMenu menu) {
         //
     }
 

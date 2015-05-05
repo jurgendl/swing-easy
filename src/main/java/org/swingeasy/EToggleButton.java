@@ -72,7 +72,7 @@ public class EToggleButton extends JToggleButton implements EComponentI, Readabl
         }
     }
 
-    protected void installPopupMenuAction(@SuppressWarnings("unused") EComponentPopupMenu menu) {
+    protected void installPopupMenuAction( EComponentPopupMenu menu) {
         //
     }
 }

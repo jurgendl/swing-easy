@@ -24,7 +24,7 @@ public class TextAreaDemo {
         UIUtils.systemLookAndFeel();
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        @SuppressWarnings("unused")
+        
         ETextArea tc = null;
         try {
             tc = TextAreaDemo.addComponents(frame.getContentPane());

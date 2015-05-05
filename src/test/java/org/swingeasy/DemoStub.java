@@ -9,7 +9,7 @@ import javax.swing.WindowConstants;
  * @author Jurgen
  */
 public class DemoStub {
-    private static void addComponents(@SuppressWarnings("unused") Container container) {
+    private static void addComponents( Container container) {
         // TODO Auto-generated method stub
     }
 

@@ -373,7 +373,7 @@ public class EComboBox<T> extends JComboBox<T> implements EComboBoxI<T>, Iterabl
         }
     }
 
-    protected void installPopupMenuAction(@SuppressWarnings("unused") EComponentPopupMenu menu) {
+    protected void installPopupMenuAction( EComponentPopupMenu menu) {
         //
     }
 

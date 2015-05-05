@@ -69,12 +69,12 @@ public class ListenerDemo {
             }
         }
 
-        @SuppressWarnings("unused")
+        
         public void setListenerClass(Class<T> listenerClass) {
             this.listenerClass = listenerClass;
         }
 
-        @SuppressWarnings("unused")
+        
         public void setRemoveMethodName(String removeMethodName) {
             this.removeMethodName = removeMethodName;
         }

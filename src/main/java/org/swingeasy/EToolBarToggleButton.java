@@ -70,7 +70,7 @@ public class EToolBarToggleButton extends JToggleButton implements EComponentI, 
         }
     }
 
-    protected void installPopupMenuAction(@SuppressWarnings("unused") EComponentPopupMenu menu) {
+    protected void installPopupMenuAction( EComponentPopupMenu menu) {
         //
     }
 }

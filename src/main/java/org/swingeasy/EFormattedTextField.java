@@ -84,7 +84,7 @@ public class EFormattedTextField<T> extends JFormattedTextField implements EComp
         }
     }
 
-    protected void installPopupMenuAction(@SuppressWarnings("unused") EComponentPopupMenu menu) {
+    protected void installPopupMenuAction( EComponentPopupMenu menu) {
         //
     }
 

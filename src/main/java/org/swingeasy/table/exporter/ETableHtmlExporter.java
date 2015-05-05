@@ -69,7 +69,7 @@ public class ETableHtmlExporter<T> extends ETableExporterImpl<T> {
     /**
      * @see org.swingeasy.EComponentStreamExporter#postHeaderCreate(javax.swing.JComponent, java.io.BufferedWriter)
      */
-    @SuppressWarnings("unused")
+    
     public void postHeaderCreate(ETable<T> table, BufferedWriter writer) throws IOException {
         //
     }

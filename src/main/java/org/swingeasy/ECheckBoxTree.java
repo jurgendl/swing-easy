@@ -110,7 +110,7 @@ public class ECheckBoxTree<T> extends JTree implements ECheckBoxTreeI<T>, Readab
         }
     }
 
-    protected void installPopupMenuAction(@SuppressWarnings("unused") EComponentPopupMenu menu) {
+    protected void installPopupMenuAction( EComponentPopupMenu menu) {
         //
     }
 

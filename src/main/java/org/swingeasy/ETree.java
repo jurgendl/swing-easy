@@ -233,7 +233,7 @@ public class ETree<T> extends JTree implements ETreeI<T>, ReadableComponent {
     /**
      * JDOC
      */
-    protected void installPopupMenuAction(@SuppressWarnings("unused") EComponentPopupMenu menu) {
+    protected void installPopupMenuAction( EComponentPopupMenu menu) {
         //
     }
 

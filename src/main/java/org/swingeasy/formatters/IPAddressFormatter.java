@@ -19,7 +19,7 @@ public class IPAddressFormatter extends DefaultFormatter {
         this(4);
     }
 
-    public IPAddressFormatter(@SuppressWarnings("unused") boolean expanded) {
+    public IPAddressFormatter( boolean expanded) {
         this(6);
     }
 

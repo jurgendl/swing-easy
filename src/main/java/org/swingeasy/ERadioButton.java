@@ -89,7 +89,7 @@ public class ERadioButton extends JRadioButton implements EComponentI, ReadableC
     /**
      * JDOC
      */
-    protected void installPopupMenuAction(@SuppressWarnings("unused") EComponentPopupMenu menu) {
+    protected void installPopupMenuAction( EComponentPopupMenu menu) {
         //
     }
 }

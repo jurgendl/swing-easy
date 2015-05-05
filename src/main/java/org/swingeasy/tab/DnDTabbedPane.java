@@ -109,7 +109,7 @@ public class DnDTabbedPane extends JTabbedPane {
             }
         }
 
-        private void repaintDropLocation(@SuppressWarnings("unused") DropLocation loc) {
+        private void repaintDropLocation( DropLocation loc) {
             Component c = DnDTabbedPane.this.getRootPane().getGlassPane();
             if (c instanceof GhostGlassPane) {
                 GhostGlassPane glassPane = (GhostGlassPane) c;
@@ -204,7 +204,7 @@ public class DnDTabbedPane extends JTabbedPane {
 
     // warning can be ignored
     public DropLocation dropLocationForPoint(final Point p) {
-        @SuppressWarnings("unused")
+        
         boolean isTB = (this.getTabPlacement() == SwingConstants.TOP) || (this.getTabPlacement() == SwingConstants.BOTTOM);
         switch (this.dropMode) {
             case INSERT:
@@ -317,7 +317,7 @@ public class DnDTabbedPane extends JTabbedPane {
     }
 
     // warning can be ignored
-    @SuppressWarnings("unused")
+    
     public Object setDropLocation(final TransferHandler.DropLocation location, final Object state, final boolean forDrop) {
         DropLocation old = this.dropLocation;
         if ((location == null) || !forDrop) {

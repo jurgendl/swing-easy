@@ -85,7 +85,7 @@ public class ETreeNode<T> extends DefaultMutableTreeNode {
      * 
      * @param list
      */
-    protected void initChildren(@SuppressWarnings("unused") List<ETreeNode<T>> list) {
+    protected void initChildren( List<ETreeNode<T>> list) {
         // override
     }
 

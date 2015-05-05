@@ -70,7 +70,7 @@ public class EToolBarButton extends JButton implements EComponentI, ReadableComp
         }
     }
 
-    protected void installPopupMenuAction(@SuppressWarnings("unused") EComponentPopupMenu menu) {
+    protected void installPopupMenuAction( EComponentPopupMenu menu) {
         //
     }
 }

@@ -91,7 +91,7 @@ public class ELabel extends JLabel implements EComponentI, ReadableComponent {
         this.setFocusable(false);
     }
 
-    protected void installPopupMenuAction(@SuppressWarnings("unused") EComponentPopupMenu menu) {
+    protected void installPopupMenuAction( EComponentPopupMenu menu) {
         //
     }
 }

@@ -117,7 +117,7 @@ public class ECheckBox extends JCheckBox implements EComponentI, HasValue<Boolea
     /**
      * JDOC
      */
-    protected void installPopupMenuAction(@SuppressWarnings("unused") EComponentPopupMenu menu) {
+    protected void installPopupMenuAction( EComponentPopupMenu menu) {
         //
     }
 
