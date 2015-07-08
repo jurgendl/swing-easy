@@ -135,7 +135,7 @@
 		<dependency>
 			<groupId>net.java.dev.glazedlists</groupId>
 			<artifactId>glazedlists_java15</artifactId>
-			<version>1.9.0</version>
+			<version>1.9.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -166,7 +166,7 @@
 		<dependency>
 			<groupId>org.xhtmlrenderer</groupId>
 			<artifactId>flying-saucer-pdf-itext5</artifactId>
-			<version>9.0.6</version>
+			<version>9.0.7</version>
 		</dependency>
 		<dependency><!-- in poi -->
 			<groupId>commons-codec</groupId>
@@ -306,9 +306,6 @@
 					<charset>${project.build.sourceEncoding}</charset>
 					<docencoding>${project.build.sourceEncoding}</docencoding>
 					<encoding>${project.build.sourceEncoding}</encoding>
-					<sourceExcludes>
-						<sourceExclude>**/.svn/**</sourceExclude>
-					</sourceExcludes>
 				</configuration>
 			</plugin>
 		</plugins>
