@@ -16,6 +16,7 @@
 	mvn release:prepare
 	mvn release:perform
 	
+	mvn release:prepare
 	git checkout swing-easy-3.2
 	mvn -DaltDeploymentRepository=repo::default::file:../mvn-repo/releases clean deploy
 	git checkout master
