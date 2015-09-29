@@ -34,9 +34,10 @@ public class TreeTableDemo {
 			if ((args != null) && (args.length > 0)) {
 				for (String arg : args) {
 					Properties pp = new Properties();
-					FileInputStream in = new FileInputStream(arg);
-					pp.load(in);
-					in.close();
+					try (FileInputStream in = new FileInputStream(arg)) {
+						pp.load(in);
+						in.close();
+					}
 					p.putAll(pp);
 				}
 			} else {
@@ -44,9 +45,10 @@ public class TreeTableDemo {
 				String loc = JOptionPane.showInputDialog("Properties #" + i + " location");
 				while (loc != null) {
 					Properties pp = new Properties();
-					FileInputStream in = new FileInputStream(loc);
-					pp.load(in);
-					in.close();
+					try (FileInputStream in = new FileInputStream(loc)) {
+						pp.load(in);
+						in.close();
+					}
 					p.putAll(pp);
 					loc = JOptionPane.showInputDialog("Properties #" + (++i) + " location");
 				}

@@ -436,7 +436,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
 	@Override
 	public List<EListRecord<T>> getSelectedRecords() {
 		List<EListRecord<T>> list = new ArrayList<EListRecord<T>>();
-		for (Object o : this.getSelectedValues()) {
+		for (Object o : this.getSelectedValuesList()) {
 			list.add(EListRecord.class.cast(o));
 		}
 		return list;
