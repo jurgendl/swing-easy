@@ -60,55 +60,62 @@ import ca.odell.glazedlists.swing.DefaultEventSelectionModel;
 /**
  * @author Jurgen
  */
-public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T>>, ReadableComponent, HasValue<T> {
-	private class DelegatingListCellRenderer implements ListCellRenderer {
-		@SuppressWarnings("rawtypes")
-		protected transient Hashtable<Class, ListCellRenderer> defaultRenderersByClass = new Hashtable<Class, ListCellRenderer>();
+public class EList<T> extends JList<EListRecord<T>>implements EListI<T>, Iterable<EListRecord<T>>, ReadableComponent, HasValue<T> {
+	private class DelegatingListCellRenderer implements ListCellRenderer<Object> {
+		protected transient Hashtable<Class<?>, ListCellRenderer<?>> defaultRenderersByClass = new Hashtable<>();
 
-		public DelegatingListCellRenderer(ListCellRenderer defaultListCellRenderer, EComponentRenderer backgroundRenderer) {
-			this.setDefaultRenderer(java.sql.Date.class, new DateListCellRenderer().setBackgroundRenderer(backgroundRenderer));
-			this.setDefaultRenderer(java.sql.Time.class, new TimeListCellRenderer().setBackgroundRenderer(backgroundRenderer));
-			this.setDefaultRenderer(Date.class, new DateTimeListCellRenderer().setBackgroundRenderer(backgroundRenderer));
-			this.setDefaultRenderer(Number.class, new NumberListCellRenderer().setBackgroundRenderer(backgroundRenderer));
-			this.setDefaultRenderer(Float.class, new NumberListCellRenderer().setBackgroundRenderer(backgroundRenderer));
-			this.setDefaultRenderer(Double.class, new NumberListCellRenderer().setBackgroundRenderer(backgroundRenderer));
-			this.setDefaultRenderer(Color.class, new ColorListCellRenderer().setBackgroundRenderer(backgroundRenderer));
-			this.setDefaultRenderer(Boolean.class, new BooleanListCellRenderer().setBackgroundRenderer(backgroundRenderer));
-			this.setDefaultRenderer(Byte[].class, new ByteArrayListCellRenderer().setBackgroundRenderer(backgroundRenderer));
-			this.setDefaultRenderer(byte[].class, new ByteArrayListCellRenderer().setBackgroundRenderer(backgroundRenderer));
-			this.setDefaultRenderer(URL.class, new URLListCellRenderer().setBackgroundRenderer(backgroundRenderer));
-			this.setDefaultRenderer(URI.class, new URIListCellRenderer().setBackgroundRenderer(backgroundRenderer));
-			this.setDefaultRenderer(Object.class, new EListCellRenderer<Object>().setBackgroundRenderer(backgroundRenderer));
+		public DelegatingListCellRenderer(ListCellRenderer<?> defaultListCellRenderer, EComponentRenderer backgroundRenderer) {
+			defaultRenderer(java.sql.Date.class, new DateListCellRenderer().setBackgroundRenderer(backgroundRenderer));
+			defaultRenderer(java.sql.Time.class, new TimeListCellRenderer().setBackgroundRenderer(backgroundRenderer));
+			defaultRenderer(Date.class, new DateTimeListCellRenderer().setBackgroundRenderer(backgroundRenderer));
+			defaultRenderer(Number.class, new NumberListCellRenderer().setBackgroundRenderer(backgroundRenderer));
+			defaultRenderer(Float.class, new NumberListCellRenderer().setBackgroundRenderer(backgroundRenderer));
+			defaultRenderer(Double.class, new NumberListCellRenderer().setBackgroundRenderer(backgroundRenderer));
+			defaultRenderer(Color.class, new ColorListCellRenderer().setBackgroundRenderer(backgroundRenderer));
+			defaultRenderer(Boolean.class, new BooleanListCellRenderer().setBackgroundRenderer(backgroundRenderer));
+			defaultRenderer(Byte[].class, new ByteArrayListCellRenderer().setBackgroundRenderer(backgroundRenderer));
+			defaultRenderer(byte[].class, new ByteArrayListCellRenderer().setBackgroundRenderer(backgroundRenderer));
+			defaultRenderer(URL.class, new URLListCellRenderer().setBackgroundRenderer(backgroundRenderer));
+			defaultRenderer(URI.class, new URIListCellRenderer().setBackgroundRenderer(backgroundRenderer));
+			defaultRenderer(Object.class, new EListCellRenderer<Object>().setBackgroundRenderer(backgroundRenderer));
 		}
 
-		public ListCellRenderer getDefaultRenderer(Class<?> columnClass) {
+		@SuppressWarnings("unchecked")
+		public <X> ListCellRenderer<X> getDefaultRenderer(Class<X> columnClass) {
 			if (columnClass == null) {
 				return null;
 			}
-			ListCellRenderer renderer = this.defaultRenderersByClass.get(columnClass);
+			ListCellRenderer<X> renderer = (ListCellRenderer<X>) this.defaultRenderersByClass.get(columnClass);
 			if (renderer != null) {
 				return renderer;
 			}
-			return this.getDefaultRenderer(columnClass.getSuperclass());
+			return (ListCellRenderer<X>) this.getDefaultRenderer(columnClass.getSuperclass());
 		}
 
 		/**
 		 * @see javax.swing.ListCellRenderer#getListCellRendererComponent(javax.swing.JList, java.lang.Object, int, boolean, boolean)
 		 */
 		@Override
-		public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+		public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
 			if (value instanceof EListRecord) {
 				value = EListRecord.class.cast(value).get();
 			}
-			return this.getDefaultRenderer(value.getClass()).getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+			@SuppressWarnings("unchecked")
+			Class<Object> clazz = (Class<Object>) value.getClass();
+			ListCellRenderer<Object> _defaultRenderer = getDefaultRenderer(clazz);
+			return _defaultRenderer.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 		}
 
-		public void setDefaultRenderer(Class<?> columnClass, ListCellRenderer renderer) {
+		protected void defaultRenderer(Class<?> columnClass, ListCellRenderer<?> renderer) {
+			this.defaultRenderersByClass.put(columnClass, renderer);
+		}
+
+		public <X> void setDefaultRenderer(Class<X> columnClass, ListCellRenderer<X> renderer) {
 			this.defaultRenderersByClass.put(columnClass, renderer);
 		}
 
 		public void setLocale(Locale l) {
-			for (ListCellRenderer renderer : this.defaultRenderersByClass.values()) {
+			for (ListCellRenderer<?> renderer : this.defaultRenderersByClass.values()) {
 				if (renderer instanceof Component) {
 					Component.class.cast(renderer).setLocale(l);
 				}
@@ -272,8 +279,9 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
 		this.filtercomponent = null;
 	}
 
+	@SuppressWarnings("unchecked")
 	public EList(EListConfig cfg) {
-		super(EList.createModel(cfg.lock()));
+		super(EList.<T>createModel(cfg.lock()));
 		this.init(this.cfg = cfg);
 	}
 
@@ -367,7 +375,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
 	@Override
 	@SuppressWarnings("unchecked")
 	protected ListSelectionModel createSelectionModel() {
-		ListModel _model = this.getModel();
+		ListModel<EListRecord<T>> _model = this.getModel();
 		if (_model instanceof EListModel) {
 			return new DefaultEventSelectionModel<EListRecord<T>>(EListModel.class.cast(_model).sourceList);
 		}
@@ -423,10 +431,9 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
 	/**
 	 * @see org.swingeasy.EListI#getSelectedRecord()
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public EListRecord<T> getSelectedRecord() {
-		return (EListRecord<T>) this.getSelectedValue();
+		return this.getSelectedValue();
 	}
 
 	/**
@@ -476,8 +483,7 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
 			return null;
 		}
 
-		@SuppressWarnings("unchecked")
-		EListRecord<T> item = (EListRecord<T>) this.getModel().getElementAt(index);
+		EListRecord<T> item = this.getModel().getElementAt(index);
 
 		return item.getTooltip();
 	}
@@ -704,11 +710,8 @@ public class EList<T> extends JList implements EListI<T>, Iterable<EListRecord<T
 
 	/**
 	 * JDOC
-	 *
-	 * @param columnClass
-	 * @param renderer
 	 */
-	public void setDefaultRenderer(Class<?> columnClass, ListCellRenderer renderer) {
+	public <R> void setDefaultRenderer(Class<R> columnClass, ListCellRenderer<R> renderer) {
 		this.delegatingListCellRenderer.setDefaultRenderer(columnClass, renderer);
 	}
 
