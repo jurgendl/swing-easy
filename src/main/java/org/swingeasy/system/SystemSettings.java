@@ -31,7 +31,31 @@ public class SystemSettings extends PropertyChangeParent {
 	}
 
 	public static enum OS {
-		AIX, Digital_Unix, FreeBSD, HP_UX, Irix, Linux, MPE_iX, Mac_OS, Mac_OS_X, Netware_4_11, OS_2, Solaris, SunOS, Windows_2000, Windows_2003, Windows_7, Windows_8, Windows_95, Windows_98, Windows_NT, Windows_Vista, Windows_XP, unknown;
+		AIX, //
+		Digital_Unix, //
+		FreeBSD, //
+		HP_UX, //
+		Irix, //
+		Linux, //
+		MPE_iX, //
+		Mac_OS, //
+		Mac_OS_X, //
+		Netware_4_11, //
+		OS_2, //
+		Solaris, //
+		SunOS, //
+		Windows_2000, //
+		Windows_7, //
+		Windows_8, //
+		Windows_8_1, //
+		Windows_10, //
+		Windows_95, //
+		Windows_98, //
+		Windows_NT, //
+		Windows_2003, //
+		Windows_Vista, //
+		Windows_XP, //
+		unknown;//
 	}
 
 	public static enum OS_GROUP {
@@ -175,6 +199,8 @@ public class SystemSettings extends PropertyChangeParent {
 				case Windows_Vista:
 				case Windows_7:
 				case Windows_8:
+				case Windows_8_1:
+				case Windows_10:
 					_osgroup = OS_GROUP.Windows;
 
 					break;
@@ -189,8 +215,6 @@ public class SystemSettings extends PropertyChangeParent {
 				case OS_2:
 				case Solaris:
 				case SunOS:
-					_osgroup = OS_GROUP.unknown;
-
 					break;
 			}
 		} catch (Exception ex) {
