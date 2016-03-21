@@ -44,7 +44,7 @@
 		<version.miglayout>4.2</version.miglayout>
 		<version.javassist>3.18.1-GA</version.javassist>
 		<version.commons.beanutils>1.9.2</version.commons.beanutils>
-		<version.xhtmlrenderer>9.0.7</version.xhtmlrenderer>
+		<version.xhtmlrenderer>9.0.8</version.xhtmlrenderer>
 		<version.commons.codec>1.9</version.commons.codec>
 		<version.poi>3.10-FINAL</version.poi>
 		<version.slf4j>1.7.12</version.slf4j>
