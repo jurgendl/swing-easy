@@ -149,11 +149,6 @@
 	</repositories>
 	<dependencies>
 		<dependency>
-		    <groupId>commons-collections</groupId>
-		    <artifactId>commons-collections</artifactId>
-		    <version>3.2.2</version>
-		</dependency>
-		<dependency>
 			<groupId>net.java.dev.glazedlists</groupId>
 			<artifactId>glazedlists_java15</artifactId>
 			<version>${version.glazedlists}</version>
@@ -181,6 +176,10 @@
 				<exclusion>
 					<artifactId>commons-logging</artifactId>
 					<groupId>commons-logging</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>commons-collections</artifactId>
+					<groupId>commons-collections</groupId>
 				</exclusion>
 			</exclusions>
 		</dependency>
