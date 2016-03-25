@@ -17,9 +17,13 @@
 	mvn release:perform
 	
 	mvn release:prepare
-	git checkout swing-easy-3.2
+	git checkout swing-easy-3.3
+	set JAVA_HOME=C:\Program Files\Java\jdk1.8.0_51
 	mvn -DaltDeploymentRepository=repo::default::file:../mvn-repo/releases clean deploy
 	git checkout master
+	mvn versions:set -DnewVersion=3.4-SNAPSHOT
+	delete pom.xml.releaseBackup & release.properties & pom.xml.releaseBackup & pom.xml.versionsBackup
+	commit/push
 	-->
 	<properties>
 		<targetJdk>1.7</targetJdk><!-- should be compatible with 1.6 and higher -->
@@ -252,6 +256,28 @@
 			</extension>
 		</extensions>
 		<plugins>
+			<!-- http://stackoverflow.com/questions/4725668/how-to-deploy-snapshot-with-sources-and-javadoc -->
+			<plugin>
+			  <artifactId>maven-source-plugin</artifactId>
+			  <executions>
+				<execution>
+				  <id>attach-sources</id>
+				  <phase>deploy</phase>
+				  <goals><goal>jar-no-fork</goal></goals> 
+				</execution>
+			  </executions>
+			</plugin>
+			<plugin> 
+			  <!-- explicitly define maven-deploy-plugin after other to force exec order -->
+			  <artifactId>maven-deploy-plugin</artifactId> 
+			  <executions> 
+				<execution> 
+				  <id>deploy</id>
+				  <phase>deploy</phase>
+				  <goals><goal>deploy</goal></goals> 
+				</execution> 
+			  </executions> 
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
